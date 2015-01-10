@@ -1,3 +1,6 @@
+#ifndef BUTTON
+#define BUTTON
+
 #include "ofMain.h"
 
 class Button {
@@ -23,3 +26,4 @@ private:
 };
 
 
+#endif

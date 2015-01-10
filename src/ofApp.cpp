@@ -14,8 +14,11 @@ void ofApp::setup(){
     int moduleHeight = ofGetHeight();
     int moduleHabitants = totalPolygons;
     
-    for (int i = 0; i<totalModules; i++) {
-        Module(i, i*moduleWidth, 0, moduleWidth, moduleHeight, moduleHabitants);
+    myModules = new Module*[totalModules];
+    
+    for (int i = 0; i < totalModules; i++) {
+        
+        myModules[i] = new Module(i, i*moduleWidth, 0, moduleWidth, moduleHeight, moduleHabitants);
     }
 
 

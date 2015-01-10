@@ -1,5 +1,5 @@
 dependencies: \
-  /Users/oscarmsrodrigues/Desktop/of_v0.8.4_osx_release/apps/myApps/gamultOSX/src/ofApp.cpp \
+  /Users/oscarmsrodrigues/Desktop/of_v0.8.4_osx_release/apps/myApps/GamultOSX/src/ofApp.cpp \
   src/ofApp.h ../../../libs/openFrameworks/ofMain.h \
   ../../../libs/openFrameworks/utils/ofConstants.h \
   ../../../libs/glew/include/GL/glew.h \

@@ -1,3 +1,6 @@
+#ifndef OFAPP_H
+#define OFAPP_H
+
 #pragma once
 
 #include "ofMain.h"
@@ -30,10 +33,15 @@ class ofApp : public ofBaseApp{
         int totalModules;
         int totalPolygons;
     
+        Module** myModules;
+        PolyClass** myPoligons;
+    
+    
     
     private:
     
-        vector<Module*> myModules;
-        vector<Polygon*> myPolygons;
+
 
 };
+
+#endif

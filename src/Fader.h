@@ -1,3 +1,6 @@
+#ifndef FADER
+#define FADER
+
 #include "ofMain.h"
 
 class Fader {
@@ -21,3 +24,5 @@ class Fader {
 private:
     
 };
+
+#endif
