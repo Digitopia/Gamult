@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B657715F1A7AA818005E1E2F /* Particle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B657715E1A7AA818005E1E2F /* Particle.cpp */; };
 		B6A5B5071A45DEDC00B7A991 /* Button.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6A5B4FD1A45DEDC00B7A991 /* Button.cpp */; };
 		B6A5B5081A45DEDC00B7A991 /* Fader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6A5B4FF1A45DEDC00B7A991 /* Fader.cpp */; };
 		B6A5B5091A45DEDC00B7A991 /* Module.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6A5B5011A45DEDC00B7A991 /* Module.cpp */; };
@@ -64,6 +65,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		B657715D1A7AA801005E1E2F /* Particle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Particle.h; sourceTree = "<group>"; };
+		B657715E1A7AA818005E1E2F /* Particle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Particle.cpp; sourceTree = "<group>"; };
 		B6A5B4FD1A45DEDC00B7A991 /* Button.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Button.cpp; sourceTree = "<group>"; };
 		B6A5B4FE1A45DEDC00B7A991 /* Button.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Button.h; sourceTree = "<group>"; };
 		B6A5B4FF1A45DEDC00B7A991 /* Fader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Fader.cpp; sourceTree = "<group>"; };
@@ -208,6 +211,8 @@
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */,
 				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
+				B657715D1A7AA801005E1E2F /* Particle.h */,
+				B657715E1A7AA818005E1E2F /* Particle.cpp */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -309,6 +314,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B6A5B5081A45DEDC00B7A991 /* Fader.cpp in Sources */,
+				B657715F1A7AA818005E1E2F /* Particle.cpp in Sources */,
 				B6A5B50B1A45DEDC00B7A991 /* PolyClass.cpp in Sources */,
 				B6A5B50A1A45DEDC00B7A991 /* ModuleConsole.cpp in Sources */,
 				B6A5B5091A45DEDC00B7A991 /* Module.cpp in Sources */,

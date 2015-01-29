@@ -3,6 +3,7 @@
 
 #include "ofMain.h"
 #include "ModuleConsole.h"
+#include "Particle.h"
 
 class Module {
     
@@ -20,6 +21,17 @@ public:
     Module(int setIndex, float setOriginX, float setOriginY, float setWidth, float setHeight, int setPopulation);
     
     ModuleConsole* console;
+    
+    void update();
+    void addParticle(int life);
+    void manageParticles();
+    void displayConsole();
+    void boundingBox();
+    void eraseParticle();
+    
+    vector <Particle> population;
+    
+    ofVec2f modOrigin;
 
 private:
     

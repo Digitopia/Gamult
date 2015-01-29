@@ -10,6 +10,7 @@
 #include "Module.h"
 #include "ModuleConsole.h"
 #include "PolyClass.h"
+#include "Particle.h"
 
 
 class ofApp : public ofBaseApp{

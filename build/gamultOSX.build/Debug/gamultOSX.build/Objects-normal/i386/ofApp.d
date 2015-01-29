@@ -170,4 +170,4 @@ dependencies: \
   ../../../libs/openFrameworks/video/ofQTKitPlayer.h \
   ../../../libs/openFrameworks/3d/ofCamera.h \
   ../../../libs/openFrameworks/3d/ofEasyCam.h src/Button.h src/Fader.h \
-  src/Module.h src/ModuleConsole.h src/PolyClass.h
+  src/Module.h src/ModuleConsole.h src/Particle.h src/PolyClass.h
