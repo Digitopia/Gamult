@@ -21,6 +21,7 @@ public:
     Module(int setIndex, float setOriginX, float setOriginY, float setWidth, float setHeight, int setPopulation);
     
     ModuleConsole* console;
+    Particle* thisParticle;
     
     void update();
     void addParticle(int life);

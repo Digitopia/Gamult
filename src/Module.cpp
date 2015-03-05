@@ -27,19 +27,20 @@ void Module::addParticle(int life) {
 }
 
 void Module::manageParticles() {
- /*   for(int i=0; i<=population.size()-1; i++){
-        Particle thisParticle = (Particle)population.get(i);
-        if(console.freeze.state == true){
-            if(console.loop.state == true){
-                if(thisParticle.counter >= thisParticle.life)population.remove(i);
-                thisParticle.gravity();
+    for(int i=0; i<=population.size()-1; i++){
+        thisParticle = new Particle(population[i]);
+//        Particle thisParticle = (Particle)population.get(i);
+        if(console->freeze->state == true){
+            if(console->loop->state == true){
+         //       if(thisParticle.counter >= thisParticle.life)population.remove(i);
+               // thisParticle.gravity();
             }
             else{
-                thisParticle.noGravity();
+               // thisParticle.noGravity();
             }
         }
-        thisParticle.display();
-    }*/
+     //   thisParticle.display();
+    }
 }
 
 void Module::displayConsole() {

@@ -20,9 +20,10 @@ public:
     
     Button(int setModule, float setX, float setY, string setTag);
     
+    bool state;
+    
 private:
     
-    bool state;
 };
 
 

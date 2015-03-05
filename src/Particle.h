@@ -17,6 +17,20 @@ public:
     
     Particle(int setModule, int setIndex, float setX, float setY, float setSync, int setLife);
     
+    bool sendReport;
+    int myModule;
+    int index;
+    float sync;
+    float floor;
+    float speed;
+    float gravity;
+    float loopGravity;
+    float diameter;
+    ofVec2f center;
+    float initialPos;
+    int counter;
+    int life;
+    
 private:
     
 };
