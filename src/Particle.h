@@ -11,6 +11,7 @@
 
 #include "ofMain.h"
 
+
 class Particle {
     
 public:
@@ -30,6 +31,15 @@ public:
     float initialPos;
     int counter;
     int life;
+    
+    void noGravity();
+    void yesGravity();
+    void display();
+    void displayParticle();
+    void displayParticleProgress();
+    void displayLifeCircle();
+    void displaySync();
+    void report(float collision);
     
 private:
     

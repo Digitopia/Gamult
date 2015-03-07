@@ -1,5 +1,5 @@
-#ifndef MODULECONSOLE
-#define MODULECONSOLE
+#ifndef MODULECONSOLE_H
+#define MODULECONSOLE_H
 
 #include "ofMain.h"
 #include "Button.h"

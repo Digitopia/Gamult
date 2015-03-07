@@ -1,26 +1,28 @@
 #include "ofApp.h"
 
+float ofApp::increment = 0.0f;
+float ofApp::maxIncrement = 20.0f;
+int ofApp::totalModules = 4;
+int ofApp::totalPolygons = 10;
+
+
+
+Module** ofApp::myModules = new Module*[ofApp::totalModules];
+
+
+
 //--------------------------------------------------------------
 void ofApp::setup(){
     
     ofSetFrameRate(60);
     
-    increment = 0.0f;
-    maxIncrement = 20.0f;
-    totalModules = 4;
-    totalPolygons = 10;
-    
-    int moduleWidth = ofGetWidth()/totalModules;
+    int moduleWidth = ofGetWidth()/ofApp::totalModules;
     int moduleHeight = ofGetHeight();
-    int moduleHabitants = totalPolygons;
+    int moduleHabitants = ofApp::totalPolygons;
     
-    myModules = new Module*[totalModules];
-    
-    for (int i = 0; i < totalModules; i++) {
-        
+    for (int i = 0; i < ofApp::totalModules; i++) {
         myModules[i] = new Module(i, i*moduleWidth, 0, moduleWidth, moduleHeight, moduleHabitants);
     }
-
 
 }
 

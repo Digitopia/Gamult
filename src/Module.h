@@ -1,7 +1,8 @@
-#ifndef MODULE
-#define MODULE
+#ifndef MODULE_H
+#define MODULE_H
 
 #include "ofMain.h"
+
 #include "ModuleConsole.h"
 #include "Particle.h"
 
