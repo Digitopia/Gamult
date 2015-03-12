@@ -33,7 +33,14 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-
+    
+    ofBackground(255);
+    
+    for (int i=0; i< ofApp::totalModules; i++) {
+     //   myModules[i]->displayConsole();
+        myModules[i]->boundingBox();
+   //     myModules[i]->manageParticles();
+    }
 }
 
 //--------------------------------------------------------------

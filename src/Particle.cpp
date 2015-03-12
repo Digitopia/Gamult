@@ -61,15 +61,19 @@ void Particle::display() {
 }
 
 void Particle::displayParticle() {
+    ofPushStyle();
     ofFill();
     ofSetColor(0);
     ofCircle(center.x, center.y, diameter);
+    ofPopStyle();
 }
 
 void Particle::displayParticleProgress(){
+    ofPushStyle();
     ofFill();
     ofSetColor(0);
     ofCircle(center.x, center.y, life);
+    ofPopStyle();
 }
 
 // TODO: finish editing these last few methods

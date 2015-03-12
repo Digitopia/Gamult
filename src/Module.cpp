@@ -27,7 +27,8 @@ void Module::addParticle(int life) {
 }
 
 void Module::manageParticles() {
-    for(int i=0; i<=population.size()-1; i++){
+    cout << population.size() << endl;
+    for(int i=0; i<population.size(); i++){
         thisParticle = new Particle(population[i]);
 //        Particle thisParticle = (Particle)population.get(i);
         if(console->freeze->state == true){
@@ -48,13 +49,12 @@ void Module::displayConsole() {
 }
 
 void Module::boundingBox() {
-   /* pushStyle();
-    strokeWeight(1);
-    stroke(50,128);
-    noFill();
-    rect(modOrigin.x, modOrigin.y, modWidth, modHeight);
-    popStyle();
-    */
+    ofPushStyle();
+    ofSetLineWidth(1);
+    ofSetColor(50, 128);
+    ofNoFill();
+    ofRect(modOrigin.x, modOrigin.y, modWidth, modHeight);
+    ofPopStyle();
 }
 
 void Module::eraseParticle() {
