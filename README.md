@@ -1,4 +1,4 @@
-Portophone for iOS
+Gamult for OSX
 
 © Digitópia -  Casa da Música
 
