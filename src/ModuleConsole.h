@@ -22,6 +22,12 @@ public:
     Fader* gravity;
     Fader* loopSpeed;
     
+    void display();
+    
+    void displayButtons();
+    
+    void displayFaders();
+    
 private:
     
 };

@@ -15,3 +15,32 @@ ModuleConsole::ModuleConsole(ofVec2f setOrigin, float setConsoleWidth, int setMo
     loopSpeed = new Fader("Loop Speed",origin.x+(consoleWidth/2),origin.y+50+5,100);
 
 }
+
+void ModuleConsole::display() {
+    
+    ofPushStyle();
+    ofSetColor(50, 128);
+    ofFill();
+    ofRect(origin.x, origin.y, consoleWidth, 90);
+    displayButtons();
+    displayFaders();
+    ofPopStyle();
+    
+    cout << "ModuleConsoleDisplay" << endl;
+    
+}
+
+void ModuleConsole::displayButtons() {
+    
+    remove->displayClick();
+    loop->displayToggle();
+    freeze->displayToggle();
+    
+}
+
+void ModuleConsole::displayFaders() {
+    
+    gravity->display();
+    loopSpeed->display();
+    
+}

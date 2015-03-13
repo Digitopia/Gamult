@@ -9,6 +9,7 @@ public:
     void toggle();
     void click();
     void keySupport();
+    
     void displayToggle();
     void displayClick();
     

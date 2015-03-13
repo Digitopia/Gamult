@@ -38,7 +38,7 @@ void Button::keySupport() {
 }
 
 void Button::displayToggle() {
-    
+
     ofPushStyle();
     ofSetLineWidth(1);
     ofSetColor(255);
@@ -47,20 +47,21 @@ void Button::displayToggle() {
     ofRect(x,y,10,10);
     ofSetColor(255);
     ofFill();
-    
+
     // TODO: check font and size
     
    // textSize(10);
     // textAlign(LEFT,TOP);
-    ofDrawBitmapString(tag,x+20,y);
+    ofDrawBitmapString(tag, x+20, y);
     ofPopStyle();
-    
+
+    cout << "displayToggle" << endl;
     
     
 }
 
 void Button::displayClick() {
-    
+  
     ofPushStyle();
     ofSetLineWidth(1);
     ofSetColor(255);
@@ -78,5 +79,7 @@ void Button::displayClick() {
     // textAlign(LEFT,TOP);
     ofDrawBitmapString(tag,x+20,y);
     ofPopStyle();
+    
+    cout << "displayClick" << endl;
     
 }
