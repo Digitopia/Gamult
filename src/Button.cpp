@@ -43,7 +43,7 @@ void Button::displayToggle() {
     ofSetLineWidth(1);
     ofSetColor(255);
     ofNoFill();
-    if(state == false) ofColor(255);
+    if(state == false) ofFill();
     ofRect(x,y,10,10);
     ofSetColor(255);
     ofFill();
@@ -52,11 +52,9 @@ void Button::displayToggle() {
     
    // textSize(10);
     // textAlign(LEFT,TOP);
+    
     ofDrawBitmapString(tag, x+20, y);
     ofPopStyle();
-
-    cout << "displayToggle" << endl;
-    
     
 }
 
@@ -66,7 +64,7 @@ void Button::displayClick() {
     ofSetLineWidth(1);
     ofSetColor(255);
     ofNoFill();
-    if(state == false) ofColor(255);
+    if(state == false) ofFill();
     ofRect(x,y,10,10);
     ofLine(x, y, x+10, y+10);
     ofLine(x+10, y, x, y+10);
@@ -79,7 +77,5 @@ void Button::displayClick() {
     // textAlign(LEFT,TOP);
     ofDrawBitmapString(tag,x+20,y);
     ofPopStyle();
-    
-    cout << "displayClick" << endl;
     
 }

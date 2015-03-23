@@ -26,8 +26,6 @@ void ModuleConsole::display() {
     displayFaders();
     ofPopStyle();
     
-    cout << "ModuleConsoleDisplay" << endl;
-    
 }
 
 void ModuleConsole::displayButtons() {

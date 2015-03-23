@@ -29,13 +29,15 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
     
+        void displayIncrementation(int realIncrement);
+    
         static float increment;
         static float maxIncrement;
         static int totalModules;
         static int totalPolygons;
     
         static Module** myModules;
-        PolyClass** myPoligons;
+        static PolyClass** myPolygons;
     
     
     

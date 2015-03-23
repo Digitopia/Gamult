@@ -79,22 +79,25 @@ void Particle::displayParticleProgress(){
 // TODO: finish editing these last few methods
 
 void Particle::displayLifeCircle() {
-  /*  pushStyle();
-    stroke(0, 128);
-    strokeWeight(2);
-    noFill();
-    arc(center.x, center.y, life*2, life*2, 0, radians(360.-(counter*(360./life))));
-    popStyle();*/
+    ofPolyline polyline;
+    
+    ofPushStyle();
+    ofSetColor(0, 128);
+    ofSetLineWidth(2);
+    ofNoFill();
+    ofPoint point1(center.x, center.y);
+    polyline.arc(point1, life*2, life*2, 0, ofDegToRad(360.-(counter*(360./life))));
+    ofPopStyle();
 }
 
 
 void Particle::displaySync() {
-/*    pushStyle();
-    noFill();
-    strokeWeight(1);
-    stroke(128);
-    line(myModules[myModule].modOrigin.x, floor-sync, myModules[myModule].maxWidth, floor-sync);
-    popStyle();*/
+    ofPushStyle();
+    ofNoFill();
+    ofSetLineWidth(1);
+    ofSetColor(128);
+    ofLine(ofApp::myModules[myModule]->modOrigin.x, floor-sync, ofApp::myModules[myModule]->maxWidth, floor-sync);
+    ofPopStyle();
 }
 
 void Particle::report(float collision) {
