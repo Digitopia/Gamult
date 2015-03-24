@@ -99,7 +99,7 @@ void ofApp::mouseReleased(int x, int y, int button){
 
     for (int i=0; i < ofApp::totalModules; i++) {
         
-        ofApp::myModules[i]->addParticle(floor(increment));
+        ofApp::myModules[i]->addParticle(increment);
         ofApp::myModules[i]->console->remove->click();
         ofApp::myModules[i]->console->loop->toggle();
         ofApp::myModules[i]->console->freeze->toggle();
