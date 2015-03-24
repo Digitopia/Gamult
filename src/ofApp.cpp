@@ -65,7 +65,7 @@ void ofApp::draw(){
     if (ofGetMousePressed()) {
         increment++;
         if (increment>maxIncrement)increment=maxIncrement;
-        displayIncrementation(floor(increment));
+        displayIncrementation(increment);
     }
 }
 
@@ -134,7 +134,8 @@ void ofApp::displayIncrementation(int realIncrement){
     //strokeWeight(4);
     ofNoFill();
     ofPoint point1(mouseX, mouseY);
-    polyline1.arc(point1, 50, 50, 0, ofDegToRad(increment*(360./maxIncrement)), true);
+    polyline1.arc(point1, 30, 30, 0, float(increment)*(360./float(maxIncrement)));
+    polyline1.draw();
     ofPopStyle();
     
 }
