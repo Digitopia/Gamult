@@ -27,7 +27,7 @@ void Module::addParticle(int life) {
 }
 
 void Module::manageParticles() {
-    for(int i=0; i<population.size(); i++){
+    for(int i=0; i < population.size(); i++){
 //        thisParticle = new Particle(population[i]);
          managedParticle = &population[i];
 //        Particle thisParticle = (Particle)population.get(i);
@@ -38,11 +38,12 @@ void Module::manageParticles() {
                     cout << "entrou" << endl;
                     
                 population.erase(population.begin() + i);
-                managedParticle->yesGravity();
-                }
-            }
-            else{
                 managedParticle->noGravity();
+                }
+            
+                else{
+                    managedParticle->yesGravity();
+                }
             }
         }
         managedParticle->display();
