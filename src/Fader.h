@@ -21,6 +21,8 @@ class Fader {
     string myTitle;
     bool usage;
     
+    ofTrueTypeFont verdana10;
+    
 private:
     
 };

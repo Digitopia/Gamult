@@ -23,6 +23,8 @@ public:
     
     bool state;
     
+    ofTrueTypeFont verdana10;
+    
 private:
     
 };

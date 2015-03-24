@@ -13,6 +13,8 @@ Fader::Fader(string title, float initX, float initY, int extend)
     leng = extend;
     fadePos = initX;
     myTitle = title;
+    
+    verdana10.loadFont("verdana.ttf", 10, true, true);
 }
 
 float Fader::getValue() {
@@ -46,15 +48,10 @@ void Fader::keySupport(bool type) {
 
 void Fader::display(){
     
-    ofColor(255);
+    ofSetColor(255);
     ofLine(zeroX, zeroY, zeroX+leng, zeroY);
     fadePos = ofMap(getValue(), low, high, zeroX, zeroX+leng);
     ofRect(fadePos-5,zeroY-5,10,10);
-// TODO: check  text
-    //textAlign(LEFT,TOP);
-    //textSize(10);
-    //text(myTitle, zeroX, zeroY+10);
-    
-    ofDrawBitmapString(myTitle, zeroX, zeroY+10);
+    verdana10.drawString(myTitle, zeroX, zeroY+20);
     
 }

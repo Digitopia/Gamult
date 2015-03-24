@@ -11,6 +11,8 @@ Button::Button(int setModule, float setX, float setY, string setTag)
     y = setY;
     tag = setTag;
     
+    verdana10.loadFont("verdana.ttf", 10, true, true);
+    
 }
 
 void Button::toggle() {
@@ -47,13 +49,7 @@ void Button::displayToggle() {
     ofRect(x,y,10,10);
     ofSetColor(255);
     ofFill();
-
-    // TODO: check font and size
-    
-   // textSize(10);
-    // textAlign(LEFT,TOP);
-    
-    ofDrawBitmapString(tag, x+20, y);
+    verdana10.drawString(tag, x+20, y+10);
     ofPopStyle();
     
 }
@@ -70,12 +66,7 @@ void Button::displayClick() {
     ofLine(x+10, y, x, y+10);
     ofSetColor(255);
     ofFill();
-    
-    // TODO: check font and size
-    
-    // textSize(10);
-    // textAlign(LEFT,TOP);
-    ofDrawBitmapString(tag,x+20,y);
+    verdana10.drawString(tag, x+20, y+10);
     ofPopStyle();
     
 }
