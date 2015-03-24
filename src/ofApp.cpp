@@ -4,6 +4,7 @@ float ofApp::increment = 0.0f;
 float ofApp::maxIncrement = 20.0f;
 int ofApp::totalModules = 4;
 int ofApp::totalPolygons = 10;
+int ofApp::consoleHeight = 90;
 
 
 
@@ -65,7 +66,7 @@ void ofApp::draw(){
     if (ofGetMousePressed()) {
         increment++;
         if (increment>maxIncrement)increment=maxIncrement;
-        displayIncrementation(increment);
+        if (ofGetMouseY() > ofApp::consoleHeight) displayIncrementation(increment);
     }
 }
 

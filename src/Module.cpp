@@ -35,9 +35,6 @@ void Module::manageParticles() {
         if(console->freeze->state == true){
             if(console->loop->state == true){
                 if((managedParticle->counter) >= (managedParticle->life)) {
-                    
-                    cout << "entrou" << endl;
-                    
                 population.erase(population.begin() + i);
                 managedParticle->noGravity();
                 }

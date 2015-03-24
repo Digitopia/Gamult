@@ -1,6 +1,4 @@
-#include "ModuleConsole.h"
-#include "Button.h"
-#include "Fader.h"
+#include "ofApp.h"
 
 ModuleConsole::ModuleConsole(ofVec2f setOrigin, float setConsoleWidth, int setModule){
     consoleWidth = setConsoleWidth;
@@ -21,7 +19,8 @@ void ModuleConsole::display() {
     ofPushStyle();
     ofSetColor(50, 128);
     ofFill();
-    ofRect(origin.x, origin.y, consoleWidth, 90);
+    // changing original code to include a variable defined in setup to indicate console height
+    ofRect(origin.x, origin.y, consoleWidth, ofApp::consoleHeight);
     displayButtons();
     displayFaders();
     ofPopStyle();

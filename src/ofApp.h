@@ -36,6 +36,8 @@ class ofApp : public ofBaseApp{
         static int totalModules;
         static int totalPolygons;
     
+        static int consoleHeight;
+    
         static Module** myModules;
         static PolyClass** myPolygons;
     

@@ -1,6 +1,6 @@
 dependencies: \
   /Users/oscarmsrodrigues/Desktop/of_v0.8.4_osx_release/apps/myApps/GamultOSX/src/ModuleConsole.cpp \
-  src/ModuleConsole.h ../../../libs/openFrameworks/ofMain.h \
+  src/ofApp.h ../../../libs/openFrameworks/ofMain.h \
   ../../../libs/openFrameworks/utils/ofConstants.h \
   ../../../libs/glew/include/GL/glew.h \
   ../../../libs/tess2/include/tesselator.h \
@@ -169,4 +169,5 @@ dependencies: \
   ../../../libs/openFrameworks/video/ofVideoPlayer.h \
   ../../../libs/openFrameworks/video/ofQTKitPlayer.h \
   ../../../libs/openFrameworks/3d/ofCamera.h \
-  ../../../libs/openFrameworks/3d/ofEasyCam.h src/Button.h src/Fader.h
+  ../../../libs/openFrameworks/3d/ofEasyCam.h src/Button.h src/Fader.h \
+  src/Module.h src/ModuleConsole.h src/Particle.h src/PolyClass.h
