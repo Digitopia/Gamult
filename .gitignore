@@ -3,7 +3,3 @@
 *~.nib
 
 build/
-
-# the Project.xcconfig is (could be) different per user
-# is the one the one that configures where the OF PATH is
-Project.xcconfig
