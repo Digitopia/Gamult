@@ -20,6 +20,8 @@ void ofApp::setup(){
     
     ofSetFrameRate(60);
     
+    ofSetCircleResolution(50);
+    
     int moduleWidth = ofGetWidth()/ofApp::totalModules;
     int moduleHeight = ofGetHeight();
     int moduleHabitants = ofApp::totalPolygons;
@@ -135,7 +137,7 @@ void ofApp::displayIncrementation(int realIncrement){
     //strokeWeight(4);
     ofNoFill();
     ofPoint point1(mouseX, mouseY);
-    polyline1.arc(point1, 30, 30, 0, float(increment)*(360./float(maxIncrement)));
+    polyline1.arc(point1, 30, 30, 0, float(increment)*(360./float(maxIncrement)), 50);
     polyline1.draw();
     ofPopStyle();
     

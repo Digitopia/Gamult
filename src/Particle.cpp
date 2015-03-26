@@ -24,6 +24,7 @@ Particle::Particle(int setModule, int setIndex, float setX, float setY, float se
     center.y = setY;
     initialPos = center.y;
     life = setLife;
+    
 }
 
 void Particle::noGravity() {
@@ -86,7 +87,7 @@ void Particle::displayLifeCircle() {
     ofSetLineWidth(2);
     ofNoFill();
     ofPoint point1(center.x, center.y);
-    polyline.arc(point1, life*2, life*2, 0, 360.-(counter*(360./life)));
+    polyline.arc(point1, life*2, life*2, 0, 360.-(counter*(360./life)), 50);
     polyline.draw();
     ofPopStyle();
 }
