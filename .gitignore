@@ -2,4 +2,8 @@
 *.swp
 *~.nib
 
+*.app
+
 build/
+
+xcuserdata/
