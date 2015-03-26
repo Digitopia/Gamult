@@ -1,0 +1,35 @@
+--style=java
+
+# should still maybe consider --indent=force-tab
+--indent=tab
+
+# 'if(true)' becomes 'if (true)'
+--pad-header
+
+# pads operators '1+2' becomes +1 + 2'
+--pad-oper
+
+# only indents modifiers (private, protected, public) an half ident
+# --indent-modifiers
+
+--indent-switches
+--indent-cases
+--indent-preproc-block
+--indent-preproc-cond
+--indent-col1-comments
+
+# so that is 'char *var' consistently
+# options can be 'middle' and 'type'
+--align-pointer=type
+--align-reference=type
+
+# breaks the else so that it doesn't stay like '} else {' and stays like '} \n else {'
+--break-closing-brackets
+
+# always add brackets even for single-line ifs, fors and so on
+# --add-brackets
+
+# don't keep .orig files, replace on top of current file
+--suffix=none
+
+--keep-one-line-blocks

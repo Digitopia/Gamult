@@ -1,40 +1,39 @@
 #include "PolyClass.h"
 #include "ofApp.h"
 
-PolyClass::PolyClass(int setIndex)
-{
-    index = setIndex;
-    
+PolyClass::PolyClass(int setIndex) {
+	index = setIndex;
+
 }
 
 void PolyClass::addVertex(float vX, float vY) {
-    ofVec2f newVertex;
-    newVertex.set(vX, vY);
-    addedVertexes.push_back(newVertex);
+	ofVec2f newVertex;
+	newVertex.set(vX, vY);
+	addedVertexes.push_back(newVertex);
 }
 
 void PolyClass::display(int i) {
-    
-    ofPushStyle();
-    ofBeginShape();
-    ofNoFill();
-    ofSetLineWidth(1); //TODO: check if works
-    ofSetColor(0,128);
-    ofCurveVertex(0, ofGetHeight()/2);
-    ofCurveVertex(0, ofGetHeight()/2);
-    
-    for (int j=0; j < ofApp::totalModules; j++) {
-        if (ofApp::myModules[j]->population.size() > i) {
-            //TODO: check if following is correct
-            Particle thisParticle = *new Particle(/*(Particle)*/ofApp::myModules[j]->population[i]);
-            //Particle thisParticle = (Particle)myModules[j].population.get(i);
-            ofCurveVertex(thisParticle.center.x, thisParticle.center.y);
-        }
-    }
-  
-    ofCurveVertex(ofGetWidth(), ofGetHeight()/2);
-    ofCurveVertex(ofGetWidth(), ofGetHeight()/2);
-    ofEndShape();
-    ofPopStyle();
-  
+
+	ofPushStyle();
+	ofBeginShape();
+	ofNoFill();
+	ofSetLineWidth(1); //TODO: check if works
+	ofSetColor(0,128);
+	ofCurveVertex(0, ofGetHeight()/2);
+	ofCurveVertex(0, ofGetHeight()/2);
+
+	for (int j=0; j < ofApp::totalModules; j++) {
+		if (ofApp::myModules[j]->population.size() > i) {
+			//TODO: check if following is correct
+			Particle thisParticle = *new Particle(/*(Particle)*/ofApp::myModules[j]->population[i]);
+			//Particle thisParticle = (Particle)myModules[j].population.get(i);
+			ofCurveVertex(thisParticle.center.x, thisParticle.center.y);
+		}
+	}
+
+	ofCurveVertex(ofGetWidth(), ofGetHeight()/2);
+	ofCurveVertex(ofGetWidth(), ofGetHeight()/2);
+	ofEndShape();
+	ofPopStyle();
+
 }
