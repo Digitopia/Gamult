@@ -1,16 +1,16 @@
 #include "ofApp.h"
 
-Button::Button(int setModule, float setX, float setY, string setTag) {
+Button::Button(int module, float x, float y, string tag) {
 
 	inUse = false;
 	state = true;
 
-	module = setModule;
-	x = setX;
-	y = setY;
-	tag = setTag;
+	this->module = module;
+	this->x = x;
+	this->y = y;
+	this->tag = tag;
 
-	verdana10.loadFont("verdana.ttf", 10, true, true);
+	font.loadFont("verdana.ttf", 10, true, true);
 
 }
 
@@ -32,13 +32,7 @@ void Button::click() {
 
 }
 
-void Button::keySupport() {
-
-	state = !state;
-
-}
-
-void Button::displayToggle() {
+void Button::drawToggle() {
 
 	ofPushStyle();
 	ofSetLineWidth(1);
@@ -48,12 +42,12 @@ void Button::displayToggle() {
 	ofRect(x,y,10,10);
 	ofSetColor(255);
 	ofFill();
-	verdana10.drawString(tag, x+20, y+10);
+	font.drawString(tag, x+20, y+10);
 	ofPopStyle();
 
 }
 
-void Button::displayClick() {
+void Button::drawClick() {
 
 	ofPushStyle();
 	ofSetLineWidth(1);
@@ -65,7 +59,7 @@ void Button::displayClick() {
 	ofLine(x+10, y, x, y+10);
 	ofSetColor(255);
 	ofFill();
-	verdana10.drawString(tag, x+20, y+10);
+	font.drawString(tag, x+20, y+10);
 	ofPopStyle();
 
 }

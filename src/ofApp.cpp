@@ -30,7 +30,7 @@ void ofApp::setup() {
 		ofApp::myModules[i] = new Module(i, i*moduleWidth, 0, moduleWidth, moduleHeight, moduleHabitants);
 	}
 
-	for (int i=0; i < ofApp::totalPolygons; i++) {
+	for (int i = 0; i < ofApp::totalPolygons; i++) {
 		ofApp::myPolygons[i] = new PolyClass(i);
 	}
 
@@ -43,20 +43,20 @@ void ofApp::update() {
 
 //--------------------------------------------------------------
 void ofApp::draw() {
-
+	
 	ofBackground(255);
 
-	for (int i=0; i< ofApp::totalModules; i++) {
+	for (int i = 0; i < ofApp::totalModules; i++) {
 
-		ofApp::myModules[i]->displayConsole();
+		ofApp::myModules[i]->drawConsole();
 		ofApp::myModules[i]->boundingBox();
 		ofApp::myModules[i]->manageParticles();
 	}
 
-	for (int i=0; i < ofApp::totalPolygons; i++) {
+	for (int i = 0; i < ofApp::totalPolygons; i++) {
 
 		int checkVertex = 0;
-		for (int j=0; j<ofApp::totalModules; j++) {
+		for (int j = 0; j<ofApp::totalModules; j++) {
 			if (myModules[j]->population.size() > i) {
 				checkVertex++;
 			}
@@ -70,6 +70,13 @@ void ofApp::draw() {
 		if (increment>maxIncrement)increment=maxIncrement;
 		if (ofGetMouseY() > ofApp::consoleHeight) displayIncrementation(increment);
 	}
+    
+//    ofRectangle rect = ofRectangle(100, 100, 200, 200);
+//    ofRect(rect);
+//    
+//    if (ofGetMousePressed() && rect.inside(ofGetMouseX(), ofGetMouseY())) {
+//            cout << "inside rect " << ofGetMouseX() << endl;
+//    }
 }
 
 //--------------------------------------------------------------

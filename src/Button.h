@@ -1,17 +1,19 @@
-#ifndef BUTTON
-#define BUTTON
+#ifndef BUTTON_H
+#define BUTTON_H
 
 #include "ofMain.h"
 
 class Button {
+
 public:
 
+	Button(int module, float x, float y, string tag);
+    
 	void toggle();
 	void click();
-	void keySupport();
 
-	void displayToggle();
-	void displayClick();
+	void drawToggle();
+	void drawClick();
 
 	int module;
 	float x;
@@ -19,11 +21,9 @@ public:
 	bool inUse;
 	string tag;
 
-	Button(int setModule, float setX, float setY, string setTag);
-
 	bool state;
 
-	ofTrueTypeFont verdana10;
+	ofTrueTypeFont font;
 
 private:
 

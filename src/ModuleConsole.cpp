@@ -1,43 +1,43 @@
 #include "ofApp.h"
 
-ModuleConsole::ModuleConsole(ofVec2f setOrigin, float setConsoleWidth, int setModule) {
-	consoleWidth = setConsoleWidth;
-	origin.set(setOrigin);
-	module = setModule;
+ModuleConsole::ModuleConsole(ofVec2f origin, float width, int module) {
+	
+    this->width = width;
+	this->origin.set(origin);
+	this->module = module;
+    
+    int x = origin.x;
+    int y = origin.y;
 
-	remove = new Button(module, origin.x+10, origin.y+10, "Remove");
-	loop = new Button(module,origin.x+10,origin.y+30,"Loop");
-	freeze = new Button(module,origin.x+10,origin.y+50,"Freeze");
+	remove = new Button(module, x+10, y+10, "Remove");
+    loop   = new Button(module, x+10, y+30, "Loop");
+	freeze = new Button(module, x+10, y+50, "Freeze");
 
-	gravity = new Fader("Gravity",origin.x+(consoleWidth/2),origin.y+10+5,100);
-	loopSpeed = new Fader("Loop Speed",origin.x+(consoleWidth/2),origin.y+50+5,100);
-
+    x = x + width/2;
+	gravity   = new Fader(x, y+10+5, 10, 100, "Gravity");
+	loopSpeed = new Fader(x, y+50+5, 10, 100, "Loop Speed");
 }
 
-void ModuleConsole::display() {
+void ModuleConsole::draw() {
 
 	ofPushStyle();
 	ofSetColor(50, 128);
 	ofFill();
 	// changing original code to include a variable defined in setup to indicate console height
-	ofRect(origin.x, origin.y, consoleWidth, ofApp::consoleHeight);
-	displayButtons();
-	displayFaders();
+	ofRect(origin.x, origin.y, width, ofApp::consoleHeight);
+	drawButtons();
+	drawFaders();
 	ofPopStyle();
 
 }
 
-void ModuleConsole::displayButtons() {
-
-	remove->displayClick();
-	loop->displayToggle();
-	freeze->displayToggle();
-
+void ModuleConsole::drawButtons() {
+	remove->drawClick();
+	loop->drawToggle();
+	freeze->drawToggle();
 }
 
-void ModuleConsole::displayFaders() {
-
-	gravity->display();
-	loopSpeed->display();
-
+void ModuleConsole::drawFaders() {
+	gravity->draw();
+	loopSpeed->draw();
 }

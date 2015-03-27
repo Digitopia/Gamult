@@ -47,8 +47,8 @@ void Module::manageParticles() {
 	}
 }
 
-void Module::displayConsole() {
-	console->display();
+void Module::drawConsole() {
+	console->draw();
 }
 
 void Module::boundingBox() {

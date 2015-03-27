@@ -9,10 +9,10 @@ class ModuleConsole {
 
 public:
 
-	ModuleConsole(ofVec2f setOrigin, float setConsoleWidth, int setModule);
+	ModuleConsole(ofVec2f origin, float width, int module);
 
 	int module;
-	float consoleWidth;
+	float width;
 	ofVec2f origin;
 
 	Button* remove;
@@ -22,11 +22,9 @@ public:
 	Fader* gravity;
 	Fader* loopSpeed;
 
-	void display();
-
-	void displayButtons();
-
-	void displayFaders();
+	void draw();
+	void drawButtons();
+	void drawFaders();
 
 private:
 

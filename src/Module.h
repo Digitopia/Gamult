@@ -18,7 +18,6 @@ public:
 	float maxWidth;
 	float maxHeight;
 
-
 	Module(int setIndex, float setOriginX, float setOriginY, float setWidth, float setHeight, int setPopulation);
 
 	ModuleConsole* console;
@@ -27,7 +26,7 @@ public:
 	void update();
 	void addParticle(int life);
 	void manageParticles();
-	void displayConsole();
+	void drawConsole();
 	void boundingBox();
 	void eraseParticle();
 

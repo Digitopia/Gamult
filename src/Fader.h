@@ -1,30 +1,31 @@
-#ifndef FADER
-#define FADER
+#ifndef FADER_H
+#define FADER_H
 
 #include "ofMain.h"
 
 class Fader {
+
 public:
 
-	float getValue();
-	void keySupport(bool type);
-	void display();
+	Fader(float x0, float y, int size, int range, string title);
 
-	//    void mousePressed(ofMouseEventArgs& event);
-
-	Fader(string title, float initX, float initY, int extend);
-
-	float zeroX, zeroY, leng;
-	float low, high;
-	int fadeRadius;
-	float fadePos, faderVal;
-	string myTitle;
-	bool usage;
-
-	ofTrueTypeFont verdana10;
+	void draw();
+    float getValue();
+	void mousePressed(ofMouseEventArgs& event);
+	void mouseDragged(ofMouseEventArgs& event);
+	void mouseReleased(ofMouseEventArgs& event);
 
 private:
-
+   
+    int x0; // the inital position of the fader in the full window
+    int y;  // the y position of the fader (is constant all the time)
+    ofRectangle rect; // the rectangle of the fader itself
+	ofTrueTypeFont font;
+	string title;
+    int size; // size in pixels of the square of the fader
+    int range; // range in pixels of the line in which the fader moves
+    bool dragging; // true if the fader is being dragged and false otherwise
+    
 };
 
 #endif
