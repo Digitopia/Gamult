@@ -1,65 +1,66 @@
 #include "ofApp.h"
 
-Button::Button(int module, float x, float y, string tag) {
+int	Button::size = 10;
 
-	inUse = false;
-	state = true;
+Button::Button(buttonType type, int module, float x, float y, string title) {
 
+    this->type = type;
 	this->module = module;
 	this->x = x;
 	this->y = y;
-	this->tag = tag;
+	this->title = title;
+	this->state = true;
 
-	font.loadFont("verdana.ttf", 10, true, true);
+	this->rect = ofRectangle(x, y, size, size);
+
+	font.loadFont("verdana.ttf", 10, true);
+
+	ofAddListener(ofEvents().mousePressed, this, &Button::mousePressed);
 
 }
 
-void Button::toggle() {
-	// TODO: mudar para box
-	if (ofGetMouseX() >= x && ofGetMouseX() <=x+10 && ofGetMouseY() >= y && ofGetMouseY() <=y+10) {
-		state = !state;
+void Button::mousePressed(ofMouseEventArgs& event) {
+
+	if (!rect.inside(event.x, event.y))
+		return;
+
+	if (type == BUTTON_TOGGLE) {
+	  	state = !state;
 	}
-}
 
-void Button::click() {
-	if (ofApp::myModules[module]->population.size() > 0) {
-		if (ofGetMouseX() >= x && ofGetMouseX() <=x+10 && ofGetMouseY() >= y && ofGetMouseY() <=y+10) {
-
+	else if (type == BUTTON_CLICK) {
+		if (ofApp::myModules[module]->population.size() > 0) {
 			ofApp::myModules[module]->population.erase(ofApp::myModules[module]->population.end());
-
 		}
 	}
 
 }
 
-void Button::drawToggle() {
+void Button::draw() {
 
 	ofPushStyle();
+	
+	// TODO: color should be a variable
+	ofSetColor(255);
+	
 	ofSetLineWidth(1);
-	ofSetColor(255);
+	
 	ofNoFill();
-	if (state == false) ofFill();
-	ofRect(x,y,10,10);
-	ofSetColor(255);
+	
+	if (!state)
+		ofFill();
+
+	ofRect(rect);
+	
+	// TODO: é preciso este ofFill?
 	ofFill();
-	font.drawString(tag, x+20, y+10);
-	ofPopStyle();
 
-}
+	font.drawString(title, x+size*2, y+size);
+	
+	if (type == BUTTON_CLICK) {
+		ofLine(x, y, x+size, y+size);
+		ofLine(x+size, y, x, y+size);
+	}
 
-void Button::drawClick() {
-
-	ofPushStyle();
-	ofSetLineWidth(1);
-	ofSetColor(255);
-	ofNoFill();
-	if (state == false) ofFill();
-	ofRect(x,y,10,10);
-	ofLine(x, y, x+10, y+10);
-	ofLine(x+10, y, x, y+10);
-	ofSetColor(255);
-	ofFill();
-	font.drawString(tag, x+20, y+10);
-	ofPopStyle();
-
+    ofPopStyle();
 }

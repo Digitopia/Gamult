@@ -6,25 +6,21 @@ int ofApp::totalModules = 4;
 int ofApp::totalPolygons = 10;
 int ofApp::consoleHeight = 90;
 
-
-
 Module** ofApp::myModules = new Module* [ofApp::totalModules];
 
 // TODO: see if there's need to make this static
 PolyClass** ofApp::myPolygons = new PolyClass* [ofApp::totalPolygons];
 
-
-
-//--------------------------------------------------------------
 void ofApp::setup() {
 
 	ofSetFrameRate(60);
-
 	ofSetCircleResolution(50);
 
 	int moduleWidth = ofGetWidth()/ofApp::totalModules;
 	int moduleHeight = ofGetHeight();
 	int moduleHabitants = ofApp::totalPolygons;
+	
+	drawingParticle = false;
 
 	for (int i = 0; i < ofApp::totalModules; i++) {
 		ofApp::myModules[i] = new Module(i, i*moduleWidth, 0, moduleWidth, moduleHeight, moduleHabitants);
@@ -36,19 +32,16 @@ void ofApp::setup() {
 
 }
 
-//--------------------------------------------------------------
 void ofApp::update() {
-
+	// TODO: should be doing updates here and not in draw methods
 }
 
-//--------------------------------------------------------------
 void ofApp::draw() {
 	
 	ofBackground(255);
 
 	for (int i = 0; i < ofApp::totalModules; i++) {
-
-		ofApp::myModules[i]->drawConsole();
+		ofApp::myModules[i]->draw();
 		ofApp::myModules[i]->boundingBox();
 		ofApp::myModules[i]->manageParticles();
 	}
@@ -93,7 +86,6 @@ void ofApp::mouseDragged(int x, int y, int button) {
 void ofApp::mousePressed(int x, int y, int button) {
 	if (y >= ofApp::consoleHeight) {
 		drawingParticle = true;
-		cout << "true" << endl;
 	}
 }
 
@@ -108,14 +100,8 @@ void ofApp::mouseReleased(int x, int y, int button) {
 		if (ofGetMouseY() > ofApp::consoleHeight) displayIncrementation(increment);
 	}
 	
-	
-
 	for (int i=0; i < ofApp::totalModules; i++) {
-
 		ofApp::myModules[i]->addParticle(increment);
-		ofApp::myModules[i]->console->remove->click();
-		ofApp::myModules[i]->console->loop->toggle();
-		ofApp::myModules[i]->console->freeze->toggle();
 	}
 	increment = 0;
 

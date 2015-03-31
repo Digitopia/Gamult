@@ -1,19 +1,18 @@
 #include "Module.h"
 
-Module::Module(int setIndex, float setOriginX, float setOriginY, float setWidth, float setHeight, int setPopulation) {
-	index = setIndex;
-	maximumPopulation = setPopulation;
-	modWidth = setWidth;
-	modHeight = setHeight;
-	modOrigin.set(setOriginX, setOriginY);
-	maxWidth = modOrigin.x + modWidth;
-	maxHeight = modOrigin.y + modHeight;
-	console = new ModuleConsole(modOrigin, modWidth, index);
-
+Module::Module(int index, float x, float y, float width, float height, int population) {
+	this->index = index;
+	this->maximumPopulation = population;
+	this->modWidth = width;
+	this->modHeight = height;
+	this->modOrigin.set(x, y);
+	this->maxWidth = modOrigin.x + width;
+	this->maxHeight = modOrigin.y + height;
+	this->console = new ModuleConsole(modOrigin, width, index);
 }
 
 void Module::update() {
-
+	// TODO: should be doing updates here
 }
 
 void Module::addParticle(int life) {
@@ -28,9 +27,7 @@ void Module::addParticle(int life) {
 
 void Module::manageParticles() {
 	for (int i=0; i < population.size(); i++) {
-		//        thisParticle = new Particle(population[i]);
 		managedParticle = &population[i];
-		//        Particle thisParticle = (Particle)population.get(i);
 		if (console->freeze->state == true) {
 			if (console->loop->state == true) {
 				if ((managedParticle->counter) >= (managedParticle->life)) {
@@ -43,11 +40,11 @@ void Module::manageParticles() {
 				}
 			}
 		}
-		managedParticle->display();
+		managedParticle->draw();
 	}
 }
 
-void Module::drawConsole() {
+void Module::draw() {
 	console->draw();
 }
 

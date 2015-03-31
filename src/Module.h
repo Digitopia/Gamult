@@ -10,6 +10,16 @@ class Module {
 
 public:
 
+	Module(int index, float x, float y, float width, float height, int population);
+
+	void update();
+	void addParticle(int life);
+	void manageParticles();
+	void eraseParticle();
+	void draw();
+	void boundingBox();
+
+	// TODO: should be private!	
 	int index;
 	int maximumPopulation;
 	float sync;
@@ -17,22 +27,10 @@ public:
 	float modHeight;
 	float maxWidth;
 	float maxHeight;
-
-	Module(int setIndex, float setOriginX, float setOriginY, float setWidth, float setHeight, int setPopulation);
-
+	vector <Particle> population;
+	ofVec2f modOrigin;
 	ModuleConsole* console;
 	Particle* managedParticle;
-
-	void update();
-	void addParticle(int life);
-	void manageParticles();
-	void drawConsole();
-	void boundingBox();
-	void eraseParticle();
-
-	vector <Particle> population;
-
-	ofVec2f modOrigin;
 
 private:
 

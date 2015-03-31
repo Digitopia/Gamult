@@ -1,36 +1,32 @@
-//
-//  Particle.cpp
-//  gamultOSX
-//
-//  Created by Oscar Rodrigues on 29/01/15.
-//
-//
-
 #include "ofApp.h"
 
-Particle::Particle(int setModule, int setIndex, float setX, float setY, float setSync, int setLife) {
+Particle::Particle(int module, int index, float x, float y, float sync, int life) {
 
-	counter = 0;
-	sendReport = true;
-	myModule = setModule;
-	index = setIndex;
-	sync = setSync;
-	floor = ofGetHeight();
-	speed = 0;
-	gravity = ofApp::myModules[myModule]->console->gravity->getValue()*0.1+0.1;
-	loopGravity = ofApp::myModules[myModule]->console->loopSpeed->getValue()*5;
-	diameter = 0;
-	center.x = setX;
-	center.y = setY;
-	initialPos = center.y;
-	life = setLife;
+	this->module = module;
+	this->index = index;
+	this->center.x = x;
+	this->center.y = y;
+	this->sync = sync;
+	this->life = life;
+
+	this->counter = 0;
+	this->sendReport = true;
+	this->floor = ofGetHeight();
+	this->speed = 0;
+
+	// TODO: too complicated lines...
+	this->gravity = ofApp::myModules[module]->console->gravity->getValue()*0.1+0.1;
+	this->loopGravity = ofApp::myModules[module]->console->loopSpeed->getValue()*5;
+	
+	this->diameter = 0;
+	this->initialPos = center.y;
 
 }
 
 void Particle::noGravity() {
 	center.y += loopGravity;
-	if (center.y > floor)loopGravity = (ofApp::myModules[myModule]->console->loopSpeed->getValue()*5)*-1;
-	if (center.y < initialPos) loopGravity = (ofApp::myModules[myModule]->console->loopSpeed->getValue()*5);
+	if (center.y > floor)loopGravity = (ofApp::myModules[module]->console->loopSpeed->getValue()*5)*-1;
+	if (center.y < initialPos) loopGravity = (ofApp::myModules[module]->console->loopSpeed->getValue()*5);
 	if (center.y > floor-sync && sendReport == true) {
 		report(center.x);
 		sendReport = false;
@@ -39,7 +35,7 @@ void Particle::noGravity() {
 }
 
 void Particle::yesGravity() {
-	gravity = ofApp::myModules[myModule]->console->gravity->getValue()*1;
+	gravity = ofApp::myModules[module]->console->gravity->getValue()*1;
 	speed+=gravity;
 	center.y+=speed;
 	if (center.y > floor-sync && sendReport == true) {
@@ -55,13 +51,13 @@ void Particle::yesGravity() {
 	}
 }
 
-void Particle::display() {
-	displaySync();
-	displayLifeCircle();
-	displayParticleProgress();
+void Particle::draw() {
+	drawSync();
+	drawLifeCircle();
+	drawParticleProgress();
 }
 
-void Particle::displayParticle() {
+void Particle::drawParticle() {
 	ofPushStyle();
 	ofFill();
 	ofSetColor(0);
@@ -69,7 +65,7 @@ void Particle::displayParticle() {
 	ofPopStyle();
 }
 
-void Particle::displayParticleProgress() {
+void Particle::drawParticleProgress() {
 	ofPushStyle();
 	ofFill();
 	ofSetColor(0);
@@ -79,34 +75,37 @@ void Particle::displayParticleProgress() {
 
 // TODO: finish editing these last few methods
 
-void Particle::displayLifeCircle() {
+void Particle::drawLifeCircle() {
+
 	ofPolyline polyline;
 
 	ofPushStyle();
+
+	// TODO: should be a variable
 	ofSetColor(0, 128);
 	ofSetLineWidth(2);
 	ofNoFill();
+	
 	ofPoint point1(center.x, center.y);
 	polyline.arc(point1, life*2, life*2, 0, 360.-(counter*(360./life)), 50);
 	polyline.draw();
+
 	ofPopStyle();
 }
 
 
-void Particle::displaySync() {
+void Particle::drawSync() {
 	ofPushStyle();
 	ofNoFill();
 	ofSetLineWidth(1);
 	ofSetColor(128);
-	ofLine(ofApp::myModules[myModule]->modOrigin.x, floor-sync, ofApp::myModules[myModule]->maxWidth, floor-sync);
+	ofLine(ofApp::myModules[module]->modOrigin.x, floor-sync, ofApp::myModules[module]->maxWidth, floor-sync);
 	ofPopStyle();
 }
 
 void Particle::report(float collision) {
-	/*  OscMessage myOscMessage = new OscMessage("/GML");
-	  String messageFormat = myModule+" "+int(collision)+" "+int(myModules[myModule].modOrigin.x)+" "+int(myModules[myModule].maxWidth)+" "+int(life);
-	  myOscMessage.add(messageFormat);
-	  oscP5.send(myOscMessage, myRemoteLocation);
-
-	}*/
+	// OscMessage myOscMessage = new OscMessage("/GML");
+	// String messageFormat = myModule+" "+int(collision)+" "+int(myModules[myModule].modOrigin.x)+" "+int(myModules[myModule].maxWidth)+" "+int(life);
+	// myOscMessage.add(messageFormat);
+	// oscP5.send(myOscMessage, myRemoteLocation);
 }

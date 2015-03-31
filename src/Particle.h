@@ -1,50 +1,40 @@
-//
-//  Particle.h
-//  gamultOSX
-//
-//  Created by Oscar Rodrigues on 29/01/15.
-//
-//
-
-#ifndef gamultOSX_Particle_h
-#define gamultOSX_Particle_h
+#ifndef PARTICLE_H
+#define PARTICLE_H
 
 #include "ofMain.h"
-
 
 class Particle {
 
 public:
 
-	Particle(int setModule, int setIndex, float setX, float setY, float setSync, int setLife);
+	Particle(int module, int index, float x, float y, float sync, int life);
 
-	bool sendReport;
-	int myModule;
+	void noGravity();
+	void yesGravity();
+	void draw();
+	void drawParticle();
+	void drawParticleProgress();
+	void drawLifeCircle();
+	void drawSync();
+	void report(float collision);
+
+	// TODO: this should be private members
+	int module;
 	int index;
+	int counter;
+	int life;
 	float sync;
 	float floor;
 	float speed;
 	float gravity;
 	float loopGravity;
 	float diameter;
-	ofVec2f center;
 	float initialPos;
-	int counter;
-	int life;
-
-	void noGravity();
-	void yesGravity();
-	void display();
-	void displayParticle();
-	void displayParticleProgress();
-	void displayLifeCircle();
-	void displaySync();
-	void report(float collision);
+	bool sendReport;
+	ofVec2f center;
 
 private:
 
 };
-
-
 
 #endif

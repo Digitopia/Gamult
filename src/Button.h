@@ -3,31 +3,39 @@
 
 #include "ofMain.h"
 
+enum buttonType {
+	BUTTON_TOGGLE,
+	BUTTON_CLICK
+};
+
 class Button {
 
 public:
 
-	Button(int module, float x, float y, string tag);
+	Button(buttonType type, int module, float x, float y, string title);
+
+	void mousePressed(ofMouseEventArgs& event);
+	void draw();
     
-	void toggle();
-	void click();
-
-	void drawToggle();
-	void drawClick();
-
+	// TODO: isto devia tudo ser privado e ser accessivel com metodos get
 	int module;
+
+	string title;
+
 	float x;
 	float y;
-	bool inUse;
-	string tag;
 
 	bool state;
+
+	ofRectangle rect;
 
 	ofTrueTypeFont font;
 
 private:
 
-};
+	static int size;
+	buttonType type;
 
+};
 
 #endif

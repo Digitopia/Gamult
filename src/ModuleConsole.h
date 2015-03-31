@@ -11,6 +11,9 @@ public:
 
 	ModuleConsole(ofVec2f origin, float width, int module);
 
+	void draw();
+	
+	// TODO: all these members should be private
 	int module;
 	float width;
 	ofVec2f origin;
@@ -21,10 +24,6 @@ public:
 
 	Fader* gravity;
 	Fader* loopSpeed;
-
-	void draw();
-	void drawButtons();
-	void drawFaders();
 	
 private:
 

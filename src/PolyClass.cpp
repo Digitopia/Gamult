@@ -1,8 +1,8 @@
 #include "PolyClass.h"
 #include "ofApp.h"
 
-PolyClass::PolyClass(int setIndex) {
-	index = setIndex;
+PolyClass::PolyClass(int index) {
+	this->index = index;
 
 }
 
@@ -18,11 +18,14 @@ void PolyClass::display(int i) {
 	ofBeginShape();
 	ofNoFill();
 	ofSetLineWidth(1); //TODO: check if works
+
+	// TODO: should be a variable
 	ofSetColor(0,128);
+
 	ofCurveVertex(0, ofGetHeight()/2);
 	ofCurveVertex(0, ofGetHeight()/2);
 
-	for (int j=0; j < ofApp::totalModules; j++) {
+	for (int j = 0; j < ofApp::totalModules; j++) {
 		if (ofApp::myModules[j]->population.size() > i) {
 			//TODO: check if following is correct
 			Particle thisParticle = *new Particle(/*(Particle)*/ofApp::myModules[j]->population[i]);
