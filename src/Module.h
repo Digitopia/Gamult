@@ -19,6 +19,9 @@ public:
 	void draw();
 	void boundingBox();
 
+	bool isFreezed();
+	bool isLooping();
+	
 	// TODO: should be private!	
 	int index;
 	int maximumPopulation;
