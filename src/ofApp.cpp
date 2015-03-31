@@ -64,19 +64,12 @@ void ofApp::draw() {
 
 		if (checkVertex!=0) ofApp::myPolygons[i]->display(i);
 	}
-
-	if (ofGetMousePressed()) {
+	
+	if (drawingParticle) {
 		increment++;
 		if (increment>maxIncrement)increment=maxIncrement;
 		if (ofGetMouseY() > ofApp::consoleHeight) displayIncrementation(increment);
 	}
-    
-//    ofRectangle rect = ofRectangle(100, 100, 200, 200);
-//    ofRect(rect);
-//    
-//    if (ofGetMousePressed() && rect.inside(ofGetMouseX(), ofGetMouseY())) {
-//            cout << "inside rect " << ofGetMouseX() << endl;
-//    }
 }
 
 //--------------------------------------------------------------
@@ -86,26 +79,36 @@ void ofApp::keyPressed(int key) {
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key) {
-
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y) {
-
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseDragged(int x, int y, int button) {
-
 }
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button) {
-
+	if (y >= ofApp::consoleHeight) {
+		drawingParticle = true;
+		cout << "true" << endl;
+	}
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button) {
+	
+	drawingParticle = false;
+	
+	if (ofGetMousePressed()) {
+		increment++;
+		if (increment>maxIncrement)increment=maxIncrement;
+		if (ofGetMouseY() > ofApp::consoleHeight) displayIncrementation(increment);
+	}
+	
+	
 
 	for (int i=0; i < ofApp::totalModules; i++) {
 

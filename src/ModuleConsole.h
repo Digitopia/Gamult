@@ -25,7 +25,7 @@ public:
 	void draw();
 	void drawButtons();
 	void drawFaders();
-
+	
 private:
 
 };

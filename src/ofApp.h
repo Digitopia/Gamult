@@ -14,7 +14,9 @@
 
 
 class ofApp : public ofBaseApp {
+
 public:
+
 	void setup();
 	void update();
 	void draw();
@@ -40,12 +42,10 @@ public:
 
 	static Module** myModules;
 	static PolyClass** myPolygons;
-
-
+	
+	bool drawingParticle;
 
 private:
-
-
 
 };
 
