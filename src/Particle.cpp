@@ -18,8 +18,9 @@ Particle::Particle(int module, int index, float x, float y, float sync, int life
 	this->gravity = ofApp::myModules[module]->console->gravity->getValue()*0.1+0.1;
 	this->loopGravity = ofApp::myModules[module]->console->loopSpeed->getValue()*5;
 	
-	this->diameter = 0;
 	this->initialPos = center.y;
+	
+	this->diameter = 0;
 
 }
 
@@ -35,9 +36,10 @@ void Particle::noGravity() {
 }
 
 void Particle::yesGravity() {
+
 	gravity = ofApp::myModules[module]->console->gravity->getValue()*1;
-	speed+=gravity;
-	center.y+=speed;
+	speed += gravity;
+	center.y += speed;
 	if (center.y > floor-sync && sendReport == true) {
 		report(center.x);
 		sendReport = false;
@@ -49,6 +51,10 @@ void Particle::yesGravity() {
 		counter++;
 		center.y=floor;
 	}
+	
+	if (center.y <= ofApp::consoleHeight + life)
+		speed *= -0.95;
+	
 }
 
 void Particle::draw() {
@@ -61,16 +67,21 @@ void Particle::drawParticle() {
 	ofPushStyle();
 	ofFill();
 	ofSetColor(0);
-	ofCircle(center.x, center.y, diameter);
 	ofPopStyle();
 }
 
+
 void Particle::drawParticleProgress() {
+	
+	// isto desenha o circulo de dentro
+	
 	ofPushStyle();
 	ofFill();
 	ofSetColor(0);
 	ofCircle(center.x, center.y, life);
 	ofPopStyle();
+	
+	cout << life << endl;
 }
 
 // TODO: finish editing these last few methods
@@ -95,12 +106,12 @@ void Particle::drawLifeCircle() {
 
 
 void Particle::drawSync() {
-	ofPushStyle();
-	ofNoFill();
-	ofSetLineWidth(1);
-	ofSetColor(128);
-	ofLine(ofApp::myModules[module]->modOrigin.x, floor-sync, ofApp::myModules[module]->maxWidth, floor-sync);
-	ofPopStyle();
+//	ofPushStyle();
+//	ofNoFill();
+//	ofSetLineWidth(1);
+//	ofSetColor(128);
+//	ofLine(ofApp::myModules[module]->modOrigin.x, floor-sync, ofApp::myModules[module]->maxWidth, floor-sync);
+//	ofPopStyle();
 }
 
 void Particle::report(float collision) {

@@ -21,14 +21,17 @@ public:
 	// TODO: this should be private members
 	int module;
 	int index;
-	int counter;
-	int life;
-	float sync;
+	int counter; // variavel que vai aumentando (ou diminuindo) em funcao da vida da particula
+	int life; // tamamho da particulo, diametro, que é sempre igual
+	float sync; // TODO!
+	
+	float diameter;
+	
 	float floor;
+
 	float speed;
 	float gravity;
 	float loopGravity;
-	float diameter;
 	float initialPos;
 	bool sendReport;
 	ofVec2f center;
