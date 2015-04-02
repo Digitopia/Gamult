@@ -30,7 +30,7 @@ void PolyClass::display(int i) {
 			//TODO: check if following is correct
 			Particle thisParticle = *new Particle(/*(Particle)*/ofApp::myModules[j]->population[i]);
 			//Particle thisParticle = (Particle)myModules[j].population.get(i);
-			ofCurveVertex(thisParticle.center.x, thisParticle.center.y);
+			ofCurveVertex(thisParticle.getX(), thisParticle.getY());
 		}
 	}
 

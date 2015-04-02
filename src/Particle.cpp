@@ -1,55 +1,44 @@
 #include "ofApp.h"
 
-Particle::Particle(int module, int index, float x, float y, float sync, int life) {
+Particle::Particle(int module, int index, float x, float y, int life) {
 
 	this->module = module;
 	this->index = index;
 	this->center.x = x;
 	this->center.y = y;
-	this->sync = sync;
 	this->life = life;
 
 	this->counter = 0;
-	this->sendReport = true;
-	this->floor = ofGetHeight();
 	this->speed = 0;
 
-	// TODO: too complicated lines...
-	this->gravity = ofApp::myModules[module]->console->gravity->getValue()*0.1+0.1;
-	this->loopGravity = ofApp::myModules[module]->console->loopSpeed->getValue()*5;
+	this->gravity = ofApp::myModules[module]->getGravity()*0.1+0.1;
+	this->loopGravity = ofApp::myModules[module]->getLoopSpeed()*5;
 	
-	this->initialPos = center.y;
-	
-	this->diameter = 0;
+	this->y0 = center.y;
 
 }
 
 void Particle::noGravity() {
 	center.y += loopGravity;
-	if (center.y > floor)loopGravity = (ofApp::myModules[module]->console->loopSpeed->getValue()*5)*-1;
-	if (center.y < initialPos) loopGravity = (ofApp::myModules[module]->console->loopSpeed->getValue()*5);
-	if (center.y > floor-sync && sendReport == true) {
+	if (center.y > ofGetHeight())loopGravity = (ofApp::myModules[module]->getLoopSpeed()*5)*-1;
+	if (center.y < y0) loopGravity = (ofApp::myModules[module]->getLoopSpeed()*5);
+	if (center.y > ofGetHeight()) {
 		report(center.x);
-		sendReport = false;
 	}
-	if (center.y < floor-sync)sendReport = true;
 }
 
 void Particle::yesGravity() {
 
-	gravity = ofApp::myModules[module]->console->gravity->getValue()*1;
+	gravity = ofApp::myModules[module]->getGravity();
 	speed += gravity;
 	center.y += speed;
-	if (center.y > floor-sync && sendReport == true) {
+	if (center.y > ofGetHeight()) {
 		report(center.x);
-		sendReport = false;
 	}
-	if (center.y < floor-sync)sendReport = true;
-	if (center.y > floor) {
+	if (center.y > ofGetHeight()) {
 		speed = speed * -0.95;
-		sync = sync * 0.95;
 		counter++;
-		center.y=floor;
+		center.y = ofGetHeight();
 	}
 	
 	if (center.y <= ofApp::consoleHeight + life)
@@ -58,35 +47,19 @@ void Particle::yesGravity() {
 }
 
 void Particle::draw() {
-	drawSync();
-	drawLifeCircle();
-	drawParticleProgress();
+	drawCircle();
+	drawLife();
 }
 
-void Particle::drawParticle() {
-	ofPushStyle();
-	ofFill();
-	ofSetColor(0);
-	ofPopStyle();
-}
-
-
-void Particle::drawParticleProgress() {
-	
-	// isto desenha o circulo de dentro
-	
+void Particle::drawCircle() {
 	ofPushStyle();
 	ofFill();
 	ofSetColor(0);
 	ofCircle(center.x, center.y, life);
 	ofPopStyle();
-	
-	cout << life << endl;
 }
 
-// TODO: finish editing these last few methods
-
-void Particle::drawLifeCircle() {
+void Particle::drawLife() {
 
 	ofPolyline polyline;
 
@@ -102,16 +75,6 @@ void Particle::drawLifeCircle() {
 	polyline.draw();
 
 	ofPopStyle();
-}
-
-
-void Particle::drawSync() {
-//	ofPushStyle();
-//	ofNoFill();
-//	ofSetLineWidth(1);
-//	ofSetColor(128);
-//	ofLine(ofApp::myModules[module]->modOrigin.x, floor-sync, ofApp::myModules[module]->maxWidth, floor-sync);
-//	ofPopStyle();
 }
 
 void Particle::report(float collision) {

@@ -42,8 +42,6 @@ void Fader::mouseDragged(ofMouseEventArgs& event) {
 		
 		if (rect.x > x0 + range - size/2)
 			rect.x = x0 + range - size/2;
-		
-		cout << getValue() << endl;
 	}
 }
 

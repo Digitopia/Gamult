@@ -7,36 +7,34 @@ class Particle {
 
 public:
 
-	Particle(int module, int index, float x, float y, float sync, int life);
+	Particle(int module, int index, float x, float y, int life);
 
+	void draw();
+	void drawCircle();
+	void drawLife();
 	void noGravity();
 	void yesGravity();
-	void draw();
-	void drawParticle();
-	void drawParticleProgress();
-	void drawLifeCircle();
-	void drawSync();
+	
 	void report(float collision);
+	
+	int getSpeed() { return speed; }
+	int getGravity() { return gravity; }
+	int getLife() { return life; }
+	int getCounter() { return counter; }
+	int getX() { return center.x; }
+	int getY() { return center.y; }
 
-	// TODO: this should be private members
+private:
+
 	int module;
 	int index;
 	int counter; // variavel que vai aumentando (ou diminuindo) em funcao da vida da particula
-	int life; // tamamho da particulo, diametro, que é sempre igual
-	float sync; // TODO!
-	
-	float diameter;
-	
-	float floor;
-
+	int life;	// tamanho da particula, diametro, que é sempre igual
 	float speed;
 	float gravity;
 	float loopGravity;
-	float initialPos;
-	bool sendReport;
+	float y0;
 	ofVec2f center;
-
-private:
 
 };
 

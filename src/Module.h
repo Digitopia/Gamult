@@ -22,7 +22,9 @@ public:
 	bool isFreezed();
 	bool isLooping();
 	
-	// TODO: should be private!	
+	float getGravity();
+	float getLoopSpeed();
+	
 	int index;
 	int maximumPopulation;
 	float sync;
@@ -33,6 +35,8 @@ public:
 	vector <Particle> population;
 	ofVec2f modOrigin;
 	ModuleConsole* console;
+
+	// TODO: these should be multiple particles
 	Particle* managedParticle;
 
 private:

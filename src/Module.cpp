@@ -19,7 +19,7 @@ void Module::addParticle(int life) {
 	if (population.size() < maximumPopulation) {
 		// TODO: fixe modOrigin.y+100 (index it to moduleconsole)
 		if (ofGetMouseX() >= modOrigin.x && ofGetMouseX() <=maxWidth && ofGetMouseY() >= modOrigin.y+100 && ofGetMouseY() <= maxHeight/2) {
-			Particle newParticle(index, population.size(), ofGetMouseX(), ofGetMouseY(), sync, life);
+			Particle newParticle(index, population.size(), ofGetMouseX(), ofGetMouseY(), life);
 			population.push_back(newParticle);
 		}
 	}
@@ -30,7 +30,7 @@ void Module::manageParticles() {
 		managedParticle = &population[i];
 		if (isFreezed()) {
 			if (isLooping()) {
-				if ((managedParticle->counter) >= (managedParticle->life)) {
+				if ((managedParticle->getCounter()) >= (managedParticle->getLife())) {
 					population.erase(population.begin() + i);
 					managedParticle->noGravity();
 				}
@@ -65,10 +65,18 @@ void Module::eraseParticle() {
 }
 
 bool Module::isFreezed() {
-	return console->freeze->state;
+	return console->isFreezed();
 }
 
 bool Module::isLooping() {
-	return console->loop->state;
+	return console->isLooping();
+}
+
+float Module::getGravity() {
+	return console->getGravity();
+}
+
+float Module::getLoopSpeed() {
+	return console->getLoopSpeed();
 }
 

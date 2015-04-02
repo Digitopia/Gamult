@@ -13,9 +13,16 @@ public:
 
 	void draw();
 	
-	// TODO: all these members should be private
+	bool isFreezed();
+	bool isLooping();
+	float getGravity() { return gravity->getValue(); }
+	float getLoopSpeed() { return loopSpeed->getValue(); }
+	
+private:
+
 	int module;
 	float width;
+
 	ofVec2f origin;
 
 	Button* remove;
@@ -25,8 +32,6 @@ public:
 	Fader* gravity;
 	Fader* loopSpeed;
 	
-private:
-
 };
 
 #endif

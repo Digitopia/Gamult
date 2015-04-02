@@ -28,7 +28,6 @@ void ModuleConsole::draw() {
 
 	ofFill();
 
-	// changing original code to include a variable defined in setup to indicate console height
 	ofRect(origin.x, origin.y, width, ofApp::consoleHeight);
 
 	ofPopStyle();
@@ -40,4 +39,12 @@ void ModuleConsole::draw() {
 	gravity->draw();
 	loopSpeed->draw();
 
+}
+
+bool ModuleConsole::isFreezed() {
+	return freeze->state;
+}
+
+bool ModuleConsole::isLooping() {
+	return loop->state;
 }
