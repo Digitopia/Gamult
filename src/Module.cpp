@@ -29,7 +29,6 @@ void Module::manageParticles() {
 	for (int i=0; i < population.size(); i++) {
 		managedParticle = &population[i];
 		if (isFreezed()) {
-			if (isLooping()) {
 				if ((managedParticle->getCounter()) >= (managedParticle->getLife())) {
 					population.erase(population.begin() + i);
 					managedParticle->noGravity();
@@ -38,7 +37,6 @@ void Module::manageParticles() {
 				else {
 					managedParticle->yesGravity();
 				}
-			}
 		}
 		managedParticle->draw();
 	}

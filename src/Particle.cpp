@@ -35,15 +35,10 @@ void Particle::yesGravity() {
 	if (center.y > ofGetHeight()) {
 		report(center.x);
 	}
-	if (center.y > ofGetHeight()) {
+    if (center.y > ofGetHeight() || center.y <= ofApp::consoleHeight + life) {
 		speed = speed * -0.95;
 		counter++;
-		center.y = ofGetHeight();
 	}
-	
-	if (center.y <= ofApp::consoleHeight + life)
-		speed *= -0.95;
-	
 }
 
 void Particle::draw() {
