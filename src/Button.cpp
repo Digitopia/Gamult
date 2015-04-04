@@ -9,7 +9,7 @@ Button::Button(buttonType type, int module, float x, float y, string title) {
 	this->x = x;
 	this->y = y;
 	this->title = title;
-	this->state = true;
+	this->state = false;
 
 	this->rect = ofRectangle(x, y, size, size);
 
@@ -47,7 +47,7 @@ void Button::draw() {
 	
 	ofNoFill();
 	
-	if (!state)
+	if (state)
 		ofFill();
 
 	ofRect(rect);

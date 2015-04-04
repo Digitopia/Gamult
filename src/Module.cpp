@@ -28,7 +28,7 @@ void Module::addParticle(int life) {
 void Module::manageParticles() {
 	for (int i=0; i < population.size(); i++) {
 		managedParticle = &population[i];
-		if (isFreezed()) {
+		if (!isFreezed()) {
 				if ((managedParticle->getCounter()) >= (managedParticle->getLife())) {
 					population.erase(population.begin() + i);
 					managedParticle->noGravity();
