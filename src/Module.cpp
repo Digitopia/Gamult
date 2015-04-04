@@ -40,6 +40,7 @@ void Module::manageParticles() {
 				}
             
         } else if (isLooping() && !isFreezed()) { // if the particle is looping, but not freezed
+            managedParticle->updateGravity();
             managedParticle->noGravity();
         }
 		managedParticle->draw();

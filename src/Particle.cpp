@@ -10,9 +10,10 @@ Particle::Particle(int module, int index, float x, float y, int life) {
 
 	this->counter = 0;
 	this->speed = 0;
+    this->direction = 1.;
 
 	this->gravity = ofApp::myModules[module]->getGravity()*0.1+0.1;
-	this->loopGravity = ofApp::myModules[module]->getLoopSpeed()*5;
+	this->loopGravity = ofApp::myModules[module]->getLoopSpeed()*10.;
 	
 	this->y0 = center.y;
 
@@ -20,11 +21,6 @@ Particle::Particle(int module, int index, float x, float y, int life) {
 
 void Particle::noGravity() {
 	center.y += loopGravity;
-	if (center.y > ofGetHeight())loopGravity = (ofApp::myModules[module]->getLoopSpeed()*5)*-1;
-	if (center.y < y0) loopGravity = (ofApp::myModules[module]->getLoopSpeed()*5);
-	if (center.y > ofGetHeight()) {
-		report(center.x);
-	}
 }
 
 void Particle::yesGravity() {
@@ -70,6 +66,15 @@ void Particle::drawLife() {
 	polyline.draw();
 
 	ofPopStyle();
+}
+
+void Particle::updateGravity() {
+    if (center.y > ofGetHeight()) direction = -1.;
+    if (center.y < y0) direction = 1.;
+    if (center.y > ofGetHeight()) {
+        report(center.x);
+    }
+    loopGravity = ofApp::myModules[module]->getLoopSpeed()*10. * direction;
 }
 
 void Particle::report(float collision) {

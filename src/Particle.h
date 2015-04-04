@@ -14,6 +14,7 @@ public:
 	void drawLife();
 	void noGravity();
 	void yesGravity();
+    void updateGravity();
 	
 	void report(float collision);
 	
@@ -32,6 +33,7 @@ private:
 	int life;	// tamanho da particula, diametro, que é sempre igual
 	float speed;
 	float gravity;
+    float direction;
 	float loopGravity;
 	float y0;
 	ofVec2f center;

@@ -16,7 +16,7 @@ public:
 	bool isFreezed();
 	bool isLooping();
 	float getGravity() { return gravity->getValue(); }
-	float getLoopSpeed() { return loopSpeed->getValue(); }
+    float getLoopSpeed() { return loopSpeed->getValue(); }
 	
 private:
 
