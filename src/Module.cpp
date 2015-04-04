@@ -1,4 +1,4 @@
-#include "Module.h"
+#include "ofApp.h"
 
 Module::Module(int index, float x, float y, float width, float height, int population) {
 	this->index = index;
@@ -17,8 +17,7 @@ void Module::update() {
 
 void Module::addParticle(int life) {
 	if (population.size() < maximumPopulation) {
-		// TODO: fixe modOrigin.y+100 (index it to moduleconsole)
-		if (ofGetMouseX() >= modOrigin.x && ofGetMouseX() <=maxWidth && ofGetMouseY() >= modOrigin.y+100 && ofGetMouseY() <= maxHeight/2) {
+        if (ofGetMouseX() >= modOrigin.x && ofGetMouseX() <= maxWidth && ofGetMouseY() >= ofApp::consoleHeight && ofGetMouseY() <= maxHeight) {
 			Particle newParticle(index, population.size(), ofGetMouseX(), ofGetMouseY(), life);
 			population.push_back(newParticle);
 		}

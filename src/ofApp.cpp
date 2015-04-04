@@ -94,12 +94,6 @@ void ofApp::mouseReleased(int x, int y, int button) {
 	
 	drawingParticle = false;
 	
-	if (ofGetMousePressed()) {
-		increment++;
-		if (increment>maxIncrement)increment=maxIncrement;
-		if (ofGetMouseY() > ofApp::consoleHeight) displayIncrementation(increment);
-	}
-	
 	for (int i=0; i < ofApp::totalModules; i++) {
 		ofApp::myModules[i]->addParticle(increment);
 	}
