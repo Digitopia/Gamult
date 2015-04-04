@@ -28,16 +28,20 @@ void Module::addParticle(int life) {
 void Module::manageParticles() {
 	for (int i=0; i < population.size(); i++) {
 		managedParticle = &population[i];
-		if (!isFreezed()) {
+		if (!isFreezed() && !isLooping()) { // if the particle is not freezed, apply gravity
+            
 				if ((managedParticle->getCounter()) >= (managedParticle->getLife())) {
 					population.erase(population.begin() + i);
-					managedParticle->noGravity();
+                    // TODO: check if this is really needed, maybe for collision detection?
+					//managedParticle->noGravity();
 				}
-
 				else {
 					managedParticle->yesGravity();
 				}
-		}
+            
+        } else if (isLooping() && !isFreezed()) { // if the particle is looping, but not freezed
+            managedParticle->noGravity();
+        }
 		managedParticle->draw();
 	}
 }

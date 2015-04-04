@@ -46,7 +46,7 @@ void Fader::mouseDragged(ofMouseEventArgs& event) {
 }
 
 float Fader::getValue() {
-	return ofMap(rect.x, x0, x0+range-size, 0.0, 1.0);
+	return ofMap(rect.x, x0-size/2, x0+range-size/2, 0.0, 1.0);
 }
 
 void Fader::draw() {
