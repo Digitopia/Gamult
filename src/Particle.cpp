@@ -27,14 +27,22 @@ void Particle::yesGravity() {
 
 	gravity = ofApp::myModules[module]->getGravity();
 	speed += gravity;
-	center.y += speed;
-	if (center.y > ofGetHeight()) {
+	
+	if (center.y >= ofGetHeight()) {
+		center.y = ofGetHeight();
 		report(center.x);
 	}
-    if (center.y > ofGetHeight() || center.y <= ofApp::consoleHeight + life) {
+		
+	else if (center.y <= ofApp::consoleHeight + life) {
+		center.y = ofApp::consoleHeight + life;
+	}
+	
+	if (center.y >= ofGetHeight() || center.y <= ofApp::consoleHeight + life) {
 		speed = speed * -0.95;
 		counter++;
 	}
+	
+	center.y += speed;
 }
 
 void Particle::draw() {
@@ -77,9 +85,21 @@ void Particle::updateGravity() {
     loopGravity = ofApp::myModules[module]->getLoopSpeed()*10. * direction;
 }
 
-void Particle::report(float collision) {
-	// OscMessage myOscMessage = new OscMessage("/GML");
-	// String messageFormat = myModule+" "+int(collision)+" "+int(myModules[myModule].modOrigin.x)+" "+int(myModules[myModule].maxWidth)+" "+int(life);
-	// myOscMessage.add(messageFormat);
-	// oscP5.send(myOscMessage, myRemoteLocation);
+void Particle::report(int collision) {
+	
+	ofxOscMessage m;
+	m.setAddress( "/mouse/button" );
+	m.addStringArg( "up" );
+	sender.sendMessage( m );
+	
+	ofxOscMessage m;
+	m.setAddress( "/mouse/position" );
+	m.addIntArg( touch.x );
+	m.addIntArg( touch.y );
+	sender.sendMessage( m );
+	
+	 OscMessage myOscMessage = new OscMessage("/GML");
+	 String messageFormat = myModule+" "+int(collision)+" "+int(myModules[myModule].modOrigin.x)+" "+int(myModules[myModule].maxWidth)+" "+int(life);
+	 myOscMessage.add(messageFormat);
+	 oscP5.send(myOscMessage, myRemoteLocation);
 }

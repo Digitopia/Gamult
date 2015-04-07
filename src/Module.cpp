@@ -1,15 +1,15 @@
 #include "ofApp.h"
 
-Module::Module(int index, float x, float y, float width, float height, int population) {
-	this->index = index;
-	this->maximumPopulation = population;
-	this->modWidth = width;
-	this->modHeight = height;
-	this->modOrigin.set(x, y);
-	this->maxWidth = modOrigin.x + width;
-	this->maxHeight = modOrigin.y + height;
-	this->console = new ModuleConsole(modOrigin, width, index);
-}
+Module::Module(int index, float x, float y, float width, float height, int population) { 
+	this->index = index; 
+	this->maximumPopulation = population; 
+	this->modWidth = width; 
+	this->modHeight = height; 
+	this->modOrigin.set(x, y); 
+	this->maxWidth = modOrigin.x + width; 
+	this->maxHeight = modOrigin.y + height; 
+	this->console = new ModuleConsole(modOrigin, width, index); 
+} 
 
 void Module::update() {
 	// TODO: should be doing updates here
