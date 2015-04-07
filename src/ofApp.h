@@ -5,7 +5,6 @@
 
 #include "ofMain.h"
 #include "ofxOsc.h"
-//#include "ofxiOS.h"
 
 #include "Button.h"
 #include "Fader.h"

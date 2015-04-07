@@ -86,7 +86,6 @@ void Particle::updateGravity() {
 }
 
 void Particle::report(int collision) {
-	
 //	ofxOscMessage m;
 //	m.setAddress( "/mouse/button" );
 //	m.addStringArg( "up" );

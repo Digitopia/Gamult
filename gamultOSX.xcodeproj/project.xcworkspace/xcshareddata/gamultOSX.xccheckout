@@ -6,15 +6,19 @@
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>1784415F-59D8-490F-9C4E-65DAF11ECFA6</string>
+	<key>IDESourceControlProjectName</key>
+	<string>GamultOSX</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>2048FF9C653E1ACFE2ECDCAF164590D773D4AD0B</key>
 		<string>github.com:Digitopia/GamultOSX.git</string>
 	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>GamultOSX.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>2048FF9C653E1ACFE2ECDCAF164590D773D4AD0B</key>
-		<string>GamultOSX.bak/</string>
+		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>github.com:Digitopia/GamultOSX.git</string>
@@ -30,7 +34,7 @@
 			<key>IDESourceControlWCCIdentifierKey</key>
 			<string>2048FF9C653E1ACFE2ECDCAF164590D773D4AD0B</string>
 			<key>IDESourceControlWCCName</key>
-			<string>GamultOSX.bak</string>
+			<string>GamultOSX</string>
 		</dict>
 	</array>
 </dict>
