@@ -16,7 +16,7 @@ public:
 	void yesGravity();
     void updateGravity();
 	
-	void report(float collision);
+	void report(int collision);
 	
 	int getSpeed() { return speed; }
 	int getGravity() { return gravity; }

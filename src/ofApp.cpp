@@ -12,10 +12,12 @@ Module** ofApp::myModules = new Module* [ofApp::totalModules];
 PolyClass** ofApp::myPolygons = new PolyClass* [ofApp::totalPolygons];
 
 void ofApp::setup() {
+	
+//	sender.setup( HOST, PORT );
 
 	ofSetFrameRate(60);
 	ofSetCircleResolution(50);
-
+	
 	int moduleWidth = ofGetWidth()/ofApp::totalModules;
 	int moduleHeight = ofGetHeight();
 	int moduleHabitants = ofApp::totalPolygons;

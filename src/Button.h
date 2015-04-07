@@ -3,6 +3,11 @@
 
 #include "ofMain.h"
 
+#define BUTTON_SIZE 10
+#define FONT_SIZE 10
+#define FONT_FACE "verdana.ttf"
+#define BUTTON_COLOR 255
+
 enum buttonType {
 	BUTTON_TOGGLE,
 	BUTTON_CLICK
@@ -33,7 +38,6 @@ public:
 
 private:
 
-	static int size;
 	buttonType type;
 
 };

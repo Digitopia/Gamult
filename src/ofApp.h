@@ -4,6 +4,8 @@
 #pragma once
 
 #include "ofMain.h"
+#include "ofxOsc.h"
+//#include "ofxiOS.h"
 
 #include "Button.h"
 #include "Fader.h"
@@ -12,6 +14,8 @@
 #include "PolyClass.h"
 #include "Particle.h"
 
+#define HOST "localhost"
+#define PORT 12345
 
 class ofApp : public ofBaseApp {
 
@@ -44,6 +48,8 @@ public:
 	static PolyClass** myPolygons;
 	
 	bool drawingParticle;
+	
+//	ofxOscSender oscSender;
 
 private:
 

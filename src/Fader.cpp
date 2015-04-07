@@ -8,7 +8,7 @@ Fader::Fader(float x0, float y, int size, int range, string title) {
     this->range = range;
 	this->title = title;
     
-    this->rect = ofRectangle(x0+5, y-size/2, size, size);
+    this->rect = ofRectangle(x0+range/2-size/2, y-size/2, size, size);
 
 	// TODO: this should be probably somewhere else
 	font.loadFont("verdana.ttf", 10, true, true);
@@ -56,6 +56,8 @@ void Fader::draw() {
 
 	// draw the line in which the fader moves
 	ofLine(x0, y, x0+range, y);
+
+	ofLine(x0+range/2, y-size/2, x0+range/2, y+size/2);
 
 	// draw the fader
 	ofRect(rect);

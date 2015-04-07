@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:gamultOSX.xcodeproj">
+      location = "self:GamultOSX.xcodeproj">
    </FileRef>
 </Workspace>

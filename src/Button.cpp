@@ -1,7 +1,5 @@
 #include "ofApp.h"
 
-int	Button::size = 10;
-
 Button::Button(buttonType type, int module, float x, float y, string title) {
 
     this->type = type;
@@ -11,9 +9,9 @@ Button::Button(buttonType type, int module, float x, float y, string title) {
 	this->title = title;
 	this->state = false;
 
-	this->rect = ofRectangle(x, y, size, size);
+	this->rect = ofRectangle(x, y, BUTTON_SIZE, BUTTON_SIZE);
 
-	font.loadFont("verdana.ttf", 10, true);
+	font.loadFont(FONT_FACE, FONT_SIZE, true);
 
 	ofAddListener(ofEvents().mousePressed, this, &Button::mousePressed);
 
@@ -41,7 +39,7 @@ void Button::draw() {
 	ofPushStyle();
 	
 	// TODO: color should be a variable
-	ofSetColor(255);
+	ofSetColor(BUTTON_COLOR);
 	
 	ofSetLineWidth(1);
 	
@@ -55,11 +53,11 @@ void Button::draw() {
 	// TODO: é preciso este ofFill?
 	ofFill();
 
-	font.drawString(title, x+size*2, y+size);
+	font.drawString(title, x+BUTTON_SIZE*2, y+BUTTON_SIZE);
 	
 	if (type == BUTTON_CLICK) {
-		ofLine(x, y, x+size, y+size);
-		ofLine(x+size, y, x, y+size);
+		ofLine(x, y, x+BUTTON_SIZE, y+BUTTON_SIZE);
+		ofLine(x+BUTTON_SIZE, y, x, y+BUTTON_SIZE);
 	}
 
     ofPopStyle();
