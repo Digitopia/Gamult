@@ -14,7 +14,7 @@
 #include "Particle.h"
 
 #define HOST "localhost"
-#define PORT 12345
+#define PORT 5000
 
 class ofApp : public ofBaseApp {
 
@@ -32,8 +32,7 @@ public:
 	void mouseReleased(int x, int y, int button);
 	void windowResized(int w, int h);
 	void dragEvent(ofDragInfo dragInfo);
-	void gotMessage(ofMessage msg);
-
+	
 	void displayIncrementation(int realIncrement);
 
 	static float increment;
@@ -48,10 +47,10 @@ public:
 	
 	bool drawingParticle;
 	
-//	ofxOscSender oscSender;
+	static ofxOscSender oscSender;
 
 private:
-
+	
 };
 
 #endif

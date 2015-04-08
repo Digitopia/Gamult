@@ -6,6 +6,8 @@ int ofApp::totalModules = 4;
 int ofApp::totalPolygons = 10;
 int ofApp::consoleHeight = 90;
 
+ofxOscSender ofApp::oscSender;
+
 Module** ofApp::myModules = new Module* [ofApp::totalModules];
 
 // TODO: see if there's need to make this static
@@ -13,7 +15,7 @@ PolyClass** ofApp::myPolygons = new PolyClass* [ofApp::totalPolygons];
 
 void ofApp::setup() {
 	
-//	sender.setup( HOST, PORT );
+	oscSender.setup(HOST, PORT);
 
 	ofSetFrameRate(60);
 	ofSetCircleResolution(50);
@@ -107,11 +109,7 @@ void ofApp::mouseReleased(int x, int y, int button) {
 void ofApp::windowResized(int w, int h) {
 
 }
-
 //--------------------------------------------------------------
-void ofApp::gotMessage(ofMessage msg) {
-
-}
 
 //--------------------------------------------------------------
 void ofApp::dragEvent(ofDragInfo dragInfo) {

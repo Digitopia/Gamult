@@ -1,5 +1,8 @@
 #include "ofApp.h"
 
+#include <stdio.h>
+#include <stdlib.h>
+
 Particle::Particle(int module, int index, float x, float y, int life) {
 
 	this->module = module;
@@ -30,7 +33,7 @@ void Particle::yesGravity() {
 	
 	if (center.y >= ofGetHeight()) {
 		center.y = ofGetHeight();
-		report(center.x);
+		report();
 	}
 		
 	else if (center.y <= ofApp::consoleHeight + life) {
@@ -80,25 +83,26 @@ void Particle::updateGravity() {
     if (center.y > ofGetHeight()) direction = -1.;
     if (center.y < y0) direction = 1.;
     if (center.y > ofGetHeight()) {
-        report(center.x);
+        report();
     }
-    loopGravity = ofApp::myModules[module]->getLoopSpeed()*10. * direction;
+    loopGravity = ofApp::myModules[module]->getLoopSpeed()*50. * direction;
 }
 
-void Particle::report(int collision) {
-//	ofxOscMessage m;
-//	m.setAddress( "/mouse/button" );
-//	m.addStringArg( "up" );
-//	sender.sendMessage( m );
-//	
-//	ofxOscMessage m;
-//	m.setAddress( "/mouse/position" );
-//	m.addIntArg( touch.x );
-//	m.addIntArg( touch.y );
-//	sender.sendMessage( m );
-//	
-//	 OscMessage myOscMessage = new OscMessage("/GML");
-//	 String messageFormat = myModule+" "+int(collision)+" "+int(myModules[myModule].modOrigin.x)+" "+int(myModules[myModule].maxWidth)+" "+int(life);
-//	 myOscMessage.add(messageFormat);
-//	 oscP5.send(myOscMessage, myRemoteLocation);
+void Particle::report() {
+
+	ofxOscMessage m;
+	
+	int idx = ofApp::myModules[module]->index;
+	string addr = "/GML/" + ofToString(idx);
+	
+	m.setAddress(addr);
+	
+	float notef = ofMap(center.x, ofApp::myModules[module]->modOrigin.x, ofApp::myModules[module]->maxWidth, 0, 3);
+	int note = floor(notef + 0.5);
+	m.addIntArg(note);
+	
+	m.addIntArg(100);
+	
+	ofApp::oscSender.sendMessage(m);
+	
 }
