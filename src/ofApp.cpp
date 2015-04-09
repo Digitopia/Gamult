@@ -93,8 +93,8 @@ void ofApp::mousePressed(int x, int y, int button) {
 	}
     
     for (int i=0; i < ofApp::totalModules; i++) {
-        if(ofApp::myModules[i]->console->select.inside(x, y)) {
-            ofApp::myModules[i]->console->showPanel = !ofApp::myModules[i]->console->showPanel;
+        if(ofApp::myModules[i]->panel->select.inside(x, y)) {
+            ofApp::myModules[i]->panel->showPanel = !ofApp::myModules[i]->panel->showPanel;
         }
     }
 }

@@ -8,7 +8,8 @@ Module::Module(int index, float x, float y, float width, float height, int popul
 	this->modOrigin.set(x, y); 
 	this->maxWidth = modOrigin.x + width; 
 	this->maxHeight = modOrigin.y + height; 
-	this->console = new ModuleConsole(modOrigin, width, index); 
+	this->console = new ModuleConsole(modOrigin, width, index);
+    this->panel = new Panel(index, modOrigin.x, modOrigin.y, modWidth);
 } 
 
 void Module::update() {
@@ -48,6 +49,7 @@ void Module::manageParticles() {
 
 void Module::draw() {
 	console->draw();
+    panel->draw();
 }
 
 void Module::boundingBox() {

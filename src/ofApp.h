@@ -12,6 +12,7 @@
 #include "ModuleConsole.h"
 #include "PolyClass.h"
 #include "Particle.h"
+#include "Panel.h"
 
 #define HOST "localhost"
 #define PORT 5000

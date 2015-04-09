@@ -5,6 +5,7 @@
 
 #include "ModuleConsole.h"
 #include "Particle.h"
+#include "Panel.h"
 
 class Module {
 
@@ -35,6 +36,7 @@ public:
 	vector <Particle> population;
 	ofVec2f modOrigin;
 	ModuleConsole* console;
+    Panel* panel;
 
 	// TODO: these should be multiple particles
 	Particle* managedParticle;

@@ -20,6 +20,7 @@
 		8F5205AEF8861EF234F0651A /* ofxOscSender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 81967292BFC87A0144BD32C6 /* ofxOscSender.cpp */; };
 		A29D8C96AE042ECEAA1BD4F3 /* NetworkingUtilsWin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2A5B1FAD3F30C8065C396ACB /* NetworkingUtilsWin.cpp */; };
 		ADE367465D2A8EBAD4C7A8D9 /* IpEndpointName.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADD194746185E2DA11468377 /* IpEndpointName.cpp */; };
+		B6800FDE1AD72FCD009D95F9 /* Panel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6800FDC1AD72FCD009D95F9 /* Panel.cpp */; };
 		B69BE73C1AD6DB980019A408 /* ofxBaseGui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B69BE72B1AD6DB980019A408 /* ofxBaseGui.cpp */; };
 		B69BE73D1AD6DB980019A408 /* ofxButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B69BE72D1AD6DB980019A408 /* ofxButton.cpp */; };
 		B69BE73E1AD6DB980019A408 /* ofxGuiGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B69BE7301AD6DB980019A408 /* ofxGuiGroup.cpp */; };
@@ -112,6 +113,8 @@
 		ADD194746185E2DA11468377 /* IpEndpointName.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = IpEndpointName.cpp; path = ../../../addons/ofxOsc/libs/oscpack/src/ip/IpEndpointName.cpp; sourceTree = SOURCE_ROOT; };
 		AE335EB4709BFD4671EEAC84 /* MessageMappingOscPacketListener.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = MessageMappingOscPacketListener.h; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/MessageMappingOscPacketListener.h; sourceTree = SOURCE_ROOT; };
 		B31C608870ECEB2490A93736 /* ofxOscParameterSync.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxOscParameterSync.h; path = ../../../addons/ofxOsc/src/ofxOscParameterSync.h; sourceTree = SOURCE_ROOT; };
+		B6800FDC1AD72FCD009D95F9 /* Panel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Panel.cpp; sourceTree = "<group>"; };
+		B6800FDD1AD72FCD009D95F9 /* Panel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Panel.h; sourceTree = "<group>"; };
 		B69BE72B1AD6DB980019A408 /* ofxBaseGui.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBaseGui.cpp; sourceTree = "<group>"; };
 		B69BE72C1AD6DB980019A408 /* ofxBaseGui.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxBaseGui.h; sourceTree = "<group>"; };
 		B69BE72D1AD6DB980019A408 /* ofxButton.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxButton.cpp; sourceTree = "<group>"; };
@@ -402,6 +405,8 @@
 				BC7C5EF41AD44212004AB63E /* Particle.h */,
 				BC7C5EF51AD44212004AB63E /* PolyClass.cpp */,
 				BC7C5EF61AD44212004AB63E /* PolyClass.h */,
+				B6800FDC1AD72FCD009D95F9 /* Panel.cpp */,
+				B6800FDD1AD72FCD009D95F9 /* Panel.h */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -539,6 +544,7 @@
 				BC7C5EFA1AD44212004AB63E /* Module.cpp in Sources */,
 				ADE367465D2A8EBAD4C7A8D9 /* IpEndpointName.cpp in Sources */,
 				67FE4C7B15C2F0478C8126C2 /* NetworkingUtils.cpp in Sources */,
+				B6800FDE1AD72FCD009D95F9 /* Panel.cpp in Sources */,
 				510CAFE035E576A4E1502D52 /* UdpSocket.cpp in Sources */,
 				B69BE7421AD6DB980019A408 /* ofxSliderGroup.cpp in Sources */,
 				B69BE73F1AD6DB980019A408 /* ofxLabel.cpp in Sources */,
