@@ -91,6 +91,12 @@ void ofApp::mousePressed(int x, int y, int button) {
 	if (y >= ofApp::consoleHeight) {
 		drawingParticle = true;
 	}
+    
+    for (int i=0; i < ofApp::totalModules; i++) {
+        if(ofApp::myModules[i]->console->select.inside(x, y)) {
+            ofApp::myModules[i]->console->showPanel = !ofApp::myModules[i]->console->showPanel;
+        }
+    }
 }
 
 //--------------------------------------------------------------

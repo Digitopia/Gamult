@@ -5,6 +5,8 @@
 #include "Button.h"
 #include "Fader.h"
 
+#include "ofxGui.h"
+
 class ModuleConsole {
 
 public:
@@ -17,6 +19,11 @@ public:
 	bool isLooping();
 	float getGravity() { return gravity->getValue(); }
     float getLoopSpeed() { return loopSpeed->getValue(); }
+    
+    void setInstrument1();
+    void setInstrument2();
+    bool showPanel;
+    ofRectangle select;
 	
 private:
 
@@ -31,6 +38,14 @@ private:
 
 	Fader* gravity;
 	Fader* loopSpeed;
+    
+
+    
+    ofxPanel panel;
+    
+    ofxButton inst1;
+    ofxButton inst2;
+
 	
 };
 
