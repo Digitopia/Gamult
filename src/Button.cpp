@@ -27,8 +27,8 @@ void Button::mousePressed(ofMouseEventArgs& event) {
 	}
 
 	else if (type == BUTTON_CLICK) {
-		if (ofApp::myModules[module]->population.size() > 0) {
-			ofApp::myModules[module]->population.erase(ofApp::myModules[module]->population.end());
+		if (ofApp::modules[module]->population.size() > 0) {
+			ofApp::modules[module]->population.erase(ofApp::modules[module]->population.end());
 		}
 	}
 

@@ -1,8 +1,6 @@
 #ifndef OFAPP_H
 #define OFAPP_H
 
-#pragma once
-
 #include "ofMain.h"
 #include "ofxOsc.h"
 
@@ -14,17 +12,16 @@
 #include "Particle.h"
 #include "Panel.h"
 
-#define HOST "localhost"
-#define PORT 5000
-
 class ofApp : public ofBaseApp {
 
 public:
 
+	// OF stuff
 	void setup();
 	void update();
 	void draw();
 
+	// events
 	void keyPressed(int key);
 	void keyReleased(int key);
 	void mouseMoved(int x, int y);
@@ -33,25 +30,23 @@ public:
 	void mouseReleased(int x, int y, int button);
 	void windowResized(int w, int h);
 	void dragEvent(ofDragInfo dragInfo);
-	
-	void displayIncrementation(int realIncrement);
 
-	static float increment;
-	static float maxIncrement;
-	static int totalModules;
-	static int totalPolygons;
+	// custom
+	void drawIncrement();
 
+	static int nModules;
+	static int nPolygons;
 	static int consoleHeight;
-
-	static Module** myModules;
-	static PolyClass** myPolygons;
-	
-	bool drawingParticle;
-	
+	static Module** modules;
+	static PolyClass** polygons;
 	static ofxOscSender oscSender;
 
 private:
 	
+	float increment; // current radius of the particle animation before releasing the mouse
+	float maxIncrement; // maximum radius allowed for the particle animation before releasing the mouse
+	bool drawingParticle;
+
 };
 
 #endif

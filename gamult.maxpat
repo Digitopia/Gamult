@@ -3,8 +3,9 @@
 		"fileversion" : 1,
 		"appversion" : 		{
 			"major" : 6,
-			"minor" : 0,
-			"revision" : 4
+			"minor" : 1,
+			"revision" : 10,
+			"architecture" : "x86"
 		}
 ,
 		"rect" : [ 73.0, 200.0, 723.0, 462.0 ],
@@ -213,7 +214,7 @@
 					"numinlets" : 1,
 					"numoutlets" : 3,
 					"outlettype" : [ "", "", "OSCTimeTag" ],
-					"patching_rect" : [ 237.0, 103.0, 106.0, 20.0 ],
+					"patching_rect" : [ 230.0, 103.0, 106.0, 20.0 ],
 					"text" : "opensoundcontrol"
 				}
 
@@ -228,8 +229,8 @@
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 389.0, 143.0, 50.0, 32.0 ],
-					"text" : "/GML/2 60 100"
+					"patching_rect" : [ 389.0, 143.0, 51.0, 31.0 ],
+					"text" : "/GML/0 1 100"
 				}
 
 			}

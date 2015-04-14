@@ -15,8 +15,8 @@ Particle::Particle(int module, int index, float x, float y, int life) {
 	this->speed = 0;
     this->direction = 1.;
 
-	this->gravity = ofApp::myModules[module]->getGravity()*0.1+0.1;
-	this->loopGravity = ofApp::myModules[module]->getLoopSpeed()*10.;
+	this->gravity = ofApp::modules[module]->getGravity()*0.1+0.1;
+	this->loopGravity = ofApp::modules[module]->getLoopSpeed()*10.;
 	
 	this->y0 = center.y;
 
@@ -28,7 +28,7 @@ void Particle::noGravity() {
 
 void Particle::yesGravity() {
 
-	gravity = ofApp::myModules[module]->getGravity();
+	gravity = ofApp::modules[module]->getGravity();
 	speed += gravity;
 	
 	if (center.y >= ofGetHeight()) {
@@ -85,19 +85,19 @@ void Particle::updateGravity() {
     if (center.y > ofGetHeight()) {
         report();
     }
-    loopGravity = ofApp::myModules[module]->getLoopSpeed()*50. * direction;
+    loopGravity = ofApp::modules[module]->getLoopSpeed()*50. * direction;
 }
 
 void Particle::report() {
 
 	ofxOscMessage m;
 	
-	int idx = ofApp::myModules[module]->index;
+	int idx = ofApp::modules[module]->index;
 	string addr = "/GML/" + ofToString(idx);
 	
 	m.setAddress(addr);
 	
-	float notef = ofMap(center.x, ofApp::myModules[module]->modOrigin.x, ofApp::myModules[module]->maxWidth, 0, 3);
+	float notef = ofMap(center.x, ofApp::modules[module]->modOrigin.x, ofApp::modules[module]->maxWidth, 0, 3);
 	int note = floor(notef + 0.5);
 	m.addIntArg(note);
 	

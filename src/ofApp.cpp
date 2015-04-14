@@ -1,140 +1,143 @@
 #include "ofApp.h"
 
-float ofApp::increment = 0.0f;
-float ofApp::maxIncrement = 20.0f;
-int ofApp::totalModules = 4;
-int ofApp::totalPolygons = 10;
+#define HOST "localhost"
+#define PORT 5000
+#define FRAME_RATE 60
+#define CIRCLE_RESOLUTION 50
+#define BACKGROUND_COLOR 255
+
+int ofApp::nModules = 4;
+int ofApp::nPolygons = 10;
 int ofApp::consoleHeight = 90;
 
 ofxOscSender ofApp::oscSender;
 
-Module** ofApp::myModules = new Module* [ofApp::totalModules];
+Module** ofApp::modules = new Module* [ofApp::nModules];
 
 // TODO: see if there's need to make this static
-PolyClass** ofApp::myPolygons = new PolyClass* [ofApp::totalPolygons];
+PolyClass** ofApp::polygons = new PolyClass* [ofApp::nPolygons];
 
 void ofApp::setup() {
 	
+	ofSetFrameRate(FRAME_RATE);
+	ofSetCircleResolution(CIRCLE_RESOLUTION);
+	
 	oscSender.setup(HOST, PORT);
 
-	ofSetFrameRate(60);
-	ofSetCircleResolution(50);
-	
-	int moduleWidth = ofGetWidth()/ofApp::totalModules;
+	int moduleWidth = ofGetWidth()/ofApp::nModules;
 	int moduleHeight = ofGetHeight();
-	int moduleHabitants = ofApp::totalPolygons;
+	int moduleHabitants = ofApp::nPolygons;
 	
+	for (int i = 0; i < ofApp::nModules; i++)
+		ofApp::modules[i] = new Module(i, i*moduleWidth, 0, moduleWidth, moduleHeight, moduleHabitants);
+
+	for (int i = 0; i < ofApp::nPolygons; i++)
+		ofApp::polygons[i] = new PolyClass(i);
+
 	drawingParticle = false;
-
-	for (int i = 0; i < ofApp::totalModules; i++) {
-		ofApp::myModules[i] = new Module(i, i*moduleWidth, 0, moduleWidth, moduleHeight, moduleHabitants);
-	}
-
-	for (int i = 0; i < ofApp::totalPolygons; i++) {
-		ofApp::myPolygons[i] = new PolyClass(i);
-	}
+	increment = 0.0;
+	maxIncrement = 20.0;
 
 }
 
 void ofApp::update() {
-	// TODO: should be doing updates here and not in draw methods
+	
 }
 
 void ofApp::draw() {
 	
-	ofBackground(255);
+	ofBackground(BACKGROUND_COLOR);
 
-	for (int i = 0; i < ofApp::totalModules; i++) {
-		ofApp::myModules[i]->draw();
-		ofApp::myModules[i]->boundingBox();
-		ofApp::myModules[i]->manageParticles();
+	for (int i = 0; i < ofApp::nModules; i++) {
+		ofApp::modules[i]->draw();
+		ofApp::modules[i]->boundingBox();
+		ofApp::modules[i]->manageParticles();
 	}
 
-	for (int i = 0; i < ofApp::totalPolygons; i++) {
-
+	// TODO: this block can be really better written
+	// commenting everything but the display(i) line makes the code all most work entirely
+	for (int i = 0; i < ofApp::nPolygons; i++) {
 		int checkVertex = 0;
-		for (int j = 0; j<ofApp::totalModules; j++) {
-			if (myModules[j]->population.size() > i) {
+		for (int j = 0; j < ofApp::nModules; j++) {
+			if (ofApp::modules[j]->population.size() > i) {
 				checkVertex++;
 			}
 		}
 
-		if (checkVertex!=0) ofApp::myPolygons[i]->display(i);
+		if (checkVertex != 0)
+			ofApp::polygons[i]->display(i);
 	}
 	
 	if (drawingParticle) {
+	
 		increment++;
-		if (increment>maxIncrement)increment=maxIncrement;
-		if (ofGetMouseY() > ofApp::consoleHeight) displayIncrementation(increment);
+	
+		if (increment > maxIncrement)
+			increment = maxIncrement;
+		
+		if (ofGetMouseY() > ofApp::consoleHeight)
+			drawIncrement();
 	}
 }
 
-//--------------------------------------------------------------
 void ofApp::keyPressed(int key) {
-
 }
 
-//--------------------------------------------------------------
 void ofApp::keyReleased(int key) {
 }
 
-//--------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y) {
 }
 
-//--------------------------------------------------------------
 void ofApp::mouseDragged(int x, int y, int button) {
 }
 
-//--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button) {
+
 	if (y >= ofApp::consoleHeight) {
 		drawingParticle = true;
 	}
     
-    for (int i=0; i < ofApp::totalModules; i++) {
-        if(ofApp::myModules[i]->panel->select.inside(x, y)) {
-            ofApp::myModules[i]->panel->showPanel = !ofApp::myModules[i]->panel->showPanel;
+    for (int i = 0; i < ofApp::nModules; i++) {
+        if(ofApp::modules[i]->panel->select.inside(x, y)) {
+            ofApp::modules[i]->panel->showPanel = !ofApp::modules[i]->panel->showPanel;
         }
     }
 }
 
-//--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button) {
 	
 	drawingParticle = false;
 	
-	for (int i=0; i < ofApp::totalModules; i++) {
-		ofApp::myModules[i]->addParticle(increment);
-	}
+	for (int i = 0; i < ofApp::nModules; i++)
+		ofApp::modules[i]->addParticle(increment);
+	
 	increment = 0;
 
 }
 
-//--------------------------------------------------------------
 void ofApp::windowResized(int w, int h) {
-
 }
-//--------------------------------------------------------------
 
-//--------------------------------------------------------------
 void ofApp::dragEvent(ofDragInfo dragInfo) {
-
 }
 
-void ofApp::displayIncrementation(int realIncrement) {
-
-	ofPolyline polyline1;
+// draws the increase of the particle after mouse press and before mouse release
+// TODO: deveria estar em Particle.cpp
+// através de registar um mouse** event
+void ofApp::drawIncrement() {
 
 	ofPushStyle();
-	ofSetColor (0, 128);
-	//stroke(0, 128);
+
+	ofSetColor(0, 128);
 	ofSetLineWidth(4);
-	//strokeWeight(4);
 	ofNoFill();
-	ofPoint point1(mouseX, mouseY);
-	polyline1.arc(point1, 30, 30, 0, float(increment)*(360./float(maxIncrement)), 50);
-	polyline1.draw();
+	
+	ofPolyline polyline;
+	ofPoint pt(mouseX, mouseY);
+	polyline.arc(pt, 30, 30, 0, float(increment)*(360./float(maxIncrement)), 50);
+	polyline.draw();
+
 	ofPopStyle();
 
 }
