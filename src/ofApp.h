@@ -12,6 +12,30 @@
 #include "Particle.h"
 #include "Panel.h"
 
+//
+// CONSTANTS
+//
+
+#define HOST "localhost"
+#define PORT 5000
+
+#define UI_FONT_FACE "verdana.ttf" // TODO: change this font!
+#define UI_FONT_SIZE 10
+#define UI_COLOR 255
+
+#define BUTTON_SIZE 10
+#define FADER_SIZE 10
+#define FADER_RANGE 100
+
+#define FRAME_RATE 60
+#define BACKGROUND_COLOR 255
+#define CIRCLE_RESOLUTION 50
+
+#define INCREMENT_LINE_WIDTH 3
+#define INCREMENT_RADIUS 30
+#define INCREMENT_COLOR 128
+#define INCREMENT_RESOLUTION 30
+
 class ofApp : public ofBaseApp {
 
 public:

@@ -1,6 +1,6 @@
 #include "ofApp.h"
 
-Button::Button(buttonType type, int module, float x, float y, string title) {
+Button::Button(buttonType type, int module, int size, float x, float y, string title) {
 
     this->type = type;
 	this->module = module;
@@ -8,10 +8,11 @@ Button::Button(buttonType type, int module, float x, float y, string title) {
 	this->y = y;
 	this->title = title;
 	this->state = false;
+	this->size = size;
 
-	this->rect = ofRectangle(x, y, BUTTON_SIZE, BUTTON_SIZE);
+	this->rect = ofRectangle(x, y, size, size);
 
-	font.loadFont(FONT_FACE, FONT_SIZE, true);
+	font.loadFont(UI_FONT_FACE, UI_FONT_SIZE, true);
 
 	ofAddListener(ofEvents().mousePressed, this, &Button::mousePressed);
 
@@ -38,10 +39,9 @@ void Button::draw() {
 
 	ofPushStyle();
 	
-	// TODO: color should be a variable
-	ofSetColor(BUTTON_COLOR);
+	ofSetColor(UI_COLOR);
 	
-	ofSetLineWidth(1);
+	ofSetLineWidth(BUTTON_WIDTH);
 	
 	ofNoFill();
 	
@@ -50,14 +50,11 @@ void Button::draw() {
 
 	ofRect(rect);
 	
-	// TODO: é preciso este ofFill?
-	ofFill();
-
-	font.drawString(title, x+BUTTON_SIZE*2, y+BUTTON_SIZE);
+	font.drawString(title, x+size*2, y+size);
 	
 	if (type == BUTTON_CLICK) {
-		ofLine(x, y, x+BUTTON_SIZE, y+BUTTON_SIZE);
-		ofLine(x+BUTTON_SIZE, y, x, y+BUTTON_SIZE);
+		ofLine(x, y, x+size, y+size);
+		ofLine(x+size, y, x, y+size);
 	}
 
     ofPopStyle();

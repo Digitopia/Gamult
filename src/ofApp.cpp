@@ -1,17 +1,5 @@
 #include "ofApp.h"
 
-#define HOST "localhost"
-#define PORT 5000
-
-#define FRAME_RATE 60
-#define BACKGROUND_COLOR 255
-#define CIRCLE_RESOLUTION 50
-
-#define INCREMENT_LINE_WIDTH 3
-#define INCREMENT_RADIUS 30
-#define INCREMENT_COLOR 128
-#define INCREMENT_RESOLUTION 30
-
 int ofApp::nModules = 4;
 int ofApp::nPolygons = 10;
 int ofApp::consoleHeight = 90;

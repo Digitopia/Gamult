@@ -1,4 +1,5 @@
 #include "Fader.h"
+#include "ofApp.h"
 
 Fader::Fader(float x0, float y, int size, int range, string title) {
     
@@ -7,11 +8,10 @@ Fader::Fader(float x0, float y, int size, int range, string title) {
     this->size = size;
     this->range = range;
 	this->title = title;
-    
+	
     this->rect = ofRectangle(x0+range/2-size/2, y-size/2, size, size);
 
-	// TODO: this should be probably somewhere else
-	font.loadFont("verdana.ttf", 10, true, true);
+	font.loadFont(UI_FONT_FACE, UI_FONT_SIZE, true);
 
     this->dragging = false;
 	
@@ -51,8 +51,7 @@ float Fader::getValue() {
 
 void Fader::draw() {
     
-	// TODO: should be a variable
-	ofSetColor(255);
+	ofSetColor(UI_COLOR);
 
 	// draw the line in which the fader moves
 	ofLine(x0, y, x0+range, y);
@@ -62,6 +61,6 @@ void Fader::draw() {
 	// draw the fader
 	ofRect(rect);
     
-	font.drawString(title, x0, y+20);
+	font.drawString(title, x0, y+size*2);
 
 }

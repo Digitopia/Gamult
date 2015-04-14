@@ -10,13 +10,13 @@ ModuleConsole::ModuleConsole(ofVec2f origin, float width, int module) {
 	int x = origin.x;
 	int y = origin.y;
 
-	remove = new Button(BUTTON_CLICK,  module, x+BUTTON_SIZE, y+10, "Remove");
-	loop = new Button(BUTTON_TOGGLE, module, x+BUTTON_SIZE, y+30, "Loop");
-	freeze = new Button(BUTTON_TOGGLE, module, x+BUTTON_SIZE, y+50, "Freeze");
+	remove = new Button(BUTTON_CLICK,  module, BUTTON_SIZE, x+BUTTON_SIZE, y+BUTTON_SIZE,   "Remove");
+	loop =   new Button(BUTTON_TOGGLE, module, BUTTON_SIZE, x+BUTTON_SIZE, y+BUTTON_SIZE*3, "Loop");
+	freeze = new Button(BUTTON_TOGGLE, module, BUTTON_SIZE, x+BUTTON_SIZE, y+BUTTON_SIZE*5, "Freeze");
 
 	x = x + width/2;
-	gravity = new Fader(x, y+10+5, 10, 100, "Gravity");
-	loopSpeed = new Fader(x, y+50+5, 10, 100, "Loop Speed");
+	gravity   = new Fader(x, y+10+5, FADER_SIZE, FADER_RANGE, "Gravity");
+	loopSpeed = new Fader(x, y+50+5, FADER_SIZE, FADER_RANGE, "Loop Speed");
     
 }
 
@@ -43,9 +43,9 @@ void ModuleConsole::draw() {
 }
 
 bool ModuleConsole::isFreezed() {
-	return freeze->state;
+	return freeze->getState();
 }
 
 bool ModuleConsole::isLooping() {
-	return loop->state;
+	return loop->getState();
 }
