@@ -2,9 +2,15 @@
 
 #define HOST "localhost"
 #define PORT 5000
+
 #define FRAME_RATE 60
-#define CIRCLE_RESOLUTION 50
 #define BACKGROUND_COLOR 255
+#define CIRCLE_RESOLUTION 50
+
+#define INCREMENT_LINE_WIDTH 3
+#define INCREMENT_RADIUS 30
+#define INCREMENT_COLOR 128
+#define INCREMENT_RESOLUTION 30
 
 int ofApp::nModules = 4;
 int ofApp::nPolygons = 10;
@@ -113,7 +119,7 @@ void ofApp::mouseReleased(int x, int y, int button) {
 		ofApp::modules[i]->addParticle(increment);
 	
 	increment = 0;
-
+	
 }
 
 void ofApp::windowResized(int w, int h) {
@@ -123,19 +129,19 @@ void ofApp::dragEvent(ofDragInfo dragInfo) {
 }
 
 // draws the increase of the particle after mouse press and before mouse release
-// TODO: deveria estar em Particle.cpp
-// através de registar um mouse** event
 void ofApp::drawIncrement() {
 
 	ofPushStyle();
 
-	ofSetColor(0, 128);
-	ofSetLineWidth(4);
+	ofSetColor(INCREMENT_COLOR);
+	ofSetLineWidth(INCREMENT_LINE_WIDTH);
 	ofNoFill();
 	
 	ofPolyline polyline;
 	ofPoint pt(mouseX, mouseY);
-	polyline.arc(pt, 30, 30, 0, float(increment)*(360./float(maxIncrement)), 50);
+	float angleBegin = 180;
+	float angleEnd = float(increment)*(360./float(maxIncrement)) - 180;
+	polyline.arc(pt, INCREMENT_RADIUS, INCREMENT_RADIUS, angleBegin, angleEnd, INCREMENT_RESOLUTION);
 	polyline.draw();
 
 	ofPopStyle();

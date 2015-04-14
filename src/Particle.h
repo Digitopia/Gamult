@@ -29,8 +29,8 @@ private:
 
 	int module;
 	int index;
-	int counter; // variavel que vai aumentando (ou diminuindo) em funcao da vida da particula
-	int life;	// tamanho da particula, diametro, que é sempre igual
+	int counter; //	increases (or decreases) in function of the life of the particle
+	int life;	 // radius of the particle, that is always the same
 	float speed;
 	float gravity;
     float direction;

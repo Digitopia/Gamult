@@ -1,8 +1,5 @@
 #include "ofApp.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-
 Particle::Particle(int module, int index, float x, float y, int life) {
 
 	this->module = module;
@@ -15,9 +12,6 @@ Particle::Particle(int module, int index, float x, float y, int life) {
 	this->speed = 0;
     this->direction = 1.;
 
-	this->gravity = ofApp::modules[module]->getGravity()*0.1+0.1;
-	this->loopGravity = ofApp::modules[module]->getLoopSpeed()*10.;
-	
 	this->y0 = center.y;
 
 }
