@@ -2,7 +2,6 @@
 #define MODULE_H
 
 #include "ofMain.h"
-
 #include "ModuleConsole.h"
 #include "Particle.h"
 #include "Panel.h"
@@ -20,28 +19,35 @@ public:
 	void draw();
 	void boundingBox();
 
-	bool isFreezed();
-	bool isLooping();
-	
-	float getGravity();
-	float getLoopSpeed();
-	
-	int index;
-	int maximumPopulation;
-	float sync;
-	float modWidth;
-	float modHeight;
-	float maxWidth;
-	float maxHeight;
-	vector <Particle> population;
-	ofVec2f modOrigin;
-	ModuleConsole* console;
-    Panel* panel;
+	bool isFreezed() { return console->isFreezed(); }
+	bool isLooping() { return console->isLooping(); }
 
-	// TODO: these should be multiple particles
+	float getGravity() { return console->getGravity(); }
+	float getLoopSpeed() { return console->getLoopSpeed(); }
+	
+	int getIndex()		{ return index; }
+	int getMaxWidth()	{ return maxWidth; }
+	int getMaxHeight()	{ return maxHeight; }
+	int getModWidth()	{ return modWidth; }
+	int getModHeight()	{ return modHeight; }
+	int getModOriginX()	{ return modOrigin.x; }
+	int getModOriginY()	{ return modOrigin.y; }
+
+	// TODO: these should be private too
+	vector <Particle> population;
 	Particle* managedParticle;
+	Panel* panel;
 
 private:
+
+	int index;
+	int modWidth;
+	int modHeight;
+	int maxWidth;
+	int maxHeight;
+	int maximumPopulation;
+	ofVec2f modOrigin;
+	ModuleConsole* console;
 
 };
 

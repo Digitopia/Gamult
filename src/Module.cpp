@@ -16,6 +16,7 @@ void Module::update() {
 	// TODO: should be doing updates here
 }
 
+// TODO: this is way too complicated method..
 void Module::addParticle(int life) {
 	if (population.size() < maximumPopulation) {
         if (ofGetMouseX() >= modOrigin.x && ofGetMouseX() <= maxWidth && ofGetMouseY() >= ofApp::consoleHeight && ofGetMouseY() <= maxHeight) {
@@ -25,6 +26,7 @@ void Module::addParticle(int life) {
 	}
 }
 
+// TODO: this is way too complicated method..
 void Module::manageParticles() {
 	for (int i=0; i < population.size(); i++) {
 		managedParticle = &population[i];
@@ -53,34 +55,22 @@ void Module::draw() {
 }
 
 void Module::boundingBox() {
+
 	ofPushStyle();
-	ofSetLineWidth(1);
-	ofSetColor(50, 128);
+
+	ofSetLineWidth(CONSOLE_BORDER);
+	ofSetColor(50, 128); // TODO: not working the hex value
+//	ofSetColor(0x989898);
 	ofNoFill();
 	ofRect(modOrigin.x, modOrigin.y, modWidth, modHeight);
+
 	ofPopStyle();
+	
 }
 
+// TODO: erase particle shouldn't clear.. this looks weird...
 void Module::eraseParticle() {
-	for (int i=0; i< population.size(); i++) {
-		//        thisParticle = new Particle(population[i]);
+	for (int i = 0; i < population.size(); i++)
 		population.clear();
-	}
-}
-
-bool Module::isFreezed() {
-	return console->isFreezed();
-}
-
-bool Module::isLooping() {
-	return console->isLooping();
-}
-
-float Module::getGravity() {
-	return console->getGravity();
-}
-
-float Module::getLoopSpeed() {
-	return console->getLoopSpeed();
 }
 

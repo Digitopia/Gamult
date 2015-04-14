@@ -3,13 +3,9 @@
 int ofApp::nModules = 4;
 int ofApp::nPolygons = 10;
 int ofApp::consoleHeight = 90;
-
 ofxOscSender ofApp::oscSender;
-
 Module** ofApp::modules = new Module* [ofApp::nModules];
-
-// TODO: see if there's need to make this static
-PolyClass** ofApp::polygons = new PolyClass* [ofApp::nPolygons];
+PolyClass** ofApp::polygons = new PolyClass* [ofApp::nPolygons]; // TODO: see if there's need to make this static
 
 void ofApp::setup() {
 	
@@ -129,7 +125,7 @@ void ofApp::drawIncrement() {
 	ofPoint pt(mouseX, mouseY);
 	float angleBegin = 180;
 	float angleEnd = float(increment)*(360./float(maxIncrement)) - 180;
-	polyline.arc(pt, INCREMENT_RADIUS, INCREMENT_RADIUS, angleBegin, angleEnd, INCREMENT_RESOLUTION);
+	polyline.arc(pt, INCREMENT_RADIUS, INCREMENT_RADIUS, angleBegin, angleEnd, ARC_RESOLUTION);
 	polyline.draw();
 
 	ofPopStyle();

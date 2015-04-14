@@ -16,25 +16,40 @@
 // CONSTANTS
 //
 
+// osc
 #define HOST "localhost"
 #define PORT 5000
+#define OSC_ADDRESS "/GML/"
 
+// user interface
 #define UI_FONT_FACE "verdana.ttf" // TODO: change this font!
 #define UI_FONT_SIZE 10
 #define UI_COLOR 255
 
+// buttons and faders
 #define BUTTON_SIZE 10
 #define FADER_SIZE 10
 #define FADER_RANGE 100
 
+// general conf stuff
 #define FRAME_RATE 60
 #define BACKGROUND_COLOR 255
 #define CIRCLE_RESOLUTION 50
+#define ARC_RESOLUTION 30
 
+// increment
 #define INCREMENT_LINE_WIDTH 3
 #define INCREMENT_RADIUS 30
 #define INCREMENT_COLOR 128
-#define INCREMENT_RESOLUTION 30
+
+// particle
+#define PARTICLE_COLOR 0
+#define PARTICLE_LIFE_COLOR 128
+#define PARTICLE_WIDTH 2
+
+// console
+#define CONSOLE_COLOR 0x989898
+#define CONSOLE_BORDER 1
 
 class ofApp : public ofBaseApp {
 
@@ -67,7 +82,7 @@ public:
 
 private:
 	
-	float increment; // current radius of the particle animation before releasing the mouse
+	float increment;	// current radius of the particle animation before releasing the mouse
 	float maxIncrement; // maximum radius allowed for the particle animation before releasing the mouse
 	bool drawingParticle;
 

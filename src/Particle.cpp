@@ -48,53 +48,65 @@ void Particle::draw() {
 }
 
 void Particle::drawCircle() {
+
 	ofPushStyle();
+
 	ofFill();
-	ofSetColor(0);
+	ofSetColor(PARTICLE_COLOR);
 	ofCircle(center.x, center.y, life);
+	
 	ofPopStyle();
+	
 }
 
 void Particle::drawLife() {
 
-	ofPolyline polyline;
-
 	ofPushStyle();
 
-	// TODO: should be a variable
-	ofSetColor(0, 128);
-	ofSetLineWidth(2);
+	ofSetColor(PARTICLE_LIFE_COLOR);
+	ofSetLineWidth(PARTICLE_WIDTH);
 	ofNoFill();
 	
-	ofPoint point1(center.x, center.y);
-	polyline.arc(point1, life*2, life*2, 0, 360.-(counter*(360./life)), 50);
+	ofPolyline polyline;
+	ofPoint pt(center.x, center.y);
+	float angleBegin = 0;
+	float angleEnd = 360.-(counter*(360./life));
+	int radius = life*2;
+	polyline.arc(pt, radius, radius, angleBegin, angleEnd, ARC_RESOLUTION);
 	polyline.draw();
 
 	ofPopStyle();
 }
 
 void Particle::updateGravity() {
-    if (center.y > ofGetHeight()) direction = -1.;
-    if (center.y < y0) direction = 1.;
-    if (center.y > ofGetHeight()) {
-        report();
-    }
-    loopGravity = ofApp::modules[module]->getLoopSpeed()*50. * direction;
+	
+	if (center.y > ofGetHeight()) {
+		direction = -1.;
+		report();
+	}
+
+	else if (center.y < y0)
+		direction = 1.;
+
+	// TODO: magic number
+	loopGravity = ofApp::modules[module]->getLoopSpeed()*50. * direction;
 }
 
 void Particle::report() {
 
 	ofxOscMessage m;
-	
-	int idx = ofApp::modules[module]->index;
-	string addr = "/GML/" + ofToString(idx);
-	
+
+	// set message address
+	int idx = ofApp::modules[module]->getIndex();
+	string addr = OSC_ADDRESS + ofToString(idx);
 	m.setAddress(addr);
-	
-	float notef = ofMap(center.x, ofApp::modules[module]->modOrigin.x, ofApp::modules[module]->maxWidth, 0, 3);
+
+	// segment particle position x to 4 spaces
+	float notef = ofMap(center.x, ofApp::modules[module]->getModOriginX(), ofApp::modules[module]->getMaxWidth(), 0, 3);
 	int note = floor(notef + 0.5);
 	m.addIntArg(note);
-	
+
+	// TODO: this should be the velocity of the MIDI note
 	m.addIntArg(100);
 	
 	ofApp::oscSender.sendMessage(m);
