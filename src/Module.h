@@ -10,7 +10,7 @@ class Module {
 
 public:
 
-	Module(int index, float x, float y, float width, float height, int population);
+	Module(int index, float x, float y, float width, float height, int population, vector<string> soundVector);
 
 	void update();
 	void addParticle(int life);
@@ -32,11 +32,17 @@ public:
 	int getModHeight()	{ return modHeight; }
 	int getModOriginX()	{ return modOrigin.x; }
 	int getModOriginY()	{ return modOrigin.y; }
+    void playSound(int index);
+    
+    vector <ofSoundPlayer> sounds;
+    
+    string getSoundLocation(int index) {return soundVector[index]; }
 
 	// TODO: these should be private too
 	vector <Particle> population;
 	Particle* managedParticle;
 	Panel* panel;
+    vector <string> soundVector;
 
 private:
 

@@ -72,6 +72,7 @@ public:
 
 	// custom
 	void drawIncrement();
+    void initSounds();
 
 	static int nModules;
 	static int nPolygons;
@@ -79,6 +80,14 @@ public:
 	static Module** modules;
 	static PolyClass** polygons;
 	static ofxOscSender oscSender;
+    
+    vector <string> bonang;
+    vector <string> gender;
+    vector <string> gong;
+    vector <string> saron;
+    
+    vector <vector<string> > instruments;
+    
 
 private:
 	

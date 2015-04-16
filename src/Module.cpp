@@ -1,6 +1,6 @@
 #include "ofApp.h"
 
-Module::Module(int index, float x, float y, float width, float height, int population) { 
+Module::Module(int index, float x, float y, float width, float height, int population, vector<string> soundVector) {
 	this->index = index; 
 	this->maximumPopulation = population; 
 	this->modWidth = width; 
@@ -10,6 +10,17 @@ Module::Module(int index, float x, float y, float width, float height, int popul
 	this->maxHeight = modOrigin.y + height; 
 	this->console = new ModuleConsole(modOrigin, width, index);
     this->panel = new Panel(index, modOrigin.x, modOrigin.y, modWidth);
+    this->soundVector = soundVector;
+
+    for (int i=0; i<soundVector.size(); i++) {
+        
+        //TODO: this looks pretty bad...
+        ofSoundPlayer placeholderSound;
+        sounds.push_back(placeholderSound);
+        sounds[i].loadSound(soundVector[i], true);
+        
+    }
+
 } 
 
 void Module::update() {
@@ -74,3 +85,6 @@ void Module::eraseParticle() {
 		population.clear();
 }
 
+void Module::playSound(int index) {
+    sounds[index].play();
+}

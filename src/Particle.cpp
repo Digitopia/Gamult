@@ -28,6 +28,7 @@ void Particle::yesGravity() {
 	if (center.y >= ofGetHeight()) {
 		center.y = ofGetHeight();
 		report();
+        playSound();
 	}
 		
 	else if (center.y <= ofApp::consoleHeight + life) {
@@ -83,6 +84,7 @@ void Particle::updateGravity() {
 	if (center.y > ofGetHeight()) {
 		direction = -1.;
 		report();
+        playSound();
 	}
 
 	else if (center.y < y0)
@@ -111,4 +113,14 @@ void Particle::report() {
 	
 	ofApp::oscSender.sendMessage(m);
 	
+}
+
+void Particle::playSound() {
+    
+    // copied from above
+    float notef = ofMap(center.x, ofApp::modules[module]->getModOriginX(), ofApp::modules[module]->getMaxWidth(), 0, 3);
+    int note = floor(notef + 0.5);
+    
+    ofApp::modules[module]->playSound(note);
+    
 }

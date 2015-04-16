@@ -17,7 +17,8 @@ public:
     void updateGravity();
 	
 	void report();
-	
+    void playSound();
+    
 	int getSpeed() { return speed; }
 	int getGravity() { return gravity; }
 	int getLife() { return life; }

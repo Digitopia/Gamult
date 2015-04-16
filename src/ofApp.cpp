@@ -17,9 +17,11 @@ void ofApp::setup() {
 	int moduleWidth = ofGetWidth()/ofApp::nModules;
 	int moduleHeight = ofGetHeight();
 	int moduleHabitants = ofApp::nPolygons;
+    
+    initSounds();
 	
 	for (int i = 0; i < ofApp::nModules; i++)
-		ofApp::modules[i] = new Module(i, i*moduleWidth, 0, moduleWidth, moduleHeight, moduleHabitants);
+		ofApp::modules[i] = new Module(i, i*moduleWidth, 0, moduleWidth, moduleHeight, moduleHabitants, instruments[i]);
 
 	for (int i = 0; i < ofApp::nPolygons; i++)
 		ofApp::polygons[i] = new PolyClass(i);
@@ -27,6 +29,8 @@ void ofApp::setup() {
 	drawingParticle = false;
 	increment = 0.0;
 	maxIncrement = 20.0;
+    
+    
 
 }
 
@@ -130,4 +134,32 @@ void ofApp::drawIncrement() {
 
 	ofPopStyle();
 
+}
+
+void ofApp::initSounds() {
+    bonang.push_back("sounds/BBPL1.mp3");
+    bonang.push_back("sounds/BBPL2.mp3");
+    bonang.push_back("sounds/BBPL3.mp3");
+    bonang.push_back("sounds/BBPL4.mp3");
+    
+    gender.push_back("sounds/GBPL1.wav");
+    gender.push_back("sounds/GBPL2.wav");
+    gender.push_back("sounds/GBPL3.wav");
+    gender.push_back("sounds/GBPL5.wav");
+    
+    gong.push_back("sounds/GKPL1f.wav");
+    gong.push_back("sounds/GKPL2f.wav");
+    gong.push_back("sounds/GKPL3f.wav");
+    gong.push_back("sounds/GKPL5f.wav");
+    
+    saron.push_back("sounds/SBPL1.wav");
+    saron.push_back("sounds/SBPL2.wav");
+    saron.push_back("sounds/SBPL3.wav");
+    saron.push_back("sounds/SBPL4.wav");
+    
+    instruments.push_back(bonang);
+    instruments.push_back(gender);
+    instruments.push_back(gong);
+    instruments.push_back(saron);
+    
 }
