@@ -27,9 +27,9 @@
 #define UI_COLOR 255
 
 // buttons and faders
-#define BUTTON_SIZE 10
-#define FADER_SIZE 10
-#define FADER_RANGE 100
+#define BUTTON_SIZE 16
+#define FADER_SIZE 12
+#define FADER_RANGE 150
 
 // general conf stuff
 #define FRAME_RATE 60
@@ -50,7 +50,7 @@
 // console
 #define CONSOLE_COLOR 0x989898
 #define CONSOLE_BORDER 1
-#define CONSOLE_HEIGHT 90
+#define CONSOLE_HEIGHT 120
 
 class ofApp : public ofBaseApp {
 

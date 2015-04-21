@@ -50,7 +50,7 @@ void Button::draw() {
 
 	ofRect(rect);
 	
-	font.drawString(title, x+size*2, y+size);
+	font.drawString(title, x+size*1.5, y+size-3);
 	
 	if (type == BUTTON_CLICK) {
 		ofLine(x, y, x+size, y+size);
