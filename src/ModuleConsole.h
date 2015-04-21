@@ -9,7 +9,7 @@ class ModuleConsole {
 
 public:
 
-	ModuleConsole(ofVec2f origin, float width, int module);
+	ModuleConsole(int x, float width, int module);
 
 	void draw();
 	
@@ -23,7 +23,7 @@ private:
 	int module;
 	float width;
 
-	ofVec2f origin;
+	int x, y;
 
 	Button* remove;
 	Button* loop;

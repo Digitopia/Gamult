@@ -1,15 +1,15 @@
 #include "ofApp.h"
 #include "Button.h"
 
-ModuleConsole::ModuleConsole(ofVec2f origin, float width, int module) {
+ModuleConsole::ModuleConsole(int x, float width, int module) {
 	
 	this->width = width;
-	this->origin.set(origin);
+	this->x = x;
+	this->y = 0;
 	this->module = module;
 	
-	int x = origin.x;
-	int y = origin.y;
-
+	int y = 0;
+	
 	remove = new Button(BUTTON_CLICK,  module, BUTTON_SIZE, x+BUTTON_SIZE, y+BUTTON_SIZE,   "Remove");
 	loop =   new Button(BUTTON_TOGGLE, module, BUTTON_SIZE, x+BUTTON_SIZE, y+BUTTON_SIZE*3, "Loop");
 	freeze = new Button(BUTTON_TOGGLE, module, BUTTON_SIZE, x+BUTTON_SIZE, y+BUTTON_SIZE*5, "Freeze");
@@ -29,7 +29,7 @@ void ModuleConsole::draw() {
 
 	ofFill();
 
-	ofRect(origin.x, origin.y, width, CONSOLE_HEIGHT);
+	ofRect(x, y, width, CONSOLE_HEIGHT);
 
 	ofPopStyle();
 

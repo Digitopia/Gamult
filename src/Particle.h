@@ -16,8 +16,8 @@ public:
 	void yesGravity();
     void updateGravity();
 	
-	void report();
-    void playSound();
+	void report(int  idx, int note, int vel);
+    void playSound(bool send);
     
 	int getSpeed() { return speed; }
 	int getGravity() { return gravity; }

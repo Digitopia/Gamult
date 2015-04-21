@@ -10,50 +10,44 @@ class Module {
 
 public:
 
-	Module(int index, float x, float y, float width, float height, int population, vector<string> soundVector);
+	Module(int index, float x, float y, float width, float height, int maxPopulation, vector<string> soundPaths);
 
 	void update();
 	void addParticle(int life);
 	void manageParticles();
 	void eraseParticle();
 	void draw();
-	void boundingBox();
-
-	bool isFreezed() { return console->isFreezed(); }
-	bool isLooping() { return console->isLooping(); }
-
+	void drawGrid();
+	void drawBorders();
+    void playSound(int index);
+	
 	float getGravity() { return console->getGravity(); }
 	float getLoopSpeed() { return console->getLoopSpeed(); }
+	bool isFreezed() { return console->isFreezed(); }
+	bool isLooping() { return console->isLooping(); }
+	int getIndex() { return index; }
+	int getWidth() { return width; }
+	int getHeight()	{ return height; }
+	int getX0()	{ return x0; }
+	int getX1()	{ return x1; }
+    string getSoundLocation(int index) { return soundPaths[index]; }
 	
-	int getIndex()		{ return index; }
-	int getMaxWidth()	{ return maxWidth; }
-	int getMaxHeight()	{ return maxHeight; }
-	int getModWidth()	{ return modWidth; }
-	int getModHeight()	{ return modHeight; }
-	int getModOriginX()	{ return modOrigin.x; }
-	int getModOriginY()	{ return modOrigin.y; }
-    void playSound(int index);
-    
-    vector<ofSoundPlayer> sounds;
-    
-    string getSoundLocation(int index) {return soundVector[index]; }
-
 	// TODO: these should be private too
 	vector<Particle> population;
 	Particle* managedParticle;
-	Panel* panel;
-    vector<string> soundVector;
+//	Panel* panel;
 
 private:
 
+	int x0, x1;
+	int y;
 	int index;
-	int modWidth;
-	int modHeight;
-	int maxWidth;
-	int maxHeight;
-	int maximumPopulation;
-	ofVec2f modOrigin;
+	int width;
+	int height;
+	int maxPopulation;
 	ModuleConsole* console;
+    vector<string> soundPaths;
+    vector<ofSoundPlayer> sounds;
 
 };
 

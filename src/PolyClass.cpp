@@ -3,7 +3,6 @@
 
 PolyClass::PolyClass(int index) {
 	this->index = index;
-
 }
 
 void PolyClass::addVertex(float vX, float vY) {
@@ -17,19 +16,18 @@ void PolyClass::display(int i) {
 	ofPushStyle();
 	ofBeginShape();
 	ofNoFill();
-	ofSetLineWidth(1); //TODO: check if works
+	ofSetLineWidth(POLY_WIDTH);
 
 	// TODO: should be a variable
-	ofSetColor(0,128);
+	ofSetColor(0, 128);
 
 	ofCurveVertex(0, ofGetHeight()/2);
 	ofCurveVertex(0, ofGetHeight()/2);
 
 	for (int j = 0; j < ofApp::nModules; j++) {
 		if (ofApp::modules[j]->population.size() > i) {
-			//TODO: check if following is correct
+			// TODO: check if following is correct
 			Particle thisParticle = *new Particle(/*(Particle)*/ofApp::modules[j]->population[i]);
-			//Particle thisParticle = (Particle)modules[j].population.get(i);
 			ofCurveVertex(thisParticle.getX(), thisParticle.getY());
 		}
 	}

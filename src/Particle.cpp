@@ -27,8 +27,7 @@ void Particle::yesGravity() {
 	
 	if (center.y >= ofGetHeight()) {
 		center.y = ofGetHeight();
-		report();
-        playSound();
+        playSound(true);
 	}
 		
 	else if (center.y <= CONSOLE_HEIGHT + life) {
@@ -83,8 +82,7 @@ void Particle::updateGravity() {
 	
 	if (center.y > ofGetHeight()) {
 		direction = -1.;
-		report();
-        playSound();
+        playSound(true);
 	}
 
 	else if (center.y < y0)
@@ -94,33 +92,26 @@ void Particle::updateGravity() {
 	loopGravity = ofApp::modules[module]->getLoopSpeed()*50. * direction;
 }
 
-void Particle::report() {
-
+void Particle::report(int idx, int note, int vel) {
 	ofxOscMessage m;
-
-	// set message address
-	int idx = ofApp::modules[module]->getIndex();
 	string addr = OSC_ADDRESS + ofToString(idx);
 	m.setAddress(addr);
-
-	// segment particle position x to 4 spaces
-	float notef = ofMap(center.x, ofApp::modules[module]->getModOriginX(), ofApp::modules[module]->getMaxWidth(), 0, 3);
-	int note = floor(notef + 0.5);
 	m.addIntArg(note);
-
-	// TODO: this should be the velocity of the MIDI note
-	m.addIntArg(100);
-	
+	m.addIntArg(vel);
 	ofApp::oscSender.sendMessage(m);
-	
 }
 
-void Particle::playSound() {
-    
-    // copied from above
-    float notef = ofMap(center.x, ofApp::modules[module]->getModOriginX(), ofApp::modules[module]->getMaxWidth(), 0, 3);
-    int note = floor(notef + 0.5);
-    
+void Particle::playSound(bool send) {
+	
+	// segment particle position x to 4 spaces
+	// TODO: this should be according to the instrument
+	float notef = ofMap(center.x, ofApp::modules[module]->getX0(), ofApp::modules[module]->getX1(), 0, 3);
+	int note = floor(notef + 0.5);
+
     ofApp::modules[module]->playSound(note);
-    
+	int idx = ofApp::modules[module]->getIndex();
+
+	// TODO: still not sending the velocity properly
+	if (send)
+		report(idx, note, 100);
 }
