@@ -68,10 +68,9 @@ void Module::draw() {
 void Module::boundingBox() {
 
 	ofPushStyle();
-
-	ofSetLineWidth(CONSOLE_BORDER);
-	ofSetColor(50, 128); // TODO: not working the hex value
-//	ofSetColor(0x989898);
+	
+	ofSetLineWidth(CONSOLE_BORDER_WIDTH);
+	ofSetHexColor(CONSOLE_BORDER_COLOR);
 	ofNoFill();
 	ofRect(modOrigin.x, modOrigin.y, modWidth, modHeight);
 

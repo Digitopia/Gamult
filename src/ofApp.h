@@ -47,12 +47,13 @@
 // particle
 #define PARTICLE_COLOR 0
 #define PARTICLE_LIFE_COLOR 128
-#define PARTICLE_LIMIT_COLOR 0xFF3300 
+#define PARTICLE_LIMIT_COLOR 0xFF3300
 #define PARTICLE_WIDTH 2
 
 // console
 #define CONSOLE_COLOR 0x989898
-#define CONSOLE_BORDER 1
+#define CONSOLE_BORDER_WIDTH 1
+#define CONSOLE_BORDER_COLOR 0x717171
 #define CONSOLE_HEIGHT 120
 
 #define LIMIT_PARTICLE 0.2 // percentage of the console height below which it is not possible to add particles
@@ -93,7 +94,6 @@ public:
     vector <string> sarons;
     
     vector <vector<string> > instruments;
-    
 
 private:
 	

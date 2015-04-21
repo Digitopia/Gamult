@@ -34,15 +34,15 @@ public:
 	int getModOriginY()	{ return modOrigin.y; }
     void playSound(int index);
     
-    vector <ofSoundPlayer> sounds;
+    vector<ofSoundPlayer> sounds;
     
     string getSoundLocation(int index) {return soundVector[index]; }
 
 	// TODO: these should be private too
-	vector <Particle> population;
+	vector<Particle> population;
 	Particle* managedParticle;
 	Panel* panel;
-    vector <string> soundVector;
+    vector<string> soundVector;
 
 private:
 
