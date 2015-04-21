@@ -29,7 +29,7 @@ void ModuleConsole::draw() {
 
 	ofFill();
 
-	ofRect(origin.x, origin.y, width, ofApp::consoleHeight);
+	ofRect(origin.x, origin.y, width, CONSOLE_HEIGHT);
 
 	ofPopStyle();
 

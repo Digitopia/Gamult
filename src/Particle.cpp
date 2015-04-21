@@ -31,11 +31,11 @@ void Particle::yesGravity() {
         playSound();
 	}
 		
-	else if (center.y <= ofApp::consoleHeight + life) {
-		center.y = ofApp::consoleHeight + life;
+	else if (center.y <= CONSOLE_HEIGHT + life) {
+		center.y = CONSOLE_HEIGHT + life;
 	}
 	
-	if (center.y >= ofGetHeight() || center.y <= ofApp::consoleHeight + life) {
+	if (center.y >= ofGetHeight() || center.y <= CONSOLE_HEIGHT + life) {
 		speed = speed * -0.95;
 		counter++;
 	}

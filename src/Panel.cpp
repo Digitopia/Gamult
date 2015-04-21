@@ -7,7 +7,7 @@ Panel::Panel(int index, int x, int y, int width) {
     this->y = y;
     this->width = width;
     
-    select.set(x + width*0.9, y + ofApp::consoleHeight * 3/4, width*0.1 - 3, ofApp::consoleHeight*1/4 - 3);
+    select.set(x + width*0.9, y + CONSOLE_HEIGHT * 3/4, width*0.1 - 3, CONSOLE_HEIGHT*1/4 - 3);
     
     
     inst1.addListener(this, &Panel::setInstrument1);
@@ -39,7 +39,7 @@ void Panel::draw() {
     
     if (showPanel) panel.draw();
     
-    ofDrawBitmapString(tag, x + width*0.9, y + ofApp::consoleHeight * 3/4+ (ofApp::consoleHeight*1/4)/2);
+    ofDrawBitmapString(tag, x + width*0.9, y + CONSOLE_HEIGHT * 3/4+ (CONSOLE_HEIGHT*1/4)/2);
     
 }
 

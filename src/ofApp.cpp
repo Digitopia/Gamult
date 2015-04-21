@@ -2,7 +2,6 @@
 
 int ofApp::nModules = 4;
 int ofApp::nPolygons = 10;
-int ofApp::consoleHeight = 90;
 ofxOscSender ofApp::oscSender;
 Module** ofApp::modules = new Module* [ofApp::nModules];
 PolyClass** ofApp::polygons = new PolyClass* [ofApp::nPolygons]; // TODO: see if there's need to make this static
@@ -69,7 +68,7 @@ void ofApp::draw() {
 		if (increment > maxIncrement)
 			increment = maxIncrement;
 		
-		if (ofGetMouseY() > ofApp::consoleHeight)
+		if (ofGetMouseY() > CONSOLE_HEIGHT)
 			drawIncrement();
 	}
 }
@@ -88,7 +87,7 @@ void ofApp::mouseDragged(int x, int y, int button) {
 
 void ofApp::mousePressed(int x, int y, int button) {
 
-	if (y >= ofApp::consoleHeight) {
+	if (y >= CONSOLE_HEIGHT) {
 		drawingParticle = true;
 	}
     

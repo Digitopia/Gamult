@@ -50,6 +50,7 @@
 // console
 #define CONSOLE_COLOR 0x989898
 #define CONSOLE_BORDER 1
+#define CONSOLE_HEIGHT 90
 
 class ofApp : public ofBaseApp {
 
@@ -76,7 +77,6 @@ public:
 
 	static int nModules;
 	static int nPolygons;
-	static int consoleHeight;
 	static Module** modules;
 	static PolyClass** polygons;
 	static ofxOscSender oscSender;

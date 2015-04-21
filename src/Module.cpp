@@ -30,7 +30,7 @@ void Module::update() {
 // TODO: this is way too complicated method..
 void Module::addParticle(int life) {
 	if (population.size() < maximumPopulation) {
-        if (ofGetMouseX() >= modOrigin.x && ofGetMouseX() <= maxWidth && ofGetMouseY() >= ofApp::consoleHeight && ofGetMouseY() <= maxHeight) {
+        if (ofGetMouseX() >= modOrigin.x && ofGetMouseX() <= maxWidth && ofGetMouseY() >= CONSOLE_HEIGHT && ofGetMouseY() <= maxHeight) {
 			Particle newParticle(index, population.size(), ofGetMouseX(), ofGetMouseY(), life);
 			population.push_back(newParticle);
 		}
