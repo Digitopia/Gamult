@@ -69,14 +69,14 @@ void Module::draw() {
 }
 
 void Module::drawGrid() {
-//	ofSetColor(GRID_COLOR);
-//	int gridNumberElements = soundPaths.size();
-//	int gridCellSize = round(float(width) / gridNumberElements);
-//	for (int i = 1; i < gridNumberElements; i++) {
-//		int gridCellX = x0 + (i)*gridCellSize;
+	ofSetColor(GRID_COLOR);
+	int gridNumberElements = soundPaths.size();
+	int gridCellSize = round(float(width) / gridNumberElements);
+	for (int i = 1; i < gridNumberElements; i++) {
+		int gridCellX = x0 + (i)*gridCellSize;
 //    	ofLine(gridCellX, ofGetHeight(), gridCellX, ofGetHeight()-GRID_HEIGHT);
-////    	ofLine(gridCellX, ofGetHeight(), gridCellX, CONSOLE_HEIGHT);
-//	}
+    	ofLine(gridCellX, ofGetHeight(), gridCellX, CONSOLE_HEIGHT);
+	}
 }
 
 void Module::drawBorders() {
