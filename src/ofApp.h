@@ -47,7 +47,7 @@
 // particle
 #define PARTICLE_COLOR 0
 #define PARTICLE_LIFE_COLOR 128
-#define PARTICLE_LIMIT_COLOR "red"
+#define PARTICLE_LIMIT_COLOR 0xFF3300 
 #define PARTICLE_WIDTH 2
 
 // console

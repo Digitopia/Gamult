@@ -73,6 +73,7 @@ void ofApp::draw() {
 		if (ofGetMouseY() > CONSOLE_HEIGHT)
 			drawIncrement();
 	}
+
 }
 
 void ofApp::keyPressed(int key) {
@@ -104,7 +105,7 @@ void ofApp::mouseReleased(int x, int y, int button) {
 	
 	drawingParticle = false;
 	
-	if (y > maxParticleY) {
+	if (y > ofApp::maxParticleY) {
 		increment = 0;
 		return;
 	}
@@ -126,8 +127,9 @@ void ofApp::dragEvent(ofDragInfo dragInfo) {
 void ofApp::drawIncrement() {
 
 	ofPushStyle();
-
+	
 	ofSetColor(INCREMENT_COLOR);
+	if (ofGetMouseY() > ofApp::maxParticleY) ofSetHexColor(PARTICLE_LIMIT_COLOR);
 	ofSetLineWidth(INCREMENT_LINE_WIDTH);
 	ofNoFill();
 	
