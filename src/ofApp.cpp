@@ -1,7 +1,9 @@
 #include "ofApp.h"
 
-int ofApp::nModules = 4;
-int ofApp::nPolygons = 10;
+int ofApp::nModules = MODULES;
+int ofApp::nPolygons = PARTICLES_PER_MODULE;
+int ofApp::maxParticleY = 0;
+
 ofxOscSender ofApp::oscSender;
 Module** ofApp::modules = new Module* [ofApp::nModules];
 PolyClass** ofApp::polygons = new PolyClass* [ofApp::nPolygons]; // TODO: see if there's need to make this static
@@ -29,7 +31,7 @@ void ofApp::setup() {
 	increment = 0.0;
 	maxIncrement = 20.0;
     
-    
+	ofApp::maxParticleY = round(ofGetHeight() * (1-LIMIT_PARTICLE)); // TODO should be the height of the module instead
 
 }
 
@@ -102,6 +104,11 @@ void ofApp::mouseReleased(int x, int y, int button) {
 	
 	drawingParticle = false;
 	
+	if (y > maxParticleY) {
+		increment = 0;
+		return;
+	}
+	
 	for (int i = 0; i < ofApp::nModules; i++)
 		ofApp::modules[i]->addParticle(increment);
 	
@@ -136,6 +143,7 @@ void ofApp::drawIncrement() {
 }
 
 void ofApp::initSounds() {
+	
     bonangs.push_back("sounds/BBPL1.mp3");
     bonangs.push_back("sounds/BBPL2.mp3");
     bonangs.push_back("sounds/BBPL3.mp3");
