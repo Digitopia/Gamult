@@ -136,29 +136,29 @@ void ofApp::drawIncrement() {
 }
 
 void ofApp::initSounds() {
-    bonang.push_back("sounds/BBPL1.mp3");
-    bonang.push_back("sounds/BBPL2.mp3");
-    bonang.push_back("sounds/BBPL3.mp3");
-    bonang.push_back("sounds/BBPL4.mp3");
+    bonangs.push_back("sounds/BBPL1.mp3");
+    bonangs.push_back("sounds/BBPL2.mp3");
+    bonangs.push_back("sounds/BBPL3.mp3");
+    bonangs.push_back("sounds/BBPL4.mp3");
     
-    gender.push_back("sounds/GBPL1.wav");
-    gender.push_back("sounds/GBPL2.wav");
-    gender.push_back("sounds/GBPL3.wav");
-    gender.push_back("sounds/GBPL5.wav");
+    genders.push_back("sounds/GBPL1.wav");
+    genders.push_back("sounds/GBPL2.wav");
+    genders.push_back("sounds/GBPL3.wav");
+    genders.push_back("sounds/GBPL5.wav");
     
-    gong.push_back("sounds/GKPL1f.wav");
-    gong.push_back("sounds/GKPL2f.wav");
-    gong.push_back("sounds/GKPL3f.wav");
-    gong.push_back("sounds/GKPL5f.wav");
+    gongs.push_back("sounds/GKPL1f.wav");
+    gongs.push_back("sounds/GKPL2f.wav");
+    gongs.push_back("sounds/GKPL3f.wav");
+    gongs.push_back("sounds/GKPL5f.wav");
     
-    saron.push_back("sounds/SBPL1.wav");
-    saron.push_back("sounds/SBPL2.wav");
-    saron.push_back("sounds/SBPL3.wav");
-    saron.push_back("sounds/SBPL4.wav");
+    sarons.push_back("sounds/SBPL1.wav");
+    sarons.push_back("sounds/SBPL2.wav");
+    sarons.push_back("sounds/SBPL3.wav");
+    sarons.push_back("sounds/SBPL4.wav");
     
-    instruments.push_back(bonang);
-    instruments.push_back(gender);
-    instruments.push_back(gong);
-    instruments.push_back(saron);
+    instruments.push_back(bonangs);
+    instruments.push_back(genders);
+    instruments.push_back(gongs);
+    instruments.push_back(sarons);
     
 }

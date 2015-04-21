@@ -81,10 +81,10 @@ public:
 	static PolyClass** polygons;
 	static ofxOscSender oscSender;
     
-    vector <string> bonang;
-    vector <string> gender;
-    vector <string> gong;
-    vector <string> saron;
+    vector <string> bonangs;
+    vector <string> genders;
+    vector <string> gongs;
+    vector <string> sarons;
     
     vector <vector<string> > instruments;
     
