@@ -105,8 +105,9 @@ void Particle::playSound(bool send) {
 	
 	// segment particle position x to 4 spaces
 	// TODO: this should be according to the instrument
-	float notef = ofMap(center.x, ofApp::modules[module]->getX0(), ofApp::modules[module]->getX1(), 0, 3);
-	int note = floor(notef + 0.5);
+	float notef = ofMap(center.x, ofApp::modules[module]->getX0(), ofApp::modules[module]->getX1(), 0, 4);
+    
+	int note = floor(notef);
 
     ofApp::modules[module]->playSound(note);
 	int idx = ofApp::modules[module]->getIndex();
