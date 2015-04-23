@@ -27,10 +27,10 @@ void ofApp::setup() {
 void ofApp::initModules() {
 	
 	vector<string> bonangs;
-	bonangs.push_back("sounds/BBPL1.mp3");
-	bonangs.push_back("sounds/BBPL2.mp3");
-	bonangs.push_back("sounds/BBPL3.mp3");
-	bonangs.push_back("sounds/BBPL4.mp3");
+	bonangs.push_back("sounds/BBPL1.wav");
+	bonangs.push_back("sounds/BBPL2.wav");
+	bonangs.push_back("sounds/BBPL3.wav");
+	bonangs.push_back("sounds/BBPL4.wav");
 	
 	vector<string> genders;
 	genders.push_back("sounds/GBPL1.wav");

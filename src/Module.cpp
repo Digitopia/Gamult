@@ -19,6 +19,7 @@ Module::Module(int index, float x, float y, float width, float height, int maxPo
         // TODO: this looks pretty bad...
         ofSoundPlayer s;
         sounds.push_back(s);
+        sounds[i].setMultiPlay(true);
         sounds[i].loadSound(soundPaths[i], true);
     }
 
