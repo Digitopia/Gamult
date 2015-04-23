@@ -24,7 +24,7 @@
 #define UI_FONT_SIZE 10
 #define UI_COLOR 255
 
-#define BUTTON_SIZE 16
+//#define BUTTON_SIZE 16
 #define FADER_SIZE 12
 #define FADER_RANGE 150
 

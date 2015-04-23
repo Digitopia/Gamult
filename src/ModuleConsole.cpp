@@ -9,10 +9,12 @@ ModuleConsole::ModuleConsole(int x, float width, int module) {
 	this->module = module;
 	
 	int y = 0;
+    
+    int buttonSize = ofGetHeight()*0.018;
 	
-	remove = new Button(BUTTON_CLICK,  module, BUTTON_SIZE, x+BUTTON_SIZE, y+BUTTON_SIZE,   "Remove");
-	loop =   new Button(BUTTON_TOGGLE, module, BUTTON_SIZE, x+BUTTON_SIZE, y+BUTTON_SIZE*3, "Loop");
-	freeze = new Button(BUTTON_TOGGLE, module, BUTTON_SIZE, x+BUTTON_SIZE, y+BUTTON_SIZE*5, "Freeze");
+	remove = new Button(BUTTON_CLICK,  module, buttonSize, x+buttonSize, y+buttonSize,   "Remove");
+	loop =   new Button(BUTTON_TOGGLE, module, buttonSize, x+buttonSize, y+buttonSize*3, "Loop");
+	freeze = new Button(BUTTON_TOGGLE, module, buttonSize, x+buttonSize, y+buttonSize*5, "Freeze");
 
 	x = x + width/2;
 	gravity   = new Fader(x, y+10+5, FADER_SIZE, FADER_RANGE, "Gravity");
