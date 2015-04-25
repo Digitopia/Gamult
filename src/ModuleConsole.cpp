@@ -26,8 +26,7 @@ void ModuleConsole::draw() {
 
 	ofPushStyle();
 	
-	// TODO: should be a variable	
-	ofSetColor(50, 128);
+	ofSetHexColor(CONSOLE_COLOR);
 
 	ofFill();
 
