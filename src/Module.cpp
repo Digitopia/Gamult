@@ -40,25 +40,27 @@ void Module::addParticle(int life, int x, int y) {
 	}
 }
 
-// TODO: refactor!
 void Module::manageParticles() {
+
 	for (int i = 0; i < population.size(); i++) {
+		
 		managedParticle = &population[i];
-		if (!isFreezed() && !isLooping()) {
-            
-				if ((managedParticle->getCounter()) >= (managedParticle->getLife())) {
+
+		if (!isFreezed()) {
+			if (!isLooping()) {
+				if (managedParticle->getCounter() >= managedParticle->getLife()) {
 					population.erase(population.begin() + i);
-                    // TODO: check if this is really needed, maybe for collision detection?
-					//managedParticle->noGravity();
 				}
 				else {
 					managedParticle->yesGravity();
 				}
-            
-        } else if (isLooping() && !isFreezed()) { // if the particle is looping, but not freezed
-            managedParticle->updateGravity();
-            managedParticle->noGravity();
-        }
+			}
+			else { // not freezed and not looping
+				managedParticle->updateGravity();
+				managedParticle->noGravity();
+			}
+		}
+		
 		managedParticle->draw();
 	}
 }
@@ -76,8 +78,8 @@ void Module::drawGrid() {
 	int gridCellSize = round(float(width) / gridNumberElements);
 	for (int i = 1; i < gridNumberElements; i++) {
 		int gridCellX = x0 + (i)*gridCellSize;
-//    	ofLine(gridCellX, ofGetHeight(), gridCellX, ofGetHeight()-GRID_HEIGHT);
-    	ofLine(gridCellX, ofGetHeight(), gridCellX, CONSOLE_HEIGHT);
+//    	ofLine(gridCellX, ofGetHeight(), gridCellX, ofGetHeight()-GRID_HEIGHT); // small grids at bottom
+    	ofLine(gridCellX, ofGetHeight(), gridCellX, CONSOLE_HEIGHT); // top to bottom grids
 	}
 }
 
