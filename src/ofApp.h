@@ -20,7 +20,7 @@
 #define PORT 5000
 #define OSC_ADDRESS "/GML/"
 
-#define UI_FONT_FACE "verdana.ttf" // TODO: change this font!
+#define UI_FONT_FACE "verdana.ttf"
 #define UI_FONT_SIZE 10
 #define UI_COLOR 255
 
@@ -53,6 +53,7 @@
 #define GRID_HEIGHT 20
 
 #define POLY_WIDTH 1
+#define POLY_COLOR 128
 
 #define LIMIT_PARTICLE 0.2 // percentage of the console height below which it is not possible to add particles
 

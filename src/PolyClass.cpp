@@ -19,7 +19,7 @@ void PolyClass::display(int i) {
 	ofSetLineWidth(POLY_WIDTH);
 
 	// TODO: should be a variable
-	ofSetColor(0, 128);
+	ofSetColor(POLY_COLOR);
 
 	ofCurveVertex(0, ofGetHeight()/2);
 	ofCurveVertex(0, ofGetHeight()/2);
