@@ -13,17 +13,20 @@ Module::Module(int index, float x, float y, float width, float height, int maxPo
 	this->console = new ModuleConsole(x0, width, index);
 //    this->panel = new Panel(index, x0, y, width);
 	
-	this->x1 = x + width; // just so that calculations are faster to write
+	this->x1 = x + width;
+	
+	loadSounds();
 
+}
+
+void Module::loadSounds() {
     for (int i = 0; i < soundPaths.size(); i++) {
-        // TODO: this looks pretty bad...
         ofSoundPlayer s;
         sounds.push_back(s);
         sounds[i].setMultiPlay(true);
         sounds[i].loadSound(soundPaths[i], true);
     }
-
-} 
+}
 
 void Module::update() {
 	// TODO: should be doing updates here

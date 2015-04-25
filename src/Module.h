@@ -12,6 +12,7 @@ public:
 
 	Module(int index, float x, float y, float width, float height, int maxPopulation, vector<string> soundPaths);
 
+	void loadSounds();
 	void update();
 	void addParticle(int life);
 	void manageParticles();
