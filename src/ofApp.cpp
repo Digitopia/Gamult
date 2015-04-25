@@ -136,7 +136,7 @@ void ofApp::mouseReleased(int x, int y, int button) {
 	}
 	
 	for (int i = 0; i < ofApp::nModules; i++)
-		ofApp::modules[i]->addParticle(increment);
+		ofApp::modules[i]->addParticle(increment, x, y);
 	
 	increment = 0;
 	

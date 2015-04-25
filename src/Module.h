@@ -14,7 +14,7 @@ public:
 
 	void loadSounds();
 	void update();
-	void addParticle(int life);
+	void addParticle(int life, int x, int y);
 	void manageParticles();
 	void eraseParticle();
 	void draw();

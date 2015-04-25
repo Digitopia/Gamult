@@ -32,12 +32,10 @@ void Module::update() {
 	// TODO: should be doing updates here
 }
 
-// TODO: this should be working with callbacks
-void Module::addParticle(int life) {
+void Module::addParticle(int life, int x, int y) {
 	if (population.size() < maxPopulation) {
-        if (ofGetMouseX() >= x0 && ofGetMouseX() <= x1 && ofGetMouseY() >= CONSOLE_HEIGHT) {
-			Particle p(index, population.size(), ofGetMouseX(), ofGetMouseY(), life);
-			population.push_back(p);
+        if (x >= x0 && x <= x1 && y >= CONSOLE_HEIGHT) {
+			population.push_back(Particle(index, population.size(), x, y, life));
 		}
 	}
 }
