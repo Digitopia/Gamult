@@ -5,22 +5,15 @@ PolyClass::PolyClass(int index) {
 	this->index = index;
 }
 
-void PolyClass::addVertex(float vX, float vY) {
-	ofVec2f newVertex;
-	newVertex.set(vX, vY);
-	addedVertexes.push_back(newVertex);
-}
-
 void PolyClass::display(int i) {
 
 	ofPushStyle();
-	ofBeginShape();
+
 	ofNoFill();
 	ofSetLineWidth(POLY_WIDTH);
-
-	// TODO: should be a variable
 	ofSetColor(POLY_COLOR);
 
+	ofBeginShape();
 	ofCurveVertex(0, ofGetHeight()/2);
 	ofCurveVertex(0, ofGetHeight()/2);
 

@@ -8,16 +8,12 @@ class PolyClass {
 public:
 
 	PolyClass(int index);
-
-	void addVertex(float vX, float vY);
 	void display(int i);
 
-	// TODO: this should be private
-	int index;
-	vector <ofVec2f> addedVertexes;
-
 private:
-
+	
+	int index;
+	
 };
 
 #endif
