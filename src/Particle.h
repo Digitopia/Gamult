@@ -12,15 +12,15 @@ public:
 	void draw();
 	void drawCircle();
 	void drawLife();
-	void noGravity();
-	void yesGravity();
-    void updateGravity();
+//	void noGravity();
+	void gravity();
+    void loop();
 	
 	void report(int  idx, int note, int vel);
     void playSound(bool send);
     
 	int getSpeed() { return speed; }
-	int getGravity() { return gravity; }
+//	int getGravity() { return gravity; }
 	int getLife() { return life; }
 	int getCounter() { return counter; }
 	int getX() { return center.x; }
@@ -33,9 +33,9 @@ private:
 	int counter; //	increases (or decreases) in function of the life of the particle
 	int life;	 // radius of the particle, that is always the same
 	float speed;
-	float gravity;
+//	float gravity;
     float direction;
-	float loopGravity;
+//	float loopGravity;
 	float y0;
 	ofVec2f center;
 

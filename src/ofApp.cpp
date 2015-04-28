@@ -6,7 +6,7 @@ int ofApp::maxParticleY = 0;
 
 ofxOscSender ofApp::oscSender;
 Module** ofApp::modules = new Module* [ofApp::nModules];
-PolyClass** ofApp::polygons = new PolyClass* [ofApp::nPolygons]; // TODO: see if there's need to make this static
+PolyClass** ofApp::polygons = new PolyClass* [ofApp::nPolygons];
 
 void ofApp::setup() {
 	
@@ -62,7 +62,9 @@ void ofApp::initModules() {
 }
 
 void ofApp::update() {
-	
+	for (int i = 0; i < ofApp::nModules; i++) {
+		ofApp::modules[i]->update();
+	}
 }
 
 void ofApp::draw() {
@@ -71,7 +73,6 @@ void ofApp::draw() {
 
 	for (int i = 0; i < ofApp::nModules; i++) {
 		ofApp::modules[i]->draw();
-		ofApp::modules[i]->manageParticles();
 	}
 
 	// TODO: this block can be really better written

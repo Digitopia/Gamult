@@ -15,11 +15,11 @@ public:
 	void loadSounds();
 	void update();
 	void addParticle(int life, int x, int y);
-	void manageParticles();
 	void eraseParticle();
 	void draw();
 	void drawGrid();
 	void drawBorders();
+	void drawParticles();
     void playSound(int index);
 	
 	float getGravity() { return console->getGravity(); }
@@ -36,7 +36,6 @@ public:
 	
 	// TODO: these should be private too
 	vector<Particle> particles;
-	Particle* managedParticle;
 //	Panel* panel;
 
 private:

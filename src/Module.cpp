@@ -28,10 +28,6 @@ void Module::loadSounds() {
     }
 }
 
-void Module::update() {
-	// TODO: should be doing updates here
-}
-
 void Module::addParticle(int life, int x, int y) {
 	if (particles.size() < maxPopulation) {
         if (x >= x0 && x <= x1 && y >= CONSOLE_HEIGHT) {
@@ -40,28 +36,22 @@ void Module::addParticle(int life, int x, int y) {
 	}
 }
 
-void Module::manageParticles() {
-
+void Module::update() {
 	for (int i = 0; i < particles.size(); i++) {
-		
-		managedParticle = &particles[i];
-
+		Particle *p = &particles[i];
 		if (!isFreezed()) {
-			if (!isLooping()) {
-				if (managedParticle->getCounter() >= managedParticle->getLife()) {
-					particles.erase(particles.begin() + i);
+			if (isLooping()) {
+				p->loop();
+			}
+			else {
+				if (p->getCounter() >= p->getLife()) {
+					particles.erase(particles.begin()+i);
 				}
 				else {
-					managedParticle->yesGravity();
+					p->gravity();
 				}
 			}
-			else { // not freezed and not looping
-				managedParticle->updateGravity();
-				managedParticle->noGravity();
-			}
 		}
-		
-		managedParticle->draw();
 	}
 }
 
@@ -70,6 +60,12 @@ void Module::draw() {
 //    panel->draw();
 	drawBorders();
 	drawGrid();
+	drawParticles();
+}
+
+void Module::drawParticles() {
+	for (int i = 0; i < particles.size(); i++)
+		particles[i].draw();
 }
 
 void Module::drawGrid() {

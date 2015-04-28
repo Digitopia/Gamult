@@ -16,13 +16,9 @@ Particle::Particle(int module, int index, float x, float y, int life) {
 
 }
 
-void Particle::noGravity() {
-	center.y += loopGravity;
-}
+void Particle::gravity() {
 
-void Particle::yesGravity() {
-
-	gravity = ofApp::modules[module]->getGravity();
+	float gravity = ofApp::modules[module]->getGravity();
 	speed += gravity;
 	
 	if (center.y >= ofGetHeight()) {
@@ -36,10 +32,34 @@ void Particle::yesGravity() {
 	
 	if (center.y >= ofGetHeight() || center.y <= CONSOLE_HEIGHT + life) {
 		speed = speed * -0.95;
+//		speed = speed * -1.0;
 		counter++;
 	}
 	
 	center.y += speed;
+}
+
+void Particle::loop() {
+	
+	if (center.y > ofGetHeight()) {
+		direction = -1;
+		playSound(true);
+	}
+
+	// bounce back at the initial position rather than the top of the console
+//	else if (center.y < y0)
+//		direction = 1;
+	
+	else if (center.y <= CONSOLE_HEIGHT + life) {
+		direction = 1;
+	}
+	
+//	float loopGravity = ofApp::modules[module]->getLoopSpeed()*50. * direction;
+	
+//	center.y += loopGravity;
+	
+	float gravity = ofApp::modules[module]->getGravity();
+	speed += gravity;
 }
 
 void Particle::draw() {
@@ -76,20 +96,6 @@ void Particle::drawLife() {
 	polyline.draw();
 
 	ofPopStyle();
-}
-
-void Particle::updateGravity() {
-	
-	if (center.y > ofGetHeight()) {
-		direction = -1.;
-        playSound(true);
-	}
-
-	else if (center.y < y0)
-		direction = 1.;
-
-	// TODO: magic number
-	loopGravity = ofApp::modules[module]->getLoopSpeed()*50. * direction;
 }
 
 void Particle::report(int idx, int note, int vel) {
