@@ -32,6 +32,7 @@ public:
 	int getX0()	{ return x0; }
 	int getX1()	{ return x1; }
     string getSoundLocation(int index) { return soundPaths[index]; }
+	int getNumberOfInstrumentNotes() { return soundPaths.size(); }
 	
 	// TODO: these should be private too
 	vector<Particle> population;

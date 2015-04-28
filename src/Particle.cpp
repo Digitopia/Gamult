@@ -103,9 +103,8 @@ void Particle::report(int idx, int note, int vel) {
 
 void Particle::playSound(bool send) {
 	
-	// segment particle position x to 4 spaces
-	// TODO: this should be according to the instrument
-	float notef = ofMap(center.x, ofApp::modules[module]->getX0(), ofApp::modules[module]->getX1(), 0, 4);
+	// segment particle position x to the amount of notes the instrument has
+	float notef = ofMap(center.x, ofApp::modules[module]->getX0(), ofApp::modules[module]->getX1(), 0, ofApp::modules[module]->getNumberOfInstrumentNotes());
     
 	int note = floor(notef);
 
