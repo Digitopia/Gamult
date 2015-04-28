@@ -35,7 +35,7 @@ public:
 	int getNumberOfInstrumentNotes() { return soundPaths.size(); }
 	
 	// TODO: these should be private too
-	vector<Particle> population;
+	vector<Particle> particles;
 	Particle* managedParticle;
 //	Panel* panel;
 

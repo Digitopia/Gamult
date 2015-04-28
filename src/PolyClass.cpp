@@ -18,9 +18,9 @@ void PolyClass::display(int i) {
 	ofCurveVertex(0, ofGetHeight()/2);
 
 	for (int j = 0; j < ofApp::nModules; j++) {
-		if (ofApp::modules[j]->population.size() > i) {
+		if (ofApp::modules[j]->particles.size() > i) {
 			// TODO: check if following is correct
-			Particle thisParticle = *new Particle(/*(Particle)*/ofApp::modules[j]->population[i]);
+			Particle thisParticle = *new Particle(/*(Particle)*/ofApp::modules[j]->particles[i]);
 			ofCurveVertex(thisParticle.getX(), thisParticle.getY());
 		}
 	}

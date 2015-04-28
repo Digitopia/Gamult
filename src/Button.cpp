@@ -28,8 +28,8 @@ void Button::mousePressed(ofMouseEventArgs& event) {
 	}
 
 	else if (type == BUTTON_CLICK) {
-		if (ofApp::modules[module]->population.size() > 0) {
-			ofApp::modules[module]->population.erase(ofApp::modules[module]->population.end());
+		if (ofApp::modules[module]->particles.size() > 0) {
+			ofApp::modules[module]->particles.erase(ofApp::modules[module]->particles.end());
 		}
 	}
 
