@@ -37,29 +37,27 @@ void Particle::gravity() {
 	}
 	
 	center.y += speed;
+	
+	cout << speed << endl;
 }
 
 void Particle::loop() {
 	
-	if (center.y > ofGetHeight()) {
-		direction = -1;
+	if (center.y <= y0) {
+		speed *= -1;
+	}
+	// bounce back at the initial position rather than the top of the console
+	else if (center.y >= ofGetHeight()) {
+		speed *= -1;
 		playSound(true);
 	}
-
-	// bounce back at the initial position rather than the top of the console
-//	else if (center.y < y0)
+	// bounce back the at the top of the console
+//	else if (center.y <= CONSOLE_HEIGHT + life) {
 //		direction = 1;
+//	}
 	
-	else if (center.y <= CONSOLE_HEIGHT + life) {
-		direction = 1;
-	}
-	
-//	float loopGravity = ofApp::modules[module]->getLoopSpeed()*50. * direction;
-	
-//	center.y += loopGravity;
-	
-	float gravity = ofApp::modules[module]->getGravity();
-	speed += gravity;
+	float loopCoef = ofApp::modules[module]->getLoopSpeed();
+	center.y += speed * loopCoef;
 }
 
 void Particle::draw() {
