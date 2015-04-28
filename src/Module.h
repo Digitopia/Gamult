@@ -34,7 +34,7 @@ public:
     string getSoundLocation(int index) { return soundPaths[index]; }
 	int getNumberOfInstrumentNotes() { return soundPaths.size(); }
 	vector<Particle> getParticles() { return particles; }
-	bool noParticles() { return particles.size() == 0; }
+	bool anyParticles() { return particles.size() > 0; }
 	void removeParticle() { particles.erase(particles.end()); }
 	int getNumberOfParticles() { return particles.size(); }
 	

@@ -28,7 +28,7 @@ void Button::mousePressed(ofMouseEventArgs& event) {
 	}
 
 	else if (type == BUTTON_CLICK) {
-		if (ofApp::modules[module]->noParticles()) {
+		if (ofApp::modules[module]->anyParticles()) {
 			ofApp::modules[module]->removeParticle();
 		}
 	}
