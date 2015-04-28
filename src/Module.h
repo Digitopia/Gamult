@@ -33,9 +33,11 @@ public:
 	int getX1()	{ return x1; }
     string getSoundLocation(int index) { return soundPaths[index]; }
 	int getNumberOfInstrumentNotes() { return soundPaths.size(); }
+	vector<Particle> getParticles() { return particles; }
+	bool noParticles() { return particles.size() == 0; }
+	void removeParticle() { particles.erase(particles.end()); }
+	int getNumberOfParticles() { return particles.size(); }
 	
-	// TODO: these should be private too
-	vector<Particle> particles;
 //	Panel* panel;
 
 private:
@@ -49,7 +51,7 @@ private:
 	ModuleConsole* console;
     vector<string> soundPaths;
     vector<ofSoundPlayer> sounds;
-
+	vector<Particle> particles;
 };
 
 #endif

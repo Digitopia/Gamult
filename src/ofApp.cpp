@@ -80,7 +80,7 @@ void ofApp::draw() {
 	for (int i = 0; i < ofApp::nPolygons; i++) {
 		int checkVertex = 0;
 		for (int j = 0; j < ofApp::nModules; j++) {
-			if (ofApp::modules[j]->particles.size() > i) {
+			if (ofApp::modules[j]->getNumberOfParticles() > i) {
 				checkVertex++;
 			}
 		}
