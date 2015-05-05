@@ -6,7 +6,6 @@ int ofApp::maxParticleY = 0;
 
 ofxOscSender ofApp::oscSender;
 Module** ofApp::modules = new Module* [ofApp::nModules];
-PolyClass** ofApp::polygons = new PolyClass* [ofApp::nPolygons];
 
 void ofApp::setup() {
 	
@@ -74,20 +73,8 @@ void ofApp::draw() {
 	for (int i = 0; i < ofApp::nModules; i++) {
 		ofApp::modules[i]->draw();
 	}
-
-	// TODO: this block can be really better written
-	// commenting everything but the display(i) line makes the code all most work entirely
-	for (int i = 0; i < ofApp::nPolygons; i++) {
-		int checkVertex = 0;
-		for (int j = 0; j < ofApp::nModules; j++) {
-			if (ofApp::modules[j]->getNumberOfParticles() > i) {
-				checkVertex++;
-			}
-		}
-
-		if (checkVertex != 0)
-			ofApp::polygons[i]->display(i);
-	}
+	
+	drawLines();
 	
 	if (drawingParticle) {
 	
@@ -99,7 +86,7 @@ void ofApp::draw() {
 		if (ofGetMouseY() > CONSOLE_HEIGHT)
 			drawIncrement();
 	}
-
+	
 }
 
 void ofApp::keyPressed(int key) {
@@ -170,3 +157,43 @@ void ofApp::drawIncrement() {
 
 }
 
+void ofApp::drawLine(int nth) {
+
+	vector<Particle*> nthParticles;
+	for (int i = 0; i < ofApp::nModules; i++) {
+		if (ofApp::modules[i]->getNumberOfParticles() > nth) {
+			nthParticles.push_back(ofApp::modules[i]->getParticle(nth));
+		}
+	}
+	
+	if (nthParticles.size() == 0)
+		return;
+	
+	ofPushStyle();
+	
+	ofNoFill();
+	ofSetLineWidth(POLY_WIDTH);
+	ofSetColor(POLY_COLOR);
+	
+	ofBeginShape();
+
+	// need four points at least otherwise the shape doesn't 'close' and therefore doesn't draw
+	ofCurveVertex(0, ofGetHeight()/2);
+	ofCurveVertex(0, ofGetHeight()/2);
+	
+	for (int i = 0; i < nthParticles.size(); i++)
+        ofCurveVertex(nthParticles[i]->getX(), nthParticles[i]->getY());
+	
+	ofCurveVertex(ofGetWidth(), ofGetHeight()/2);
+	ofCurveVertex(ofGetWidth(), ofGetHeight()/2);
+	
+	ofEndShape();
+	
+	ofPopStyle();
+}
+
+void ofApp::drawLines() {
+	for (int i = 0; i < PARTICLES_PER_MODULE; i++) {
+		drawLine(i);
+	}
+}

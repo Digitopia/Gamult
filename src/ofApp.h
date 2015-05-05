@@ -8,7 +8,6 @@
 #include "Fader.h"
 #include "Module.h"
 #include "ModuleConsole.h"
-#include "PolyClass.h"
 #include "Particle.h"
 #include "Panel.h"
 
@@ -78,12 +77,13 @@ public:
 
 	// custom
 	void drawIncrement();
+	void drawLines();
+	void drawLine(int nth);
 	void initModules();
 
 	static int nModules;
 	static int nPolygons;
 	static Module** modules;
-	static PolyClass** polygons;
 	static ofxOscSender oscSender;
     static int maxParticleY;
     
