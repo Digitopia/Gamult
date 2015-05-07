@@ -37,7 +37,6 @@
 		BC7C5EFB1AD44212004AB63E /* ModuleConsole.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC7C5EEF1AD44212004AB63E /* ModuleConsole.cpp */; };
 		BC7C5EFC1AD44212004AB63E /* ofApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC7C5EF11AD44212004AB63E /* ofApp.cpp */; };
 		BC7C5EFD1AD44212004AB63E /* Particle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC7C5EF31AD44212004AB63E /* Particle.cpp */; };
-		BC7C5EFE1AD44212004AB63E /* PolyClass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC7C5EF51AD44212004AB63E /* PolyClass.cpp */; };
 		C4782ECC372420ACE0615B74 /* OscPrintReceivedElements.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC8881B3C8C0A1C45F042E7A /* OscPrintReceivedElements.cpp */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
 		E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9710E8CC7DD009D7055 /* AGL.framework */; };
@@ -146,8 +145,6 @@
 		BC7C5EF21AD44212004AB63E /* ofApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofApp.h; sourceTree = "<group>"; };
 		BC7C5EF31AD44212004AB63E /* Particle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Particle.cpp; sourceTree = "<group>"; };
 		BC7C5EF41AD44212004AB63E /* Particle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Particle.h; sourceTree = "<group>"; };
-		BC7C5EF51AD44212004AB63E /* PolyClass.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PolyClass.cpp; sourceTree = "<group>"; };
-		BC7C5EF61AD44212004AB63E /* PolyClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PolyClass.h; sourceTree = "<group>"; };
 		BC8881B3C8C0A1C45F042E7A /* OscPrintReceivedElements.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = OscPrintReceivedElements.cpp; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscPrintReceivedElements.cpp; sourceTree = SOURCE_ROOT; };
 		C2FAC65C491D4231379F3298 /* ofxOscReceiver.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxOscReceiver.cpp; path = ../../../addons/ofxOsc/src/ofxOscReceiver.cpp; sourceTree = SOURCE_ROOT; };
 		C58862C6D212C8E8A83810F4 /* ofxOscMessage.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxOscMessage.h; path = ../../../addons/ofxOsc/src/ofxOscMessage.h; sourceTree = SOURCE_ROOT; };
@@ -403,8 +400,6 @@
 				BC7C5EF21AD44212004AB63E /* ofApp.h */,
 				BC7C5EF31AD44212004AB63E /* Particle.cpp */,
 				BC7C5EF41AD44212004AB63E /* Particle.h */,
-				BC7C5EF51AD44212004AB63E /* PolyClass.cpp */,
-				BC7C5EF61AD44212004AB63E /* PolyClass.h */,
 				B6800FDC1AD72FCD009D95F9 /* Panel.cpp */,
 				B6800FDD1AD72FCD009D95F9 /* Panel.h */,
 			);
@@ -474,7 +469,7 @@
 			attributes = {
 				LastUpgradeCheck = 0460;
 			};
-			buildConfigurationList = E4B69B4D0A3A1720003C02F2 /* Build configuration list for PBXProject "gamultOSX" */;
+			buildConfigurationList = E4B69B4D0A3A1720003C02F2 /* Build configuration list for PBXProject "GamultOSX" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -537,7 +532,6 @@
 				640279EE111671BD026CB013 /* ofxOscReceiver.cpp in Sources */,
 				8F5205AEF8861EF234F0651A /* ofxOscSender.cpp in Sources */,
 				BC7C5EF91AD44212004AB63E /* main.cpp in Sources */,
-				BC7C5EFE1AD44212004AB63E /* PolyClass.cpp in Sources */,
 				B69BE73D1AD6DB980019A408 /* ofxButton.cpp in Sources */,
 				BC7C5EF71AD44212004AB63E /* Button.cpp in Sources */,
 				BC7C5EFD1AD44212004AB63E /* Particle.cpp in Sources */,
@@ -835,7 +829,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		E4B69B4D0A3A1720003C02F2 /* Build configuration list for PBXProject "gamultOSX" */ = {
+		E4B69B4D0A3A1720003C02F2 /* Build configuration list for PBXProject "GamultOSX" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E4B69B4E0A3A1720003C02F2 /* Debug */,
