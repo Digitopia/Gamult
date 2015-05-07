@@ -14,6 +14,7 @@ public:
 	void drawLife();
 	void gravity();
     void loop();
+	void update();
 	
 	void report(int idx, int note, int vel);
     void playSound(bool send);

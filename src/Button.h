@@ -18,6 +18,8 @@ public:
 	void mousePressed(ofMouseEventArgs& event);
 	void draw();
 	bool getState() { return state; }
+	void on() { state = true; }
+	void off() { state = false; }
     
 private:
 
