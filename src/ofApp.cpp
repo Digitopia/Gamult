@@ -25,6 +25,8 @@ void ofApp::setup() {
 
 void ofApp::initModules() {
 	
+	// TODO: maybe this could just be a JSON config file?
+	
 	vector<string> bonangs;
 	bonangs.push_back("sounds/BBPL1.wav");
 	bonangs.push_back("sounds/BBPL2.wav");
@@ -49,14 +51,34 @@ void ofApp::initModules() {
 	sarons.push_back("sounds/SBPL3.wav");
 	sarons.push_back("sounds/SBPL4.wav");
 	
+	vector< vector<string> > config;
+	config.push_back(bonangs);
+	config.push_back(genders);
+	config.push_back(gongs);
+	config.push_back(sarons);
+	
+	vector<string> icons;
+	icons.push_back("1.png");
+	icons.push_back("2.png");
+	icons.push_back("3.png");
+	icons.push_back("4.png");
+
+	vector<string> icons2;
+	icons2.push_back("1.png");
+	icons2.push_back("2.png");
+	
+	vector<string> icons3;
+	icons3.push_back("3.png");
+	icons3.push_back("4.png");
+	
 	int moduleWidth = ofGetWidth()/ofApp::nModules;
 	int moduleHeight = ofGetHeight();
 	int moduleHabitants = ofApp::nPolygons;
 	
-	ofApp::modules[0] = new Module(0, 0*moduleWidth, 0, moduleWidth, moduleHeight, moduleHabitants, bonangs);
-	ofApp::modules[1] = new Module(1, 1*moduleWidth, 0, moduleWidth, moduleHeight, moduleHabitants, genders);
-	ofApp::modules[2] = new Module(2, 2*moduleWidth, 0, moduleWidth, moduleHeight, moduleHabitants, gongs);
-	ofApp::modules[3] = new Module(3, 3*moduleWidth, 0, moduleWidth, moduleHeight, moduleHabitants, sarons);
+	ofApp::modules[0] = new Module(0, 0*moduleWidth, 0, moduleWidth, moduleHeight, moduleHabitants, bonangs, icons);
+	ofApp::modules[1] = new Module(1, 1*moduleWidth, 0, moduleWidth, moduleHeight, moduleHabitants, genders, icons2);
+	ofApp::modules[2] = new Module(2, 2*moduleWidth, 0, moduleWidth, moduleHeight, moduleHabitants, gongs, icons3);
+	ofApp::modules[3] = new Module(3, 3*moduleWidth, 0, moduleWidth, moduleHeight, moduleHabitants, sarons, icons);
 
 }
 

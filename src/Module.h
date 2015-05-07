@@ -10,9 +10,10 @@ class Module {
 
 public:
 
-	Module(int index, float x, float y, float width, float height, int maxPopulation, vector<string> soundPaths);
+	Module(int index, float x, float y, float width, float height, int maxPopulation, vector<string> soundPaths, vector<string> iconPaths);
 
-	void loadSounds();
+	void loadSounds(vector<string> paths);
+	void loadIcons(vector<string> paths);
 	void update();
 	void addParticle(int life, int x, int y);
 	void eraseParticle();
@@ -21,6 +22,7 @@ public:
 	void drawBorders();
 	void drawParticles();
     void playSound(int index);
+	void changeInstrument(int index);
 	
 	float getGravity() { return console->getGravity(); }
 	float getLoopSpeed() { return console->getLoopSpeed(); }
@@ -31,8 +33,7 @@ public:
 	int getHeight()	{ return height; }
 	int getX0()	{ return x0; }
 	int getX1()	{ return x1; }
-    string getSoundLocation(int index) { return soundPaths[index]; }
-	int getNumberOfInstrumentNotes() { return soundPaths.size(); }
+	int getNumberOfInstrumentNotes() { return sounds.size(); }
 	vector<Particle> getParticles() { return particles; }
 	Particle* getParticle(int i) { return &particles[i]; }
 	bool anyParticles() { return particles.size() > 0; }
@@ -50,7 +51,6 @@ private:
 	int height;
 	int maxPopulation;
 	ModuleConsole* console;
-    vector<string> soundPaths;
     vector<ofSoundPlayer> sounds;
 	vector<Particle> particles;
 };

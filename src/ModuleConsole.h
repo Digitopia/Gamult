@@ -9,15 +9,20 @@ class ModuleConsole {
 
 public:
 
-	ModuleConsole(int x, float width, int module);
+	ModuleConsole(int x, float width, int module, vector<string> iconPaths);
+	
+	void loadIcons(vector<string> paths);
 
 	void draw();
+	void drawIcons();
 	
 	bool isFreezed();
 	bool isLooping();
 	float getGravity() { return gravity->getValue(); }
     float getLoopSpeed() { return loopSpeed->getValue(); }
 	
+	void mousePressed(ofMouseEventArgs& event);
+
 private:
 
 	int module;
@@ -31,6 +36,11 @@ private:
 
 	Fader* gravity;
 	Fader* loopSpeed;
+	
+	vector<ofImage> icons;
+	vector<ofRectangle> rects;
+	
+	ofImage img;
 
 };
 

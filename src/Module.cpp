@@ -1,6 +1,6 @@
 #include "ofApp.h"
 
-Module::Module(int index, float x, float y, float width, float height, int maxPopulation, vector<string> soundPaths) {
+Module::Module(int index, float x, float y, float width, float height, int maxPopulation, vector<string> soundPaths, vector<string> iconPaths) {
 
 	this->index = index;
 	this->x0 = x;
@@ -8,24 +8,26 @@ Module::Module(int index, float x, float y, float width, float height, int maxPo
 	this->width = width;
 	this->height = height;
 	this->maxPopulation = maxPopulation;
-    this->soundPaths = soundPaths;
 
-	this->console = new ModuleConsole(x0, width, index);
-//    this->panel = new Panel(index, x0, y, width);
+	this->console = new ModuleConsole(x0, width, index, iconPaths);
 	
 	this->x1 = x + width;
 	
-	loadSounds();
+	loadSounds(soundPaths);
 
 }
 
-void Module::loadSounds() {
-    for (int i = 0; i < soundPaths.size(); i++) {
+void Module::loadSounds(vector<string> paths) {
+    for (int i = 0; i < paths.size(); i++) {
         ofSoundPlayer s;
         sounds.push_back(s);
         sounds[i].setMultiPlay(true);
-        sounds[i].loadSound(soundPaths[i], true);
+        sounds[i].loadSound(paths[i], true);
     }
+}
+
+void Module::changeInstrument(int index) {
+	cout << "changing isntrument" << endl;
 }
 
 void Module::addParticle(int life, int x, int y) {
@@ -70,7 +72,7 @@ void Module::drawParticles() {
 
 void Module::drawGrid() {
 	ofSetColor(GRID_COLOR);
-	int gridNumberElements = soundPaths.size();
+	int gridNumberElements = sounds.size();
 	int gridCellSize = round(float(width) / gridNumberElements);
 	for (int i = 1; i < gridNumberElements; i++) {
 		int gridCellX = x0 + (i)*gridCellSize;
