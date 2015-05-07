@@ -73,7 +73,6 @@ public:
 	void mousePressed(int x, int y, int button);
 	void mouseReleased(int x, int y, int button);
 	void windowResized(int w, int h);
-	void dragEvent(ofDragInfo dragInfo);
 
 	// custom
 	void drawIncrement();
@@ -92,7 +91,6 @@ private:
 	float increment;	// current radius of the particle animation before releasing the mouse
 	float maxIncrement; // maximum radius allowed for the particle animation before releasing the mouse
 	bool drawingParticle;
-	
 
 };
 

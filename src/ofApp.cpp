@@ -133,9 +133,6 @@ void ofApp::mouseReleased(int x, int y, int button) {
 void ofApp::windowResized(int w, int h) {
 }
 
-void ofApp::dragEvent(ofDragInfo dragInfo) {
-}
-
 // draws the increase of the particle after mouse press and before mouse release
 void ofApp::drawIncrement() {
 
