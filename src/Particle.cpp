@@ -37,7 +37,7 @@ void Particle::gravity() {
 	
 	center.y += speed;
 	
-	cout << speed << endl;
+//	cout << speed << endl;
 }
 
 void Particle::loop() {

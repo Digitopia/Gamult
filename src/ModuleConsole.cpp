@@ -18,6 +18,8 @@ ModuleConsole::ModuleConsole(int x, float width, int module) {
 
 	// by default gravity is on
 	btnGravity->on();
+	btnRemove->off();
+	btnFreeze->off();
 
 	x = x + width/2;
 	fadSpeed = new Fader(x, y+50+5, FADER_SIZE, FADER_RANGE, "Speed");
