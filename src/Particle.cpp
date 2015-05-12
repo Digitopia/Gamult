@@ -18,7 +18,7 @@ Particle::Particle(int module, int index, float x, float y, int life) {
 
 void Particle::gravity() {
 
-	float gravity = ofApp::modules[module]->getGravity();
+	float gravity = ofApp::modules[module]->getSpeed();
 	speed += gravity;
 	
 	if (center.y >= ofGetHeight()) {
@@ -32,13 +32,12 @@ void Particle::gravity() {
 	
 	if (center.y >= ofGetHeight() || center.y <= CONSOLE_HEIGHT + life) {
 		speed = speed * -0.95;
-//		speed = speed * -1.0;
 		counter++;
 	}
 	
 	center.y += speed;
 	
-	cout << speed << endl;
+//	cout << speed << endl;
 }
 
 void Particle::loop() {
@@ -56,7 +55,7 @@ void Particle::loop() {
 //		direction = 1;
 //	}
 	
-	float loopCoef = ofApp::modules[module]->getLoopSpeed();
+	float loopCoef = ofApp::modules[module]->getSpeed();
 	center.y += speed * loopCoef;
 }
 

@@ -41,18 +41,10 @@ void Module::addParticle(int life, int x, int y) {
 void Module::update() {
 	for (int i = 0; i < particles.size(); i++) {
 		Particle *p = &particles[i];
-		if (!isFreezed()) {
-			if (isLooping()) {
-				p->loop();
-			}
-			else {
-				if (p->getCounter() >= p->getLife()) {
-					particles.erase(particles.begin()+i);
-				}
-				else {
-					p->gravity();
-				}
-			}
+		if (!isFreezed() && isLooping()) p->loop();
+		if (!isFreezed() && isGravityOn()) {
+			if (p->getCounter() >= p->getLife()) particles.erase(particles.begin()+i);
+			else p->gravity();
 		}
 	}
 }

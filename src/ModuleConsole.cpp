@@ -12,14 +12,19 @@ ModuleConsole::ModuleConsole(int x, float width, int module, vector<string> icon
     
     int buttonSize = ofGetHeight()*0.018;
 	
-	remove = new Button(BUTTON_CLICK,  module, buttonSize, x+buttonSize, y+buttonSize,   "Remove");
-	loop =   new Button(BUTTON_TOGGLE, module, buttonSize, x+buttonSize, y+buttonSize*3, "Loop");
-	freeze = new Button(BUTTON_TOGGLE, module, buttonSize, x+buttonSize, y+buttonSize*5, "Freeze");
+	btnRemove  = new Button(BUTTON_CLICK,  module, buttonSize, x+buttonSize, y+buttonSize,   "Remove");
+	btnGravity = new Button(BUTTON_TOGGLE, module, buttonSize, x+buttonSize, y+buttonSize*3, "Gravity");
+	btnFreeze  = new Button(BUTTON_TOGGLE, module, buttonSize, x+buttonSize, y+buttonSize*5, "Freeze");
+	
+	fadSpeed = new Fader(x+150, y+50+5, FADER_SIZE, FADER_RANGE, "Speed");
+	
+	// by default gravity is on
+	btnGravity->on();
+	btnRemove->off();
+	btnFreeze->off();
 
 	x = x + width/2;
-	gravity   = new Fader(x, y+10+5, FADER_SIZE, FADER_RANGE, "Gravity");
-	loopSpeed = new Fader(x, y+50+5, FADER_SIZE, FADER_RANGE, "Loop Speed");
-	
+
 	loadIcons(iconPaths);
 	
 	ofAddListener(ofEvents().mouseReleased, this, &ModuleConsole::mousePressed);
@@ -57,14 +62,12 @@ void ModuleConsole::draw() {
 
 	ofPopStyle();
 
-	remove->draw();
-	loop->draw();
-	freeze->draw();
-
-	gravity->draw();
-	loopSpeed->draw();
+	btnRemove->draw();
+	btnGravity->draw();
+	btnFreeze->draw();
+	fadSpeed->draw();
 	
-	drawIcons();
+//	drawIcons();
 
 }
 
@@ -91,10 +94,4 @@ void ModuleConsole::mousePressed(ofMouseEventArgs& event) {
 	}
 }
 
-bool ModuleConsole::isFreezed() {
-	return freeze->getState();
-}
 
-bool ModuleConsole::isLooping() {
-	return loop->getState();
-}

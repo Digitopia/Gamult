@@ -24,24 +24,22 @@ public:
     void playSound(int index);
 	void changeInstrument(int index);
 	
-	float getGravity() { return console->getGravity(); }
-	float getLoopSpeed() { return console->getLoopSpeed(); }
-	bool isFreezed() { return console->isFreezed(); }
-	bool isLooping() { return console->isLooping(); }
-	int getIndex() { return index; }
-	int getWidth() { return width; }
-	int getHeight()	{ return height; }
-	int getX0()	{ return x0; }
-	int getX1()	{ return x1; }
-	int getNumberOfInstrumentNotes() { return sounds.size(); }
-	vector<Particle> getParticles() { return particles; }
-	Particle* getParticle(int i) { return &particles[i]; }
-	bool anyParticles() { return particles.size() > 0; }
-	void removeParticle() { particles.erase(particles.end()); }
-	int getNumberOfParticles() { return particles.size(); }
+	int getX0()	       { return x0; }
+	int getX1()	       { return x1; }
+	int getIndex()     { return index; }
+	int getWidth()     { return width; }
+	int getHeight()	   { return height; }
+	float getSpeed()   { return console->getSpeed(); }
+	bool isFreezed()   { return console->isFreezed(); }
+	bool isLooping()   { return console->isLooping(); }
+	bool isGravityOn() { return console->isGravityOn(); }
+	int getNumberOfInstrumentNotes()   { return sounds.size(); }
+	bool anyParticles()                { return particles.size() > 0; }
+	void removeParticle()              { particles.erase(particles.end()); }
+	int getNumberOfParticles()         { return particles.size(); }
+	vector<Particle> getParticles()    { return particles; }
+	Particle* getParticle(int i)       { return &particles[i]; }
 	
-//	Panel* panel;
-
 private:
 
 	int x0, x1;

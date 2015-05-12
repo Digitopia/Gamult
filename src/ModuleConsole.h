@@ -16,10 +16,10 @@ public:
 	void draw();
 	void drawIcons();
 	
-	bool isFreezed();
-	bool isLooping();
-	float getGravity() { return gravity->getValue(); }
-    float getLoopSpeed() { return loopSpeed->getValue(); }
+	bool isFreezed()   { return btnFreeze->getState(); }
+	bool isGravityOn() { return btnGravity->getState(); }
+	bool isLooping()   { return !isGravityOn(); }
+    float getSpeed()   { return fadSpeed->getValue(); }
 	
 	void mousePressed(ofMouseEventArgs& event);
 
@@ -30,18 +30,17 @@ private:
 
 	int x, y;
 
-	Button* remove;
-	Button* loop;
-	Button* freeze;
-
-	Fader* gravity;
-	Fader* loopSpeed;
-	
 	vector<ofImage> icons;
 	vector<ofRectangle> rects;
 	
 	ofImage img;
+	
+	Button* btnRemove;
+	Button* btnGravity;
+	Button* btnFreeze;
 
+	Fader* fadSpeed;
+	
 };
 
 #endif
