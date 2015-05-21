@@ -34,10 +34,17 @@ void Particle::gravity() {
 		speed = speed * -0.95;
 		counter++;
 	}
+    
+    //make y0 the new highest point the particle reached when bouncing
+    
+    if(speed > 0 && prevSpeed <= 0) y0 = center.y;
 	
 	center.y += speed;
+    
+    prevSpeed = speed;
 	
 //	cout << speed << endl;
+    
 }
 
 void Particle::loop() {
