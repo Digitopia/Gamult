@@ -34,6 +34,8 @@ void Particle::gravity() {
         speed += gravity;
     }
     
+    center.y += speed;
+    
 }
 
 void Particle::loop() {
