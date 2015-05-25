@@ -12,8 +12,6 @@ Particle::Particle(int module, int index, float x, float y, int life) {
 	this->speed = 0;
     this->direction = 1.;
 
-	this->y0 = center.y;
-
 }
 
 void Particle::gravity() {
