@@ -19,7 +19,6 @@ Particle::Particle(int module, int index, float x, float y, int life) {
 void Particle::gravity() {
 
 	float gravity = ofApp::modules[module]->getSpeed();
-	speed += gravity;
 	
 	if (center.y >= ofGetHeight()) {
 		center.y = ofGetHeight();
@@ -33,37 +32,23 @@ void Particle::gravity() {
 	if (center.y >= ofGetHeight() || center.y <= CONSOLE_HEIGHT + life) {
 		speed = speed * -0.95;
 		counter++;
-	}
-    
-    //make y0 the new highest point the particle reached when bouncing
-    
-    if(speed > 0 && prevSpeed <= 0) y0 = center.y;
-	
-	center.y += speed;
-    
-    prevSpeed = speed;
-	
-//	cout << speed << endl;
+    } else {
+        speed += gravity;
+    }
     
 }
 
 void Particle::loop() {
-	
-	if (center.y <= y0) {
-		speed *= -1;
-	}
-	// bounce back at the initial position rather than the top of the console
-	else if (center.y >= ofGetHeight()) {
+    float loopCoef = ofApp::modules[module]->getSpeed();
+
+	if (center.y >= ofGetHeight()) {
 		speed *= -1;
 		playSound(true);
-	}
-	// bounce back the at the top of the console
-//	else if (center.y <= CONSOLE_HEIGHT + life) {
-//		direction = 1;
-//	}
+    } else {
+        speed += loopCoef;
+    }
 	
-	float loopCoef = ofApp::modules[module]->getSpeed();
-	center.y += speed * loopCoef;
+    center.y += speed;
 }
 
 void Particle::draw() {

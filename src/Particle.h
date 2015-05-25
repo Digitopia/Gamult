@@ -32,9 +32,7 @@ private:
 	int counter; //	increases (or decreases) in function of the life of the particle
 	int life;	 // radius of the particle, that is always the same
 	float speed;
-    float prevSpeed;
     float direction;
-	float y0;
 	ofVec2f center;
 
 };
