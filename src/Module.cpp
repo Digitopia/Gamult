@@ -33,6 +33,8 @@ void Module::changeInstrument(int index) {
 void Module::addParticle(int life, int x, int y) {
 	if (particles.size() < maxPopulation) {
         if (x >= x0 && x <= x1 && y >= CONSOLE_HEIGHT) {
+            // the following line is to make sure that when the particle is created it always goes downwards first (was causing problems with Particle::gravity(); 
+            if (y <= CONSOLE_HEIGHT + life) y = CONSOLE_HEIGHT + life + 1;
 			particles.push_back(Particle(index, particles.size(), x, y, life));
 		}
 	}
