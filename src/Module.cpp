@@ -82,6 +82,7 @@ void Module::drawBorders() {
 	ofPopStyle();
 }
 
-void Module::playSound(int index) {
+void Module::playSound(int index, float vol) {
+    sounds[index].setVolume(vol);
     sounds[index].play();
 }

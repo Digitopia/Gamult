@@ -21,7 +21,7 @@ public:
 	void drawGrid();
 	void drawBorders();
 	void drawParticles();
-    void playSound(int index);
+    void playSound(int index, float vol);
 	void changeInstrument(int index);
 	
 	int getX0()	       { return x0; }
