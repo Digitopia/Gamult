@@ -20,6 +20,9 @@ void ofApp::setup() {
 	maxIncrement = 20.0;
     
 	ofApp::maxParticleY = round(ofGetHeight() * (1-LIMIT_PARTICLE)); // TODO should be the height of the module instead
+    
+    info.load("info.png");
+    infoBox.set(ofGetWidth() - 65, ofGetHeight() - 65, 50, 50);
 
 }
 
@@ -108,6 +111,10 @@ void ofApp::draw() {
 		if (ofGetMouseY() > CONSOLE_HEIGHT)
 			drawIncrement();
 	}
+    ofPushStyle();
+    ofSetColor(255,255,255, 80);
+    info.draw(ofGetWidth() - 65, ofGetHeight() - 65, 50, 50);
+    ofPopStyle();
 	
 }
 

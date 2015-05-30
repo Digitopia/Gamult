@@ -104,7 +104,6 @@ void Particle::playSound(bool send) {
 	int note = floor(notef);
     // TODO: check magic numbers
     float vol = ofMap(speed, 5, 60, 0, 1);
-    cout << vol << endl;
 
     ofApp::modules[module]->playSound(note, vol);
 	int idx = ofApp::modules[module]->getIndex();
