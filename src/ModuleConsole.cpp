@@ -44,7 +44,7 @@ void ModuleConsole::loadIcons(vector<string> paths) {
     	int y = CONSOLE_HEIGHT - size - padding;
 		
 		ofRectangle rect;
-		rect.set(x+buttonSize + i*size, y, size, size);
+		rect.set(x+buttonSize + i*size + 2*width/3, y, size, size);
 		rects.push_back(rect);
 	}
 	
@@ -67,7 +67,7 @@ void ModuleConsole::draw() {
 	btnFreeze->draw();
 	fadSpeed->draw();
 	
-//	drawIcons();
+	drawIcons();
 
 }
 
@@ -78,7 +78,7 @@ void ModuleConsole::drawIcons() {
     int buttonSize = ofGetHeight()*0.018;
 	int y = CONSOLE_HEIGHT - size - padding;
 	for (int i = 0; i < icons.size(); i++) {
-		icons[i].draw(x+buttonSize + i*size, y, size, size);
+		icons[i].draw(x+buttonSize + i*size + 2*width/3, y, size, size);
 //		ofRect(rects[i]);
 	}
 	

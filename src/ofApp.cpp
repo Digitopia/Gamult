@@ -63,21 +63,21 @@ void ofApp::initModules() {
 	icons.push_back("3.png");
 	icons.push_back("4.png");
 
-	vector<string> icons2;
-	icons2.push_back("1.png");
-	icons2.push_back("2.png");
-	
-	vector<string> icons3;
-	icons3.push_back("3.png");
-	icons3.push_back("4.png");
+//	vector<string> icons2;
+//	icons2.push_back("1.png");
+//	icons2.push_back("2.png");
+//	
+//	vector<string> icons3;
+//	icons3.push_back("3.png");
+//	icons3.push_back("4.png");
 	
 	int moduleWidth = ofGetWidth()/ofApp::nModules;
 	int moduleHeight = ofGetHeight();
 	int moduleHabitants = ofApp::nPolygons;
 	
 	ofApp::modules[0] = new Module(0, 0*moduleWidth, 0, moduleWidth, moduleHeight, moduleHabitants, bonangs, icons);
-	ofApp::modules[1] = new Module(1, 1*moduleWidth, 0, moduleWidth, moduleHeight, moduleHabitants, genders, icons2);
-	ofApp::modules[2] = new Module(2, 2*moduleWidth, 0, moduleWidth, moduleHeight, moduleHabitants, gongs, icons3);
+	ofApp::modules[1] = new Module(1, 1*moduleWidth, 0, moduleWidth, moduleHeight, moduleHabitants, genders, icons);
+	ofApp::modules[2] = new Module(2, 2*moduleWidth, 0, moduleWidth, moduleHeight, moduleHabitants, gongs, icons);
 	ofApp::modules[3] = new Module(3, 3*moduleWidth, 0, moduleWidth, moduleHeight, moduleHabitants, sarons, icons);
 
 }

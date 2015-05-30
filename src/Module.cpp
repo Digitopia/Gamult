@@ -26,7 +26,73 @@ void Module::loadSounds(vector<string> paths) {
     }
 }
 
+void Module::unloadSounds() {
+    for (int i = 0; i<sounds.size(); i++) {
+        sounds[i].stop();
+        cout << "stopping sound " << i << endl;
+        sounds[i].unload();
+        cout << "unloading sound " << i << endl;
+    }
+    sounds.clear();
+    
+}
+
 void Module::changeInstrument(int index) {
+    
+    unloadSounds();
+    switch (index) {
+        case 0:
+        {
+            vector<string> bonangs;
+            bonangs.push_back("sounds/BBPL1.wav");
+            bonangs.push_back("sounds/BBPL2.wav");
+            bonangs.push_back("sounds/BBPL3.wav");
+            bonangs.push_back("sounds/BBPL4.wav");
+            loadSounds(bonangs);
+        }
+            break;
+        case 1:
+        {
+            vector<string> genders;
+            genders.push_back("sounds/GBPL1.wav");
+            genders.push_back("sounds/GBPL2.wav");
+            genders.push_back("sounds/GBPL3.wav");
+            genders.push_back("sounds/GBPL5.wav");
+            loadSounds(genders);
+        }
+            break;
+        case 2:
+        {
+            vector<string> gongs;
+            gongs.push_back("sounds/GKPL1f.wav");
+            gongs.push_back("sounds/GKPL2f.wav");
+            gongs.push_back("sounds/GKPL3f.wav");
+            gongs.push_back("sounds/GKPL5f.wav");
+            loadSounds(gongs);
+        }
+            break;
+        case 3:
+        {
+            vector<string> sarons;
+            sarons.push_back("sounds/SBPL1.wav");
+            sarons.push_back("sounds/SBPL2.wav");
+            sarons.push_back("sounds/SBPL3.wav");
+            sarons.push_back("sounds/SBPL4.wav");
+            loadSounds(sarons);
+        }
+            break;
+        default:
+        {
+            vector<string> bonangs;
+            bonangs.push_back("sounds/BBPL1.wav");
+            bonangs.push_back("sounds/BBPL2.wav");
+            bonangs.push_back("sounds/BBPL3.wav");
+            bonangs.push_back("sounds/BBPL4.wav");
+            loadSounds(bonangs);
+        }
+            break;
+    }
+    
 	cout << "changing isntrument" << endl;
 }
 
