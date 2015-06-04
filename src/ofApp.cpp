@@ -21,8 +21,11 @@ void ofApp::setup() {
     
 	ofApp::maxParticleY = round(ofGetHeight() * (1-LIMIT_PARTICLE)); // TODO should be the height of the module instead
     
+    about.load("about.png");
     info.load("info.png");
     infoBox.set(ofGetWidth() - 65, ofGetHeight() - 65, 50, 50);
+    
+    infoDisplay = false;
 
 }
 
@@ -113,8 +116,13 @@ void ofApp::draw() {
 	}
     ofPushStyle();
     ofSetColor(255,255,255, 80);
-    info.draw(ofGetWidth() - 65, ofGetHeight() - 65, 50, 50);
+    about.draw(ofGetWidth() - 65, ofGetHeight() - 65, 50, 50);
     ofPopStyle();
+    
+    if(infoDisplay)
+    {
+    info.draw(0 + 50, CONSOLE_HEIGHT + 50, ofGetWidth() - 100, ofGetHeight() - CONSOLE_HEIGHT - 100);
+    }
 	
 }
 
@@ -131,10 +139,17 @@ void ofApp::mouseDragged(int x, int y, int button) {
 }
 
 void ofApp::mousePressed(int x, int y, int button) {
+    
+    if (y >= CONSOLE_HEIGHT && !infoDisplay) {
+        drawingParticle = true;
+    }
+    
+    if(infoDisplay == true) infoDisplay = false;
+    
+    if (infoBox.inside(x,y) ) {
+        infoDisplay = true;
+    }
 
-	if (y >= CONSOLE_HEIGHT) {
-		drawingParticle = true;
-	}
     
 //    for (int i = 0; i < ofApp::nModules; i++) {
 //        if(ofApp::modules[i]->panel->select.inside(x, y)) {

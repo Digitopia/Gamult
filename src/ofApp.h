@@ -91,6 +91,8 @@ private:
 	float increment;	// current radius of the particle animation before releasing the mouse
 	float maxIncrement; // maximum radius allowed for the particle animation before releasing the mouse
 	bool drawingParticle;
+    bool infoDisplay;
+    ofImage about;
     ofImage info;
     ofRectangle infoBox;
 
