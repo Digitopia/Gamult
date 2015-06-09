@@ -30,7 +30,7 @@ void Module::unloadSounds() {
     for (int i = 0; i<sounds.size(); i++) {
         sounds[i].stop();
         cout << "stopping sound " << i << endl;
-        sounds[i].unload();
+        sounds[i].unloadSound();
         cout << "unloading sound " << i << endl;
     }
     sounds.clear();

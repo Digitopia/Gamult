@@ -19,6 +19,9 @@
 #define PORT 5000
 #define OSC_ADDRESS "/GML/"
 
+#define PORT2 7000
+#define NUM_MSG_STRINGS 20
+
 #define UI_FONT_FACE "verdana.ttf"
 #define UI_FONT_SIZE 10
 #define UI_COLOR 255
@@ -79,13 +82,15 @@ public:
 	void drawLines();
 	void drawLine(int nth);
 	void initModules();
+	void checkMultitouchData();
 
 	static int nModules;
 	static int nPolygons;
 	static Module** modules;
 	static ofxOscSender oscSender;
+	static ofxOscReceiver oscReceiver;
     static int maxParticleY;
-    
+	
 private:
 	
 	float increment;	// current radius of the particle animation before releasing the mouse
@@ -95,7 +100,7 @@ private:
     ofImage about;
     ofImage info;
     ofRectangle infoBox;
-
+	
 };
 
 #endif

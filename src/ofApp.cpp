@@ -5,12 +5,15 @@ int ofApp::nPolygons = PARTICLES_PER_MODULE;
 int ofApp::maxParticleY = 0;
 
 ofxOscSender ofApp::oscSender;
+ofxOscReceiver ofApp::oscReceiver;
+
 Module** ofApp::modules = new Module* [ofApp::nModules];
 
 void ofApp::setup() {
 	
 	ofSetFrameRate(FRAME_RATE);
 	ofSetCircleResolution(CIRCLE_RESOLUTION);
+	oscReceiver.setup(PORT2);
 	oscSender.setup(HOST, PORT);
 
 	initModules();
@@ -21,10 +24,10 @@ void ofApp::setup() {
     
 	ofApp::maxParticleY = round(ofGetHeight() * (1-LIMIT_PARTICLE)); // TODO should be the height of the module instead
     
-    about.load("about.png");
-    info.load("info.png");
-    infoBox.set(ofGetWidth() - 65, ofGetHeight() - 65, 50, 50);
-    
+    about.loadImage("about.png");
+    info.loadImage("info.png");
+//    infoBox.set(ofGetWidth() - 65, ofGetHeight() - 65, 50, 50);
+	
     infoDisplay = false;
 
 }
@@ -88,7 +91,18 @@ void ofApp::initModules() {
 
 }
 
+void ofApp::checkMultitouchData() {
+	while(oscReceiver.hasWaitingMessages()){
+		ofxOscMessage m;
+		oscReceiver.getNextMessage(&m);
+		cout << m.getAddress() << endl;
+	}
+}
+
 void ofApp::update() {
+	
+	checkMultitouchData();
+	
 	for (int i = 0; i < ofApp::nModules; i++) {
 		ofApp::modules[i]->update();
 	}
@@ -116,7 +130,7 @@ void ofApp::draw() {
 	}
     ofPushStyle();
     ofSetColor(255,255,255, 80);
-    about.draw(ofGetWidth() - 65, ofGetHeight() - 65, 50, 50);
+//    about.draw(ofGetWidth() - 65, ofGetHeight() - 65, 50, 50);
     ofPopStyle();
     
     if(infoDisplay)
@@ -146,9 +160,9 @@ void ofApp::mousePressed(int x, int y, int button) {
     
     if(infoDisplay == true) infoDisplay = false;
     
-    if (infoBox.inside(x,y) ) {
-        infoDisplay = true;
-    }
+//    if (infoBox.inside(x,y) ) {
+//        infoDisplay = true;
+//    }
 
     
 //    for (int i = 0; i < ofApp::nModules; i++) {
