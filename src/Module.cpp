@@ -12,7 +12,7 @@ Module::Module(int index, float x, float y, float width, float height, int maxPo
 	this->console = new ModuleConsole(x0, width, index, iconPaths);
 	
 	this->x1 = x + width;
-	
+    
 	loadSounds(soundPaths);
 
 }
@@ -27,14 +27,13 @@ void Module::loadSounds(vector<string> paths) {
 }
 
 void Module::unloadSounds() {
-    for (int i = 0; i<sounds.size(); i++) {
+    for (int i = 0; i < sounds.size(); i++) {
         sounds[i].stop();
         cout << "stopping sound " << i << endl;
         sounds[i].unloadSound();
         cout << "unloading sound " << i << endl;
     }
     sounds.clear();
-    
 }
 
 void Module::changeInstrument(int index) {
@@ -97,12 +96,12 @@ void Module::changeInstrument(int index) {
 }
 
 void Module::addParticle(int life, int x, int y) {
+    cout << life << " " << x << " " << y << endl;
+    cout << "size is " << particles.size() << endl;
 	if (particles.size() < maxPopulation) {
-        if (x >= x0 && x <= x1 && y >= CONSOLE_HEIGHT) {
-            // the following line is to make sure that when the particle is created it always goes downwards first (was causing problems with Particle::gravity(); 
-            if (y <= CONSOLE_HEIGHT + life) y = CONSOLE_HEIGHT + life + 1;
-			particles.push_back(Particle(index, particles.size(), x, y, life));
-		}
+        // the following line is to make sure that when the particle is created it always goes downwards first (was causing problems with Particle::gravity(); 
+        if (y <= CONSOLE_HEIGHT + life) y = CONSOLE_HEIGHT + life + 1;
+        particles.push_back(Particle(index, particles.size(), x, y, life));
 	}
 }
 
@@ -119,15 +118,15 @@ void Module::update() {
 
 void Module::draw() {
 	console->draw();
-//    panel->draw();
 	drawBorders();
 	drawGrid();
 	drawParticles();
 }
 
 void Module::drawParticles() {
-	for (int i = 0; i < particles.size(); i++)
+	for (int i = 0; i < particles.size(); i++) {
 		particles[i].draw();
+    }
 }
 
 void Module::drawGrid() {

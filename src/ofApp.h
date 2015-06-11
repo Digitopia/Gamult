@@ -10,54 +10,10 @@
 #include "ModuleConsole.h"
 #include "Particle.h"
 #include "Panel.h"
+#include "Touch.h"
+//#include "Constants.h"
 
-//
-// CONSTANTS
-//
-
-#define HOST "localhost"
-#define PORT 5000
-#define OSC_ADDRESS "/GML/"
-
-#define PORT2 7000
-#define NUM_MSG_STRINGS 20
-
-#define UI_FONT_FACE "verdana.ttf"
-#define UI_FONT_SIZE 10
-#define UI_COLOR 255
-
-//#define BUTTON_SIZE 16
-#define FADER_SIZE 12
-#define FADER_RANGE 150
-
-#define FRAME_RATE 60
-#define BACKGROUND_COLOR 255
-#define CIRCLE_RESOLUTION 50
-#define ARC_RESOLUTION 30
-#define MODULES 4
-#define PARTICLES_PER_MODULE 10
-
-#define INCREMENT_LINE_WIDTH 3
-#define INCREMENT_RADIUS 30
-#define INCREMENT_COLOR 128
-
-#define PARTICLE_COLOR 0
-#define PARTICLE_LIFE_COLOR 128
-#define PARTICLE_LIMIT_COLOR 0xFF3300
-#define PARTICLE_WIDTH 2
-
-#define CONSOLE_COLOR 0x989898
-#define CONSOLE_BORDER_WIDTH 1
-#define CONSOLE_BORDER_COLOR 0x717171
-#define CONSOLE_HEIGHT 120
-
-#define GRID_COLOR 230
-#define GRID_HEIGHT 20
-
-#define POLY_WIDTH 1
-#define POLY_COLOR 128
-
-#define LIMIT_PARTICLE 0.2 // percentage of the console height below which it is not possible to add particles
+class Touch; // TODO: something about the includes not working so that this needs to be here
 
 class ofApp : public ofBaseApp {
 
@@ -78,24 +34,28 @@ public:
 	void windowResized(int w, int h);
 
 	// custom
-	void drawIncrement();
 	void drawLines();
 	void drawLine(int nth);
 	void initModules();
 	void checkMultitouchData();
+    int getModuleId(int x);
+
+    // multitouch
+    void addTouch(int id, int x, int y);
+    void updateTouch(int id, int x, int y);
+    void removeTouch(int id);
 
 	static int nModules;
-	static int nPolygons;
-	static Module** modules;
+	static int nParticlesPerModule;
+	static Module** modules; // TODO make this a vector or something
 	static ofxOscSender oscSender;
 	static ofxOscReceiver oscReceiver;
-    static int maxParticleY;
+    
+    static int maxParticleY; // TODO does this really needs to be static and here
 	
 private:
-	
-	float increment;	// current radius of the particle animation before releasing the mouse
-	float maxIncrement; // maximum radius allowed for the particle animation before releasing the mouse
-	bool drawingParticle;
+    
+    vector <Touch> touches;
     bool infoDisplay;
     ofImage about;
     ofImage info;

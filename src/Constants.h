@@ -1,5 +1,5 @@
-#ifndef PARTICLE_H
-#define PARTICLE_H
+//#ifndef CONSTANTS_H
+//#define CONSTANTS_H
 
 // setup
 #define FRAME_RATE 60
@@ -54,4 +54,4 @@
 
 #define LIMIT_PARTICLE 0.2 // percentage of the console height below which it is not possible to add particles
 
-#endif
+//#endif

@@ -1,10 +1,10 @@
 #include "Touch.h"
 
 Touch::Touch(int id, int x, int y) {
-    this.id = id;
-    this.x = x;
-    this.y = y;
-    this.increment = 0;
+    this->id = id;
+    this->x = x;
+    this->y = y;
+    this->increment = 0.0;
 }
 
 void Touch::update() {
@@ -30,9 +30,9 @@ void Touch::draw() {
         ofNoFill();
 
         ofPolyline polyline;
-        ofPoint pt(t.getX(), t.getY());
+        ofPoint pt(x, y);
         float angleBegin = 180;
-        float angleEnd = float(increment)*(360./float(maxIncrement)) - 180;
+        float angleEnd = float(increment)*(360./float(TOUCH_MAX)) - 180;
         polyline.arc(pt, TOUCH_RADIUS, TOUCH_RADIUS, angleBegin, angleEnd, ARC_RESOLUTION);
         polyline.draw();
 

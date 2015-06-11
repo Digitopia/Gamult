@@ -34,6 +34,7 @@ private:
 	float speed;
     float direction;
 	ofVec2f center;
+    int id;
 
 };
 

@@ -2,6 +2,8 @@
 #define TOUCH_H
 
 #include "ofMain.h"
+#include "Constants.h"
+#include "ofApp.h"
 
 class Touch {
 
@@ -12,6 +14,7 @@ class Touch {
         int getId() { return id; }
         int getX() { return x; }
         int getY() { return y; }
+        float getIncrement() { return increment; }
 
         void setXY(int x, int y) { this->x = x; this->y = y;}
 
