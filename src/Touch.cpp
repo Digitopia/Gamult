@@ -19,25 +19,25 @@ void Touch::update() {
 }
 
 void Touch::draw() {
-
-    if (y > CONSOLE_HEIGHT) {
-
-        ofPushStyle();
-
-        ofSetColor(TOUCH_COLOR);
-        if (y > ofApp::maxParticleY) ofSetHexColor(PARTICLE_LIMIT_COLOR);
-        ofSetLineWidth(TOUCH_LINE_WIDTH);
-        ofNoFill();
-
-        ofPolyline polyline;
-        ofPoint pt(x, y);
-        float angleBegin = 180;
-        float angleEnd = float(increment)*(360./float(TOUCH_MAX)) - 180;
-        polyline.arc(pt, TOUCH_RADIUS, TOUCH_RADIUS, angleBegin, angleEnd, ARC_RESOLUTION);
-        polyline.draw();
-
-        ofPopStyle();
-
+    
+    ofPushStyle();
+    
+    ofSetColor(TOUCH_COLOR);
+    
+    if (y > ofApp::maxParticleY || y < CONSOLE_HEIGHT) {
+        ofSetHexColor(PARTICLE_LIMIT_COLOR);
     }
+    
+    ofSetLineWidth(TOUCH_LINE_WIDTH);
+    ofNoFill();
+    
+    ofPolyline polyline;
+    ofPoint pt(x, y);
+    float angleBegin = 180;
+    float angleEnd = float(increment)*(360./float(TOUCH_MAX)) - 180;
+    polyline.arc(pt, TOUCH_RADIUS, TOUCH_RADIUS, angleBegin, angleEnd, ARC_RESOLUTION);
+    polyline.draw();
+    
+    ofPopStyle();
 
 }

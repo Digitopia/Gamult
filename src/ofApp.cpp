@@ -20,13 +20,13 @@ void ofApp::setup() {
 	ofHideCursor();
 	
 	initModules();
-	
-	ofApp::maxParticleY = round(ofGetHeight() * (1-LIMIT_PARTICLE)); // TODO should be the height of the module instead
+
+    // TODO should be the height of the module instead
+	ofApp::maxParticleY = round(ofGetHeight() * (1-LIMIT_PARTICLE));
     
     about.loadImage("about.png");
     info.loadImage("info.png");
-   // infoBox.set(ofGetWidth() - 65, ofGetHeight() - 65, 50, 50);
-	
+    infoBox.set(ofGetWidth() - 65, ofGetHeight() - 65, 50, 50); // TODO: magic numbers!
     infoDisplay = false;
 }
 
@@ -58,15 +58,15 @@ void ofApp::draw() {
 	
 	drawLines();
 	
-    // ofPushStyle();
-    // ofSetColor(255,255,255, 80);
-    // about.draw(ofGetWidth() - 65, ofGetHeight() - 65, 50, 50);
-    // ofPopStyle();
+     ofPushStyle();
+     ofSetColor(255,255,255, 80);
+     about.draw(ofGetWidth() - 65, ofGetHeight() - 65, 50, 50);
+     ofPopStyle();
     
-    // if(infoDisplay)
-    // {
-    // info.draw(0 + 50, CONSOLE_HEIGHT + 50, ofGetWidth() - 100, ofGetHeight() - CONSOLE_HEIGHT - 100);
-    // }
+     if(infoDisplay) {
+         // TODO: magic numbers!
+         info.draw(0 + 50, CONSOLE_HEIGHT + 50, ofGetWidth() - 100, ofGetHeight() - CONSOLE_HEIGHT - 100);
+     }
 	
 }
 
@@ -110,14 +110,6 @@ void ofApp::initModules() {
 	icons.push_back("3.png");
 	icons.push_back("4.png");
 
-//	vector<string> icons2;
-//	icons2.push_back("1.png");
-//	icons2.push_back("2.png");
-//	
-//	vector<string> icons3;
-//	icons3.push_back("3.png");
-//	icons3.push_back("4.png");
-	
 	int moduleWidth = ofGetWidth()/ofApp::nModules;
 	int moduleHeight = ofGetHeight();
 	int moduleHabitants = ofApp::nParticlesPerModule;
@@ -161,6 +153,8 @@ void ofApp::checkMultitouchData() {
 }
 
 void ofApp::addTouch(int id, int x, int y) {
+    
+    ofNotifyMousePressed(x, y, 0);
 
     cout << "add (" << id << ", " << x << ", " << y << ")" << endl;
 
@@ -170,23 +164,21 @@ void ofApp::addTouch(int id, int x, int y) {
         infoDisplay = true;
     }
 
-    // for (int i = 0; i < ofApp::nModules; i++) {
-        // if(ofApp::modules[i]->panel->select.inside(x, y)) {
-            // ofApp::modules[i]->panel->showPanel = !ofApp::modules[i]->panel->showPanel;
-        // }
-    // }
-
     if (infoDisplay) {
         return;
     }
 
-    if (y >= CONSOLE_HEIGHT && modules[getModuleId(x)]->isNotFull()) {
+    if (modules[getModuleId(x)]->isNotFull()) {
+//    if (y >= CONSOLE_HEIGHT && modules[getModuleId(x)]->isNotFull()) {
         touches.push_back(Touch(id, x, y));
     }
 
 }
 
 void ofApp::updateTouch(int id, int x, int y) {
+
+    ofNotifyMouseDragged(x, y, 0);
+//    ofNotifyMouseMoved(x, y, 0);
 
     cout << "upd (" << id << ", " << x << ", " << y << ")" << endl;
 
@@ -200,7 +192,7 @@ void ofApp::updateTouch(int id, int x, int y) {
 }
 
 void ofApp::removeTouch(int id) {
-
+    
     cout << "rem (" << id << ")" << endl;
     
 	int x, y;
@@ -224,7 +216,10 @@ void ofApp::removeTouch(int id) {
         return;
     }
 
-	if (y < ofApp::maxParticleY) {
+
+//    ofNotifyMouseReleased(x, y, 0);
+    
+    if (y > CONSOLE_HEIGHT && y < ofApp::maxParticleY) {
         modules[getModuleId(x)]->addParticle(increment, x, y);
 	}
 

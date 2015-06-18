@@ -41,7 +41,7 @@ public:
 	vector<Particle> getParticles()  { return particles; }
 	Particle* getParticle(int i)     { return &particles[i]; }
     bool isFull()                    { return particles.size() == maxPopulation; }
-    bool isNotFull()                 { return !isFull(); }
+    bool isNotFull()                 { return !isFull();}
 
 private:
 
