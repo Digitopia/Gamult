@@ -28,8 +28,8 @@ void ofApp::setup() {
     // TODO should be the height of the module instead
 	ofApp::maxParticleY = round(ofGetHeight() * (1-LIMIT_PARTICLE));
     
-    imgAboutIcon.loadImage("about.png");
-    imgAbout.loadImage("info.png");
+    imgAboutIcon.loadImage("about.png"); // TODO: refactor filenames
+    imgAbout.loadImage("info.png"); // TODO: refactor filenames
     aboutRect.set(ofGetWidth() - 65, ofGetHeight() - 65, 50, 50); // TODO: magic numbers
     inAbout = false;
     
@@ -38,6 +38,8 @@ void ofApp::setup() {
 void ofApp::update() {
     
     checkMultitouchData();
+    
+    if (inAbout) return;
     
     for (touchesIterator it = touches.begin(); it != touches.end(); it++) {
         it->second.update();
@@ -169,6 +171,11 @@ void ofApp::checkMultitouchData() {
 
 void ofApp::touchDown(ofTouchEventArgs &touch) {
     
+    if (inAbout) {
+        inAbout = false;
+        return;
+    }
+    
     int x = touch.x;
     int y = touch.y;
     int id = touch.id;
@@ -188,6 +195,8 @@ void ofApp::touchDown(ofTouchEventArgs &touch) {
 
 void ofApp::touchMoved(ofTouchEventArgs &touch) {
     
+    if (inAbout) return;
+    
     int x = touch.x;
     int y = touch.y;
     int id = touch.id;
@@ -201,9 +210,7 @@ void ofApp::touchMoved(ofTouchEventArgs &touch) {
 
 void ofApp::touchUp(ofTouchEventArgs &touch) {
     
-    if (inAbout) {
-        return;
-    }
+    if (inAbout) return;
     
     int id = touch.id;
     
