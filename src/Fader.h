@@ -10,9 +10,10 @@ public:
 	Fader(float x0, float y, int size, int range, string title);
 	void draw();
     float getValue();
-	void mousePressed(ofMouseEventArgs& event);
-	void mouseDragged(ofMouseEventArgs& event);
-	void mouseReleased(ofMouseEventArgs& event);
+	
+    void touchDown(ofTouchEventArgs& event);
+	void touchMoved(ofTouchEventArgs& event);
+	void touchUp(ofTouchEventArgs& event);
 
 private:
 	
@@ -23,7 +24,8 @@ private:
 	string title;
     int size; // size in pixels of the square of the fader
     int range; // range in pixels of the line in which the fader moves
-    bool dragging; // true if the fader is being dragged and false otherwise
+//    bool dragging; // true if the fader is being dragged and false otherwise
+    int id; // the id of the touch to which this fader is locked
     
 };
 

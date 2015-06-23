@@ -4,6 +4,8 @@ int ofApp::nModules = MODULES;
 int ofApp::nParticlesPerModule = PARTICLES_PER_MODULE;
 int ofApp::maxParticleY = 0;
 
+typedef map<int, Touch>::iterator touchesIterator;
+
 ofxOscSender ofApp::oscSender;
 ofxOscReceiver ofApp::oscReceiver;
 
@@ -15,27 +17,25 @@ void ofApp::setup() {
 	ofSetCircleResolution(CIRCLE_RESOLUTION);
 	oscReceiver.setup(RECEIVE_PORT);
 	oscSender.setup(HOST, SEND_PORT);
+    
+    ofRegisterTouchEvents(this);
 
-    // everything is controlled by multitouch so no need for cursor
-	ofHideCursor();
+    // with multitouch no need for mouse cursor
+    ofHideCursor();
 	
 	initModules();
 
     // TODO should be the height of the module instead
 	ofApp::maxParticleY = round(ofGetHeight() * (1-LIMIT_PARTICLE));
     
-    about.loadImage("about.png");
-    info.loadImage("info.png");
-    infoBox.set(ofGetWidth() - 65, ofGetHeight() - 65, 50, 50); // TODO: magic numbers!
-    infoDisplay = false;
 }
 
 void ofApp::update() {
 
     checkMultitouchData();
 
-    for (int i = 0; i < touches.size(); i++) {
-        touches[i].update();
+    for (touchesIterator it = touches.begin(); it != touches.end(); it++) {
+        it->second.update();
     }
 
 	for (int i = 0; i < ofApp::nModules; i++) {
@@ -52,21 +52,11 @@ void ofApp::draw() {
 		ofApp::modules[i]->draw();
 	}
 
-    for (int i = 0; i < touches.size(); i++) {
-        touches[i].draw();
+    for (touchesIterator it = touches.begin(); it != touches.end(); it++) {
+        it->second.draw();
     }
 	
 	drawLines();
-	
-     ofPushStyle();
-     ofSetColor(255,255,255, 80);
-     about.draw(ofGetWidth() - 65, ofGetHeight() - 65, 50, 50);
-     ofPopStyle();
-    
-     if(infoDisplay) {
-         // TODO: magic numbers!
-         info.draw(0 + 50, CONSOLE_HEIGHT + 50, ofGetWidth() - 100, ofGetHeight() - CONSOLE_HEIGHT - 100);
-     }
 	
 }
 
@@ -129,100 +119,86 @@ void ofApp::checkMultitouchData() {
 		oscReceiver.getNextMessage(&m);
         // cout << m.getAddress() << endl;
 
+        ofTouchEventArgs touchEvent;
+        
         int id = int(m.getArgAsFloat(0));
-
+        touchEvent.id = id;
+        
         // TODO: change numbers to 'add', 'update' and 'remove' preprends
         // Can't open and edit Max since already past trial
-
+        
         // TODO: We should change to PureData rather than Max if commited to open source
-
+        
         if (m.getAddress() == "/1/" || m.getAddress() == "/2/") {
-
+            
             float x, y;
             x = m.getArgAsFloat(2) * ofGetWidth();
             y = m.getArgAsFloat(3) * ofGetHeight();
-
-            if (m.getAddress() == "/1/") addTouch(id, x, y);
-            else updateTouch(id, x, y);
+            
+            touchEvent.x = x;
+            touchEvent.y = y;
+            
+            if (m.getAddress() == "/1/") {
+                touchEvent.type = ofTouchEventArgs::down;
+                ofNotifyEvent(ofEvents().touchDown, touchEvent, this);
+            }
+            else {
+                touchEvent.type = ofTouchEventArgs::move;
+                ofNotifyEvent(ofEvents().touchMoved, touchEvent, this);
+            }
         }
-
+        
         else if (m.getAddress() == "/3/") {
-            removeTouch(id);
+            touchEvent.type = ofTouchEventArgs::up;
+            ofNotifyEvent(ofEvents().touchUp, touchEvent, this);
         }
-	}
+    }
 }
 
-void ofApp::addTouch(int id, int x, int y) {
+void ofApp::touchDown(ofTouchEventArgs &touch) {
     
-    ofNotifyMousePressed(x, y, 0);
-
-    cout << "add (" << id << ", " << x << ", " << y << ")" << endl;
-
-    if (infoDisplay == true) infoDisplay = false;
-
-    if (infoBox.inside(x,y) ) {
-        infoDisplay = true;
-    }
-
-    if (infoDisplay) {
-        return;
-    }
-
+    int x = touch.x;
+    int y = touch.y;
+    int id = touch.id;
+    
+//    cout << "down (" << id << ", " << x << ", " << y << ")" << endl;
+    
     if (modules[getModuleId(x)]->isNotFull()) {
-//    if (y >= CONSOLE_HEIGHT && modules[getModuleId(x)]->isNotFull()) {
-        touches.push_back(Touch(id, x, y));
+        touches.insert(pair<int,Touch> (id, Touch(x, y)));
     }
-
+    
 }
 
-void ofApp::updateTouch(int id, int x, int y) {
-
-    ofNotifyMouseDragged(x, y, 0);
-//    ofNotifyMouseMoved(x, y, 0);
-
-    cout << "upd (" << id << ", " << x << ", " << y << ")" << endl;
-
-    for (int i = 0; i < touches.size(); i++) {
-        if (touches[i].getId() == id) {
-            touches[i].setXY(x, y);
-            return;
-        }
-    }
-
+void ofApp::touchMoved(ofTouchEventArgs &touch) {
+    
+    int x = touch.x;
+    int y = touch.y;
+    int id = touch.id;
+    
+//    cout << "moved (" << id << ", " << x << ", " << y << ")" << endl;
+    
+    touchesIterator it = touches.find(id);
+    it->second.setXY(x, y);
+    
 }
 
-void ofApp::removeTouch(int id) {
+void ofApp::touchUp(ofTouchEventArgs &touch) {
     
-    cout << "rem (" << id << ")" << endl;
+    int id = touch.id;
     
-	int x, y;
-	float increment;
+//    cout << "up (" << id << ")" << endl;
     
-    cout << "touches size " << touches.size() << endl;
-
-    bool found = false;
-    for (int i = 0; i < touches.size(); i++) {
-        if (touches[i].getId() == id) {
-            found = true;
-			x = touches[i].getX();
-			y = touches[i].getY();
-            increment = touches[i].getIncrement();
-            cout << id << " " << increment << " " << x << " " << y << endl;
-            touches.erase(touches.begin()+i);
-        }
-    }
+    touchesIterator it = touches.find(id);
+    int x = it->second.getX();
+    int y = it->second.getY();
+    float increment = it->second.getIncrement();
     
-    if (!found) {
-        return;
-    }
-
-
-//    ofNotifyMouseReleased(x, y, 0);
+    touches.erase(it);
     
     if (y > CONSOLE_HEIGHT && y < ofApp::maxParticleY) {
         modules[getModuleId(x)]->addParticle(increment, x, y);
-	}
-
+    }
+    
 }
 
 int ofApp::getModuleId(int x) {
@@ -234,64 +210,43 @@ int ofApp::getModuleId(int x) {
 }
 
 void ofApp::drawLine(int nth) {
-
-	vector<Particle*> nthParticles;
-	for (int i = 0; i < ofApp::nModules; i++) {
-		if (ofApp::modules[i]->getNumberOfParticles() > nth) {
-			nthParticles.push_back(ofApp::modules[i]->getParticle(nth));
-		}
-	}
-	
-	if (nthParticles.size() == 0)
-		return;
-	
-	ofPushStyle();
-	
-	ofNoFill();
-	ofSetLineWidth(POLY_WIDTH);
-	ofSetColor(POLY_COLOR);
-	
-	ofBeginShape();
-
-	// need four points at least otherwise the shape doesn't 'close' and therefore doesn't draw
-	ofCurveVertex(0, ofGetHeight()/2);
-	ofCurveVertex(0, ofGetHeight()/2);
-	
-	for (int i = 0; i < nthParticles.size(); i++) {
+    
+    vector<Particle*> nthParticles;
+    for (int i = 0; i < ofApp::nModules; i++) {
+        if (ofApp::modules[i]->getNumberOfParticles() > nth) {
+            nthParticles.push_back(ofApp::modules[i]->getParticle(nth));
+        }
+    }
+    
+    if (nthParticles.size() == 0)
+        return;
+    
+    ofPushStyle();
+    
+    ofNoFill();
+    ofSetLineWidth(POLY_WIDTH);
+    ofSetColor(POLY_COLOR);
+    
+    ofBeginShape();
+    
+    // need four points at least otherwise the shape doesn't 'close' and therefore doesn't draw
+    ofCurveVertex(0, ofGetHeight()/2);
+    ofCurveVertex(0, ofGetHeight()/2);
+    
+    for (int i = 0; i < nthParticles.size(); i++) {
         ofCurveVertex(nthParticles[i]->getX(), nthParticles[i]->getY());
     }
-	
-	ofCurveVertex(ofGetWidth(), ofGetHeight()/2);
-	ofCurveVertex(ofGetWidth(), ofGetHeight()/2);
-	
-	ofEndShape();
-	
-	ofPopStyle();
+    
+    ofCurveVertex(ofGetWidth(), ofGetHeight()/2);
+    ofCurveVertex(ofGetWidth(), ofGetHeight()/2);
+    
+    ofEndShape();
+    
+    ofPopStyle();
 }
 
 void ofApp::drawLines() {
-	for (int i = 0; i < PARTICLES_PER_MODULE; i++) {
-		drawLine(i);
-	}
-}
-
-void ofApp::mousePressed(int x, int y, int button) {
-}
-
-void ofApp::mouseReleased(int x, int y, int button) {
-}
-
-void ofApp::keyPressed(int key) {
-}
-
-void ofApp::keyReleased(int key) {
-}
-
-void ofApp::mouseMoved(int x, int y) {
-}
-
-void ofApp::mouseDragged(int x, int y, int button) {
-}
-
-void ofApp::windowResized(int w, int h) {
+    for (int i = 0; i < PARTICLES_PER_MODULE; i++) {
+        drawLine(i);
+    }
 }

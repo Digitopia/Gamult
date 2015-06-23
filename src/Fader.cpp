@@ -8,32 +8,35 @@ Fader::Fader(float x0, float y, int size, int range, string title) {
     this->size = size;
     this->range = range;
 	this->title = title;
+    
+    this->id = -1; // -1 means there is no touch associated
 	
     this->rect = ofRectangle(x0+range/2-size/2, y-size/2, size, size);
 
 	font.loadFont(UI_FONT_FACE, UI_FONT_SIZE, true);
 
-    this->dragging = false;
-	
-	ofAddListener(ofEvents().mousePressed, this, &Fader::mousePressed);
-	ofAddListener(ofEvents().mouseDragged, this, &Fader::mouseDragged);
-	ofAddListener(ofEvents().mouseReleased, this, &Fader::mouseReleased);
+	ofAddListener(ofEvents().touchDown,  this, &Fader::touchDown);
+	ofAddListener(ofEvents().touchMoved, this, &Fader::touchMoved);
+	ofAddListener(ofEvents().touchUp,    this, &Fader::touchUp);
 	
 }
 
-void Fader::mousePressed(ofMouseEventArgs& event) {
-	if (rect.inside(event.x, event.y))
-		dragging = true;
+void Fader::touchDown(ofTouchEventArgs& event) {
+    if (id == -1 && rect.inside(event.x, event.y)) {
+        id = event.id;
+    }
 }
 
-void Fader::mouseReleased(ofMouseEventArgs& event) {
-	dragging = false;
+void Fader::touchUp(ofTouchEventArgs& event) {
+    if (event.id == id){
+        id = -1;
+    }
 }
 
-void Fader::mouseDragged(ofMouseEventArgs& event) {
+void Fader::touchMoved(ofTouchEventArgs& event) {
 
 	// make sure that only updates fader position if first click was inside it
-	if (dragging) {
+	if (event.id == id) {
 
 		rect.setX(event.x);
 	

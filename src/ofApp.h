@@ -25,13 +25,18 @@ public:
 	void draw();
 
 	// events
-	void keyPressed(int key);
-	void keyReleased(int key);
-	void mouseMoved(int x, int y);
-	void mouseDragged(int x, int y, int button);
-	void mousePressed(int x, int y, int button);
-	void mouseReleased(int x, int y, int button);
-	void windowResized(int w, int h);
+	void keyPressed(int key){}
+	void keyReleased(int key){}
+	void windowResized(int w, int h){}
+	void mouseMoved(int x, int y){}
+	void mouseDragged(int x, int y, int button){}
+	void mousePressed(int x, int y, int button){}
+	void mouseReleased(int x, int y, int button){}
+    void touchDown(ofTouchEventArgs &touch);
+    void touchMoved(ofTouchEventArgs &touch);
+    void touchUp(ofTouchEventArgs &touch);
+    void touchDoubleTap(ofTouchEventArgs &touch){}
+    void touchCancelled(ofTouchEventArgs &touch){}
 
 	// custom
 	void drawLines();
@@ -39,11 +44,6 @@ public:
 	void initModules();
 	void checkMultitouchData();
     int getModuleId(int x);
-
-    // multitouch
-    void addTouch(int id, int x, int y);
-    void updateTouch(int id, int x, int y);
-    void removeTouch(int id);
 
 	static int nModules;
 	static int nParticlesPerModule;
@@ -55,7 +55,8 @@ public:
 	
 private:
     
-    vector <Touch> touches;
+    map<int, Touch> touches;
+
     bool infoDisplay;
     ofImage about;
     ofImage info;

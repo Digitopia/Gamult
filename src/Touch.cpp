@@ -1,7 +1,6 @@
 #include "Touch.h"
 
-Touch::Touch(int id, int x, int y) {
-    this->id = id;
+Touch::Touch(int x, int y) {
     this->x = x;
     this->y = y;
     this->increment = 0.0;
@@ -35,7 +34,8 @@ void Touch::draw() {
     ofPoint pt(x, y);
     float angleBegin = 180;
     float angleEnd = float(increment)*(360./float(TOUCH_MAX)) - 180;
-    polyline.arc(pt, TOUCH_RADIUS, TOUCH_RADIUS, angleBegin, angleEnd, ARC_RESOLUTION);
+//    polyline.arc(pt, TOUCH_RADIUS, TOUCH_RADIUS, angleBegin, angleEnd, ARC_RESOLUTION);
+    polyline.arc(pt, 5, 5, angleBegin, angleEnd, ARC_RESOLUTION);
     polyline.draw();
     
     ofPopStyle();

@@ -9,9 +9,8 @@ class Touch {
 
     public:
 
-        Touch(int id, int x, int y);
+        Touch(int x, int y);
 
-        int getId() { return id; }
         int getX() { return x; }
         int getY() { return y; }
         float getIncrement() { return increment; }
@@ -23,7 +22,6 @@ class Touch {
 
     private:
 
-        int id;
         int x;
         int y;
         float increment;
