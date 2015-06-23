@@ -4,7 +4,7 @@ int ofApp::nModules = MODULES;
 int ofApp::nParticlesPerModule = PARTICLES_PER_MODULE;
 int ofApp::maxParticleY = 0;
 
-typedef map<int, Touch>::iterator touchesIterator;
+typedef map<int,Touch>::iterator touchesIterator;
 
 ofxOscSender ofApp::oscSender;
 ofxOscReceiver ofApp::oscReceiver;
@@ -28,43 +28,55 @@ void ofApp::setup() {
     // TODO should be the height of the module instead
 	ofApp::maxParticleY = round(ofGetHeight() * (1-LIMIT_PARTICLE));
     
+    imgAboutIcon.loadImage("about.png");
+    imgAbout.loadImage("info.png");
+    aboutRect.set(ofGetWidth() - 65, ofGetHeight() - 65, 50, 50); // TODO: magic numbers
+    inAbout = false;
+    
 }
 
 void ofApp::update() {
-
+    
     checkMultitouchData();
-
+    
     for (touchesIterator it = touches.begin(); it != touches.end(); it++) {
         it->second.update();
     }
-
-	for (int i = 0; i < ofApp::nModules; i++) {
-		ofApp::modules[i]->update();
-	}
-
+    
+    for (int i = 0; i < ofApp::nModules; i++) {
+        ofApp::modules[i]->update();
+    }
+    
 }
 
 void ofApp::draw() {
-	
-	ofBackground(BACKGROUND_COLOR);
-
-	for (int i = 0; i < ofApp::nModules; i++) {
-		ofApp::modules[i]->draw();
-	}
-
+    
+    ofBackground(BACKGROUND_COLOR);
+    
+    for (int i = 0; i < ofApp::nModules; i++) {
+        ofApp::modules[i]->draw();
+    }
+    
     for (touchesIterator it = touches.begin(); it != touches.end(); it++) {
         it->second.draw();
     }
-	
-	drawLines();
-	
+    
+    imgAboutIcon.draw(ofGetWidth() - 65, ofGetHeight() - 65, 50, 50); // TODO: magic numbers
+    
+    if (inAbout) {
+        // TODO: magic numbers
+        imgAbout.draw(0 + 50, CONSOLE_HEIGHT + 50, ofGetWidth() - 100, ofGetHeight() - CONSOLE_HEIGHT - 100);
+    }
+    
+    drawLines();
+    
 }
 
 void ofApp::initModules() {
-	
-	// TODO: maybe this could just be a JSON config file?
-	
-	vector<string> bonangs;
+    
+    // TODO: maybe this could just be a JSON config file?
+    
+    vector<string> bonangs;
 	bonangs.push_back("sounds/BBPL1.wav");
 	bonangs.push_back("sounds/BBPL2.wav");
 	bonangs.push_back("sounds/BBPL3.wav");
@@ -161,7 +173,12 @@ void ofApp::touchDown(ofTouchEventArgs &touch) {
     int y = touch.y;
     int id = touch.id;
     
-//    cout << "down (" << id << ", " << x << ", " << y << ")" << endl;
+    if (aboutRect.inside(x, y)) {
+        inAbout = true;
+        return;
+    }
+    
+    // cout << "down (" << id << ", " << x << ", " << y << ")" << endl;
     
     if (modules[getModuleId(x)]->isNotFull()) {
         touches.insert(pair<int,Touch> (id, Touch(x, y)));
@@ -175,7 +192,7 @@ void ofApp::touchMoved(ofTouchEventArgs &touch) {
     int y = touch.y;
     int id = touch.id;
     
-//    cout << "moved (" << id << ", " << x << ", " << y << ")" << endl;
+    // cout << "moved (" << id << ", " << x << ", " << y << ")" << endl;
     
     touchesIterator it = touches.find(id);
     it->second.setXY(x, y);
@@ -184,9 +201,13 @@ void ofApp::touchMoved(ofTouchEventArgs &touch) {
 
 void ofApp::touchUp(ofTouchEventArgs &touch) {
     
+    if (inAbout) {
+        return;
+    }
+    
     int id = touch.id;
     
-//    cout << "up (" << id << ")" << endl;
+    // cout << "up (" << id << ")" << endl;
     
     touchesIterator it = touches.find(id);
     int x = it->second.getX();

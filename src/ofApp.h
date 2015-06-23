@@ -19,26 +19,16 @@ class ofApp : public ofBaseApp {
 
 public:
 
-	// OF stuff
 	void setup();
 	void update();
 	void draw();
 
-	// events
-	void keyPressed(int key){}
-	void keyReleased(int key){}
-	void windowResized(int w, int h){}
-	void mouseMoved(int x, int y){}
-	void mouseDragged(int x, int y, int button){}
-	void mousePressed(int x, int y, int button){}
-	void mouseReleased(int x, int y, int button){}
     void touchDown(ofTouchEventArgs &touch);
     void touchMoved(ofTouchEventArgs &touch);
     void touchUp(ofTouchEventArgs &touch);
     void touchDoubleTap(ofTouchEventArgs &touch){}
     void touchCancelled(ofTouchEventArgs &touch){}
 
-	// custom
 	void drawLines();
 	void drawLine(int nth);
 	void initModules();
@@ -47,20 +37,19 @@ public:
 
 	static int nModules;
 	static int nParticlesPerModule;
+    static int maxParticleY; // TODO does this really needs to be static and here
 	static Module** modules; // TODO make this a vector or something
 	static ofxOscSender oscSender;
 	static ofxOscReceiver oscReceiver;
-    
-    static int maxParticleY; // TODO does this really needs to be static and here
 	
 private:
     
-    map<int, Touch> touches;
-
-    bool infoDisplay;
-    ofImage about;
-    ofImage info;
-    ofRectangle infoBox;
+    map<int,Touch> touches;
+    
+    bool inAbout;
+    ofImage imgAbout;
+    ofImage imgAboutIcon;
+    ofRectangle aboutRect; // TODO: collision check should be with a circle and not rectangle
 	
 };
 
