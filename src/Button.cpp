@@ -13,31 +13,44 @@ Button::Button(buttonType type, int module, int size, float x, float y, string t
 	this->rect = ofRectangle(x, y, size, size);
 
 	font.loadFont(UI_FONT_FACE, UI_FONT_SIZE, true);
+    
+    this->id = -1;
 
-	ofAddListener(ofEvents().mousePressed, this, &Button::mousePressed);
-	ofAddListener(ofEvents().mouseReleased, this, &Button::mouseReleased);
+	ofAddListener(ofEvents().touchDown,  this, &Button::touchDown);
+	ofAddListener(ofEvents().touchMoved, this, &Button::touchMoved);
+	ofAddListener(ofEvents().touchUp,    this, &Button::touchUp);
 
 }
 
-void Button::mousePressed(ofMouseEventArgs& event) {
-	
-	if (type == BUTTON_TOGGLE && rect.inside(event.x, event.y))
+void Button::touchDown(ofTouchEventArgs& event) {
+    
+    if (id == -1 && type == BUTTON_TOGGLE && rect.inside(event.x, event.y)) {
+        id = event.id;
 		state = !state;
+    }
 
-	if (type == BUTTON_CLICK && ofDist(event.x, event.y, x+size/2, y+size/2) <= size/2)
+    if (id == -1 && type == BUTTON_CLICK && ofDist(event.x, event.y, x+size/2, y+size/2) <= size/2) {
+        id = event.id;
 		state = true;
+    }
 
 }
 
-void Button::mouseReleased(ofMouseEventArgs& event) {
-	if (state && type == BUTTON_CLICK) {
-		if (ofDist(event.x, event.y, x+size/2, y+size/2) <= size/2) {
-    		if (ofApp::modules[module]->anyParticles()) {
-    			ofApp::modules[module]->removeParticle();
-			}
-		}
-		state = false;
-	}
+void Button::touchMoved(ofTouchEventArgs &event) {
+    if (type == BUTTON_CLICK && id == event.id && !rect.inside(event.x, event.y)) {
+        state = false;
+        id = -1;
+    }
+}
+
+void Button::touchUp(ofTouchEventArgs& event) {
+    if (event.id == id && state && type == BUTTON_CLICK) {
+        if (ofApp::modules[module]->anyParticles()) {
+            ofApp::modules[module]->removeParticle();
+        }
+        state = false;
+        id = -1;
+    }
 }
 
 void Button::draw() {

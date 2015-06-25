@@ -24,7 +24,6 @@ private:
 	string title;
     int size; // size in pixels of the square of the fader
     int range; // range in pixels of the line in which the fader moves
-//    bool dragging; // true if the fader is being dragged and false otherwise
     int id; // the id of the touch to which this fader is locked
     
 };

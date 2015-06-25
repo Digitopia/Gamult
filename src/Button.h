@@ -15,12 +15,14 @@ class Button {
 public:
 
 	Button(buttonType type, int module, int size, float x, float y, string title);
-	void mousePressed(ofMouseEventArgs& event);
-	void mouseReleased(ofMouseEventArgs& event);
 	void draw();
 	bool getState() { return state; }
 	void on() { state = true; }
 	void off() { state = false; }
+    
+    void touchDown(ofTouchEventArgs& event);
+	void touchMoved(ofTouchEventArgs& event);
+	void touchUp(ofTouchEventArgs& event);
     
 private:
 
@@ -33,6 +35,7 @@ private:
 	ofRectangle rect;
 	ofTrueTypeFont font;
 	bool state;
+    int id; // the id of the touch to which this fader is locked
 
 };
 
