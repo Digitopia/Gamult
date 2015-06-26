@@ -28,7 +28,14 @@ public:
     void touchUp(ofTouchEventArgs &touch);
     void touchDoubleTap(ofTouchEventArgs &touch){}
     void touchCancelled(ofTouchEventArgs &touch){}
-
+   
+    void mouseMoved(ofMouseEventArgs &mouse){}
+    void mouseDragged(ofMouseEventArgs &mouse);
+    void mousePressed(ofMouseEventArgs &mouse);
+    void mouseReleased(ofMouseEventArgs &mouse);
+    
+    void keyPressed(int key);
+    
 	void drawLines();
 	void drawLine(int nth);
 	void initModules();
@@ -41,11 +48,12 @@ public:
 	static Module** modules; // TODO make this a vector or something
 	static ofxOscSender oscSender;
 	static ofxOscReceiver oscReceiver;
+    static int mouseId;
+    static bool multitouch;
 	
 private:
     
     map<int,Touch> touches;
-    
     bool inAbout;
     ofImage imgAbout;
     ofImage imgAboutIcon;

@@ -3,6 +3,8 @@
 int ofApp::nModules = MODULES;
 int ofApp::nParticlesPerModule = PARTICLES_PER_MODULE;
 int ofApp::maxParticleY = 0;
+int ofApp::mouseId = 0;
+bool ofApp::multitouch = false;
 
 typedef map<int,Touch>::iterator touchesIterator;
 
@@ -15,31 +17,33 @@ void ofApp::setup() {
 
 	ofSetFrameRate(FRAME_RATE);
 	ofSetCircleResolution(CIRCLE_RESOLUTION);
-	oscReceiver.setup(RECEIVE_PORT);
+	
+    oscReceiver.setup(RECEIVE_PORT);
 	oscSender.setup(HOST, SEND_PORT);
-    
+   
     ofRegisterTouchEvents(this);
-
-    // with multitouch no need for mouse cursor
-    ofHideCursor();
+    
+    if (multitouch) {
+        ofHideCursor();
+    }
 	
 	initModules();
 
     // TODO should be the height of the module instead
 	ofApp::maxParticleY = round(ofGetHeight() * (1-LIMIT_PARTICLE));
     
-    imgAboutIcon.loadImage("about.png"); // TODO: refactor filenames
-    imgAbout.loadImage("info.png"); // TODO: refactor filenames
+    imgAboutIcon.loadImage("about-icon.png");
+    imgAbout.loadImage("about.png");
     aboutRect.set(ofGetWidth() - 65, ofGetHeight() - 65, 50, 50); // TODO: magic numbers
     inAbout = false;
     
 }
 
 void ofApp::update() {
-    
-    checkMultitouchData();
-    
+
     if (inAbout) return;
+
+    checkMultitouchData();
     
     for (touchesIterator it = touches.begin(); it != touches.end(); it++) {
         it->second.update();
@@ -128,10 +132,13 @@ void ofApp::initModules() {
 void ofApp::checkMultitouchData() {
 
 	while (oscReceiver.hasWaitingMessages()) {
-
+        
 		ofxOscMessage m;
 		oscReceiver.getNextMessage(&m);
         // cout << m.getAddress() << endl;
+        
+        if (!multitouch)
+            return;
 
         ofTouchEventArgs touchEvent;
         
@@ -169,6 +176,56 @@ void ofApp::checkMultitouchData() {
     }
 }
 
+void ofApp::mousePressed(ofMouseEventArgs &mouse) {
+    if (multitouch) return;
+    cout << "pressed" << endl;
+    ofTouchEventArgs touchEvent;
+    touchEvent.id = ++mouseId;
+    touchEvent.x = mouse.x;
+    touchEvent.y = mouse.y;
+    touchEvent.type = ofTouchEventArgs::down;
+    ofNotifyEvent(ofEvents().touchDown, touchEvent, this);
+}
+
+void ofApp::mouseDragged(ofMouseEventArgs &mouse) {
+    if (multitouch) return;
+    cout << "dragged" << endl;
+    ofTouchEventArgs touchEvent;
+    touchEvent.id = mouseId;
+    touchEvent.x = mouse.x;
+    touchEvent.y = mouse.y;
+    touchEvent.type = ofTouchEventArgs::move;
+    ofNotifyEvent(ofEvents().touchMoved, touchEvent, this);
+}
+
+void ofApp::mouseReleased(ofMouseEventArgs &mouse) {
+    if (multitouch) return;
+    cout << "released" << endl;
+    ofTouchEventArgs touchEvent;
+    touchEvent.id = ofApp::mouseId;
+    touchEvent.type = ofTouchEventArgs::up;
+    ofNotifyEvent(ofEvents().touchUp, touchEvent, this);
+}
+
+void ofApp::keyPressed(int key) {
+    
+    if (key == 'm') {
+        
+        multitouch = !multitouch;
+    
+        if (multitouch) {
+            cout << "multitouch on" << endl;
+            ofHideCursor();
+        }
+        else {
+            cout << "multitouch off" << endl;
+            ofShowCursor();
+        }
+        
+    }
+    
+}
+
 void ofApp::touchDown(ofTouchEventArgs &touch) {
     
     if (inAbout) {
@@ -185,13 +242,14 @@ void ofApp::touchDown(ofTouchEventArgs &touch) {
         return;
     }
     
-    // cout << "down (" << id << ", " << x << ", " << y << ")" << endl;
+     cout << "down (" << id << ", " << x << ", " << y << ")" << endl;
     
-    if (modules[getModuleId(x)]->isNotFull()) {
+    if (y > CONSOLE_HEIGHT && modules[getModuleId(x)]->isNotFull()) {
         touches.insert(pair<int,Touch> (id, Touch(x, y)));
     }
     
 }
+
 
 void ofApp::touchMoved(ofTouchEventArgs &touch) {
     
@@ -201,9 +259,11 @@ void ofApp::touchMoved(ofTouchEventArgs &touch) {
     int y = touch.y;
     int id = touch.id;
     
-    // cout << "moved (" << id << ", " << x << ", " << y << ")" << endl;
+     cout << "moved (" << id << ", " << x << ", " << y << ")" << endl;
     
     touchesIterator it = touches.find(id);
+    if (it == touches.end()) return;
+    
     it->second.setXY(x, y);
     
 }
@@ -214,13 +274,16 @@ void ofApp::touchUp(ofTouchEventArgs &touch) {
     
     int id = touch.id;
     
-    // cout << "up (" << id << ")" << endl;
+     cout << "up (" << id << ")" << endl;
     
     touchesIterator it = touches.find(id);
+
+    if (it == touches.end()) return;
+    
     int x = it->second.getX();
     int y = it->second.getY();
     float increment = it->second.getIncrement();
-    
+  
     touches.erase(it);
     
     if (y > CONSOLE_HEIGHT && y < ofApp::maxParticleY) {
