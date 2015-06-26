@@ -25,7 +25,6 @@ Button::Button(buttonType type, int module, int size, float x, float y, string t
 void Button::touchDown(ofTouchEventArgs& event) {
     
     if (id == -1 && type == BUTTON_TOGGLE && rect.inside(event.x, event.y)) {
-        id = event.id;
 		state = !state;
     }
 
