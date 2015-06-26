@@ -23,8 +23,11 @@
 #define UI_COLOR 255
 
 // faders
-#define FADER_SIZE 50
+#define FADER_SIZE 16
 #define FADER_RANGE 150
+
+// buttons
+#define BUTTON_SIZE 16
 
 // touches
 #define TOUCH_LINE_WIDTH 3

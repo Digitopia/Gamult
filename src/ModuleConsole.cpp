@@ -10,7 +10,8 @@ ModuleConsole::ModuleConsole(int x, float width, int module, vector<string> icon
 	
 	int y = 0;
     
-    int buttonSize = ofGetHeight()*0.018;
+//    int buttonSize = ofGetHeight()*0.018;
+    int buttonSize = BUTTON_SIZE;
 	
 	btnRemove  = new Button(BUTTON_CLICK,  module, buttonSize, x+buttonSize, y+buttonSize,   "Remove");
 	btnGravity = new Button(BUTTON_TOGGLE, module, buttonSize, x+buttonSize, y+buttonSize*3, "Gravity");
