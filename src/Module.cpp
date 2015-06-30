@@ -92,7 +92,7 @@ void Module::changeInstrument(int index) {
             break;
     }
     
-	cout << "changing isntrument" << endl;
+	cout << "changing instrument" << endl;
 }
 
 void Module::addParticle(int life, int x, int y) {
@@ -106,14 +106,25 @@ void Module::addParticle(int life, int x, int y) {
 }
 
 void Module::update() {
+    
+    if (isFreezed())
+        return;
+    
 	for (int i = 0; i < particles.size(); i++) {
-		Particle *p = &particles[i];
-		if (!isFreezed() && isLooping()) p->loop();
-		if (!isFreezed() && isGravityOn()) {
-			if (p->getCounter() >= p->getLife()) particles.erase(particles.begin()+i);
-			else p->gravity();
-		}
+		
+        Particle *p = &particles[i];
+		
+        if (isLooping())
+            p->loop();
+        
+		if (isGravityOn())
+			p->gravity();
+        
+        if (p->getCounter() >= p->getLife())
+            particles.erase(particles.begin()+i);
+        
 	}
+    
 }
 
 void Module::draw() {
