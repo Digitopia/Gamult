@@ -8,8 +8,8 @@ Particle::Particle(int module, int index, float x, float y, int life) {
 	this->center.y = y;
 	this->life = life;
 
-	this->counter = 0;
-	this->speed = 0;
+	this->health = life;
+	this->velocity = 0;
     this->direction = 1.;
 
 }
@@ -22,33 +22,39 @@ void Particle::gravity() {
 		center.y = ofGetHeight();
         playSound(true);
 	}
+    
+//    if (center.y >= ofGetHeight() - DELAY_OFFSET) {
+//        cout << 
+//        playSound(true);
+//    }
 		
 	else if (center.y <= CONSOLE_HEIGHT + life) {
 		center.y = CONSOLE_HEIGHT + life;
 	}
 	
 	if (center.y >= ofGetHeight() || center.y <= CONSOLE_HEIGHT + life) {
-		speed = speed * -0.95;
-		counter++;
+		velocity = velocity * -0.95;
+        health--;
     } else {
-        speed += gravity;
+        velocity += gravity;
     }
     
-    center.y += speed;
+    center.y += velocity;
     
 }
 
 void Particle::loop() {
+    
     float loopCoef = ofApp::modules[module]->getSpeed();
 
 	if (center.y >= ofGetHeight()) {
-		speed *= -1;
+		velocity *= -1;
 		playSound(true);
     } else {
-        speed += loopCoef;
+        velocity += loopCoef;
     }
 	
-    center.y += speed;
+    center.y += velocity;
 }
 
 void Particle::draw() {
@@ -79,12 +85,14 @@ void Particle::drawLife() {
 	ofPolyline polyline;
 	ofPoint pt(center.x, center.y);
 	float angleBegin = 0;
-	float angleEnd = 360.-(counter*(360./life));
+//	float angleEnd = 360.-(counter*(360./life));
+	float angleEnd = 360.-((life-health)*(360./life));
 	int radius = life*2;
 	polyline.arc(pt, radius, radius, angleBegin, angleEnd, ARC_RESOLUTION);
 	polyline.draw();
 
 	ofPopStyle();
+    
 }
 
 void Particle::report(int idx, int note, int vel) {
@@ -103,7 +111,7 @@ void Particle::playSound(bool send) {
     
 	int note = floor(notef);
     // TODO: check magic numbers
-    float vol = ofMap(speed, 5, 60, 0, 1);
+    float vol = ofMap(velocity, 5, 60, 0, 1);
 
     ofApp::modules[module]->playSound(note, vol);
 	int idx = ofApp::modules[module]->getIndex();

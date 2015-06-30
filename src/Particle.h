@@ -19,9 +19,9 @@ public:
 	void report(int idx, int note, int vel);
     void playSound(bool send);
     
-	int getSpeed() { return speed; }
+	int getVelocity() { return velocity; }
 	int getLife() { return life; }
-	int getCounter() { return counter; }
+	int getHealth() { return health; }
 	int getX() { return center.x; }
 	int getY() { return center.y; }
 
@@ -29,9 +29,9 @@ private:
 
 	int module;
 	int index;
-	int counter; //	increases (or decreases) in function of the life of the particle
-	int life;	 // radius of the particle, that is always the same
-	float speed;
+	int health;
+	int life;
+	float velocity;
     float direction;
 	ofVec2f center;
     int id;

@@ -120,7 +120,7 @@ void Module::update() {
 		if (isGravityOn())
 			p->gravity();
         
-        if (p->getCounter() >= p->getLife())
+        if (p->getHealth() <= 0)
             particles.erase(particles.begin()+i);
         
 	}
