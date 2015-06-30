@@ -34,6 +34,7 @@ private:
 	float velocity;
 	ofVec2f center;
     int id;
+    int radius;
 
 };
 
