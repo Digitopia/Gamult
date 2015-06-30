@@ -32,7 +32,6 @@ private:
 	int health;
 	int life;
 	float velocity;
-    float direction;
 	ofVec2f center;
     int id;
 

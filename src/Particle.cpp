@@ -10,7 +10,6 @@ Particle::Particle(int module, int index, float x, float y, int life) {
 
 	this->health = life;
 	this->velocity = 0;
-    this->direction = 1.;
 
 }
 
