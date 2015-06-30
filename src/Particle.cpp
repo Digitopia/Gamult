@@ -47,8 +47,8 @@ void Particle::loop() {
     float loopCoef = ofApp::modules[module]->getSpeed();
 
 	if (center.y >= ofGetHeight()) {
-		velocity *= -1;
 		playSound(true);
+		velocity *= -1;
     } else {
         velocity += loopCoef;
     }
@@ -107,15 +107,15 @@ void Particle::playSound(bool send) {
 	
 	// segment particle position x to the amount of notes the instrument has
 	float notef = ofMap(center.x, ofApp::modules[module]->getX0(), ofApp::modules[module]->getX1(), 0, ofApp::modules[module]->getNumberOfInstrumentNotes());
-    
 	int note = floor(notef);
-    // TODO: check magic numbers
-    float vol = ofMap(velocity, 5, 60, 0, 1);
+    
+    float vol = ofMap(velocity, 5, 60, 0, 1); // TODO: check magic numbers
 
     ofApp::modules[module]->playSound(note, vol);
 	int idx = ofApp::modules[module]->getIndex();
 
 	// TODO: still not sending the velocity properly
-	if (send)
+    if (send) {
 		report(idx, note, (vol*100));
+    }
 }
