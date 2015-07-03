@@ -37,6 +37,10 @@ void Touch::draw() {
     polyline.arc(pt, TOUCH_RADIUS, TOUCH_RADIUS, angleBegin, angleEnd, ARC_RESOLUTION);
     polyline.draw();
     
+    // TODO: check these magic numbers when rebuilding code according to screen size
+    ofFill();
+    ofEllipse(x, y, increment*3, increment*3);
+    
     ofPopStyle();
 
 }
