@@ -36,7 +36,7 @@ public:
 	bool isGravityOn()               { return console->isGravityOn(); }
 	int getNumberOfInstrumentNotes() { return sounds.size(); }
 	bool anyParticles()              { return particles.size() > 0; }
-	void removeParticle()            { particles.erase(particles.end()); }
+	void removeParticle()            { particles.erase(particles.end() - 1); }
 	int getNumberOfParticles()       { return particles.size(); }
 	vector<Particle> getParticles()  { return particles; }
 	Particle* getParticle(int i)     { return &particles[i]; }
