@@ -50,7 +50,12 @@ void Particle::loop() {
 	if (center.y >= ofGetHeight()) {
 		playSound(true);
 		velocity *= -1;
-    } else {
+    } else if(center.y <= CONSOLE_HEIGHT + life) {
+        center.y = CONSOLE_HEIGHT + life;
+        velocity = 0;
+        velocity += loopCoef;
+    }
+    else {
         velocity += loopCoef;
     }
 	
