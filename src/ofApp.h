@@ -13,9 +13,19 @@
 #include "Touch.h"
 //#include "Constants.h"
 
+#ifdef TARGET_OF_IOS
+#include "ofxiOS.h"
+#include "ofxiOSExtras.h"
+#endif
+
+
 class Touch; // TODO: something about the includes not working so that this needs to be here
 
+#ifdef TARGET_OF_IOS
+class ofApp : public ofxiOSApp {
+#else
 class ofApp : public ofBaseApp {
+#endif
 
 public:
 
