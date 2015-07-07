@@ -20,7 +20,6 @@
 		8F5205AEF8861EF234F0651A /* ofxOscSender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 81967292BFC87A0144BD32C6 /* ofxOscSender.cpp */; };
 		A29D8C96AE042ECEAA1BD4F3 /* NetworkingUtilsWin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2A5B1FAD3F30C8065C396ACB /* NetworkingUtilsWin.cpp */; };
 		ADE367465D2A8EBAD4C7A8D9 /* IpEndpointName.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADD194746185E2DA11468377 /* IpEndpointName.cpp */; };
-		B6800FDE1AD72FCD009D95F9 /* Panel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B6800FDC1AD72FCD009D95F9 /* Panel.cpp */; };
 		B69BE73C1AD6DB980019A408 /* ofxBaseGui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B69BE72B1AD6DB980019A408 /* ofxBaseGui.cpp */; };
 		B69BE73D1AD6DB980019A408 /* ofxButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B69BE72D1AD6DB980019A408 /* ofxButton.cpp */; };
 		B69BE73E1AD6DB980019A408 /* ofxGuiGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B69BE7301AD6DB980019A408 /* ofxGuiGroup.cpp */; };
@@ -30,14 +29,15 @@
 		B69BE7421AD6DB980019A408 /* ofxSliderGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B69BE7381AD6DB980019A408 /* ofxSliderGroup.cpp */; };
 		B69BE7431AD6DB980019A408 /* ofxToggle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B69BE73A1AD6DB980019A408 /* ofxToggle.cpp */; };
 		BBAB23CB13894F3D00AA2426 /* GLUT.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BBAB23BE13894E4700AA2426 /* GLUT.framework */; };
-		BC7C5EF71AD44212004AB63E /* Button.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC7C5EE81AD44212004AB63E /* Button.cpp */; };
-		BC7C5EF81AD44212004AB63E /* Fader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC7C5EEA1AD44212004AB63E /* Fader.cpp */; };
-		BC7C5EF91AD44212004AB63E /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC7C5EEC1AD44212004AB63E /* main.cpp */; };
-		BC7C5EFA1AD44212004AB63E /* Module.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC7C5EED1AD44212004AB63E /* Module.cpp */; };
-		BC7C5EFB1AD44212004AB63E /* ModuleConsole.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC7C5EEF1AD44212004AB63E /* ModuleConsole.cpp */; };
-		BC7C5EFC1AD44212004AB63E /* ofApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC7C5EF11AD44212004AB63E /* ofApp.cpp */; };
-		BC7C5EFD1AD44212004AB63E /* Particle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC7C5EF31AD44212004AB63E /* Particle.cpp */; };
-		BCA591071B28F7D900598F4B /* Touch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BCA591051B28F7D900598F4B /* Touch.cpp */; };
+		BC50236E1B4C03FE002A57BB /* Button.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC50235C1B4C03FE002A57BB /* Button.cpp */; };
+		BC50236F1B4C03FE002A57BB /* Fader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC50235F1B4C03FE002A57BB /* Fader.cpp */; };
+		BC5023701B4C03FE002A57BB /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC5023611B4C03FE002A57BB /* main.cpp */; };
+		BC5023711B4C03FE002A57BB /* Module.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC5023621B4C03FE002A57BB /* Module.cpp */; };
+		BC5023721B4C03FE002A57BB /* ModuleConsole.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC5023641B4C03FE002A57BB /* ModuleConsole.cpp */; };
+		BC5023731B4C03FE002A57BB /* ofApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC5023661B4C03FE002A57BB /* ofApp.cpp */; };
+		BC5023741B4C03FE002A57BB /* Panel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC5023681B4C03FE002A57BB /* Panel.cpp */; };
+		BC5023751B4C03FE002A57BB /* Particle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC50236A1B4C03FE002A57BB /* Particle.cpp */; };
+		BC5023761B4C03FE002A57BB /* Touch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC50236C1B4C03FE002A57BB /* Touch.cpp */; };
 		C4782ECC372420ACE0615B74 /* OscPrintReceivedElements.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC8881B3C8C0A1C45F042E7A /* OscPrintReceivedElements.cpp */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
 		E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9710E8CC7DD009D7055 /* AGL.framework */; };
@@ -113,8 +113,6 @@
 		ADD194746185E2DA11468377 /* IpEndpointName.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = IpEndpointName.cpp; path = ../../../addons/ofxOsc/libs/oscpack/src/ip/IpEndpointName.cpp; sourceTree = SOURCE_ROOT; };
 		AE335EB4709BFD4671EEAC84 /* MessageMappingOscPacketListener.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = MessageMappingOscPacketListener.h; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/MessageMappingOscPacketListener.h; sourceTree = SOURCE_ROOT; };
 		B31C608870ECEB2490A93736 /* ofxOscParameterSync.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxOscParameterSync.h; path = ../../../addons/ofxOsc/src/ofxOscParameterSync.h; sourceTree = SOURCE_ROOT; };
-		B6800FDC1AD72FCD009D95F9 /* Panel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Panel.cpp; sourceTree = "<group>"; };
-		B6800FDD1AD72FCD009D95F9 /* Panel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Panel.h; sourceTree = "<group>"; };
 		B69BE72B1AD6DB980019A408 /* ofxBaseGui.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBaseGui.cpp; sourceTree = "<group>"; };
 		B69BE72C1AD6DB980019A408 /* ofxBaseGui.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxBaseGui.h; sourceTree = "<group>"; };
 		B69BE72D1AD6DB980019A408 /* ofxButton.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxButton.cpp; sourceTree = "<group>"; };
@@ -133,23 +131,25 @@
 		B69BE73A1AD6DB980019A408 /* ofxToggle.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxToggle.cpp; sourceTree = "<group>"; };
 		B69BE73B1AD6DB980019A408 /* ofxToggle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxToggle.h; sourceTree = "<group>"; };
 		BBAB23BE13894E4700AA2426 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = ../../../libs/glut/lib/osx/GLUT.framework; sourceTree = "<group>"; };
-		BC7C5EE81AD44212004AB63E /* Button.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Button.cpp; sourceTree = "<group>"; };
-		BC7C5EE91AD44212004AB63E /* Button.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Button.h; sourceTree = "<group>"; };
-		BC7C5EEA1AD44212004AB63E /* Fader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Fader.cpp; sourceTree = "<group>"; };
-		BC7C5EEB1AD44212004AB63E /* Fader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Fader.h; sourceTree = "<group>"; };
-		BC7C5EEC1AD44212004AB63E /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		BC7C5EED1AD44212004AB63E /* Module.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Module.cpp; sourceTree = "<group>"; };
-		BC7C5EEE1AD44212004AB63E /* Module.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Module.h; sourceTree = "<group>"; };
-		BC7C5EEF1AD44212004AB63E /* ModuleConsole.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ModuleConsole.cpp; sourceTree = "<group>"; };
-		BC7C5EF01AD44212004AB63E /* ModuleConsole.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModuleConsole.h; sourceTree = "<group>"; };
-		BC7C5EF11AD44212004AB63E /* ofApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofApp.cpp; sourceTree = "<group>"; };
-		BC7C5EF21AD44212004AB63E /* ofApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofApp.h; sourceTree = "<group>"; };
-		BC7C5EF31AD44212004AB63E /* Particle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Particle.cpp; sourceTree = "<group>"; };
-		BC7C5EF41AD44212004AB63E /* Particle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Particle.h; sourceTree = "<group>"; };
+		BC50235C1B4C03FE002A57BB /* Button.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Button.cpp; path = ../../src/Button.cpp; sourceTree = "<group>"; };
+		BC50235D1B4C03FE002A57BB /* Button.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Button.h; path = ../../src/Button.h; sourceTree = "<group>"; };
+		BC50235E1B4C03FE002A57BB /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Constants.h; path = ../../src/Constants.h; sourceTree = "<group>"; };
+		BC50235F1B4C03FE002A57BB /* Fader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Fader.cpp; path = ../../src/Fader.cpp; sourceTree = "<group>"; };
+		BC5023601B4C03FE002A57BB /* Fader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Fader.h; path = ../../src/Fader.h; sourceTree = "<group>"; };
+		BC5023611B4C03FE002A57BB /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../../src/main.cpp; sourceTree = "<group>"; };
+		BC5023621B4C03FE002A57BB /* Module.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Module.cpp; path = ../../src/Module.cpp; sourceTree = "<group>"; };
+		BC5023631B4C03FE002A57BB /* Module.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Module.h; path = ../../src/Module.h; sourceTree = "<group>"; };
+		BC5023641B4C03FE002A57BB /* ModuleConsole.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ModuleConsole.cpp; path = ../../src/ModuleConsole.cpp; sourceTree = "<group>"; };
+		BC5023651B4C03FE002A57BB /* ModuleConsole.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ModuleConsole.h; path = ../../src/ModuleConsole.h; sourceTree = "<group>"; };
+		BC5023661B4C03FE002A57BB /* ofApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofApp.cpp; path = ../../src/ofApp.cpp; sourceTree = "<group>"; };
+		BC5023671B4C03FE002A57BB /* ofApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofApp.h; path = ../../src/ofApp.h; sourceTree = "<group>"; };
+		BC5023681B4C03FE002A57BB /* Panel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Panel.cpp; path = ../../src/Panel.cpp; sourceTree = "<group>"; };
+		BC5023691B4C03FE002A57BB /* Panel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Panel.h; path = ../../src/Panel.h; sourceTree = "<group>"; };
+		BC50236A1B4C03FE002A57BB /* Particle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Particle.cpp; path = ../../src/Particle.cpp; sourceTree = "<group>"; };
+		BC50236B1B4C03FE002A57BB /* Particle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Particle.h; path = ../../src/Particle.h; sourceTree = "<group>"; };
+		BC50236C1B4C03FE002A57BB /* Touch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Touch.cpp; path = ../../src/Touch.cpp; sourceTree = "<group>"; };
+		BC50236D1B4C03FE002A57BB /* Touch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Touch.h; path = ../../src/Touch.h; sourceTree = "<group>"; };
 		BC8881B3C8C0A1C45F042E7A /* OscPrintReceivedElements.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = OscPrintReceivedElements.cpp; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscPrintReceivedElements.cpp; sourceTree = SOURCE_ROOT; };
-		BCA591041B28F61200598F4B /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
-		BCA591051B28F7D900598F4B /* Touch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Touch.cpp; sourceTree = "<group>"; };
-		BCA591061B28F7D900598F4B /* Touch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Touch.h; sourceTree = "<group>"; };
 		BCAB80AD1B4BF74A00F92626 /* Gamult_osxDebug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gamult_osxDebug.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2FAC65C491D4231379F3298 /* ofxOscReceiver.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxOscReceiver.cpp; path = ../../../addons/ofxOsc/src/ofxOscReceiver.cpp; sourceTree = SOURCE_ROOT; };
 		C58862C6D212C8E8A83810F4 /* ofxOscMessage.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxOscMessage.h; path = ../../../addons/ofxOsc/src/ofxOscMessage.h; sourceTree = SOURCE_ROOT; };
@@ -391,24 +391,24 @@
 		E4B69E1C0A3A1BDC003C02F2 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				BCA591041B28F61200598F4B /* Constants.h */,
-				BCA591051B28F7D900598F4B /* Touch.cpp */,
-				BCA591061B28F7D900598F4B /* Touch.h */,
-				BC7C5EE81AD44212004AB63E /* Button.cpp */,
-				BC7C5EE91AD44212004AB63E /* Button.h */,
-				BC7C5EEA1AD44212004AB63E /* Fader.cpp */,
-				BC7C5EEB1AD44212004AB63E /* Fader.h */,
-				BC7C5EEC1AD44212004AB63E /* main.cpp */,
-				BC7C5EED1AD44212004AB63E /* Module.cpp */,
-				BC7C5EEE1AD44212004AB63E /* Module.h */,
-				BC7C5EEF1AD44212004AB63E /* ModuleConsole.cpp */,
-				BC7C5EF01AD44212004AB63E /* ModuleConsole.h */,
-				BC7C5EF11AD44212004AB63E /* ofApp.cpp */,
-				BC7C5EF21AD44212004AB63E /* ofApp.h */,
-				BC7C5EF31AD44212004AB63E /* Particle.cpp */,
-				BC7C5EF41AD44212004AB63E /* Particle.h */,
-				B6800FDC1AD72FCD009D95F9 /* Panel.cpp */,
-				B6800FDD1AD72FCD009D95F9 /* Panel.h */,
+				BC50235C1B4C03FE002A57BB /* Button.cpp */,
+				BC50235D1B4C03FE002A57BB /* Button.h */,
+				BC50235E1B4C03FE002A57BB /* Constants.h */,
+				BC50235F1B4C03FE002A57BB /* Fader.cpp */,
+				BC5023601B4C03FE002A57BB /* Fader.h */,
+				BC5023611B4C03FE002A57BB /* main.cpp */,
+				BC5023621B4C03FE002A57BB /* Module.cpp */,
+				BC5023631B4C03FE002A57BB /* Module.h */,
+				BC5023641B4C03FE002A57BB /* ModuleConsole.cpp */,
+				BC5023651B4C03FE002A57BB /* ModuleConsole.h */,
+				BC5023661B4C03FE002A57BB /* ofApp.cpp */,
+				BC5023671B4C03FE002A57BB /* ofApp.h */,
+				BC5023681B4C03FE002A57BB /* Panel.cpp */,
+				BC5023691B4C03FE002A57BB /* Panel.h */,
+				BC50236A1B4C03FE002A57BB /* Particle.cpp */,
+				BC50236B1B4C03FE002A57BB /* Particle.h */,
+				BC50236C1B4C03FE002A57BB /* Touch.cpp */,
+				BC50236D1B4C03FE002A57BB /* Touch.h */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -533,35 +533,35 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BC5023731B4C03FE002A57BB /* ofApp.cpp in Sources */,
+				BC5023751B4C03FE002A57BB /* Particle.cpp in Sources */,
 				72A929D3561B8232A182ABFC /* ofxOscBundle.cpp in Sources */,
+				BC5023721B4C03FE002A57BB /* ModuleConsole.cpp in Sources */,
 				5864AD82E20F15536D054EA3 /* ofxOscMessage.cpp in Sources */,
 				4ADB88E2FB52E76A471065DE /* ofxOscParameterSync.cpp in Sources */,
 				640279EE111671BD026CB013 /* ofxOscReceiver.cpp in Sources */,
+				BC50236F1B4C03FE002A57BB /* Fader.cpp in Sources */,
 				8F5205AEF8861EF234F0651A /* ofxOscSender.cpp in Sources */,
-				BC7C5EF91AD44212004AB63E /* main.cpp in Sources */,
 				B69BE73D1AD6DB980019A408 /* ofxButton.cpp in Sources */,
-				BC7C5EF71AD44212004AB63E /* Button.cpp in Sources */,
-				BC7C5EFD1AD44212004AB63E /* Particle.cpp in Sources */,
-				BC7C5EFA1AD44212004AB63E /* Module.cpp in Sources */,
 				ADE367465D2A8EBAD4C7A8D9 /* IpEndpointName.cpp in Sources */,
 				67FE4C7B15C2F0478C8126C2 /* NetworkingUtils.cpp in Sources */,
-				B6800FDE1AD72FCD009D95F9 /* Panel.cpp in Sources */,
+				BC5023741B4C03FE002A57BB /* Panel.cpp in Sources */,
 				510CAFE035E576A4E1502D52 /* UdpSocket.cpp in Sources */,
 				B69BE7421AD6DB980019A408 /* ofxSliderGroup.cpp in Sources */,
 				B69BE73F1AD6DB980019A408 /* ofxLabel.cpp in Sources */,
 				A29D8C96AE042ECEAA1BD4F3 /* NetworkingUtilsWin.cpp in Sources */,
 				B69BE7431AD6DB980019A408 /* ofxToggle.cpp in Sources */,
 				28090DEB5109115003E8F1C5 /* UdpSocketWin.cpp in Sources */,
-				BC7C5EFB1AD44212004AB63E /* ModuleConsole.cpp in Sources */,
 				62545D179C94265CA1389D4A /* OscOutboundPacketStream.cpp in Sources */,
-				BC7C5EF81AD44212004AB63E /* Fader.cpp in Sources */,
-				BC7C5EFC1AD44212004AB63E /* ofApp.cpp in Sources */,
+				BC50236E1B4C03FE002A57BB /* Button.cpp in Sources */,
 				C4782ECC372420ACE0615B74 /* OscPrintReceivedElements.cpp in Sources */,
+				BC5023701B4C03FE002A57BB /* main.cpp in Sources */,
 				B69BE7411AD6DB980019A408 /* ofxSlider.cpp in Sources */,
 				B69BE73C1AD6DB980019A408 /* ofxBaseGui.cpp in Sources */,
+				BC5023711B4C03FE002A57BB /* Module.cpp in Sources */,
 				0546D1A38E13BD319CC9755B /* OscReceivedElements.cpp in Sources */,
 				879A251454401BC0B6E4F238 /* OscTypes.cpp in Sources */,
-				BCA591071B28F7D900598F4B /* Touch.cpp in Sources */,
+				BC5023761B4C03FE002A57BB /* Touch.cpp in Sources */,
 				B69BE73E1AD6DB980019A408 /* ofxGuiGroup.cpp in Sources */,
 				B69BE7401AD6DB980019A408 /* ofxPanel.cpp in Sources */,
 			);
