@@ -4,7 +4,6 @@
 #include "ofMain.h"
 #include "ModuleConsole.h"
 #include "Particle.h"
-#include "Panel.h"
 
 class Module {
 
