@@ -35,7 +35,6 @@
 		BC5023711B4C03FE002A57BB /* Module.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC5023621B4C03FE002A57BB /* Module.cpp */; };
 		BC5023721B4C03FE002A57BB /* ModuleConsole.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC5023641B4C03FE002A57BB /* ModuleConsole.cpp */; };
 		BC5023731B4C03FE002A57BB /* ofApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC5023661B4C03FE002A57BB /* ofApp.cpp */; };
-		BC5023741B4C03FE002A57BB /* Panel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC5023681B4C03FE002A57BB /* Panel.cpp */; };
 		BC5023751B4C03FE002A57BB /* Particle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC50236A1B4C03FE002A57BB /* Particle.cpp */; };
 		BC5023761B4C03FE002A57BB /* Touch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC50236C1B4C03FE002A57BB /* Touch.cpp */; };
 		C4782ECC372420ACE0615B74 /* OscPrintReceivedElements.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC8881B3C8C0A1C45F042E7A /* OscPrintReceivedElements.cpp */; };
@@ -143,8 +142,6 @@
 		BC5023651B4C03FE002A57BB /* ModuleConsole.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ModuleConsole.h; path = ../../src/ModuleConsole.h; sourceTree = "<group>"; };
 		BC5023661B4C03FE002A57BB /* ofApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofApp.cpp; path = ../../src/ofApp.cpp; sourceTree = "<group>"; };
 		BC5023671B4C03FE002A57BB /* ofApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofApp.h; path = ../../src/ofApp.h; sourceTree = "<group>"; };
-		BC5023681B4C03FE002A57BB /* Panel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Panel.cpp; path = ../../src/Panel.cpp; sourceTree = "<group>"; };
-		BC5023691B4C03FE002A57BB /* Panel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Panel.h; path = ../../src/Panel.h; sourceTree = "<group>"; };
 		BC50236A1B4C03FE002A57BB /* Particle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Particle.cpp; path = ../../src/Particle.cpp; sourceTree = "<group>"; };
 		BC50236B1B4C03FE002A57BB /* Particle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Particle.h; path = ../../src/Particle.h; sourceTree = "<group>"; };
 		BC50236C1B4C03FE002A57BB /* Touch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Touch.cpp; path = ../../src/Touch.cpp; sourceTree = "<group>"; };
@@ -403,8 +400,6 @@
 				BC5023651B4C03FE002A57BB /* ModuleConsole.h */,
 				BC5023661B4C03FE002A57BB /* ofApp.cpp */,
 				BC5023671B4C03FE002A57BB /* ofApp.h */,
-				BC5023681B4C03FE002A57BB /* Panel.cpp */,
-				BC5023691B4C03FE002A57BB /* Panel.h */,
 				BC50236A1B4C03FE002A57BB /* Particle.cpp */,
 				BC50236B1B4C03FE002A57BB /* Particle.h */,
 				BC50236C1B4C03FE002A57BB /* Touch.cpp */,
@@ -545,7 +540,6 @@
 				B69BE73D1AD6DB980019A408 /* ofxButton.cpp in Sources */,
 				ADE367465D2A8EBAD4C7A8D9 /* IpEndpointName.cpp in Sources */,
 				67FE4C7B15C2F0478C8126C2 /* NetworkingUtils.cpp in Sources */,
-				BC5023741B4C03FE002A57BB /* Panel.cpp in Sources */,
 				510CAFE035E576A4E1502D52 /* UdpSocket.cpp in Sources */,
 				B69BE7421AD6DB980019A408 /* ofxSliderGroup.cpp in Sources */,
 				B69BE73F1AD6DB980019A408 /* ofxLabel.cpp in Sources */,

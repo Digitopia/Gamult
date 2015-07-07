@@ -32,8 +32,8 @@ void ofApp::setup() {
     // TODO should be the height of the module instead
 	ofApp::maxParticleY = round(ofGetHeight() * (1-LIMIT_PARTICLE));
     
-    imgAboutIcon.loadImage("about-icon.png");
-    imgAbout.loadImage("about.png");
+    imgAboutIcon.loadImage("images/about-icon.png");
+    imgAbout.loadImage("images/about.png");
     aboutRect.set(ofGetWidth() - 65, ofGetHeight() - 65, 50, 50); // TODO: magic numbers
     inAbout = false;
     
@@ -113,10 +113,10 @@ void ofApp::initModules() {
 	config.push_back(sarons);
 	
 	vector<string> icons;
-	icons.push_back("1.png");
-	icons.push_back("2.png");
-	icons.push_back("3.png");
-	icons.push_back("4.png");
+	icons.push_back("images/1.png");
+	icons.push_back("images/2.png");
+	icons.push_back("images/3.png");
+	icons.push_back("images/4.png");
 
 	int moduleWidth = ofGetWidth()/ofApp::nModules;
 	int moduleHeight = ofGetHeight();
