@@ -10,7 +10,7 @@ int main() {
     window->enableOrientationAnimation();
     ofSetupOpenGL(window, 1024, 768, OF_WINDOW);
 #else
-    ofSetupOpenGL(1024, 768, OF_WINDOW);
+    ofSetupOpenGL(1024, 768, OF_FULLSCREEN);
 #endif
     
     ofRunApp(new ofApp());
