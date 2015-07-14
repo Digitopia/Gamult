@@ -73,14 +73,14 @@ void Particle::drawCircle() {
 
 	ofFill();
 	ofSetColor(PARTICLE_COLOR);
-	ofCircle(center.x, center.y, life);
+	ofCircle(center.x, center.y, 1.66*(life-(life-health)));
 	
 	ofPopStyle();
 	
 }
 
 void Particle::drawLife() {
-
+/*
 	ofPushStyle();
 
 	ofSetColor(PARTICLE_LIFE_COLOR);
@@ -97,7 +97,7 @@ void Particle::drawLife() {
 	polyline.draw();
 
 	ofPopStyle();
-    
+    */
 }
 
 void Particle::report(int idx, int note, int vel) {

@@ -1,0 +1,26 @@
+#N canvas 415 220 481 388 10;
+#X obj 80 71 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
+-1;
+#X obj 23 70 print;
+#X obj 23 22 TuioClient;
+#X text 108 36 listens to port 3333 if no port number is specified
+;
+#X text 111 77 and every second to indicate an established link;
+#X text 20 196 removeObject session_id fiducial_id;
+#X text 22 258 removeCursor session_id;
+#X text 21 112 the left output posts a list of TUIO messages:;
+#X text 111 65 the right output sends bangs on frame updates;
+#X text 107 22 receives TUIO messages at the provided port number;
+#X text 20 151 addObject session_id fiducial_id xpos ypos angle;
+#X text 22 226 addCursor session_id xpos ypos;
+#X text 22 242 updateCursor session_id xpos ypos angle xspeed yspeed
+maccel;
+#X text 22 333 removeBlob session_id;
+#X text 22 288 addBlob session_id xpos ypos angle width height area
+;
+#X text 22 304 updateBlob session_id xpos ypos angle width height area
+xspeed yspeed maccel raccel;
+#X text 21 166 updateObject session_id fiducial_id xpos ypos angle
+xspeed yspeed rspeed maccel raccel;
+#X connect 2 0 1 0;
+#X connect 2 1 0 0;
