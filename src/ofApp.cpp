@@ -209,7 +209,7 @@ void ofApp::mouseReleased(ofMouseEventArgs &mouse) {
 
 void ofApp::keyPressed(int key) {
     
-    if (key == 'm') {
+    if (key == 'm' || key == 'M ) {
         
         multitouch = !multitouch;
     
