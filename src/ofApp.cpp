@@ -156,6 +156,8 @@ void ofApp::checkMultitouchData() {
             x = m.getArgAsFloat(2) * ofGetWidth();
             y = m.getArgAsFloat(3) * ofGetHeight();
             
+            cout << "x is " << x << " and y is " << y << endl;
+            
             touchEvent.x = x;
             touchEvent.y = y;
             
@@ -209,7 +211,7 @@ void ofApp::mouseReleased(ofMouseEventArgs &mouse) {
 
 void ofApp::keyPressed(int key) {
     
-    if (key == 'm' || key == 'M ) {
+    if (key == 'm' || key == 'M' ) {
         
         multitouch = !multitouch;
     
