@@ -38,7 +38,7 @@ void ModuleConsole::loadIcons(vector<string> paths) {
 		img.loadImage(paths[i]);
 		icons.push_back(img);
 	
-		// TODO: extrapolate to proper globals or constants
+		// TODO-UI: extrapolate to proper globals or constants
     	int padding = 5;
     	int size = 20;
         int buttonSize = ofGetHeight()*0.018;
@@ -73,7 +73,7 @@ void ModuleConsole::draw() {
 }
 
 void ModuleConsole::drawIcons() {
-	// TODO: extrapolate to proper globals or constants
+	// TODO-UI: extrapolate to proper globals or constants
 	int padding = 5;
 	int size = 20;
     int buttonSize = ofGetHeight()*0.018;
