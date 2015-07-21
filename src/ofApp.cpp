@@ -148,8 +148,6 @@ void ofApp::checkMultitouchData() {
         // TODO: change numbers to 'add', 'update' and 'remove' preprends
         // Can't open and edit Max since already past trial
         
-        // TODO: We should change to PureData rather than Max if commited to open source
-        
         if (m.getAddress() == "/1/" || m.getAddress() == "/2/") {
             
             float x, y;
