@@ -41,9 +41,9 @@ void ofApp::setup() {
 
 void ofApp::update() {
 
-    if (inAbout) return;
-
     checkMultitouchData();
+    
+    if (inAbout) return;
     
     for (touchesIterator it = touches.begin(); it != touches.end(); it++) {
         it->second.update();
@@ -241,10 +241,11 @@ void ofApp::touchDown(ofTouchEventArgs &touch) {
     
     if (aboutRect.inside(x, y)) {
         inAbout = true;
+        touches.clear();
         return;
     }
     
-     cout << "down (" << id << ", " << x << ", " << y << ")" << endl;
+    cout << "down (" << id << ", " << x << ", " << y << ")" << endl;
     
     if (y > CONSOLE_HEIGHT && modules[getModuleId(x)]->isNotFull()) {
         touches.insert(pair<int,Touch> (id, Touch(x, y)));
