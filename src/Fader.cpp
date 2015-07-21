@@ -49,7 +49,7 @@ void Fader::touchMoved(ofTouchEventArgs& event) {
 }
 
 float Fader::getValue() {
-	return ofMap(rect.x, x0-size/2, x0+range-size/2, 0, 2);
+	return ofMap(rect.x, x0-size/2, x0+range-size/2, 0.1, 2);
 }
 
 void Fader::draw() {
