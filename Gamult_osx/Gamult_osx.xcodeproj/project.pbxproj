@@ -450,7 +450,7 @@
 			buildPhases = (
 				E4B69B580A3A1756003C02F2 /* Sources */,
 				E4B69B590A3A1756003C02F2 /* Frameworks */,
-				E4B6FFFD0C3F9AB9008CF71C /* ShellScript */,
+				E4B6FFFD0C3F9AB9008CF71C /* Run Script */,
 				E4C2427710CC5ABF004149E2 /* CopyFiles */,
 			);
 			buildRules = (
@@ -508,18 +508,19 @@
 /* End PBXReferenceProxy section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		E4B6FFFD0C3F9AB9008CF71C /* ShellScript */ = {
+		E4B6FFFD0C3F9AB9008CF71C /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = "Run Script";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cp -f ../../../libs/fmodex/lib/osx/libfmodex.dylib \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/MacOS/libfmodex.dylib\"; install_name_tool -change ./libfmodex.dylib @executable_path/libfmodex.dylib \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/MacOS/$PRODUCT_NAME\";\nmkdir -p \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/Resources/\"\ncp -f \"$ICON_FILE\" \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/Resources/\"\n";
+			shellScript = "cp -f ../../../libs/fmodex/lib/osx/libfmodex.dylib \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/MacOS/libfmodex.dylib\"; install_name_tool -change ./libfmodex.dylib @executable_path/libfmodex.dylib \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/MacOS/$PRODUCT_NAME\";\nmkdir -p \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/Resources/\"\ncp -f \"$ICON_FILE\" \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/Resources/\"\n\ncp -rf ../data \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/Resources\";\n\ncp -rf bin/data \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/Resources\";";
 		};
 /* End PBXShellScriptBuildPhase section */
 

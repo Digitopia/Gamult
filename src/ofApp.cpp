@@ -20,6 +20,10 @@ void ofApp::setup() {
 	
     oscReceiver.setup(RECEIVE_PORT);
 	oscSender.setup(HOST, SEND_PORT);
+    
+    #ifndef TARGET_OF_IOS
+    ofSetDataPathRoot("../Resources/data/");
+    #endif
    
     ofRegisterTouchEvents(this);
     

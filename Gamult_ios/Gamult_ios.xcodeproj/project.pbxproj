@@ -482,7 +482,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cp -rf bin/data/ \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app\"\n";
+			shellScript = "cp -rf ../data/ \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app\"\ncp -rf bin/data/ \"$TARGET_BUILD_DIR/$PRODUCT_NAME.app\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
