@@ -20,7 +20,7 @@ void Particle::gravity() {
 	
 	if (center.y >= ofGetHeight()) {
 		center.y = ofGetHeight();
-        playSound(true);
+        trigger(false, true);
 	}
     
 //    if (center.y >= ofGetHeight() - DELAY_OFFSET) {
@@ -48,7 +48,7 @@ void Particle::loop() {
     float loopCoef = ofApp::modules[module]->getSpeed();
 
 	if (center.y >= ofGetHeight()) {
-		playSound(true);
+        trigger(false, true);
 		velocity *= -1;
     } else if(center.y <= CONSOLE_HEIGHT + life) {
         center.y = CONSOLE_HEIGHT + life;
@@ -109,7 +109,7 @@ void Particle::report(int idx, int note, int vel) {
 	ofApp::oscSender.sendMessage(m);
 }
 
-void Particle::playSound(bool send) {
+void Particle::trigger(bool play, bool send) {
 	
 	// segment particle position x to the amount of notes the instrument has
 	float notef = ofMap(center.x, ofApp::modules[module]->getX0(), ofApp::modules[module]->getX1(), 0, ofApp::modules[module]->getNumberOfInstrumentNotes());
@@ -117,8 +117,11 @@ void Particle::playSound(bool send) {
     
     float vol = ofMap(velocity, 5, 60, 0, 1); // TODO: check magic numbers
 
-    ofApp::modules[module]->playSound(note, vol);
-	int idx = ofApp::modules[module]->getIndex();
+    int idx = ofApp::modules[module]->getIndex();
+    
+    if (play) {
+        ofApp::modules[module]->playSound(note, vol);
+    }
 
 	// TODO: still not sending the velocity properly
     if (send) {

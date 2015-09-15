@@ -90,25 +90,33 @@ void ofApp::initModules() {
 	bonangs.push_back("sounds/BBPL1.wav");
 	bonangs.push_back("sounds/BBPL2.wav");
 	bonangs.push_back("sounds/BBPL3.wav");
-	bonangs.push_back("sounds/BBPL4.wav");
+//	bonangs.push_back("sounds/BBPL4.wav");
 	
 	vector<string> genders;
 	genders.push_back("sounds/GBPL1.wav");
 	genders.push_back("sounds/GBPL2.wav");
 	genders.push_back("sounds/GBPL3.wav");
 	genders.push_back("sounds/GBPL5.wav");
+    genders.push_back("sounds/GBPL2.wav");
+    genders.push_back("sounds/GBPL3.wav");
+    genders.push_back("sounds/GBPL5.wav");
 	
 	vector<string> gongs;
 	gongs.push_back("sounds/GKPL1f.wav");
 	gongs.push_back("sounds/GKPL2f.wav");
 	gongs.push_back("sounds/GKPL3f.wav");
 	gongs.push_back("sounds/GKPL5f.wav");
+    gongs.push_back("sounds/GKPL1f.wav");
+    gongs.push_back("sounds/GKPL2f.wav");
+    gongs.push_back("sounds/GKPL3f.wav");
 	
 	vector<string> sarons;
 	sarons.push_back("sounds/SBPL1.wav");
 	sarons.push_back("sounds/SBPL2.wav");
 	sarons.push_back("sounds/SBPL3.wav");
 	sarons.push_back("sounds/SBPL4.wav");
+    sarons.push_back("sounds/SBPL3.wav");
+    sarons.push_back("sounds/SBPL4.wav");
 	
 	vector< vector<string> > config;
 	config.push_back(bonangs);

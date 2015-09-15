@@ -17,7 +17,7 @@ public:
 	void update();
 	
 	void report(int idx, int note, int vel);
-    void playSound(bool send);
+    void trigger(bool play, bool send);
     
 	int getVelocity() { return velocity; }
 	int getLife() { return life; }
