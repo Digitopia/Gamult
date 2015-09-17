@@ -13,11 +13,11 @@ ModuleConsole::ModuleConsole(int x, float width, int module, vector<string> icon
 //    int buttonSize = ofGetHeight()*0.018;
     int buttonSize = BUTTON_SIZE;
 	
-	btnRemove  = new Button(BUTTON_CLICK,  module, buttonSize, x+buttonSize, y+buttonSize,   "Remove");
-	btnGravity = new Button(BUTTON_TOGGLE, module, buttonSize, x+buttonSize, y+buttonSize*3, "Gravity");
-	btnFreeze  = new Button(BUTTON_TOGGLE, module, buttonSize, x+buttonSize, y+buttonSize*5, "Freeze");
+    btnGravity = new Button(BUTTON_TOGGLE, module, buttonSize, x+buttonSize, y+buttonSize, "Gravity");
+    btnFreeze  = new Button(BUTTON_TOGGLE, module, buttonSize, x+width - 8*buttonSize, y+buttonSize, "Freeze");
+	btnRemove  = new Button(BUTTON_CLICK,  module, buttonSize, x+buttonSize, y+buttonSize*4.7,   "Remove");
 	
-	fadSpeed = new Fader(x+150, y+50+5, FADER_SIZE, FADER_RANGE, "Speed");
+	fadSpeed = new Fader(x+buttonSize, y+buttonSize * 3.5, FADER_SIZE, FADER_RANGE, "Speed");
 	
 	// by default gravity is on
 	btnGravity->on();

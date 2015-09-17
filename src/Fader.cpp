@@ -3,7 +3,8 @@
 
 Fader::Fader(float x0, float y, int size, int range, string title) {
     
-    this->x0 = x0;
+    this ->stringOrigin = x0;
+    this->x0 = x0 + 120;
     this->y = y;
     this->size = size;
     this->range = range;
@@ -11,7 +12,7 @@ Fader::Fader(float x0, float y, int size, int range, string title) {
     
     this->id = -1; // -1 means there is no touch associated
 	
-    this->rect = ofRectangle(x0+range/2-size/2, y-size/2, size, size);
+    this->rect = ofRectangle(this->x0+range/2-size/2, y-size/2, size, size);
 
 	font.loadFont(UI_FONT_FACE, UI_FONT_SIZE, true);
 
@@ -64,6 +65,6 @@ void Fader::draw() {
 	// draw the fader
 	ofRect(rect);
     
-	font.drawString(title, x0, y+size*2);
+	font.drawString(title, stringOrigin, y+4);
 
 }

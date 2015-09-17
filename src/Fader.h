@@ -19,6 +19,7 @@ private:
 	
 	int x0; // the inital position of the fader in the full window
     int y;  // the y position of the fader (is constant all the time)
+    int stringOrigin; // the x point from which to draw the string
     ofRectangle rect; // the rectangle of the fader itself
 	ofTrueTypeFont font;
 	string title;
