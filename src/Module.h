@@ -18,6 +18,7 @@ public:
 	void addParticle(int life, int x, int y);
 	void eraseParticle();
 	void draw();
+    void drawBackground();
 	void drawGrid();
 	void drawBorders();
 	void drawParticles();

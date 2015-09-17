@@ -129,9 +129,17 @@ void Module::update() {
 
 void Module::draw() {
 	console->draw();
+    drawBackground();
 	drawBorders();
 	drawGrid();
 	drawParticles();
+}
+
+void Module::drawBackground() {
+    ofPushStyle();
+    ofSetColor(255 - (30 * index));
+    ofRect(x0, y + CONSOLE_HEIGHT, width, height);
+    ofPopStyle();
 }
 
 void Module::drawParticles() {
