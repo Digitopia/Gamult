@@ -73,7 +73,9 @@ void Particle::drawCircle() {
 
 	ofFill();
 	ofSetColor(PARTICLE_COLOR);
-	ofCircle(center.x, center.y, 1.66*(life-(life-health)));
+    ofCircle(center.x, center.y, 1.66*life);
+    ofSetHexColor(CONSOLE_COLOR);
+	ofCircle(center.x, center.y, 1.25*(life-(life-health)));
 	
 	ofPopStyle();
 	
