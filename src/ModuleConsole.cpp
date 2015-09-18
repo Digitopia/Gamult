@@ -61,6 +61,10 @@ void ModuleConsole::draw() {
 	ofFill();
 
 	ofRect(x, y, width, CONSOLE_HEIGHT);
+    
+    ofSetHexColor(BUTTON_COLOR);
+    
+    ofRect(x , CONSOLE_HEIGHT * 0.75, width, CONSOLE_HEIGHT * 0.25);
 
 	ofPopStyle();
 

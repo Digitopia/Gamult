@@ -28,6 +28,7 @@
 
 // buttons
 #define BUTTON_SIZE 20
+#define BUTTON_COLOR 0x8DCACB
 
 // touches
 #define TOUCH_LINE_WIDTH 3
