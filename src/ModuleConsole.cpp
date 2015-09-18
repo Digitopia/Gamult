@@ -15,7 +15,7 @@ ModuleConsole::ModuleConsole(int x, float width, int module, vector<string> icon
 	
     btnGravity = new Button(BUTTON_TOGGLE, module, buttonSize, x+buttonSize, y+buttonSize, "Gravity");
     btnFreeze  = new Button(BUTTON_TOGGLE, module, buttonSize, x+width - 8*buttonSize, y+buttonSize, "Freeze");
-	btnRemove  = new Button(BUTTON_CLICK,  module, buttonSize, x+buttonSize, y+buttonSize*4.7,   "Remove");
+    btnRemove  = new Button(BUTTON_CLICK,  module, width/2, x+1, 0.75*CONSOLE_HEIGHT,   "Remove");
 	
 	fadSpeed = new Fader(x+buttonSize, y+buttonSize * 3.5, FADER_SIZE, FADER_RANGE, "Speed");
 	
@@ -26,9 +26,9 @@ ModuleConsole::ModuleConsole(int x, float width, int module, vector<string> icon
 
 	x = x + width/2;
 
-	loadIcons(iconPaths);
+	//loadIcons(iconPaths);
 	
-	ofAddListener(ofEvents().mouseReleased, this, &ModuleConsole::mousePressed);
+	//ofAddListener(ofEvents().mouseReleased, this, &ModuleConsole::mousePressed);
 	
 }
 
@@ -68,10 +68,10 @@ void ModuleConsole::draw() {
 	btnFreeze->draw();
 	fadSpeed->draw();
 	
-	drawIcons();
+	//drawIcons();
 
 }
-
+/*
 void ModuleConsole::drawIcons() {
 	// TODO-UI: extrapolate to proper globals or constants
 	int padding = 5;
@@ -95,4 +95,4 @@ void ModuleConsole::mousePressed(ofMouseEventArgs& event) {
 	}
 }
 
-
+*/

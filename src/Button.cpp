@@ -28,7 +28,7 @@ void Button::touchDown(ofTouchEventArgs& event) {
 		state = !state;
     }
 
-    if (id == -1 && type == BUTTON_CLICK && ofDist(event.x, event.y, x+size/2, y+size/2) <= size/2) {
+    if (id == -1 && type == BUTTON_CLICK && rect.inside(event.x, event.y) && event.y < CONSOLE_HEIGHT) {
         id = event.id;
 		state = true;
     }
@@ -64,14 +64,14 @@ void Button::draw() {
 	
 	if (state)
 		ofFill();
-
-	font.drawString(title, x+size*1.5, y+size-3);
 	
 	if (type == BUTTON_TOGGLE)
+        font.drawString(title, x+size*1.5, y+size-3);
 		ofRect(rect);
 	
 	if (type == BUTTON_CLICK) {
-		ofCircle(x+size/2, y+size/2, size/2+1);
+        font.drawString(title, x+ofApp::modules[module]->getWidth()/6, y+(CONSOLE_HEIGHT/6));
+        ofRect(x, y, ofApp::modules[module]->getWidth()/2, CONSOLE_HEIGHT/4);
 //		ofLine(x, y, x+size, y+size);
 //		ofLine(x+size, y, x, y+size);
 	}
