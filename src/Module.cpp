@@ -132,7 +132,6 @@ void Module::draw() {
     drawBackground();
 	drawBorders();
 	drawGrid();
-	drawParticles();
 }
 
 void Module::drawBackground() {

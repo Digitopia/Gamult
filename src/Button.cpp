@@ -69,13 +69,14 @@ void Button::draw() {
 	if (state)
 		ofFill();
 	
-	if (type == BUTTON_TOGGLE)
+    if (type == BUTTON_TOGGLE) {
         font.drawString(title, x+size*1.5, y+size-3);
 		ofRect(rect);
+    }
 	
 	if (type == BUTTON_REMOVE || type == BUTTON_CLEAR) {
         font.drawString(title, x+ofApp::modules[module]->getWidth()/6, y+(CONSOLE_HEIGHT/6));
-        ofRect(x, y, ofApp::modules[module]->getWidth()/2, CONSOLE_HEIGHT/4);
+        ofRect(x, y, ofApp::modules[module]->getWidth()/2, CONSOLE_HEIGHT*0.25);
 //		ofLine(x, y, x+size, y+size);
 //		ofLine(x+size, y, x, y+size);
 	}

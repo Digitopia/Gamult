@@ -63,8 +63,13 @@ void ofApp::draw() {
     
     ofBackground(BACKGROUND_COLOR);
     
+    // separating the drawing of particles from that of the UI and graphic elements to make sure there's no overlapping
     for (int i = 0; i < ofApp::nModules; i++) {
         ofApp::modules[i]->draw();
+    }
+    
+    for (int i = 0; i < ofApp::nModules; i++) {
+        ofApp::modules[i]->drawParticles();
     }
     
     for (touchesIterator it = touches.begin(); it != touches.end(); it++) {
