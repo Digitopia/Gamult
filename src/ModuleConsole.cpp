@@ -15,7 +15,8 @@ ModuleConsole::ModuleConsole(int x, float width, int module, vector<string> icon
 	
     btnGravity = new Button(BUTTON_TOGGLE, module, buttonSize, x+buttonSize, y+buttonSize, "Gravity");
     btnFreeze  = new Button(BUTTON_TOGGLE, module, buttonSize, x+width - 8*buttonSize, y+buttonSize, "Freeze");
-    btnRemove  = new Button(BUTTON_CLICK,  module, width/2, x+1, 0.75*CONSOLE_HEIGHT,   "Remove");
+    btnRemove  = new Button(BUTTON_REMOVE,  module, width/2, x+1, 0.75*CONSOLE_HEIGHT,   "Remove");
+    btnClear = new Button(BUTTON_CLEAR, module, width/2, x + width/2 + 1, 0.75*CONSOLE_HEIGHT, "Clear");
 	
 	fadSpeed = new Fader(x+buttonSize, y+buttonSize * 3.5, FADER_SIZE, FADER_RANGE, "Speed");
 	
@@ -64,6 +65,7 @@ void ModuleConsole::draw() {
 	ofPopStyle();
 
 	btnRemove->draw();
+    btnClear->draw();
 	btnGravity->draw();
 	btnFreeze->draw();
 	fadSpeed->draw();

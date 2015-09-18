@@ -37,6 +37,7 @@ public:
 	int getNumberOfInstrumentNotes() { return sounds.size(); }
 	bool anyParticles()              { return particles.size() > 0; }
 	void removeParticle()            { particles.erase(particles.end() - 1); }
+    void removeAllParticles()        { particles.clear(); }
 	int getNumberOfParticles()       { return particles.size(); }
 	vector<Particle> getParticles()  { return particles; }
 	Particle* getParticle(int i)     { return &particles[i]; }

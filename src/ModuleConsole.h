@@ -35,9 +35,10 @@ private:
 	
 	ofImage img;
 	
-	Button* btnRemove;
 	Button* btnGravity;
 	Button* btnFreeze;
+    Button* btnRemove;
+    Button* btnClear;
 
 	Fader* fadSpeed;
 	

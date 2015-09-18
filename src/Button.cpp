@@ -28,7 +28,7 @@ void Button::touchDown(ofTouchEventArgs& event) {
 		state = !state;
     }
 
-    if (id == -1 && type == BUTTON_CLICK && rect.inside(event.x, event.y) && event.y < CONSOLE_HEIGHT) {
+    if (id == -1 && (type == BUTTON_REMOVE || type == BUTTON_CLEAR) && rect.inside(event.x, event.y) && event.y < CONSOLE_HEIGHT) {
         id = event.id;
 		state = true;
     }
@@ -36,16 +36,20 @@ void Button::touchDown(ofTouchEventArgs& event) {
 }
 
 void Button::touchMoved(ofTouchEventArgs &event) {
-    if (type == BUTTON_CLICK && id == event.id && !rect.inside(event.x, event.y)) {
+    if ((type == BUTTON_REMOVE || type == BUTTON_CLEAR) && id == event.id && !rect.inside(event.x, event.y)) {
         state = false;
         id = -1;
     }
 }
 
 void Button::touchUp(ofTouchEventArgs& event) {
-    if (event.id == id && state && type == BUTTON_CLICK) {
+    if (event.id == id && state && (type == BUTTON_REMOVE || type == BUTTON_CLEAR)) {
         if (ofApp::modules[module]->anyParticles()) {
-            ofApp::modules[module]->removeParticle();
+            if (type == BUTTON_REMOVE) {
+                ofApp::modules[module]->removeParticle();
+            } else {
+                ofApp::modules[module]->removeAllParticles();
+            }
         }
         state = false;
         id = -1;
@@ -69,7 +73,7 @@ void Button::draw() {
         font.drawString(title, x+size*1.5, y+size-3);
 		ofRect(rect);
 	
-	if (type == BUTTON_CLICK) {
+	if (type == BUTTON_REMOVE || type == BUTTON_CLEAR) {
         font.drawString(title, x+ofApp::modules[module]->getWidth()/6, y+(CONSOLE_HEIGHT/6));
         ofRect(x, y, ofApp::modules[module]->getWidth()/2, CONSOLE_HEIGHT/4);
 //		ofLine(x, y, x+size, y+size);

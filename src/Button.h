@@ -7,7 +7,8 @@
 
 enum buttonType {
 	BUTTON_TOGGLE,
-	BUTTON_CLICK
+	BUTTON_REMOVE,
+    BUTTON_CLEAR
 };
 
 class Button {
