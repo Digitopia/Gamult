@@ -36,10 +36,9 @@ void ofApp::setup() {
     // TODO-UI should be the height of the module instead
 	ofApp::maxParticleY = round(ofGetHeight() * (1-LIMIT_PARTICLE));
     
-    imgAboutIcon.loadImage("images/about-icon.png");
     imgAbout.loadImage("images/about.png");
     aboutRect.set(ofGetWidth() - 65, ofGetHeight() - 65, 50, 50); // TODO-UI: magic numbers
-    inAbout = false;
+    inAbout = true;
     
 }
 
@@ -76,11 +75,9 @@ void ofApp::draw() {
         it->second.draw();
     }
     
-    imgAboutIcon.draw(ofGetWidth() - 65, ofGetHeight() - 65, 50, 50); // TODO-UI: magic numbers
-    
     if (inAbout) {
         // TODO-UI: magic numbers
-        imgAbout.draw(0 + 50, CONSOLE_HEIGHT + 50, ofGetWidth() - 100, ofGetHeight() - CONSOLE_HEIGHT - 100);
+        imgAbout.draw(0, 0, ofGetWidth(), ofGetHeight());
     }
     
     drawLines();

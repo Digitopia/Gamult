@@ -65,7 +65,6 @@ private:
     map<int,Touch> touches;
     bool inAbout;
     ofImage imgAbout;
-    ofImage imgAboutIcon;
     ofRectangle aboutRect; // TODO: collision check should be with a circle and not rectangle
 	
 };
