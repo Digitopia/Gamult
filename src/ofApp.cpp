@@ -33,20 +33,53 @@ void ofApp::setup() {
 	
 	initModules();
 
-    // TODO-UI should be the height of the module instead
 	ofApp::maxParticleY = round(ofGetHeight() * (1-LIMIT_PARTICLE));
     
+    
+    int aboutRectLength = 100;
+    int aboutRectHeight = 10;
+    barRect.set(ofGetWidth()/2 - aboutRectLength/2, ofGetHeight() - aboutRectHeight, aboutRectLength, aboutRectHeight);
+    
+    aboutRect.set(100, ofGetHeight() - 100, 200, 50);
+    
+    imgSplashScreen.loadImage("images/splash-screen.png");
     imgAbout.loadImage("images/about.png");
-    aboutRect.set(ofGetWidth() - 65, ofGetHeight() - 65, 50, 50); // TODO-UI: magic numbers
-    inAbout = true;
+    
+    state = SPLASH_SCREEN;
+//    state = ABOUT_DESCENDING;
+    
+    aboutY = 0;
     
 }
 
 void ofApp::update() {
+    
+    if (aboutY < 0) {
+        state = ABOUT;
+        aboutY = 0;
+    }
 
     checkMultitouchData();
     
-    if (inAbout) return;
+    if (state == BAR_ASCENDING && aboutY <= maxParticleY) {
+        state = BAR;
+    }
+    
+    if (state == BAR_DESCENDING && aboutY >= ofGetHeight()) {
+        state = APP;
+    }
+    
+    if (state == ABOUT_ASCENDING && aboutY <= 0) {
+        state == ABOUT;
+    }
+    
+    if (state == ABOUT_DESCENDING && aboutY >= ofGetHeight()) {
+        state = APP;
+    }
+    
+    if (state == ABOUT || state == SPLASH_SCREEN) {
+        return;
+    }
     
     for (touchesIterator it = touches.begin(); it != touches.end(); it++) {
         it->second.update();
@@ -62,7 +95,16 @@ void ofApp::draw() {
     
     ofBackground(BACKGROUND_COLOR);
     
-    // separating the drawing of particles from that of the UI and graphic elements to make sure there's no overlapping
+    if (state == SPLASH_SCREEN) {
+        imgSplashScreen.draw(0, 0, ofGetWidth(), ofGetHeight());
+        return;
+    }
+    
+    else if (state == ABOUT) {
+        imgAbout.draw(0, 0, ofGetWidth(), ofGetHeight());
+        return;
+    }
+    
     for (int i = 0; i < ofApp::nModules; i++) {
         ofApp::modules[i]->draw();
     }
@@ -75,12 +117,37 @@ void ofApp::draw() {
         it->second.draw();
     }
     
-    if (inAbout) {
-        // TODO-UI: magic numbers
-        imgAbout.draw(0, 0, ofGetWidth(), ofGetHeight());
+    drawLines();
+    ofRect(barRect);
+
+    if (state == BAR) {
+        ofEnableAlphaBlending();
+        ofSetColor(255,255,255,200);
+        imgAbout.draw(0, aboutY, ofGetWidth(), ofGetHeight());
+        ofDisableAlphaBlending();
+        ofRect(barRect);
+        ofRect(aboutRect);
     }
     
-    drawLines();
+    else if (state == ABOUT_ASCENDING) {
+        aboutY -= 15;
+        imgAbout.draw(0, aboutY, ofGetWidth(), ofGetHeight());
+    }
+    
+    else if (state == ABOUT_DESCENDING) {
+        aboutY += 20;
+        imgAbout.draw(0, aboutY, ofGetWidth(), ofGetHeight());
+    }
+    
+    else if (state == BAR_ASCENDING) {
+        aboutY -= 5;
+        imgAbout.draw(0, aboutY, ofGetWidth(), ofGetHeight());
+    }
+    
+    else if (state == BAR_DESCENDING) {
+        aboutY += 5;
+        imgAbout.draw(0, aboutY, ofGetWidth(), ofGetHeight());
+    }
     
 }
 
@@ -242,8 +309,13 @@ void ofApp::keyPressed(int key) {
 
 void ofApp::touchDown(ofTouchEventArgs &touch) {
     
-    if (inAbout) {
-        inAbout = false;
+    if (state == SPLASH_SCREEN) {
+        state = ABOUT;
+        return;
+    }
+    
+    if (state == ABOUT) {
+        state = ABOUT_DESCENDING;
         return;
     }
     
@@ -251,16 +323,29 @@ void ofApp::touchDown(ofTouchEventArgs &touch) {
     int y = touch.y;
     int id = touch.id;
     
-    if (aboutRect.inside(x, y)) {
-        inAbout = true;
-        touches.clear();
+    if (state == APP && barRect.inside(x, y)) {
+        state = BAR_ASCENDING;
         return;
     }
     
-    cout << "down (" << id << ", " << x << ", " << y << ")" << endl;
+    if (state == BAR && barRect.inside(x, y)) {
+        state = BAR_DESCENDING;
+        return;
+    }
     
-    if (y > CONSOLE_HEIGHT && modules[getModuleId(x)]->isNotFull()) {
-        touches.insert(pair<int,Touch> (id, Touch(x, y)));
+    if (state == BAR && aboutRect.inside(x, y)) {
+        state = ABOUT_ASCENDING;
+        return;
+    }
+    
+    if (state == APP || state == BAR) {
+
+        cout << "down (" << id << ", " << x << ", " << y << ")" << endl;
+
+        if (y > CONSOLE_HEIGHT && modules[getModuleId(x)]->isNotFull()) {
+            touches.insert(pair<int,Touch> (id, Touch(x, y)));
+        }
+        
     }
     
 }
@@ -268,13 +353,13 @@ void ofApp::touchDown(ofTouchEventArgs &touch) {
 
 void ofApp::touchMoved(ofTouchEventArgs &touch) {
     
-    if (inAbout) return;
+    if (state != APP && state != BAR) return;
     
     int x = touch.x;
     int y = touch.y;
     int id = touch.id;
     
-     cout << "moved (" << id << ", " << x << ", " << y << ")" << endl;
+    cout << "moved (" << id << ", " << x << ", " << y << ")" << endl;
     
     touchesIterator it = touches.find(id);
     if (it == touches.end()) return;
@@ -285,11 +370,11 @@ void ofApp::touchMoved(ofTouchEventArgs &touch) {
 
 void ofApp::touchUp(ofTouchEventArgs &touch) {
     
-    if (inAbout) return;
+    if (state != APP && state != BAR) return;
     
     int id = touch.id;
     
-     cout << "up (" << id << ")" << endl;
+    cout << "up (" << id << ")" << endl;
     
     touchesIterator it = touches.find(id);
 

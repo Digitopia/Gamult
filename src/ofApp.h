@@ -18,6 +18,18 @@
 #endif
 
 
+enum appState {
+    SPLASH_SCREEN,
+    FADING_ABOUT,
+    ABOUT,
+    ABOUT_DESCENDING,
+    ABOUT_ASCENDING,
+    APP,
+    BAR_ASCENDING,
+    BAR_DESCENDING,
+    BAR
+};
+
 class Touch; // TODO: something about the includes not working so that this needs to be here
 
 #ifdef TARGET_OF_IOS
@@ -63,10 +75,18 @@ public:
 private:
     
     map<int,Touch> touches;
-    bool inAbout;
+    
+    appState state;
+    
+    ofRectangle barRect;
+    ofRectangle aboutRect;
+    
     ofImage imgAbout;
-    ofRectangle aboutRect; // TODO: collision check should be with a circle and not rectangle
+    ofImage imgSplashScreen;
+    
+    int barY;
+    int aboutY;
 	
 };
-
+    
 #endif
