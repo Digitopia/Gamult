@@ -20,7 +20,7 @@ void Particle::gravity() {
 	
 	if (center.y >= ofGetHeight()) {
 		center.y = ofGetHeight();
-        trigger(false, true);
+        trigger(true, true);
 	}
     
 //    if (center.y >= ofGetHeight() - DELAY_OFFSET) {
@@ -48,7 +48,7 @@ void Particle::loop() {
     float loopCoef = ofApp::modules[module]->getSpeed();
 
 	if (center.y >= ofGetHeight()) {
-        trigger(false, true);
+        trigger(true, true);
 		velocity *= -1;
     } else if(center.y <= CONSOLE_HEIGHT + life) {
         center.y = CONSOLE_HEIGHT + life;
