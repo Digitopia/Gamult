@@ -20,6 +20,7 @@
 
 enum appState {
     SPLASH_SCREEN,
+    SPLASH_FADE,
     FADING_ABOUT,
     ABOUT,
     ABOUT_DESCENDING,
@@ -86,6 +87,8 @@ private:
     
     int barY;
     int aboutY;
+    
+    int splashAlpha;
 	
 };
     

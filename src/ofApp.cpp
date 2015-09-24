@@ -49,6 +49,7 @@ void ofApp::setup() {
 //    state = ABOUT_DESCENDING;
     
     aboutY = 0;
+    splashAlpha = 255;
     
 }
 
@@ -97,6 +98,21 @@ void ofApp::draw() {
     
     if (state == SPLASH_SCREEN) {
         imgSplashScreen.draw(0, 0, ofGetWidth(), ofGetHeight());
+        if(ofGetElapsedTimeMillis() > 1500) state = SPLASH_FADE;
+        return;
+    }
+    
+    else if (state == SPLASH_FADE) {
+        ofPushStyle();
+        ofEnableAlphaBlending();
+        ofSetColor(255,255,255, 255);
+        imgAbout.draw(0, 0, ofGetWidth(), ofGetHeight());
+        splashAlpha -= 2;
+        ofSetColor(255,255,255, splashAlpha);
+        imgSplashScreen.draw(0, 0, ofGetWidth(), ofGetHeight());
+        ofDisableAlphaBlending();
+        ofPopStyle();
+        if(splashAlpha <= 0) state = ABOUT;
         return;
     }
     
@@ -309,7 +325,7 @@ void ofApp::keyPressed(int key) {
 
 void ofApp::touchDown(ofTouchEventArgs &touch) {
     
-    if (state == SPLASH_SCREEN) {
+    if (state == SPLASH_SCREEN || state == SPLASH_FADE) {
         state = ABOUT;
         return;
     }
