@@ -31,6 +31,14 @@ enum appState {
     BAR
 };
 
+enum inactivityStateEnum {
+    ACTIVE, // default state
+    PRE_INACTIVE, // after a min of no interaction, resets controls and clears particles
+    INACTIVE, // when the auto generated animations are happening
+    POST_INACTIVE // when the auto generated animations have finished already (it's simply transitory, goes directly to ACTIVE after)
+};
+
+
 class Touch; // TODO: something about the includes not working so that this needs to be here
 
 #ifdef TARGET_OF_IOS
@@ -63,6 +71,12 @@ public:
 	void initModules();
 	void checkMultitouchData();
     int getModuleId(int x);
+    
+    void handleInactivity();
+    int getNewInactivityThreshold();
+    int getNewInactivityThresholdWithinParticles();
+    bool hasParticles();
+    void resetModules();
 
 	static int nModules;
 	static int nParticlesPerModule;
@@ -71,13 +85,18 @@ public:
 	static ofxOscSender oscSender;
 	static ofxOscReceiver oscReceiver;
     static int mouseId;
+    static bool inactive;
     static bool multitouch;
-	
+    static unsigned int inactivityCounter;
+    static unsigned int inactivityCounterWithinParticles;
+    static unsigned int inactivityNumberOfParticles;
+    
 private:
     
     map<int,Touch> touches;
     
     appState state;
+    inactivityStateEnum inactivityState;
     
     ofRectangle barRect;
     ofRectangle aboutRect;
@@ -89,7 +108,13 @@ private:
     int aboutY;
     
     int splashAlpha;
-	
+    
+    int moduleWidth;
+    int moduleHeight;
+    
+    unsigned int inactivityThreshold;
+    unsigned int inactivityThresholdWithinParticles;
+    
 };
     
 #endif

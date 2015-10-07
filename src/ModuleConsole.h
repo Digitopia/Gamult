@@ -20,8 +20,13 @@ public:
 	bool isGravityOn() { return btnGravity->getState(); }
 	bool isLooping()   { return !isGravityOn(); }
     float getSpeed()   { return fadSpeed->getValue(); }
-	
-	void mousePressed(ofMouseEventArgs& event);
+    
+    void unfreeze() { btnFreeze->off(); }
+    void enableGravity() { btnGravity->on(); }
+    
+    void resetFaderSpeed() { fadSpeed->resetFader(); }
+    
+    void mousePressed(ofMouseEventArgs& event);
 
 private:
 

@@ -10,6 +10,7 @@ public:
 	Fader(float x0, float y, int size, int range, string title);
 	void draw();
     float getValue();
+    void resetFader() { this->rect.x = this->x0+range-size/2; }
 	
     void touchDown(ofTouchEventArgs& event);
 	void touchMoved(ofTouchEventArgs& event);

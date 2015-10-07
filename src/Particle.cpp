@@ -7,10 +7,9 @@ Particle::Particle(int module, int index, float x, float y, int life) {
 	this->center.x = x;
 	this->center.y = y;
 	this->life = life;
-
 	this->health = life;
     this->radius = life;
-	this->velocity = 0;
+    this->velocity = 0;
 
 }
 

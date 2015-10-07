@@ -21,8 +21,8 @@ ModuleConsole::ModuleConsole(int x, float width, int module, vector<string> icon
 	fadSpeed = new Fader(x+buttonSize, y+buttonSize * 3.5, FADER_SIZE, FADER_RANGE, "Speed");
 	
 	// by default gravity is on
-	btnGravity->on();
-	btnRemove->off();
+    btnGravity->on();
+    btnRemove->off();
 	btnFreeze->off();
 
 	x = x + width/2;
@@ -34,7 +34,8 @@ ModuleConsole::ModuleConsole(int x, float width, int module, vector<string> icon
 }
 
 void ModuleConsole::loadIcons(vector<string> paths) {
-	for (int i = 0; i < paths.size(); i++) {
+
+    for (int i = 0; i < paths.size(); i++) {
 		ofImage img;
 		img.loadImage(paths[i]);
 		icons.push_back(img);

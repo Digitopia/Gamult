@@ -43,6 +43,9 @@ public:
 	Particle* getParticle(int i)     { return &particles[i]; }
     bool isFull()                    { return particles.size() == maxPopulation; }
     bool isNotFull()                 { return !isFull();}
+    void resetFaderSpeed()           { console->resetFaderSpeed(); }
+    void unfreeze()                  { console->unfreeze(); }
+    void enableGravity()             { console->enableGravity(); }
 
 private:
 
