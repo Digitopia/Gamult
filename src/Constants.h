@@ -56,7 +56,7 @@
 #define POLY_WIDTH 1
 #define POLY_COLOR 128
 
-#define LIMIT_PARTICLE 0.2 // percentage of the console height below which it is not possible to add particles
+#define LIMIT_PARTICLE 0.2 // percentage of the screen height below which it is not possible to add particles
 
 // inactivity
 #define INACTIVITY_TIME_MIN 60*0.5  // time of inactivity of Gamult for auto generated particles to appear

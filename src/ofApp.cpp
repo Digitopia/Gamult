@@ -149,13 +149,14 @@ void ofApp::handleInactivity() {
         unsigned int rModule = ofRandom(0, MODULES);
         unsigned int rX = ofRandom(modules[rModule]->getX0(), modules[rModule]->getX1());
         // unsigned int rY = ofRandom(100, modules[rModules].getHeight());
-        unsigned int rY = ofRandom(100, 200);
+        unsigned int rY = ofRandom(CONSOLE_HEIGHT, ofGetHeight()*(1-LIMIT_PARTICLE));
         unsigned int rIncrement = ofRandom(INACTIVITY_TOUCH_MIN, INACTIVITY_TOUCH_MAX);
         
         modules[getModuleId(rX)]->addParticle(rIncrement, rX, rY);
         
         // cout << "inactivity particle " << rModule << " " << rX << " " << rY << " " << rIncrement << endl;
         
+        inactivityThreshold = getNewInactivityThreshold();
         inactivityThresholdWithinParticles = getNewInactivityThresholdWithinParticles();
         inactivityCounterWithinParticles = 0;
         inactivityNumberOfParticles--;
@@ -174,6 +175,8 @@ void ofApp::resetModules() {
 }
 
 int ofApp::getNewInactivityThreshold() {
+    inactivityCounter = 0; // adding this so that whenever this function is called (because of some kind of movement), the counter resets to 0
+    inactivityCounterWithinParticles = 0; // same
     inactive = false;
     return ofRandom(INACTIVITY_TIME_MIN, INACTIVITY_TIME_MAX)*1000;
 }
