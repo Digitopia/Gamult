@@ -214,6 +214,8 @@ void ofApp::draw() {
         ofApp::modules[i]->draw();
     }
     
+    drawLines();
+    
     for (int i = 0; i < ofApp::nModules; i++) {
         ofApp::modules[i]->drawParticles();
     }
@@ -222,7 +224,6 @@ void ofApp::draw() {
         it->second.draw();
     }
     
-    drawLines();
     ofRect(barRect);
 
     if (state == BAR) {
