@@ -5,8 +5,6 @@ int ofApp::nParticlesPerModule = PARTICLES_PER_MODULE;
 int ofApp::maxParticleY = 0;
 int ofApp::mouseId = 0;
 unsigned int ofApp::inactivityCounter = 0;
-unsigned int ofApp::inactivityCounterWithinParticles = 0;
-unsigned int ofApp::inactivityNumberOfParticles = 0;
 bool ofApp::multitouch = false;
 bool ofApp::inactive = false;
 
@@ -55,9 +53,6 @@ void ofApp::setup() {
     aboutY = 0;
     splashAlpha = 255;
     
-    inactivityThreshold = getNewInactivityThreshold();
-    inactivityThresholdWithinParticles = getNewInactivityThresholdWithinParticles();
-    
 }
 
 void ofApp::update() {
@@ -103,66 +98,58 @@ void ofApp::update() {
 
 void ofApp::handleInactivity() {
     
-    cout << inactivityState << endl;
+   // cout << inactivityState << endl;
     
     // inactivity timer update
     if (inactivityState == ACTIVE || inactivityState == PRE_INACTIVE) {
         inactivityCounter += ofGetLastFrameTime() * 1000;
-//        cout << inactivityCounter << endl;
-    }
-    
-    // inactivity timer within particles update
-    if (inactivityState == INACTIVE) {
-        inactivityCounterWithinParticles += ofGetLastFrameTime() * 1000;
-        cout << inactivityCounterWithinParticles << endl;
     }
     
     // ACTIVE -> PRE_INACTIVE
-    if (inactivityState == ACTIVE && inactivityCounter >= INACTIVITY_STOP*1000) {
+    if (inactivityState == ACTIVE && inactivityCounter >= INACTIVITY_THRESHOLD*1000) {
         inactivityState = PRE_INACTIVE;
-        resetModules();
+        return;
     }
     
     // PRE_INACTIVE -> INACTIVE
-    if (inactivityState == PRE_INACTIVE && inactivityCounter >= inactivityThreshold) {
-        inactivityState = INACTIVE;
+    if (inactivityState == PRE_INACTIVE) {
         resetModules();
-        inactivityNumberOfParticles = ofRandom(INACTIVITY_PARTICLES_MIN, INACTIVITY_PARTICLES_MAX);
+        inactivityState = INACTIVE;
+        return;
     }
     
-    // INACTIVE -> POST_INACTIVE
-    if (inactivityState == INACTIVE && inactivityNumberOfParticles == 0) {
-        inactivityState = POST_INACTIVE;
+    // INACTIVE
+    if (inactivityState == INACTIVE) {
+        
+        int particleChance = ofRandom(0, 1499);
+        
+        if (particleChance == 27) {
+            
+            unsigned int rModule = ofRandom(0, MODULES);
+            unsigned int rX = ofRandom(modules[rModule]->getX0(), modules[rModule]->getX1());
+            // unsigned int rY = ofRandom(100, modules[rModules].getHeight());
+            unsigned int rY = ofRandom(CONSOLE_HEIGHT, ofGetHeight()*(1-LIMIT_PARTICLE));
+            unsigned int rIncrement = ofRandom(INACTIVITY_TOUCH_MIN, INACTIVITY_TOUCH_MAX);
+            
+            modules[getModuleId(rX)]->addParticle(rIncrement, rX, rY);
+        }
+
     }
     
     // POST_INACTIVE -> ACTIVE
     if (inactivityState == POST_INACTIVE) {
-        inactivityCounter = 0;
-        inactivityThreshold = getNewInactivityThreshold();
-        inactivityThresholdWithinParticles = getNewInactivityThresholdWithinParticles();
+        for (int i = 0; i < ofApp::nModules; i++) {
+            modules[i]->removeAllParticles();
+        }
         inactivityState = ACTIVE;
     }
-        
-    // INACTIVE
-    if (inactivityState == INACTIVE && inactivityCounterWithinParticles >= inactivityThresholdWithinParticles) {
-        
-        unsigned int rModule = ofRandom(0, MODULES);
-        unsigned int rX = ofRandom(modules[rModule]->getX0(), modules[rModule]->getX1());
-        // unsigned int rY = ofRandom(100, modules[rModules].getHeight());
-        unsigned int rY = ofRandom(CONSOLE_HEIGHT, ofGetHeight()*(1-LIMIT_PARTICLE));
-        unsigned int rIncrement = ofRandom(INACTIVITY_TOUCH_MIN, INACTIVITY_TOUCH_MAX);
-        
-        modules[getModuleId(rX)]->addParticle(rIncrement, rX, rY);
-        
-        // cout << "inactivity particle " << rModule << " " << rX << " " << rY << " " << rIncrement << endl;
-        
-        inactivityThreshold = getNewInactivityThreshold();
-        inactivityThresholdWithinParticles = getNewInactivityThresholdWithinParticles();
-        inactivityCounterWithinParticles = 0;
-        inactivityNumberOfParticles--;
-        
-    }
     
+}
+
+void ofApp::resetInactivityTime() {
+    
+    if(inactivityState == INACTIVE) inactivityState = POST_INACTIVE;
+    inactivityCounter = 0;
 }
 
 void ofApp::resetModules() {
@@ -174,12 +161,6 @@ void ofApp::resetModules() {
     }
 }
 
-int ofApp::getNewInactivityThreshold() {
-    inactivityCounter = 0; // adding this so that whenever this function is called (because of some kind of movement), the counter resets to 0
-    inactivityCounterWithinParticles = 0; // same
-    inactive = false;
-    return ofRandom(INACTIVITY_TIME_MIN, INACTIVITY_TIME_MAX)*1000;
-}
 
 void ofApp::draw() {
     
@@ -415,7 +396,7 @@ void ofApp::keyPressed(int key) {
 
 void ofApp::touchDown(ofTouchEventArgs &touch) {
     
-    inactivityThreshold = getNewInactivityThreshold();
+    resetInactivityTime();
     
     if (state == SPLASH_SCREEN || state == SPLASH_FADE) {
         state = ABOUT;
@@ -460,7 +441,7 @@ void ofApp::touchDown(ofTouchEventArgs &touch) {
 
 void ofApp::touchMoved(ofTouchEventArgs &touch) {
     
-    inactivityThreshold = getNewInactivityThreshold();
+    resetInactivityTime();
     
     if (state != APP && state != BAR) return;
     
@@ -479,7 +460,7 @@ void ofApp::touchMoved(ofTouchEventArgs &touch) {
 
 void ofApp::touchUp(ofTouchEventArgs &touch) {
     
-    inactivityThreshold = getNewInactivityThreshold();
+    resetInactivityTime();
     
     if (state != APP && state != BAR) return;
     
@@ -553,9 +534,6 @@ void ofApp::drawLines() {
     }
 }
 
-int ofApp::getNewInactivityThresholdWithinParticles() {
-    return ofRandom(INACTIVITY_PARTICLE_TIME_MIN, INACTIVITY_PARTICLE_TIME_MAX)*1000;
-}
 
 bool ofApp::hasParticles() {
     for (unsigned int i = 0; i < nModules; i++) {

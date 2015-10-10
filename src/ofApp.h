@@ -73,10 +73,9 @@ public:
     int getModuleId(int x);
     
     void handleInactivity();
-    int getNewInactivityThreshold();
-    int getNewInactivityThresholdWithinParticles();
     bool hasParticles();
     void resetModules();
+    void resetInactivityTime();
 
 	static int nModules;
 	static int nParticlesPerModule;
@@ -88,8 +87,6 @@ public:
     static bool inactive;
     static bool multitouch;
     static unsigned int inactivityCounter;
-    static unsigned int inactivityCounterWithinParticles;
-    static unsigned int inactivityNumberOfParticles;
     
 private:
     

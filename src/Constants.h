@@ -59,14 +59,8 @@
 #define LIMIT_PARTICLE 0.2 // percentage of the screen height below which it is not possible to add particles
 
 // inactivity
-#define INACTIVITY_TIME_MIN 60*0.5  // time of inactivity of Gamult for auto generated particles to appear
-#define INACTIVITY_TIME_MAX 60*1
-#define INACTIVITY_PARTICLE_TIME_MIN 5  // time between auto generated particles once inactivity started
-#define INACTIVITY_PARTICLE_TIME_MAX 15
-#define INACTIVITY_PARTICLES_MIN 2 // number of particles for that happening of inactivity
-#define INACTIVITY_PARTICLES_MAX 10
 #define INACTIVITY_TOUCH_MAX TOUCH_MAX
 #define INACTIVITY_TOUCH_MIN TOUCH_MAX/5
-#define INACTIVITY_STOP 60*0.25
+#define INACTIVITY_THRESHOLD 10
 
 //#endif
