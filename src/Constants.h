@@ -1,6 +1,20 @@
 //#ifndef CONSTANTS_H
 //#define CONSTANTS_H
 
+//#define ACER // if active, will optimize for ACER screen, otherwise will work best in Macbook
+
+#ifdef ACER
+    #define FADER_SIZE 24
+    #define BUTTON_SIZE 20
+    #define CONSOLE_HEIGHT 200
+    #define UI_FONT_SIZE 14
+#else
+    #define FADER_SIZE 20
+    #define BUTTON_SIZE 36
+    #define CONSOLE_HEIGHT 120
+    #define UI_FONT_SIZE 14
+#endif
+
 // setup
 #define FRAME_RATE 60
 #define BACKGROUND_COLOR 255
@@ -19,15 +33,13 @@
 
 // user interface
 #define UI_FONT_FACE "verdana.ttf"
-#define UI_FONT_SIZE 14
+
 #define UI_COLOR 255
 
 // faders
-#define FADER_SIZE 20
 #define FADER_RANGE 250
 
 // buttons
-#define BUTTON_SIZE 20
 #define BUTTON_COLOR 0x8DCACB
 
 // touches
@@ -46,7 +58,6 @@
 #define CONSOLE_COLOR 0xA1DEDF
 #define CONSOLE_BORDER_WIDTH 1
 #define CONSOLE_BORDER_COLOR 0x717171
-#define CONSOLE_HEIGHT 120
 
 // grid
 #define GRID_COLOR 213

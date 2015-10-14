@@ -10,13 +10,12 @@ ModuleConsole::ModuleConsole(int x, float width, int module, vector<string> icon
 	
 	int y = 0;
     
-//    int buttonSize = ofGetHeight()*0.018;
     int buttonSize = BUTTON_SIZE;
 	
     btnGravity = new Button(BUTTON_TOGGLE, module, buttonSize, x+buttonSize, y+buttonSize, "Gravity");
     btnFreeze  = new Button(BUTTON_TOGGLE, module, buttonSize, x+width - 8*buttonSize, y+buttonSize, "Freeze");
     btnRemove  = new Button(BUTTON_REMOVE,  module, width/2, x+1, 0.75*CONSOLE_HEIGHT,   "Remove");
-    btnClear = new Button(BUTTON_CLEAR, module, width/2, x + width/2 + 1, 0.75*CONSOLE_HEIGHT, "Clear");
+    btnClear =   new Button(BUTTON_CLEAR, module, width/2, x + width/2 + 1, 0.75*CONSOLE_HEIGHT, "Clear");
 	
 	fadSpeed = new Fader(x+buttonSize, y+buttonSize * 3.5, FADER_SIZE, FADER_RANGE, "Speed");
 	
@@ -33,25 +32,25 @@ ModuleConsole::ModuleConsole(int x, float width, int module, vector<string> icon
 	
 }
 
-void ModuleConsole::loadIcons(vector<string> paths) {
-
-    for (int i = 0; i < paths.size(); i++) {
-		ofImage img;
-		img.loadImage(paths[i]);
-		icons.push_back(img);
-	
-		// TODO-UI: extrapolate to proper globals or constants
-    	int padding = 5;
-    	int size = 20;
-        int buttonSize = ofGetHeight()*0.018;
-    	int y = CONSOLE_HEIGHT - size - padding;
-		
-		ofRectangle rect;
-		rect.set(x+buttonSize + i*size + 2*width/3, y, size, size);
-		rects.push_back(rect);
-	}
-	
-}
+//void ModuleConsole::loadIcons(vector<string> paths) {
+//
+//    for (int i = 0; i < paths.size(); i++) {
+//		ofImage img;
+//		img.loadImage(paths[i]);
+//		icons.push_back(img);
+//	
+//		// TODO-UI: extrapolate to proper globals or constants
+//    	int padding = 5;
+//    	int size = 20;
+//        int buttonSize = ofGetHeight()*0.018;
+//    	int y = CONSOLE_HEIGHT - size - padding;
+//		
+//		ofRectangle rect;
+//		rect.set(x+buttonSize + i*size + 2*width/3, y, size, size);
+//		rects.push_back(rect);
+//	}
+//	
+//}
 
 void ModuleConsole::draw() {
 
