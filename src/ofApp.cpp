@@ -375,6 +375,10 @@ void ofApp::mouseReleased(ofMouseEventArgs &mouse) {
     ofNotifyEvent(ofEvents().touchUp, touchEvent, this);
 }
 
+void ofApp::mouseMoved(ofMouseEventArgs &mouse) {
+    resetInactivityTime();
+}
+
 void ofApp::keyPressed(int key) {
     
     if (key == 'm' || key == 'M' ) {

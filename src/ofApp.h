@@ -59,7 +59,7 @@ public:
     void touchDoubleTap(ofTouchEventArgs &touch){}
     void touchCancelled(ofTouchEventArgs &touch){}
    
-    void mouseMoved(ofMouseEventArgs &mouse){}
+    void mouseMoved(ofMouseEventArgs &mouse);
     void mouseDragged(ofMouseEventArgs &mouse);
     void mousePressed(ofMouseEventArgs &mouse);
     void mouseReleased(ofMouseEventArgs &mouse);
