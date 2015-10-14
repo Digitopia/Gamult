@@ -21,10 +21,10 @@ void Touch::draw() {
     
     ofPushStyle();
     
-    ofSetColor(TOUCH_COLOR);
+    ofSetColor(ofColor::fromHex(TOUCH_COLOR), TOUCH_ALPHA);
     
     if (y > ofApp::maxParticleY || y < CONSOLE_HEIGHT) {
-        ofSetHexColor(PARTICLE_LIMIT_COLOR);
+        ofSetColor(ofColor::fromHex(PARTICLE_LIMIT_COLOR), PARTICLE_LIMIT_ALPHA);
     }
  /*
     ofSetLineWidth(TOUCH_LINE_WIDTH);

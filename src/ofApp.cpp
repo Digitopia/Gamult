@@ -175,14 +175,14 @@ void ofApp::draw() {
     else if (state == SPLASH_FADE) {
         ofPushStyle();
         ofEnableAlphaBlending();
-        ofSetColor(255,255,255, 255);
+        ofSetColor(255, 255, 255, 255);
         imgAbout.draw(0, 0, ofGetWidth(), ofGetHeight());
         splashAlpha -= 2;
-        ofSetColor(255,255,255, splashAlpha);
+        ofSetColor(255, 255, 255, splashAlpha);
         imgSplashScreen.draw(0, 0, ofGetWidth(), ofGetHeight());
         ofDisableAlphaBlending();
         ofPopStyle();
-        if(splashAlpha <= 0) state = ABOUT;
+        if (splashAlpha <= 0) state = ABOUT;
         return;
     }
     
@@ -209,7 +209,7 @@ void ofApp::draw() {
 
     if (state == BAR) {
         ofEnableAlphaBlending();
-        ofSetColor(255,255,255,200);
+        ofSetColor(255, 255, 255, 200);
         imgAbout.draw(0, aboutY, ofGetWidth(), ofGetHeight());
         ofDisableAlphaBlending();
         ofRect(barRect);
