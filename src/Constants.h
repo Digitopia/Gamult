@@ -5,12 +5,12 @@
 
 #ifdef ACER
     #define FADER_SIZE 24
-    #define BUTTON_SIZE 20
+    #define BUTTON_SIZE 36
     #define CONSOLE_HEIGHT 200
     #define UI_FONT_SIZE 14
 #else
     #define FADER_SIZE 20
-    #define BUTTON_SIZE 36
+    #define BUTTON_SIZE 20
     #define CONSOLE_HEIGHT 120
     #define UI_FONT_SIZE 14
 #endif

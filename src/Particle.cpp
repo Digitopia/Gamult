@@ -1,7 +1,6 @@
 #include "ofApp.h"
 
 Particle::Particle(int module, int index, float x, float y, int life) {
-
 	this->module = module;
 	this->index = index;
 	this->center.x = x;
@@ -10,7 +9,6 @@ Particle::Particle(int module, int index, float x, float y, int life) {
 	this->health = life;
     this->radius = life;
     this->velocity = 0;
-
 }
 
 void Particle::gravity() {
@@ -22,11 +20,6 @@ void Particle::gravity() {
         trigger(true, true);
 	}
     
-//    if (center.y >= ofGetHeight() - DELAY_OFFSET) {
-//        cout << 
-//        playSound(true);
-//    }
-		
 	else if (center.y <= CONSOLE_HEIGHT + life) {
 		center.y = CONSOLE_HEIGHT + life;
 	}
