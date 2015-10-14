@@ -30,11 +30,10 @@
 
 // user interface
 #define UI_FONT_FACE "verdana.ttf"
-
-#define UI_COLOR 255
+#define UI_COLOR 255 // color for buttons, faders, etc.
 
 // faders
-#define FADER_RANGE 250
+#define FADER_RANGE 250 // in pixels
 
 // buttons
 #define BUTTON_COLOR 0x8DCACB
@@ -45,11 +44,10 @@
 #define TOUCH_MAX 20 // radius and in pixels
 
 // particle
-#define PARTICLE_COLOR 0
-#define PARTICLE_LIFE_COLOR 128
+#define PARTICLE_COLOR_INNER 0xA1DEDF
+#define PARTICLE_COLOR_OUTER 0
 #define PARTICLE_LIMIT_COLOR 0xFF3300
 #define PARTICLE_LIMIT_ALPHA TOUCH_ALPHA
-#define PARTICLE_WIDTH 2
 
 // console
 #define CONSOLE_COLOR 0xA1DEDF
