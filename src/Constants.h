@@ -58,7 +58,6 @@
 
 // grid
 #define GRID_COLOR 213
-#define GRID_HEIGHT 20
 
 // poly
 #define POLY_WIDTH 1
