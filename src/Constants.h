@@ -1,6 +1,3 @@
-//#ifndef CONSTANTS_H
-//#define CONSTANTS_H
-
 //#define ACER // if active, will optimize for ACER screen, otherwise will work best in Macbook
 
 #ifdef ACER
@@ -43,10 +40,9 @@
 #define BUTTON_COLOR 0x8DCACB
 
 // touches
-#define TOUCH_LINE_WIDTH 2
 #define TOUCH_COLOR 0x808080
 #define TOUCH_ALPHA 150
-#define TOUCH_MAX 20
+#define TOUCH_MAX 20 // radius and in pixels
 
 // particle
 #define PARTICLE_COLOR 0
@@ -74,5 +70,3 @@
 #define INACTIVITY_TOUCH_MAX TOUCH_MAX
 #define INACTIVITY_TOUCH_MIN TOUCH_MAX/5
 #define INACTIVITY_THRESHOLD 100
-
-//#endif
