@@ -435,7 +435,7 @@ void ofApp::touchDown(ofTouchEventArgs &touch) {
 
         cout << "down (" << id << ", " << x << ", " << y << ")" << endl;
 
-        if (y > CONSOLE_HEIGHT && modules[getModuleId(x)]->isNotFull()) {
+        if (y > CONSOLE_HEIGHT && (state != BAR || y < aboutY) && modules[getModuleId(x)]->isNotFull()) {
             touches.insert(pair<int,Touch> (id, Touch(x, y)));
         }
         
