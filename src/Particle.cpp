@@ -65,7 +65,7 @@ void Particle::drawCircle() {
 
 	ofFill();
 	ofSetColor(PARTICLE_COLOR_OUTER);
-    ofCircle(center.x, center.y, 1.05*life);
+    ofCircle(center.x, center.y, (life*PARTICLE_OFFSET));
     ofSetHexColor(PARTICLE_COLOR_INNER);
     ofCircle(center.x, center.y, health);
 	
