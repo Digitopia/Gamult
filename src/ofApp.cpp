@@ -44,7 +44,7 @@ void ofApp::setup() {
     aboutRect.set(100, ofGetHeight() - 100, 200, 50);
     
     imgSplashScreen.loadImage("images/splash-screen.png");
-    imgAbout.loadImage("images/about2.png");
+    imgAbout.loadImage("images/about3.png");
     
     state = SPLASH_SCREEN;
     
