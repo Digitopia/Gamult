@@ -29,7 +29,7 @@
 #define PARTICLES_PER_MODULE 10
 
 // user interface
-#define UI_FONT_FACE "verdana.ttf"
+#define UI_FONT_FACE "Raleway-Regular.ttf"
 #define UI_COLOR 255 // color for buttons, faders, etc.
 
 // faders
@@ -67,4 +67,4 @@
 // inactivity
 #define INACTIVITY_TOUCH_MAX TOUCH_MAX
 #define INACTIVITY_TOUCH_MIN TOUCH_MAX/5
-#define INACTIVITY_THRESHOLD 100
+#define INACTIVITY_THRESHOLD 10
