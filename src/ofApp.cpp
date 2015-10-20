@@ -37,11 +37,9 @@ void ofApp::setup() {
 
 	ofApp::maxParticleY = round(ofGetHeight() * (1-LIMIT_PARTICLE));
     
-    int aboutRectLength = 100;
-    int aboutRectHeight = 10;
-    barRect.set(ofGetWidth()/2 - aboutRectLength/2, ofGetHeight() - aboutRectHeight, aboutRectLength, aboutRectHeight);
-    
-    aboutRect.set(100, ofGetHeight() - 100, 200, 50);
+    int barRectLength = 100;
+    int barRectHeight = 10;
+    barRect.set(ofGetWidth()/2 - barRectLength/2, ofGetHeight() - barRectHeight, barRectLength, barRectHeight);
     
     imgSplashScreen.loadImage("images/splash-screen.png");
     imgAbout.loadImage("images/about3.png");
@@ -213,7 +211,6 @@ void ofApp::draw() {
         imgAbout.draw(0, aboutY, ofGetWidth(), ofGetHeight());
         ofDisableAlphaBlending();
         ofRect(barRect);
-        ofRect(aboutRect);
     }
     
     else if (state == ABOUT_ASCENDING) {
@@ -426,7 +423,7 @@ void ofApp::touchDown(ofTouchEventArgs &touch) {
         return;
     }
     
-    if (state == BAR && aboutRect.inside(x, y)) {
+    if (state == BAR && y >= ofGetHeight()*(1-LIMIT_PARTICLE)) {
         state = ABOUT_ASCENDING;
         return;
     }
