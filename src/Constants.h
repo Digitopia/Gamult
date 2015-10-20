@@ -29,7 +29,7 @@
 #define PARTICLES_PER_MODULE 10
 
 // user interface
-#define UI_FONT_FACE "Raleway-Regular.ttf"
+#define UI_FONT_FACE "Raleway-Semibold.ttf"
 #define UI_COLOR 255 // color for buttons, faders, etc.
 
 // faders
