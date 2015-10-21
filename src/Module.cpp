@@ -150,7 +150,7 @@ void Module::drawGrid() {
 	int gridNumberElements = sounds.size();
 	int gridCellSize = round(float(width) / gridNumberElements);
 	for (int i = 1; i < gridNumberElements; i++) {
-		int gridCellX = x0 + (i)*gridCellSize;
+		int gridCellX = x0 + (i)*gridCellSize + 2;
 //    	ofLine(gridCellX, ofGetHeight(), gridCellX, ofGetHeight()-GRID_HEIGHT); // small grids at bottom
     	ofLine(gridCellX, ofGetHeight(), gridCellX, CONSOLE_HEIGHT); // top to bottom grids
 	}
