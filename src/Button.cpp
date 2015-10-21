@@ -76,7 +76,7 @@ void Button::draw() {
 	
 	if (type == BUTTON_REMOVE || type == BUTTON_CLEAR) {
 
-        ofSetColor(BUTTON_REMOVE);
+        ofSetHexColor(BUTTON_REMOVE_COLOR);
         ofRect(x, y, ofApp::modules[module]->getWidth()/2, CONSOLE_HEIGHT*0.25);
 
         ofSetColor(UI_COLOR);
