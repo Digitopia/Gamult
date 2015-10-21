@@ -75,10 +75,13 @@ void Button::draw() {
     }
 	
 	if (type == BUTTON_REMOVE || type == BUTTON_CLEAR) {
-        font.drawString(title, x+ofApp::modules[module]->getWidth()/6, y+(CONSOLE_HEIGHT/6));
+
+        ofSetColor(BUTTON_REMOVE);
         ofRect(x, y, ofApp::modules[module]->getWidth()/2, CONSOLE_HEIGHT*0.25);
-//		ofLine(x, y, x+size, y+size);
-//		ofLine(x+size, y, x, y+size);
+
+        ofSetColor(UI_COLOR);
+        font.drawString(title, x+ofApp::modules[module]->getWidth()/6, y+(CONSOLE_HEIGHT/6));
+        
 	}
 
     ofPopStyle();
