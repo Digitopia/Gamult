@@ -3,8 +3,6 @@
 
 #include "ofMain.h"
 
-#define BUTTON_WIDTH 1
-
 enum buttonType {
 	BUTTON_TOGGLE,
 	BUTTON_REMOVE,

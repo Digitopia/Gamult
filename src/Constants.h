@@ -39,6 +39,8 @@
 
 // buttons
 #define BUTTON_COLOR 0x8DCACB
+#define BUTTON_REMOVE_COLOR 0x274848
+#define BUTTON_WIDTH 1
 
 // touches
 #define TOUCH_COLOR 0x808080
