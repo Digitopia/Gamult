@@ -15,6 +15,9 @@
 // setup
 #define FRAME_RATE 60
 #define BACKGROUND_COLOR 255
+#define IMAGE_COLOR 47
+#define ARROW_OFFSET 5
+#define DEFAULT_ALPHA 150
 #define CIRCLE_RESOLUTION 50
 #define ARC_RESOLUTION 30
 

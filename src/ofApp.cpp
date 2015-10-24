@@ -37,12 +37,13 @@ void ofApp::setup() {
 
 	ofApp::maxParticleY = round(ofGetHeight() * (1-LIMIT_PARTICLE));
     
-    int barRectLength = 100;
-    int barRectHeight = 10;
+    int barRectLength = 120;
+    int barRectHeight = 25;
     barRect.set(ofGetWidth()/2 - barRectLength/2, ofGetHeight() - barRectHeight, barRectLength, barRectHeight);
     
     imgSplashScreen.loadImage("images/splash-screen.png");
     imgAbout.loadImage("images/about3.png");
+    imgArrow.loadImage("images/arrow.png");
     
     state = SPLASH_SCREEN;
     
@@ -202,15 +203,16 @@ void ofApp::draw() {
     for (touchesIterator it = touches.begin(); it != touches.end(); it++) {
         it->second.draw();
     }
-    
-    ofRect(barRect);
 
     if (state == BAR) {
+        ofPushStyle();
         ofEnableAlphaBlending();
-        ofSetColor(255, 255, 255, 200);
+        ofSetColor(255, 255, 255, DEFAULT_ALPHA);
         imgAbout.draw(0, aboutY, ofGetWidth(), ofGetHeight());
         ofDisableAlphaBlending();
         ofRect(barRect);
+        drawArrow(false);
+        ofPopStyle();
     }
     
     else if (state == ABOUT_ASCENDING) {
@@ -221,17 +223,50 @@ void ofApp::draw() {
     else if (state == ABOUT_DESCENDING) {
         aboutY += 20;
         imgAbout.draw(0, aboutY, ofGetWidth(), ofGetHeight());
+        drawArrow(true);
     }
     
     else if (state == BAR_ASCENDING) {
         aboutY -= 5;
+        ofPushStyle();
+        ofSetColor(255, 255, 255, DEFAULT_ALPHA);
         imgAbout.draw(0, aboutY, ofGetWidth(), ofGetHeight());
+        drawArrow(false);
+        ofPopStyle();
     }
     
     else if (state == BAR_DESCENDING) {
         aboutY += 5;
         imgAbout.draw(0, aboutY, ofGetWidth(), ofGetHeight());
+        drawArrow(true);
     }
+    
+    else if (state == APP) {
+        drawArrow(true);
+        ofPushStyle();
+        ofSetColor(IMAGE_COLOR, DEFAULT_ALPHA);
+        ofEnableAlphaBlending();
+        ofRect(barRect);
+        ofDisableAlphaBlending();
+        ofPopStyle();
+    }
+    
+}
+
+void ofApp::drawArrow(bool up) {
+    
+    ofPushStyle();
+    ofEnableAlphaBlending();
+    
+    if (up) {
+        imgArrow.draw(barRect.x + ARROW_OFFSET, barRect.y + ARROW_OFFSET, barRect.width - 2*ARROW_OFFSET, barRect.height - 2*ARROW_OFFSET);
+    }
+    
+    else {
+        imgArrow.draw(barRect.x + barRect.width - ARROW_OFFSET, barRect.y + barRect.height - ARROW_OFFSET, -barRect.width + 2*ARROW_OFFSET, -barRect.height +2*ARROW_OFFSET);
+    }
+    
+    ofDisableAlphaBlending();
     
 }
 
