@@ -21,7 +21,6 @@
 enum appState {
     SPLASH_SCREEN,
     SPLASH_FADE,
-    FADING_ABOUT,
     ABOUT,
     ABOUT_DESCENDING,
     ABOUT_ASCENDING,
