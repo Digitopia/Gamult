@@ -59,11 +59,6 @@ void ofApp::update() {
     
     handleInactivity();
     
-    if (aboutY < 0) {
-        state = ABOUT;
-        aboutY = 0;
-    }
-
     checkMultitouchData();
     
     if (state == BAR_ASCENDING && aboutY <= maxParticleY) {
@@ -216,7 +211,13 @@ void ofApp::draw() {
     }
     
     else if (state == ABOUT_ASCENDING) {
-        aboutY -= 15;
+        if (aboutY < 15) {
+            aboutY = 0;
+            state = ABOUT;
+        }
+        else {
+            aboutY -= 15;
+        }
         if (currentAlpha < 255) currentAlpha += 3;
         ofPushStyle();
         ofEnableAlphaBlending();
