@@ -7,6 +7,7 @@ int ofApp::mouseId = 0;
 unsigned int ofApp::inactivityCounter = 0;
 bool ofApp::multitouch = false;
 bool ofApp::inactive = false;
+unsigned int ofApp::currentAlpha = DEFAULT_ALPHA;
 
 typedef map<int,Touch>::iterator touchesIterator;
 
@@ -216,7 +217,13 @@ void ofApp::draw() {
     
     else if (state == ABOUT_ASCENDING) {
         aboutY -= 15;
+        if (currentAlpha < 255) currentAlpha += 3;
+        ofPushStyle();
+        ofEnableAlphaBlending();
+        ofSetColor(255, 255, 255, currentAlpha);
         imgAbout.draw(0, aboutY, ofGetWidth(), ofGetHeight());
+        ofDisableAlphaBlending();
+        ofPopStyle();
     }
     
     else if (state == ABOUT_DESCENDING) {
@@ -248,6 +255,7 @@ void ofApp::draw() {
     }
     
     else if (state == APP) {
+        currentAlpha = DEFAULT_ALPHA;
         drawArrow(true);
         ofPushStyle();
         ofSetColor(IMAGE_COLOR, DEFAULT_ALPHA);

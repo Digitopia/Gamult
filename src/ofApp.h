@@ -88,6 +88,7 @@ public:
     static bool inactive;
     static bool multitouch;
     static unsigned int inactivityCounter;
+    static unsigned int currentAlpha;
     
 private:
     
