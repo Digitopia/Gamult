@@ -210,7 +210,6 @@ void ofApp::draw() {
         ofSetColor(255, 255, 255, DEFAULT_ALPHA);
         imgAbout.draw(0, aboutY, ofGetWidth(), ofGetHeight());
         ofDisableAlphaBlending();
-        ofRect(barRect);
         drawArrow(false);
         ofPopStyle();
     }
@@ -223,22 +222,29 @@ void ofApp::draw() {
     else if (state == ABOUT_DESCENDING) {
         aboutY += 20;
         imgAbout.draw(0, aboutY, ofGetWidth(), ofGetHeight());
-        drawArrow(true);
     }
     
     else if (state == BAR_ASCENDING) {
-        aboutY -= 5;
         ofPushStyle();
+        ofEnableAlphaBlending();
         ofSetColor(255, 255, 255, DEFAULT_ALPHA);
+        aboutY -= 5;
         imgAbout.draw(0, aboutY, ofGetWidth(), ofGetHeight());
         drawArrow(false);
+        ofDisableAlphaBlending();
         ofPopStyle();
     }
     
     else if (state == BAR_DESCENDING) {
+        ofPushStyle();
+        ofEnableAlphaBlending();
+        ofSetColor(255, 255, 255, DEFAULT_ALPHA);
         aboutY += 5;
         imgAbout.draw(0, aboutY, ofGetWidth(), ofGetHeight());
         drawArrow(true);
+        
+        ofDisableAlphaBlending();
+        ofPopStyle();
     }
     
     else if (state == APP) {
@@ -267,6 +273,8 @@ void ofApp::drawArrow(bool up) {
     }
     
     ofDisableAlphaBlending();
+    
+    ofPopStyle();
     
 }
 
