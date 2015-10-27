@@ -69,7 +69,7 @@
 #define POLY_WIDTH 1
 #define POLY_COLOR 128
 
-#define LIMIT_PARTICLE 0.18 // percentage of the screen height below which it is not possible to add particles
+#define LIMIT_PARTICLE 0.21 // percentage of the screen height below which it is not possible to add particles
 
 // inactivity
 #define INACTIVITY_TOUCH_MAX TOUCH_MAX

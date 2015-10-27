@@ -72,6 +72,7 @@ public:
 	void checkMultitouchData();
     int getModuleId(int x);
     void drawArrow(bool up);
+    void drawBouncingArrow();
     
     void handleInactivity();
     bool hasParticles();
@@ -103,9 +104,13 @@ private:
     ofImage imgAbout;
     ofImage imgSplashScreen;
     ofImage imgArrow;
+    ofImage imgArrowDown;
     
     int barY;
     int aboutY;
+    int arrowDownY;
+    int arrowDownYBase;
+    int arrowDownDir;
     
     int splashAlpha;
     

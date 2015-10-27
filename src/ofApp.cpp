@@ -43,8 +43,9 @@ void ofApp::setup() {
     barRect.set(ofGetWidth()/2 - barRectLength/2, ofGetHeight() - barRectHeight, barRectLength, barRectHeight);
     
     imgSplashScreen.loadImage("images/splash-screen.png");
-    imgAbout.loadImage("images/about3.png");
+    imgAbout.loadImage("images/about5.png");
     imgArrow.loadImage("images/arrow.png");
+    imgArrowDown.loadImage("images/arrow_down.png");
     
     state = SPLASH_SCREEN;
     
@@ -52,6 +53,9 @@ void ofApp::setup() {
     
     aboutY = 0;
     splashAlpha = 255;
+    arrowDownY = ofGetHeight()/3*2;
+    arrowDownYBase = arrowDownY;
+    arrowDownDir = 1;
     
 }
 
@@ -183,6 +187,7 @@ void ofApp::draw() {
     
     else if (state == ABOUT) {
         imgAbout.draw(0, 0, ofGetWidth(), ofGetHeight());
+        drawBouncingArrow();
         return;
     }
     
@@ -268,6 +273,13 @@ void ofApp::draw() {
     
 }
 
+void ofApp::drawBouncingArrow() {
+    if (arrowDownY > arrowDownYBase + 5) arrowDownDir = -1;
+    else if (arrowDownY < arrowDownYBase - 15) arrowDownDir = 1;
+    arrowDownY += arrowDownDir;
+    imgArrowDown.draw(ofGetWidth()/2-imgArrowDown.width/2, arrowDownY);
+}
+
 void ofApp::drawArrow(bool up) {
     
     ofPushStyle();
@@ -288,8 +300,6 @@ void ofApp::drawArrow(bool up) {
 }
 
 void ofApp::initModules() {
-    
-    // TODO: maybe this could just be a JSON config file?
     
     vector<string> bonangs;
 	bonangs.push_back("sounds/BBPL1.wav");
@@ -455,15 +465,18 @@ void ofApp::touchDown(ofTouchEventArgs &touch) {
         state = ABOUT;
         return;
     }
-    
-    if (state == ABOUT) {
-        state = ABOUT_DESCENDING;
-        return;
-    }
-    
+
     int x = touch.x;
     int y = touch.y;
     int id = touch.id;
+    
+    if (state == ABOUT) {
+        ofRectangle arrowDownRect(ofGetWidth()/2 - imgArrowDown.width/2, arrowDownY, imgArrowDown.width, imgArrowDown.height);
+        if (arrowDownRect.inside(x, y)) {
+            state = ABOUT_DESCENDING;
+        }
+        return;
+    }
     
     if (state == APP && barRect.inside(x, y)) {
         state = BAR_ASCENDING;
