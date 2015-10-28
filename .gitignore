@@ -12,3 +12,5 @@ xcshareddata/
 supervisord.pid
 
 releases/
+
+*.sublime-workspace
