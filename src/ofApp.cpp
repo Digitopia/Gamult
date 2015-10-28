@@ -5,7 +5,7 @@ int ofApp::nParticlesPerModule = PARTICLES_PER_MODULE;
 int ofApp::maxParticleY = 0;
 int ofApp::mouseId = 0;
 unsigned int ofApp::inactivityCounter = 0;
-bool ofApp::multitouch = false;
+bool ofApp::multitouch = true;
 bool ofApp::inactive = false;
 unsigned int ofApp::currentAlpha = DEFAULT_ALPHA;
 
