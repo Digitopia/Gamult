@@ -9,4 +9,6 @@ build/
 xcuserdata/
 xcshareddata/
 
+supervisord.pid
+
 releases/
