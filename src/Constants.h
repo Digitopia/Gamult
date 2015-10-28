@@ -1,4 +1,4 @@
-//#define ACER // if active, will optimize for ACER screen, otherwise will work best in Macbook
+#define ACER // if active, will optimize for ACER screen, otherwise will work best in Macbook
 
 #ifdef ACER
     #define FADER_SIZE 24
