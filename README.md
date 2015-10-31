@@ -1,10 +1,3 @@
-#### How to stop in Semibreve (if needs debugging or restarting something)
-
-In terminal run:
-
-    ps aux | grep supervisor
-    sudo kill -9 <pid of supervisor>
-
 Gamult for OSX
 
 © Digitópia -  Casa da Música
