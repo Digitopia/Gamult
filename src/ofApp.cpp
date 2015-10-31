@@ -43,7 +43,7 @@ void ofApp::setup() {
     barRect.set(ofGetWidth()/2 - barRectLength/2, ofGetHeight() - barRectHeight, barRectLength, barRectHeight);
     
     imgSplashScreen.loadImage("images/splash-screen.png");
-    imgAbout.loadImage("images/about5.png");
+    imgAbout.loadImage("images/about6.png");
     imgArrow.loadImage("images/arrow.png");
     imgArrowDown.loadImage("images/arrow_down.png");
     
