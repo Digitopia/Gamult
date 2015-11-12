@@ -42,10 +42,10 @@ void ofApp::setup() {
     int barRectHeight = 25;
     barRect.set(ofGetWidth()/2 - barRectLength/2, ofGetHeight() - barRectHeight, barRectLength, barRectHeight);
     
-    imgSplashScreen.loadImage("images/splash-screen.png");
-    imgAbout.loadImage("images/about6.png");
-    imgArrow.loadImage("images/arrow.png");
-    imgArrowDown.loadImage("images/arrow_down.png");
+    imgSplashScreen.load("images/splash-screen.png");
+    imgAbout.load("images/about6.png");
+    imgArrow.load("images/arrow.png");
+    imgArrowDown.load("images/arrow_down.png");
     
     state = SPLASH_SCREEN;
     
@@ -277,7 +277,7 @@ void ofApp::drawBouncingArrow() {
     if (arrowDownY > arrowDownYBase + 5) arrowDownDir = -1;
     else if (arrowDownY < arrowDownYBase - 15) arrowDownDir = 1;
     arrowDownY += arrowDownDir;
-    imgArrowDown.draw(ofGetWidth()/2-imgArrowDown.width/2, arrowDownY);
+    imgArrowDown.draw(ofGetWidth()/2-imgArrowDown.getWidth()/2, arrowDownY);
 }
 
 void ofApp::drawArrow(bool up) {
@@ -472,7 +472,7 @@ void ofApp::touchDown(ofTouchEventArgs &touch) {
     int id = touch.id;
     
     if (state == ABOUT) {
-        ofRectangle arrowDownRect(ofGetWidth()/2 - imgArrowDown.width/2, arrowDownY, imgArrowDown.width, imgArrowDown.height);
+        ofRectangle arrowDownRect(ofGetWidth()/2 - imgArrowDown.getWidth()/2, arrowDownY, imgArrowDown.getWidth(), imgArrowDown.getHeight());
         if (arrowDownRect.inside(x, y)) {
             state = ABOUT_DESCENDING;
         }
