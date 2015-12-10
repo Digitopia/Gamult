@@ -301,44 +301,41 @@ void ofApp::drawArrow(bool up) {
 
 void ofApp::initModules() {
     
-    vector<string> bonangs;
-	bonangs.push_back("sounds/BBPL1.wav");
-	bonangs.push_back("sounds/BBPL2.wav");
-	bonangs.push_back("sounds/BBPL3.wav");
+    vector<string> kendang;
+	kendang.push_back("sounds/D1.wav");
+	kendang.push_back("sounds/D2.wav");
+	kendang.push_back("sounds/D3.wav");
+    kendang.push_back("sounds/D4.wav");
+    kendang.push_back("sounds/D5.wav");
+    kendang.push_back("sounds/D6.wav");
 //	bonangs.push_back("sounds/BBPL4.wav");
 	
-	vector<string> genders;
-	genders.push_back("sounds/GBPL1.wav");
-	genders.push_back("sounds/GBPL2.wav");
-	genders.push_back("sounds/GBPL3.wav");
-	genders.push_back("sounds/GBPL5.wav");
-    genders.push_back("sounds/GBPL2.wav");
-    genders.push_back("sounds/GBPL3.wav");
+	vector<string> kenong;
+	kenong.push_back("sounds/K1.wav");
+	kenong.push_back("sounds/K2.wav");
+	kenong.push_back("sounds/K3.wav");
+	kenong.push_back("sounds/K4.wav");
+//    kenong.push_back("sounds/GBPL2.wav");
+//    kenong.push_back("sounds/GBPL3.wav");
 //    genders.push_back("sounds/GBPL5.wav");
 	
 	vector<string> gongs;
-	gongs.push_back("sounds/GKPL1f.wav");
-	gongs.push_back("sounds/GKPL2f.wav");
-	gongs.push_back("sounds/GKPL3f.wav");
-	gongs.push_back("sounds/GKPL5f.wav");
-    gongs.push_back("sounds/GKPL1f.wav");
-    gongs.push_back("sounds/GKPL2f.wav");
-    gongs.push_back("sounds/GKPL3f.wav");
+	gongs.push_back("sounds/G1.wav");
+	gongs.push_back("sounds/G2.wav");
+	gongs.push_back("sounds/G3.wav");
+	gongs.push_back("sounds/G4.wav");
+//    gongs.push_back("sounds/GKPL1f.wav");
+//    gongs.push_back("sounds/GKPL2f.wav");
+//    gongs.push_back("sounds/GKPL3f.wav");
 	
 	vector<string> sarons;
-	sarons.push_back("sounds/SBPL1.wav");
-	sarons.push_back("sounds/SBPL2.wav");
-	sarons.push_back("sounds/SBPL3.wav");
-	sarons.push_back("sounds/SBPL4.wav");
-    sarons.push_back("sounds/SBPL3.wav");
-    sarons.push_back("sounds/SBPL4.wav");
-    sarons.push_back("sounds/SBPL4.wav");
-	
-	vector< vector<string> > config;
-	config.push_back(bonangs);
-	config.push_back(genders);
-	config.push_back(gongs);
-	config.push_back(sarons);
+	sarons.push_back("sounds/S1.wav");
+	sarons.push_back("sounds/S2.wav");
+	sarons.push_back("sounds/S3.wav");
+	sarons.push_back("sounds/S4.wav");
+    sarons.push_back("sounds/S5.wav");
+    sarons.push_back("sounds/S6.wav");
+//    sarons.push_back("sounds/SBPL4.wav");
 	
 	vector<string> icons;
 	icons.push_back("images/1.png");
@@ -350,10 +347,10 @@ void ofApp::initModules() {
 	moduleHeight = ofGetHeight();
 	int moduleHabitants = ofApp::nParticlesPerModule;
 	
-	ofApp::modules[0] = new Module(0, 0*moduleWidth, 0, moduleWidth, moduleHeight, moduleHabitants, bonangs, icons);
-	ofApp::modules[1] = new Module(1, 1*moduleWidth, 0, moduleWidth, moduleHeight, moduleHabitants, genders, icons);
-	ofApp::modules[2] = new Module(2, 2*moduleWidth, 0, moduleWidth, moduleHeight, moduleHabitants, gongs, icons);
-	ofApp::modules[3] = new Module(3, 3*moduleWidth, 0, moduleWidth, moduleHeight, moduleHabitants, sarons, icons);
+	ofApp::modules[0] = new Module(0, 0*moduleWidth, 0, moduleWidth, moduleHeight, moduleHabitants, gongs, icons);
+	ofApp::modules[1] = new Module(1, 1*moduleWidth, 0, moduleWidth, moduleHeight, moduleHabitants, kenong, icons);
+	ofApp::modules[2] = new Module(2, 2*moduleWidth, 0, moduleWidth, moduleHeight, moduleHabitants, sarons, icons);
+	ofApp::modules[3] = new Module(3, 3*moduleWidth, 0, moduleWidth, moduleHeight, moduleHabitants, kendang, icons);
 
 }
 
