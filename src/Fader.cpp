@@ -14,7 +14,7 @@ Fader::Fader(float x0, float y, int size, int range, string title) {
 	
     this->rect = ofRectangle(this->x0+range/2-size/2, y-size/2, size, size);
 
-	font.loadFont(UI_FONT_FACE, UI_FONT_SIZE, true);
+	font.load(UI_FONT_FACE, UI_FONT_SIZE, true);
 
 	ofAddListener(ofEvents().touchDown,  this, &Fader::touchDown);
 	ofAddListener(ofEvents().touchMoved, this, &Fader::touchMoved);
@@ -58,12 +58,12 @@ void Fader::draw() {
 	ofSetColor(UI_COLOR);
 
 	// draw the line in which the fader moves
-	ofLine(x0, y, x0+range, y);
+	ofDrawLine(x0, y, x0+range, y);
 
-	ofLine(x0+range/2, y-size/2, x0+range/2, y+size/2);
+	ofDrawLine(x0+range/2, y-size/2, x0+range/2, y+size/2);
 
 	// draw the fader
-	ofRect(rect);
+	ofDrawRectangle(rect);
     
 	font.drawString(title, stringOrigin, y+4);
 

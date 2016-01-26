@@ -2,7 +2,10 @@
 #define OFAPP_H
 
 #include "ofMain.h"
+
+#ifndef TARGET_OF_IOS
 #include "ofxOsc.h"
+#endif
 
 #include "Button.h"
 #include "Fader.h"
@@ -82,8 +85,12 @@ public:
 	static int nParticlesPerModule;
     static int maxParticleY; // TODO does this really needs to be static and here
 	static Module** modules; // TODO make this a vector or something
-	static ofxOscSender oscSender;
+	
+    #ifndef TARGET_OF_IOS
+    static ofxOscSender oscSender;
 	static ofxOscReceiver oscReceiver;
+    #endif
+
     static int mouseId;
     static bool inactive;
     static bool multitouch;

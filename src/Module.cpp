@@ -22,7 +22,7 @@ void Module::loadSounds(vector<string> paths) {
         ofSoundPlayer s;
         sounds.push_back(s);
         sounds[i].setMultiPlay(true);
-        sounds[i].loadSound(paths[i], true);
+        sounds[i].load(paths[i], true);
     }
 }
 
@@ -30,7 +30,7 @@ void Module::unloadSounds() {
     for (int i = 0; i < sounds.size(); i++) {
         sounds[i].stop();
         cout << "stopping sound " << i << endl;
-        sounds[i].unloadSound();
+        sounds[i].unload();
         cout << "unloading sound " << i << endl;
     }
     sounds.clear();
@@ -135,7 +135,7 @@ void Module::draw() {
 void Module::drawBackground() {
     ofPushStyle();
     ofSetColor(255 - (30 * index));
-    ofRect(x0, y + CONSOLE_HEIGHT, width, height);
+    ofDrawRectangle(x0, y + CONSOLE_HEIGHT, width, height);
     ofPopStyle();
 }
 
@@ -152,7 +152,7 @@ void Module::drawGrid() {
 	for (int i = 1; i < gridNumberElements; i++) {
 		int gridCellX = x0 + (i)*gridCellSize + 2;
 //    	ofLine(gridCellX, ofGetHeight(), gridCellX, ofGetHeight()-GRID_HEIGHT); // small grids at bottom
-    	ofLine(gridCellX, ofGetHeight(), gridCellX, CONSOLE_HEIGHT); // top to bottom grids
+    	ofDrawLine(gridCellX, ofGetHeight(), gridCellX, CONSOLE_HEIGHT); // top to bottom grids
 	}
 }
 
@@ -161,7 +161,7 @@ void Module::drawBorders() {
 	ofSetLineWidth(CONSOLE_BORDER_WIDTH);
 	ofSetHexColor(CONSOLE_BORDER_COLOR);
 	ofNoFill();
-	ofRect(x0, y, width, ofGetHeight());
+	ofDrawRectangle(x0, y, width, ofGetHeight());
 	ofPopStyle();
 }
 
