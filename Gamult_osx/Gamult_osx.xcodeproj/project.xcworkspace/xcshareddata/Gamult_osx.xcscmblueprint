@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "2048FF9C653E1ACFE2ECDCAF164590D773D4AD0B",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "2DE9C8846D9375EAACFABA8963120E8E7719BAF5" : 0,
+    "2048FF9C653E1ACFE2ECDCAF164590D773D4AD0B" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "09345EE3-68A4-4F61-8DBB-6B2D1A3EC865",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "2DE9C8846D9375EAACFABA8963120E8E7719BAF5" : "..",
+    "2048FF9C653E1ACFE2ECDCAF164590D773D4AD0B" : "Gamult\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "Gamult_osx",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Gamult_osx\/Gamult_osx.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:Digitopia\/Gamult.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "2048FF9C653E1ACFE2ECDCAF164590D773D4AD0B"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "git:\/\/github.com\/openframeworks\/openFrameworks.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "2DE9C8846D9375EAACFABA8963120E8E7719BAF5"
+    }
+  ]
+}

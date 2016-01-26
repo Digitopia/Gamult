@@ -11,8 +11,10 @@ unsigned int ofApp::currentAlpha = DEFAULT_ALPHA;
 
 typedef map<int,Touch>::iterator touchesIterator;
 
+#ifndef TARGET_OF_IOS
 ofxOscSender ofApp::oscSender;
 ofxOscReceiver ofApp::oscReceiver;
+#endif
 
 Module** ofApp::modules = new Module* [ofApp::nModules];
 
@@ -20,9 +22,11 @@ void ofApp::setup() {
 
 	ofSetFrameRate(FRAME_RATE);
 	ofSetCircleResolution(CIRCLE_RESOLUTION);
-	
+
+    #ifndef TARGET_OF_IOS
     oscReceiver.setup(RECEIVE_PORT);
 	oscSender.setup(HOST, SEND_PORT);
+    #endif
     
     #ifndef TARGET_OF_IOS
     ofSetDataPathRoot("../Resources/data/");
@@ -63,6 +67,7 @@ void ofApp::update() {
     
     handleInactivity();
     
+    
     checkMultitouchData();
     
     if (state == BAR_ASCENDING && aboutY <= maxParticleY) {
@@ -74,7 +79,7 @@ void ofApp::update() {
     }
     
     if (state == ABOUT_ASCENDING && aboutY <= 0) {
-        state == ABOUT;
+        state = ABOUT;
     }
     
     if (state == ABOUT_DESCENDING && aboutY >= ofGetHeight()) {
@@ -266,7 +271,7 @@ void ofApp::draw() {
         ofPushStyle();
         ofSetColor(IMAGE_COLOR, DEFAULT_ALPHA);
         ofEnableAlphaBlending();
-        ofRect(barRect);
+        ofDrawRectangle(barRect);
         ofDisableAlphaBlending();
         ofPopStyle();
     }
@@ -359,6 +364,8 @@ void ofApp::initModules() {
 
 void ofApp::checkMultitouchData() {
 
+    #ifndef TARGET_OF_IOS
+
 	while (oscReceiver.hasWaitingMessages()) {
         
 		ofxOscMessage m;
@@ -402,7 +409,9 @@ void ofApp::checkMultitouchData() {
             ofNotifyEvent(ofEvents().touchUp, touchEvent, this);
         }
     }
+    #endif
 }
+
 
 void ofApp::mousePressed(ofMouseEventArgs &mouse) {
     if (multitouch) return;

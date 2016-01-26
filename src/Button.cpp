@@ -12,7 +12,7 @@ Button::Button(buttonType type, int module, int size, float x, float y, string t
 
 	this->rect = ofRectangle(x, y, size, size);
 
-	font.loadFont(UI_FONT_FACE, UI_FONT_SIZE, true);
+	font.load(UI_FONT_FACE, UI_FONT_SIZE, true);
     
     this->id = -1;
 
@@ -71,13 +71,13 @@ void Button::draw() {
 	
     if (type == BUTTON_TOGGLE) {
         font.drawString(title, x+size*1.5, y+size-3);
-		ofRect(rect);
+		ofDrawRectangle(rect);
     }
 	
 	if (type == BUTTON_REMOVE || type == BUTTON_CLEAR) {
 
         ofSetHexColor(BUTTON_REMOVE_COLOR);
-        ofRect(x, y, ofApp::modules[module]->getWidth()/2, CONSOLE_HEIGHT*0.25);
+        ofDrawRectangle(x, y, ofApp::modules[module]->getWidth()/2, CONSOLE_HEIGHT*0.25);
 
         ofSetColor(UI_COLOR);
         font.drawString(title, x+ofApp::modules[module]->getWidth()/6, y+(CONSOLE_HEIGHT/6));

@@ -65,9 +65,9 @@ void Particle::drawCircle() {
 
 	ofFill();
 	ofSetColor(PARTICLE_COLOR_OUTER);
-    ofCircle(center.x, center.y, (life*PARTICLE_OFFSET));
+    ofDrawCircle(center.x, center.y, (life*PARTICLE_OFFSET));
     ofSetHexColor(PARTICLE_COLOR_INNER);
-    ofCircle(center.x, center.y, health);
+    ofDrawCircle(center.x, center.y, health);
 	
 	ofPopStyle();
 	
@@ -95,12 +95,14 @@ void Particle::drawLife() {
 }
 
 void Particle::report(int idx, int note, int vel) {
-	ofxOscMessage m;
+    #ifndef TARGET_OF_IOS
+    ofxOscMessage m;
 	string addr = OSC_ADDRESS + ofToString(idx);
 	m.setAddress(addr);
 	m.addIntArg(note);
 	m.addIntArg(vel);
 	ofApp::oscSender.sendMessage(m);
+    #endif
 }
 
 void Particle::trigger(bool play, bool send) {

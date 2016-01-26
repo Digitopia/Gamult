@@ -39,7 +39,7 @@ void Touch::draw() {
 */
     // TODO: check these magic numbers when rebuilding code according to screen size
     ofFill();
-    ofCircle(x, y, increment*PARTICLE_OFFSET);
+    ofDrawCircle(x, y, increment*PARTICLE_OFFSET);
     
     ofPopStyle();
 
