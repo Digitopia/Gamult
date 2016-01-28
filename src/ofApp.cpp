@@ -105,54 +105,25 @@ void ofApp::handleInactivity() {
    // cout << inactivityState << endl;
     
     // inactivity timer update
-    if (inactivityState == ACTIVE || inactivityState == PRE_INACTIVE) {
+    if (inactivityState == ACTIVE) {
         inactivityCounter += ofGetLastFrameTime() * 1000;
     }
     
-    // ACTIVE -> PRE_INACTIVE
+    
     if (inactivityState == ACTIVE && inactivityCounter >= INACTIVITY_THRESHOLD*1000) {
-        inactivityState = PRE_INACTIVE;
-        return;
-    }
-    
-    // PRE_INACTIVE -> INACTIVE
-    if (inactivityState == PRE_INACTIVE) {
-        resetModules();
-        inactivityState = INACTIVE;
-        return;
-    }
-    
-    // INACTIVE
-    if (inactivityState == INACTIVE) {
-        
-        int particleChance = ofRandom(0, 1499);
-        
-        if (particleChance == 27) {
-            
-            unsigned int rModule = ofRandom(0, MODULES);
-            unsigned int rX = ofRandom(modules[rModule]->getX0(), modules[rModule]->getX1());
-            // unsigned int rY = ofRandom(100, modules[rModules].getHeight());
-            unsigned int rY = ofRandom(CONSOLE_HEIGHT, ofGetHeight()*(1-LIMIT_PARTICLE));
-            unsigned int rIncrement = ofRandom(INACTIVITY_TOUCH_MIN, INACTIVITY_TOUCH_MAX);
-            
-            modules[getModuleId(rX)]->addParticle(rIncrement, rX, rY);
-        }
-
-    }
-    
-    // POST_INACTIVE -> ACTIVE
-    if (inactivityState == POST_INACTIVE) {
         for (int i = 0; i < ofApp::nModules; i++) {
             modules[i]->removeAllParticles();
         }
-        inactivityState = ACTIVE;
+        resetModules();
+        state = ABOUT;
+        return;
     }
+    
     
 }
 
 void ofApp::resetInactivityTime() {
     
-    if(inactivityState == INACTIVE) inactivityState = POST_INACTIVE;
     inactivityCounter = 0;
 }
 
