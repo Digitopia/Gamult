@@ -548,6 +548,18 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = ofxiOS_Prefix.pch;
 				"GCC_WARN_64_TO_32_BIT_CONVERSION[arch=*64]" = NO;
+				HEADER_SEARCH_PATHS = (
+					"$(OF_CORE_HEADERS)",
+					src,
+					"$(OF_PATH)/addons/ofxOsc/libs",
+					"$(OF_PATH)/addons/ofxOsc/libs/oscpack",
+					"$(OF_PATH)/addons/ofxOsc/libs/oscpack/src",
+					"$(OF_PATH)/addons/ofxOsc/libs/oscpack/src/ip",
+					"$(OF_PATH)/addons/ofxOsc/libs/oscpack/src/ip/posix",
+					"$(OF_PATH)/addons/ofxOsc/libs/oscpack/src/ip/win32",
+					"$(OF_PATH)/addons/ofxOsc/libs/oscpack/src/osc",
+					"$(OF_PATH)/addons/ofxOsc/src",
+				);
 				INFOPLIST_FILE = "ofxiOS-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PRODUCT_NAME = "${TARGET_NAME}";
@@ -561,6 +573,18 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = ofxiOS_Prefix.pch;
 				"GCC_WARN_64_TO_32_BIT_CONVERSION[arch=*64]" = NO;
+				HEADER_SEARCH_PATHS = (
+					"$(OF_CORE_HEADERS)",
+					src,
+					"$(OF_PATH)/addons/ofxOsc/libs",
+					"$(OF_PATH)/addons/ofxOsc/libs/oscpack",
+					"$(OF_PATH)/addons/ofxOsc/libs/oscpack/src",
+					"$(OF_PATH)/addons/ofxOsc/libs/oscpack/src/ip",
+					"$(OF_PATH)/addons/ofxOsc/libs/oscpack/src/ip/posix",
+					"$(OF_PATH)/addons/ofxOsc/libs/oscpack/src/ip/win32",
+					"$(OF_PATH)/addons/ofxOsc/libs/oscpack/src/osc",
+					"$(OF_PATH)/addons/ofxOsc/src",
+				);
 				INFOPLIST_FILE = "ofxiOS-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PRODUCT_NAME = "${TARGET_NAME}";
