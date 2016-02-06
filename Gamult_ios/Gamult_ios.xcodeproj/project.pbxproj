@@ -189,18 +189,6 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				B660733C1C665DDA0095E989 /* OscOutboundPacketStream.cpp */,
-				B660733D1C665DDA0095E989 /* OscPrintReceivedElements.cpp */,
-				B660733E1C665DDA0095E989 /* OscReceivedElements.cpp */,
-				B660733F1C665DDA0095E989 /* OscTypes.cpp */,
-				B66073381C665D970095E989 /* NetworkingUtils.cpp */,
-				B66073391C665D970095E989 /* UdpSocket.cpp */,
-				B66073361C665D670095E989 /* IpEndpointName.cpp */,
-				B660732C1C665D250095E989 /* ofxOscBundle.cpp */,
-				B660732D1C665D250095E989 /* ofxOscMessage.cpp */,
-				B660732E1C665D250095E989 /* ofxOscParameterSync.cpp */,
-				B660732F1C665D250095E989 /* ofxOscReceiver.cpp */,
-				B66073301C665D250095E989 /* ofxOscSender.cpp */,
 				678E130917951536005B6D19 /* Icon.png */,
 				678E130717951530005B6D19 /* Icon@2x.png */,
 				678E130B1795153C005B6D19 /* Default.png */,
@@ -386,6 +374,18 @@
 		E6053AB7FEC63D5F83825B88 /* ofxOsc */ = {
 			isa = PBXGroup;
 			children = (
+				B660733C1C665DDA0095E989 /* OscOutboundPacketStream.cpp */,
+				B660733D1C665DDA0095E989 /* OscPrintReceivedElements.cpp */,
+				B660733E1C665DDA0095E989 /* OscReceivedElements.cpp */,
+				B660733F1C665DDA0095E989 /* OscTypes.cpp */,
+				B66073381C665D970095E989 /* NetworkingUtils.cpp */,
+				B66073391C665D970095E989 /* UdpSocket.cpp */,
+				B66073361C665D670095E989 /* IpEndpointName.cpp */,
+				B660732C1C665D250095E989 /* ofxOscBundle.cpp */,
+				B660732D1C665D250095E989 /* ofxOscMessage.cpp */,
+				B660732E1C665D250095E989 /* ofxOscParameterSync.cpp */,
+				B660732F1C665D250095E989 /* ofxOscReceiver.cpp */,
+				B66073301C665D250095E989 /* ofxOscSender.cpp */,
 				BD2F1A9F8D0C05EDB29122D0 /* src */,
 				38871A5825686AE018EC2BF0 /* libs */,
 			);
