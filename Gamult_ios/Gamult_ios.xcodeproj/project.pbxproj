@@ -18,6 +18,7 @@
 		678E130E17951540005B6D19 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 678E130D17951540005B6D19 /* Default@2x.png */; };
 		678E131017951549005B6D19 /* Default-568h@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 678E130F17951549005B6D19 /* Default-568h@2x~iphone.png */; };
 		67DFA53619F92A69003B3434 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67DFA53419F92A5E003B3434 /* Accelerate.framework */; };
+		B6106C821C7F7244004F1D40 /* libofxiOS_iphoneos_Debug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B6106C7F1C7F71B9004F1D40 /* libofxiOS_iphoneos_Debug.a */; };
 		B66073311C665D250095E989 /* ofxOscBundle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B660732C1C665D250095E989 /* ofxOscBundle.cpp */; };
 		B66073321C665D250095E989 /* ofxOscMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B660732D1C665D250095E989 /* ofxOscMessage.cpp */; };
 		B66073331C665D250095E989 /* ofxOscParameterSync.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B660732E1C665D250095E989 /* ofxOscParameterSync.cpp */; };
@@ -45,18 +46,17 @@
 		E41D400C13B39D2100A75A5D /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E41D400713B39D2100A75A5D /* CoreMedia.framework */; };
 		E41D400D13B39D2100A75A5D /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E41D400813B39D2100A75A5D /* CoreVideo.framework */; };
 		E41D400E13B39D2100A75A5D /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E41D400913B39D2100A75A5D /* MapKit.framework */; };
-		E41D421413B3A95300A75A5D /* libofxiOS_iphoneos_Debug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E41D410213B3A0D800A75A5D /* libofxiOS_iphoneos_Debug.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		E41D410113B3A0D800A75A5D /* PBXContainerItemProxy */ = {
+		B6106C7E1C7F71B9004F1D40 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E41D40FD13B3A0D800A75A5D /* iOS+OFLib.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = BB24DED610DA7A3F00E9C588;
 			remoteInfo = "iPhone+OF Static Library";
 		};
-		E41D410313B3A11300A75A5D /* PBXContainerItemProxy */ = {
+		B6106C801C7F7239004F1D40 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E41D40FD13B3A0D800A75A5D /* iOS+OFLib.xcodeproj */;
 			proxyType = 1;
@@ -140,12 +140,12 @@
 		D562721E691192CE935923A1 /* ofxOscSender.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxOscSender.h; path = ../../../../../Desktop/of_v0.9.0_ios_release/addons/ofxOsc/src/ofxOscSender.h; sourceTree = SOURCE_ROOT; };
 		E0D8573D1370EC2FC10948ED /* OscOutboundPacketStream.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = OscOutboundPacketStream.h; path = ../../../../../Desktop/of_v0.9.0_ios_release/addons/ofxOsc/libs/oscpack/src/osc/OscOutboundPacketStream.h; sourceTree = SOURCE_ROOT; };
 		E41D3ED613B38FB500A75A5D /* Project.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Project.xcconfig; sourceTree = "<group>"; };
-		E41D3EE513B3906D00A75A5D /* CoreOF.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = CoreOF.xcconfig; path = ../../../../../Desktop/of_v0.9.0_ios_release/libs/openFrameworksCompiled/project/ios/CoreOF.xcconfig; sourceTree = SOURCE_ROOT; };
+		E41D3EE513B3906D00A75A5D /* CoreOF.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = CoreOF.xcconfig; path = ../../../libs/openFrameworksCompiled/project/ios/CoreOF.xcconfig; sourceTree = SOURCE_ROOT; };
 		E41D400613B39D2100A75A5D /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		E41D400713B39D2100A75A5D /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		E41D400813B39D2100A75A5D /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		E41D400913B39D2100A75A5D /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
-		E41D40FD13B3A0D800A75A5D /* iOS+OFLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "iOS+OFLib.xcodeproj"; path = "../../../../../Desktop/of_v0.9.0_ios_release/libs/openFrameworksCompiled/project/ios/iOS+OFLib.xcodeproj"; sourceTree = SOURCE_ROOT; };
+		E41D40FD13B3A0D800A75A5D /* iOS+OFLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "iOS+OFLib.xcodeproj"; path = "../../../libs/openFrameworksCompiled/project/ios/iOS+OFLib.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		E4A823A312561BE3002F86A2 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		E4EA1654C28D42A8AB5BB8EC /* OscException.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = OscException.h; path = ../../../../../Desktop/of_v0.9.0_ios_release/addons/ofxOsc/libs/oscpack/src/osc/OscException.h; sourceTree = SOURCE_ROOT; };
 		E65C7F5BB962179695BFD315 /* ofxOscMessage.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxOscMessage.cpp; path = ../../../../../Desktop/of_v0.9.0_ios_release/addons/ofxOsc/src/ofxOscMessage.cpp; sourceTree = SOURCE_ROOT; };
@@ -158,7 +158,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E41D421413B3A95300A75A5D /* libofxiOS_iphoneos_Debug.a in Frameworks */,
+				B6106C821C7F7244004F1D40 /* libofxiOS_iphoneos_Debug.a in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */,
@@ -275,6 +275,14 @@
 			name = oscpack;
 			sourceTree = "<group>";
 		};
+		B6106C7B1C7F71B8004F1D40 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B6106C7F1C7F71B9004F1D40 /* libofxiOS_iphoneos_Debug.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		BB16E9930F2B1E5900518274 /* libs */ = {
 			isa = PBXGroup;
 			children = (
@@ -338,14 +346,6 @@
 				30CB364908817057B430D528 /* osc */,
 			);
 			name = src;
-			sourceTree = "<group>";
-		};
-		E41D40FE13B3A0D800A75A5D /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				E41D410213B3A0D800A75A5D /* libofxiOS_iphoneos_Debug.a */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		E4D8936A11527B74007E1F53 /* src */ = {
@@ -421,7 +421,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				E41D410413B3A11300A75A5D /* PBXTargetDependency */,
+				B6106C811C7F7239004F1D40 /* PBXTargetDependency */,
 			);
 			name = Gamult_ios;
 			productName = iPhone;
@@ -450,7 +450,7 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = E41D40FE13B3A0D800A75A5D /* Products */;
+					ProductGroup = B6106C7B1C7F71B8004F1D40 /* Products */;
 					ProjectRef = E41D40FD13B3A0D800A75A5D /* iOS+OFLib.xcodeproj */;
 				},
 			);
@@ -462,11 +462,11 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		E41D410213B3A0D800A75A5D /* libofxiOS_iphoneos_Debug.a */ = {
+		B6106C7F1C7F71B9004F1D40 /* libofxiOS_iphoneos_Debug.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libofxiOS_iphoneos_Debug.a;
-			remoteRef = E41D410113B3A0D800A75A5D /* PBXContainerItemProxy */;
+			remoteRef = B6106C7E1C7F71B9004F1D40 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -533,10 +533,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		E41D410413B3A11300A75A5D /* PBXTargetDependency */ = {
+		B6106C811C7F7239004F1D40 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "iPhone+OF Static Library";
-			targetProxy = E41D410313B3A11300A75A5D /* PBXContainerItemProxy */;
+			targetProxy = B6106C801C7F7239004F1D40 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -562,6 +562,7 @@
 				);
 				INFOPLIST_FILE = "ofxiOS-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = Gamult_ios;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				VALID_ARCHS = "$(ARCHS_STANDARD)";
 			};
@@ -587,6 +588,7 @@
 				);
 				INFOPLIST_FILE = "ofxiOS-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = Gamult_ios;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				VALID_ARCHS = "$(ARCHS_STANDARD)";
 			};
