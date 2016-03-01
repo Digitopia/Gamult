@@ -666,8 +666,10 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = NONE;
-				ICON = "$(ICON_NAME_DEBUG)";
+				ICON = icon.icns;
 				ICON_FILE = "$(ICON_FILE_PATH)$(ICON)";
+				ICON_FILE_PATH = ../data/images/;
+				ICON_NAME_DEBUG = icon.icns;
 				INFOPLIST_FILE = "openFrameworks-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (
@@ -757,6 +759,8 @@
 				GCC_MODEL_TUNING = NONE;
 				ICON = "$(ICON_NAME_RELEASE)";
 				ICON_FILE = "$(ICON_FILE_PATH)$(ICON)";
+				ICON_FILE_PATH = ../data/images/;
+				ICON_NAME_DEBUG = icon.icns;
 				INFOPLIST_FILE = "openFrameworks-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (
