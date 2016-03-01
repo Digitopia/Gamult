@@ -290,7 +290,7 @@ void ofApp::initModules() {
 	genders.push_back("sounds/GBPL5.wav");
     genders.push_back("sounds/GBPL2.wav");
     genders.push_back("sounds/GBPL3.wav");
-//    genders.push_back("sounds/GBPL5.wav");
+    genders.push_back("sounds/GBPL5.wav");
 	
 	vector<string> gongs;
 	gongs.push_back("sounds/GKPL1f.wav");
