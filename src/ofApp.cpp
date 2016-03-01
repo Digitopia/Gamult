@@ -23,9 +23,9 @@ void ofApp::setup() {
 	ofSetFrameRate(FRAME_RATE);
 	ofSetCircleResolution(CIRCLE_RESOLUTION);
     
-//    #ifdef TARGET_OF_IOS
-//    ofSetOrientation(OF_ORIENTATION_90_LEFT);
-//    #endif
+    #ifdef TARGET_OF_IOS
+    ofSetOrientation(OF_ORIENTATION_90_LEFT);
+    #endif
 
     #ifndef TARGET_OF_IOS
     oscReceiver.setup(RECEIVE_PORT);
@@ -65,19 +65,12 @@ void ofApp::setup() {
     arrowDownYBase = arrowDownY;
     arrowDownDir = 1;
     
+    ofLog() << "width is " << ofGetWidth();
+    ofLog() << "height is " << ofGetHeight();
+    
 }
 
 void ofApp::update() {
-    
-//#ifdef TARGET_OF_IOS
-//    if ( [[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] == NSOrderedDescending ) {
-//        if (ofxiOSGetGLView().frame.origin.x != 0
-//            || ofxiOSGetGLView().frame.size.width != [[UIScreen mainScreen] bounds].size.width) {
-//            ofxiOSGetGLView().frame = CGRectMake(0,0,[[UIScreen mainScreen] bounds].size.width,[[UIScreen mainScreen] bounds].size.height);
-//        }
-//    }
-//#endif
-
     
     #ifndef TARGET_OF_IOS
     handleInactivity();
