@@ -46,8 +46,15 @@ void ofApp::setup() {
 
 	ofApp::maxParticleY = round(ofGetHeight() * (1-LIMIT_PARTICLE));
     
+    
+    #ifdef TARGET_OF_IOS
+    int barRectLength = 200;
+    int barRectHeight = 50;
+    #else
     int barRectLength = 120;
     int barRectHeight = 25;
+    #endif
+    
     barRect.set(ofGetWidth()/2 - barRectLength/2, ofGetHeight() - barRectHeight, barRectLength, barRectHeight);
     
     imgSplashScreen.load("images/splash-screen.png");
