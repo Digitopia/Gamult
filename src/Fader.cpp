@@ -60,7 +60,7 @@ void Fader::draw() {
 	// draw the line in which the fader moves
 	ofDrawLine(x0, y, x0+range, y);
 
-	ofDrawLine(x0+range/2, y-size/2, x0+range/2, y+size/2);
+	ofDrawLine(x0+range/2, y-size/3, x0+range/2, y+size/3);
 
 	// draw the fader
 	ofDrawRectangle(rect);

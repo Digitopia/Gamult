@@ -1,22 +1,25 @@
-//#define ACER
+// #define TARGET_ACER_MULTITOUCH_SCREEN
 
-#ifdef ACER
+#if defined TARGET_OF_IOS
+    #define MODULES 3
+    #define FADER_SIZE 50
+    #define BUTTON_SIZE 60
+    #define CONSOLE_HEIGHT 400
+    #define UI_FONT_SIZE 24
+    #define TOUCH_MAX 50
+    #define TOUCH_MIN 10
+    #define FADER_RANGE 400
+
+#elif defined TARGET_ACER_MULTITOUCH_SCREEN
     #define MODULES 4
     #define FADER_SIZE 24
     #define BUTTON_SIZE 36
     #define CONSOLE_HEIGHT 200
     #define UI_FONT_SIZE 14
     #define TOUCH_MAX 20
+    #define TOUCH_MIN 0
+    #define FADER_RANGE 250
 
-#elif defined TARGET_OF_IOS
-    #define FADER_SIZE 40
-    #define BUTTON_SIZE 50
-    #define CONSOLE_HEIGHT 300
-    #define UI_FONT_SIZE 20
-    #define MODULES 3
-    #define TOUCH_MAX 40
-
-// osx dev
 #else
     #define MODULES 4
     #define FADER_SIZE 20
@@ -24,7 +27,11 @@
     #define CONSOLE_HEIGHT 120
     #define UI_FONT_SIZE 14
     #define TOUCH_MAX 20
+    #define TOUCH_MIN 0
+    #define FADER_RANGE 250
+
 #endif
+
 
 // setup
 #define FRAME_RATE 60
@@ -49,9 +56,6 @@
 #define UI_FONT_FACE "Raleway-Medium.ttf"
 #define UI_COLOR 255 // color for buttons, faders, etc.
 
-// faders
-#define FADER_RANGE 250 // in pixels
-
 // buttons
 #define BUTTON_COLOR 0x8DCACB
 #define BUTTON_REMOVE_COLOR 0x274848
@@ -60,7 +64,6 @@
 // touches
 #define TOUCH_COLOR 0x808080
 #define TOUCH_ALPHA 150
-//#define TOUCH_MAX 20 // radius and in pixels
 
 // particle
 #define PARTICLE_COLOR_INNER 0xA1DEDF

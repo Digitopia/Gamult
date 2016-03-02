@@ -1,9 +1,10 @@
 #include "Touch.h"
+#include "Constants.h"
 
 Touch::Touch(int x, int y) {
     this->x = x;
     this->y = y;
-    this->increment = 0.0;
+    this->increment = TOUCH_MIN;
 }
 
 void Touch::update() {

@@ -65,8 +65,8 @@ void ofApp::setup() {
     arrowDownYBase = arrowDownY;
     arrowDownDir = 1;
     
-    ofLog() << "width is " << ofGetWidth();
-    ofLog() << "height is " << ofGetHeight();
+    // ofLog() << "width is " << ofGetWidth();
+    // ofLog() << "height is " << ofGetHeight();
     
 }
 
