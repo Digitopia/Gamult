@@ -1,15 +1,29 @@
-//#define ACER // if active, will optimize for ACER screen, otherwise will work best in Macbook
+//#define ACER
 
 #ifdef ACER
+    #define MODULES 4
     #define FADER_SIZE 24
     #define BUTTON_SIZE 36
     #define CONSOLE_HEIGHT 200
     #define UI_FONT_SIZE 14
+    #define TOUCH_MAX 20
+
+#elif defined TARGET_OF_IOS
+    #define FADER_SIZE 40
+    #define BUTTON_SIZE 50
+    #define CONSOLE_HEIGHT 300
+    #define UI_FONT_SIZE 20
+    #define MODULES 3
+    #define TOUCH_MAX 40
+
+// osx dev
 #else
+    #define MODULES 4
     #define FADER_SIZE 20
     #define BUTTON_SIZE 20
     #define CONSOLE_HEIGHT 120
     #define UI_FONT_SIZE 14
+    #define TOUCH_MAX 20
 #endif
 
 // setup
@@ -28,9 +42,7 @@
 #define OSC_ADDRESS "/GML/"
 
 // app
-#define MODULES 4
 #define PARTICLES_PER_MODULE 10
-
 
 // user interface
 //#define UI_FONT_FACE "Raleway-Semibold.ttf"
@@ -48,7 +60,7 @@
 // touches
 #define TOUCH_COLOR 0x808080
 #define TOUCH_ALPHA 150
-#define TOUCH_MAX 20 // radius and in pixels
+//#define TOUCH_MAX 20 // radius and in pixels
 
 // particle
 #define PARTICLE_COLOR_INNER 0xA1DEDF

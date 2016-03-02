@@ -21,7 +21,7 @@ void Module::loadSounds(vector<string> paths) {
     for (int i = 0; i < paths.size(); i++) {
         ofSoundPlayer s;
         sounds.push_back(s);
-        sounds[i].setMultiPlay(true);
+//        sounds[i].setMultiPlay(true);
         sounds[i].load(paths[i], true);
     }
 }

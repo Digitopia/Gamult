@@ -11,7 +11,7 @@ int main() {
     window.numOfAntiAliasingSamples = 4;
     ofCreateWindow(window);
     #else
-    ofSetupOpenGL(1024, 768, OF_WINDOW);
+    ofSetupOpenGL(1024, 768, OF_FULLSCREEN);
     #endif
 
     ofRunApp(new ofApp());
