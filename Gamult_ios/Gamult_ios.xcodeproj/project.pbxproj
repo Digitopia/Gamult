@@ -553,7 +553,7 @@
 				);
 				INFOPLIST_FILE = "ofxiOS-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
-				PRODUCT_BUNDLE_IDENTIFIER = Gamult;
+				PRODUCT_BUNDLE_IDENTIFIER = com.casadamusica.Gamult;
 				PRODUCT_NAME = Gamult;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -583,7 +583,7 @@
 				);
 				INFOPLIST_FILE = "ofxiOS-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
-				PRODUCT_BUNDLE_IDENTIFIER = Gamult;
+				PRODUCT_BUNDLE_IDENTIFIER = com.casadamusica.Gamult;
 				PRODUCT_NAME = Gamult;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";

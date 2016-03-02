@@ -66,6 +66,8 @@ public:
     void mousePressed(ofMouseEventArgs &mouse);
     void mouseReleased(ofMouseEventArgs &mouse);
     
+    void deviceOrientationChanged(int newOrientation);
+    
     void keyPressed(int key);
     
 	void drawLines();

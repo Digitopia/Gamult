@@ -627,3 +627,9 @@ bool ofApp::hasParticles() {
     }
     return false;
 }
+
+// have it always in landscape
+void ofApp::deviceOrientationChanged(int newOrientation) {
+    if (newOrientation == 3) ofSetOrientation(OF_ORIENTATION_90_LEFT);
+    else if (newOrientation == 4) ofSetOrientation(OF_ORIENTATION_90_RIGHT);
+}
