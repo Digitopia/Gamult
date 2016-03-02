@@ -1,8 +1,8 @@
 // #define TARGET_ACER_MULTITOUCH_SCREEN
 
 #if defined TARGET_OF_IOS
-    #define MODULES 3
-    #define FADER_SIZE 50
+    #define MODULES 2
+    #define FADER_SIZE 60
     #define BUTTON_SIZE 60
     #define CONSOLE_HEIGHT 400
     #define UI_FONT_SIZE 24
