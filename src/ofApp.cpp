@@ -58,7 +58,9 @@ void ofApp::setup() {
     barRect.set(ofGetWidth()/2 - barRectLength/2, ofGetHeight() - barRectHeight, barRectLength, barRectHeight);
     
     imgSplashScreen.load("images/splash-screen.png");
+   // imgSplashScreen.resize(ofGetWidth(), ofGetHeight());
     imgAbout.load("images/about7.png");
+    imgAbout.resize(ofGetWidth(), ofGetHeight());
     imgArrow.load("images/arrow.png");
     imgArrowDown.load("images/arrow_down.png");
     
@@ -207,6 +209,7 @@ void ofApp::draw() {
     
     else if (state == ABOUT) {
         imgAbout.draw(0, 0, ofGetWidth(), ofGetHeight());
+        cout << "should be drawing about" << endl;
         drawBouncingArrow();
         return;
     }
