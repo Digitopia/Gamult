@@ -12,16 +12,16 @@ ModuleConsole::ModuleConsole(int x, float width, int module, vector<string> icon
     
     this->height = CONSOLE_HEIGHT * ofGetHeight();
     
-    int buttonSize = BUTTON_SIZE;
+    int buttonSize = BUTTON_SIZE*width;
 	
-    btnGravity = new Button(BUTTON_TOGGLE, module, buttonSize, x+buttonSize, y+buttonSize, "Gravity");
+    btnGravity = new Button(BUTTON_TOGGLE, module, buttonSize, x+(width*0.1), y+buttonSize, "Gravity");
     
    // btnFreeze  = new Button(BUTTON_TOGGLE, module, buttonSize, x+width - 8*buttonSize, y+buttonSize, "Freeze");
     
     #ifdef TARGET_OF_IOS
-    btnFreeze  = new Button(BUTTON_TOGGLE, module, buttonSize, x+width - 6*buttonSize, y+buttonSize, "Freeze");
+    btnFreeze  = new Button(BUTTON_TOGGLE, module, buttonSize, x+width*0.6, y+buttonSize, "Freeze");
     #else
-    btnFreeze  = new Button(BUTTON_TOGGLE, module, buttonSize, x+width - 8*buttonSize, y+buttonSize, "Freeze");
+    btnFreeze  = new Button(BUTTON_TOGGLE, module, buttonSize, x+width*0.6, y+buttonSize, "Freeze");
     #endif
     
     btnRemove  = new Button(BUTTON_REMOVE,  module, width/2, x+1, 0.75*height,   "Remove");
