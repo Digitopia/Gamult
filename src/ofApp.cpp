@@ -149,7 +149,7 @@ void ofApp::handleInactivity() {
             unsigned int rModule = ofRandom(0, MODULES);
             unsigned int rX = ofRandom(modules[rModule]->getX0(), modules[rModule]->getX1());
             // unsigned int rY = ofRandom(100, modules[rModules].getHeight());
-            unsigned int rY = ofRandom(CONSOLE_HEIGHT, ofGetHeight()*(1-LIMIT_PARTICLE));
+            unsigned int rY = ofRandom(CONSOLE_HEIGHT*ofGetHeight(), ofGetHeight()*(1-LIMIT_PARTICLE));
             unsigned int rIncrement = ofRandom(INACTIVITY_TOUCH_MIN, INACTIVITY_TOUCH_MAX);
             
             modules[getModuleId(rX)]->addParticle(rIncrement, rX, rY);
@@ -209,7 +209,6 @@ void ofApp::draw() {
     
     else if (state == ABOUT) {
         imgAbout.draw(0, 0, ofGetWidth(), ofGetHeight());
-        cout << "should be drawing about" << endl;
         drawBouncingArrow();
         return;
     }
@@ -525,7 +524,7 @@ void ofApp::touchDown(ofTouchEventArgs &touch) {
 
         cout << "down (" << id << ", " << x << ", " << y << ")" << endl;
 
-        if (y > CONSOLE_HEIGHT && (state != BAR || y < aboutY) && modules[getModuleId(x)]->isNotFull()) {
+        if (y > CONSOLE_HEIGHT*ofGetHeight() && (state != BAR || y < aboutY) && modules[getModuleId(x)]->isNotFull()) {
             touches.insert(pair<int,Touch> (id, Touch(x, y)));
         }
         
@@ -572,7 +571,7 @@ void ofApp::touchUp(ofTouchEventArgs &touch) {
   
     touches.erase(it);
     
-    if (y > CONSOLE_HEIGHT && y < ofApp::maxParticleY) {
+    if (y > CONSOLE_HEIGHT*ofGetHeight() && y < ofApp::maxParticleY) {
         modules[getModuleId(x)]->addParticle(increment, x, y);
     }
     

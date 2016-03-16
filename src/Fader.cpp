@@ -4,7 +4,7 @@
 Fader::Fader(float x0, float y, int size, int range, string title) {
     
     this ->stringOrigin = x0;
-    this->x0 = x0 + 120;
+    this->x0 = x0 + 60;
     this->y = y;
     this->size = size;
     this->range = range;

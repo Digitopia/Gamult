@@ -28,7 +28,7 @@ void Button::touchDown(ofTouchEventArgs& event) {
 		state = !state;
     }
 
-    if (id == -1 && (type == BUTTON_REMOVE || type == BUTTON_CLEAR) && rect.inside(event.x, event.y) && event.y < CONSOLE_HEIGHT) {
+    if (id == -1 && (type == BUTTON_REMOVE || type == BUTTON_CLEAR) && rect.inside(event.x, event.y) && event.y < CONSOLE_HEIGHT*ofGetHeight()) {
         id = event.id;
 		state = true;
     }
@@ -77,10 +77,10 @@ void Button::draw() {
 	if (type == BUTTON_REMOVE || type == BUTTON_CLEAR) {
 
         ofSetHexColor(BUTTON_REMOVE_COLOR);
-        ofDrawRectangle(x, y, ofApp::modules[module]->getWidth()/2, CONSOLE_HEIGHT*0.25);
+        ofDrawRectangle(x, y, ofApp::modules[module]->getWidth()/2, CONSOLE_HEIGHT*ofGetHeight()*0.25);
 
         ofSetColor(UI_COLOR);
-        font.drawString(title, x+ofApp::modules[module]->getWidth()/6, y+(CONSOLE_HEIGHT/6));
+        font.drawString(title, x+ofApp::modules[module]->getWidth()/6, y+((CONSOLE_HEIGHT*ofGetHeight())/6));
         
 	}
 

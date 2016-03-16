@@ -24,7 +24,7 @@ void Touch::draw() {
     
     ofSetColor(ofColor::fromHex(TOUCH_COLOR), TOUCH_ALPHA);
     
-    if (y > ofApp::maxParticleY || y < CONSOLE_HEIGHT) {
+    if (y > ofApp::maxParticleY || y < CONSOLE_HEIGHT*ofGetHeight()) {
         ofSetColor(ofColor::fromHex(PARTICLE_LIMIT_COLOR), PARTICLE_LIMIT_ALPHA);
     }
  /*

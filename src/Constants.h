@@ -1,20 +1,18 @@
 // #define TARGET_ACER_MULTITOUCH_SCREEN
 
 #if defined TARGET_OF_IOS
-    #define MODULES 2
-    #define FADER_SIZE 60
-    #define BUTTON_SIZE 60
-    #define CONSOLE_HEIGHT 400
-    #define UI_FONT_SIZE 24
-    #define TOUCH_MAX 50
+    #define MODULES 4
+    #define FADER_SIZE 18
+    #define BUTTON_SIZE 20
+    #define UI_FONT_SIZE 11
+    #define TOUCH_MAX 40
     #define TOUCH_MIN 10
-    #define FADER_RANGE 400
+    #define FADER_RANGE 150
 
 #elif defined TARGET_ACER_MULTITOUCH_SCREEN
     #define MODULES 4
     #define FADER_SIZE 24
     #define BUTTON_SIZE 36
-    #define CONSOLE_HEIGHT 200
     #define UI_FONT_SIZE 14
     #define TOUCH_MAX 20
     #define TOUCH_MIN 0
@@ -24,7 +22,6 @@
     #define MODULES 4
     #define FADER_SIZE 20
     #define BUTTON_SIZE 20
-    #define CONSOLE_HEIGHT 120
     #define UI_FONT_SIZE 14
     #define TOUCH_MAX 20
     #define TOUCH_MIN 0
@@ -73,6 +70,7 @@
 #define PARTICLE_OFFSET 1.05
 
 // console
+#define CONSOLE_HEIGHT 0.18
 #define CONSOLE_COLOR 0xA1DEDF
 #define CONSOLE_BORDER_WIDTH 1
 #define CONSOLE_BORDER_COLOR 0x717171

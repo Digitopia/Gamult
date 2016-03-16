@@ -20,11 +20,11 @@ void Particle::gravity() {
         trigger(true, true);
 	}
     
-	else if (center.y <= CONSOLE_HEIGHT + life) {
-		center.y = CONSOLE_HEIGHT + life;
+	else if (center.y <= CONSOLE_HEIGHT*ofGetHeight() + life) {
+		center.y = CONSOLE_HEIGHT*ofGetHeight() + life;
 	}
 	
-	if (center.y >= ofGetHeight() || center.y <= CONSOLE_HEIGHT + life) {
+	if (center.y >= ofGetHeight() || center.y <= CONSOLE_HEIGHT*ofGetHeight() + life) {
 		velocity = velocity * -0.95;
         health--;
     } else {
@@ -42,8 +42,8 @@ void Particle::loop() {
 	if (center.y >= ofGetHeight()) {
         trigger(true, true);
 		velocity *= -1;
-    } else if(center.y <= CONSOLE_HEIGHT + life) {
-        center.y = CONSOLE_HEIGHT + life;
+    } else if(center.y <= CONSOLE_HEIGHT*ofGetHeight() + life) {
+        center.y = CONSOLE_HEIGHT*ofGetHeight() + life;
         velocity = 0;
         velocity += loopCoef;
     }

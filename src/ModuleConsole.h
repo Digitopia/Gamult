@@ -32,6 +32,7 @@ private:
 
 	int module;
 	float width;
+    float height;
 
 	int x, y;
 

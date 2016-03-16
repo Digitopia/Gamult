@@ -10,11 +10,13 @@ ModuleConsole::ModuleConsole(int x, float width, int module, vector<string> icon
 	
 	int y = 0;
     
+    this->height = CONSOLE_HEIGHT * ofGetHeight();
+    
     int buttonSize = BUTTON_SIZE;
 	
     btnGravity = new Button(BUTTON_TOGGLE, module, buttonSize, x+buttonSize, y+buttonSize, "Gravity");
     
-    btnFreeze  = new Button(BUTTON_TOGGLE, module, buttonSize, x+width - 8*buttonSize, y+buttonSize, "Freeze");
+   // btnFreeze  = new Button(BUTTON_TOGGLE, module, buttonSize, x+width - 8*buttonSize, y+buttonSize, "Freeze");
     
     #ifdef TARGET_OF_IOS
     btnFreeze  = new Button(BUTTON_TOGGLE, module, buttonSize, x+width - 6*buttonSize, y+buttonSize, "Freeze");
@@ -22,10 +24,14 @@ ModuleConsole::ModuleConsole(int x, float width, int module, vector<string> icon
     btnFreeze  = new Button(BUTTON_TOGGLE, module, buttonSize, x+width - 8*buttonSize, y+buttonSize, "Freeze");
     #endif
     
-    btnRemove  = new Button(BUTTON_REMOVE,  module, width/2, x+1, 0.75*CONSOLE_HEIGHT,   "Remove");
-    btnClear   = new Button(BUTTON_CLEAR, module, width/2, x + width/2 + 1, 0.75*CONSOLE_HEIGHT, "Clear");
+    btnRemove  = new Button(BUTTON_REMOVE,  module, width/2, x+1, 0.75*height,   "Remove");
+    btnClear   = new Button(BUTTON_CLEAR, module, width/2, x + width/2 + 1, 0.75*height, "Clear");
 	
+    #ifdef TARGET_OF_IOS
 	fadSpeed = new Fader(x+buttonSize, y+buttonSize * 3.5, FADER_SIZE, FADER_RANGE, "Speed");
+    #else
+    fadSpeed = new Fader(x+buttonSize, y+buttonSize * 3.5, FADER_SIZE, FADER_RANGE, "Speed");
+    #endif
 	
 	// by default gravity is on
     btnGravity->on();
@@ -68,11 +74,11 @@ void ModuleConsole::draw() {
 
 	ofFill();
 
-	ofDrawRectangle(x, y, width, CONSOLE_HEIGHT);
+	ofDrawRectangle(x, y, width, height);
     
     ofSetHexColor(BUTTON_COLOR);
     
-    ofDrawRectangle(x , CONSOLE_HEIGHT * 0.75, width, CONSOLE_HEIGHT * 0.25);
+    ofDrawRectangle(x , height * 0.75, width, height * 0.25);
 
 	ofPopStyle();
 
