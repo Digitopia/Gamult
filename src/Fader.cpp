@@ -1,13 +1,13 @@
 #include "Fader.h"
 #include "ofApp.h"
 
-Fader::Fader(float x0, float y, int size, int range, string title) {
+Fader::Fader(float x0, float y, int size, string title) {
     
     this ->stringOrigin = x0;
-    this->x0 = x0 + 60;
+    this->x0 = x0 + 0.25 * (ofGetWidth()/MODULES); //TODO - check a better way to get this
     this->y = y;
     this->size = size;
-    this->range = range;
+    this->range = 0.6*(ofGetWidth()/MODULES);
 	this->title = title;
     
     this->id = -1; // -1 means there is no touch associated

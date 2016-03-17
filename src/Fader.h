@@ -7,7 +7,7 @@ class Fader {
 
 public:
 
-	Fader(float x0, float y, int size, int range, string title);
+	Fader(float x0, float y, int size, string title);
 	void draw();
     float getValue();
     void resetFader() { this->rect.x = this->x0+range/2-size/2; }

@@ -13,25 +13,18 @@ ModuleConsole::ModuleConsole(int x, float width, int module, vector<string> icon
     this->height = CONSOLE_HEIGHT * ofGetHeight();
     
     int buttonSize = BUTTON_SIZE*width;
+    int buttonPositionOffset = (height*CONSOLE_SECTION_HEIGHT)/4;
 	
-    btnGravity = new Button(BUTTON_TOGGLE, module, buttonSize, x+(width*0.1), y+buttonSize, "Gravity");
+    btnGravity = new Button(BUTTON_TOGGLE, module, buttonSize, x+(width*0.1), y+buttonPositionOffset, "Gravity");
     
    // btnFreeze  = new Button(BUTTON_TOGGLE, module, buttonSize, x+width - 8*buttonSize, y+buttonSize, "Freeze");
     
-    #ifdef TARGET_OF_IOS
-    btnFreeze  = new Button(BUTTON_TOGGLE, module, buttonSize, x+width*0.6, y+buttonSize, "Freeze");
-    #else
-    btnFreeze  = new Button(BUTTON_TOGGLE, module, buttonSize, x+width*0.6, y+buttonSize, "Freeze");
-    #endif
+    btnFreeze  = new Button(BUTTON_TOGGLE, module, buttonSize, x+width*0.6, y+buttonPositionOffset, "Freeze");
     
     btnRemove  = new Button(BUTTON_REMOVE,  module, width/2, x+1, 0.75*height,   "Remove");
     btnClear   = new Button(BUTTON_CLEAR, module, width/2, x + width/2 + 1, 0.75*height, "Clear");
-	
-    #ifdef TARGET_OF_IOS
-	fadSpeed = new Fader(x+buttonSize, y+buttonSize * 3.5, FADER_SIZE, FADER_RANGE, "Speed");
-    #else
-    fadSpeed = new Fader(x+buttonSize, y+buttonSize * 3.5, FADER_SIZE, FADER_RANGE, "Speed");
-    #endif
+
+	fadSpeed = new Fader(x+(width*0.1), y+buttonPositionOffset*3, FADER_SIZE, "Speed");
 	
 	// by default gravity is on
     btnGravity->on();
