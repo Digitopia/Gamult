@@ -77,7 +77,7 @@ void Button::draw() {
 	if (type == BUTTON_REMOVE || type == BUTTON_CLEAR) {
 
         ofSetHexColor(BUTTON_REMOVE_COLOR);
-        ofDrawRectangle(x, y, ofApp::modules[module]->getWidth()/2, CONSOLE_HEIGHT*ofGetHeight()*0.25);
+        ofDrawRectangle(x, y, ofApp::modules[module]->getWidth()/2, CONSOLE_HEIGHT*ofGetHeight()*(1-CONSOLE_SECTION_HEIGHT));
 
         ofSetColor(UI_COLOR);
         font.drawString(title, x+ofApp::modules[module]->getWidth()/6, y+((CONSOLE_HEIGHT*ofGetHeight())/6));

@@ -21,8 +21,8 @@ ModuleConsole::ModuleConsole(int x, float width, int module, vector<string> icon
     
     btnFreeze  = new Button(BUTTON_TOGGLE, module, buttonSize, x+width*0.6, y+buttonPositionOffset, "Freeze");
     
-    btnRemove  = new Button(BUTTON_REMOVE,  module, width/2, x+1, 0.75*height,   "Remove");
-    btnClear   = new Button(BUTTON_CLEAR, module, width/2, x + width/2 + 1, 0.75*height, "Clear");
+    btnRemove  = new Button(BUTTON_REMOVE,  module, width/2, x+1, CONSOLE_SECTION_HEIGHT*height,   "Remove");
+    btnClear   = new Button(BUTTON_CLEAR, module, width/2, x + width/2 + 1, CONSOLE_SECTION_HEIGHT*height, "Clear");
 
 	fadSpeed = new Fader(x+(width*0.1), y+buttonPositionOffset*3, FADER_SIZE, "Speed");
 	
