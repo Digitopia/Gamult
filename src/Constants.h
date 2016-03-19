@@ -2,21 +2,18 @@
 
 #if defined TARGET_OF_IOS
     #define MODULES 4
-    #define FADER_SIZE 18
     #define UI_FONT_SIZE 12
     #define TOUCH_MAX 40
     #define TOUCH_MIN 10
 
 #elif defined TARGET_ACER_MULTITOUCH_SCREEN
     #define MODULES 4
-    #define FADER_SIZE 24
     #define UI_FONT_SIZE 14
     #define TOUCH_MAX 20
     #define TOUCH_MIN 0
 
 #else
     #define MODULES 4
-    #define FADER_SIZE 20
     #define UI_FONT_SIZE 14
     #define TOUCH_MAX 20
     #define TOUCH_MIN 0
@@ -47,8 +44,9 @@
 #define UI_FONT_FACE "Raleway-Medium.ttf"
 #define UI_COLOR 255 // color for buttons, faders, etc.
 
-// buttons
-#define BUTTON_SIZE .08
+// buttons + fader
+#define BUTTON_SIZE .18
+#define FADER_SIZE .12
 #define BUTTON_COLOR 0x8DCACB
 #define BUTTON_REMOVE_COLOR 0x274848
 #define BUTTON_WIDTH 1

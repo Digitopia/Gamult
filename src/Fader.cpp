@@ -4,10 +4,10 @@
 Fader::Fader(float x0, float y, int size, string title) {
     
     this ->stringOrigin = x0;
-    this->x0 = x0 + 0.25 * (ofGetWidth()/MODULES); //TODO - check a better way to get this
     this->y = y;
     this->size = size;
-    this->range = 0.6*(ofGetWidth()/MODULES);
+    this->x0 = x0 + 0.15 * (ofGetWidth()/MODULES) + size; //TODO - check a better way to get this. It makes sure the fader line starts in a point which will result in the fader rectangle being in line with the Freeze buton, that is, at 0.6 of module width
+    this->range = 0.7*(ofGetWidth()/MODULES)-size;
 	this->title = title;
     
     this->id = -1; // -1 means there is no touch associated

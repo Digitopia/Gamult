@@ -78,9 +78,11 @@ void Button::draw() {
 
         ofSetHexColor(BUTTON_REMOVE_COLOR);
         ofDrawRectangle(x, y, ofApp::modules[module]->getWidth()/2, CONSOLE_HEIGHT*ofGetHeight()*(1-CONSOLE_SECTION_HEIGHT));
-
+        
+        int lowerPartHeight = (1-CONSOLE_SECTION_HEIGHT) * CONSOLE_HEIGHT * ofGetHeight();
+        
         ofSetColor(UI_COLOR);
-        font.drawString(title, x+ofApp::modules[module]->getWidth()/6, y+((CONSOLE_HEIGHT*ofGetHeight())/6));
+        font.drawString(title, x+ofApp::modules[module]->getWidth()/4-(font.stringWidth(title)/2), y+(lowerPartHeight/2)+font.stringHeight(title)/2);
         
 	}
 
