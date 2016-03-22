@@ -24,7 +24,7 @@ void ofApp::setup() {
 	ofSetFrameRate(FRAME_RATE);
 	ofSetCircleResolution(CIRCLE_RESOLUTION);
     
-    #ifdef TARGET_OF_IOS
+    #if defined(TARGET_OF_IOS) && !defined(TARGET_OF_IPHONE)
     ofSetOrientation(OF_ORIENTATION_90_LEFT);
     #endif
 
@@ -59,7 +59,8 @@ void ofApp::setup() {
     imgArrow.load("images/arrow.png");
     imgArrowDown.load("images/arrow_down.png");
     
-    state = SPLASH_SCREEN;
+//    state = SPLASH_SCREEN;
+    state = APP;
     
     inactivityState = ACTIVE;
     

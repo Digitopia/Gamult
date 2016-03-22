@@ -10,11 +10,37 @@ Module::Module(int index, float x, float y, float width, float height, int maxPo
 	this->maxPopulation = maxPopulation;
 
 	this->console = new ModuleConsole(x0, width, index, iconPaths);
-	
+
+    // util vars
 	this->x1 = x + width;
-    
+    this->consoleHeight = CONSOLE_HEIGHT*height;
+
+    int w = round(BUTTON_CHANGE_INSTRUMENT_WIDTH * width);
+    int h = round(BUTTON_CHANGE_INSTRUMENT_HEIGHT * height);
+    int middleY = round((height - consoleHeight)/2 + consoleHeight);
+    previousInstrumentRect.set(x0, middleY - h, w, h);
+    nextInstrumentRect.set(x1, middleY - h, -w, h);
+
+    ofLog() << "height " << height << endl;
+    ofLog() << "getHeight() " << height << endl;
+
 	loadSounds(soundPaths);
 
+  ofAddListener(ofEvents().touchDown,  this, &Module::touchDown);
+
+}
+
+void Module::touchDown(ofTouchEventArgs& event) {
+    
+    if (previousInstrumentRect.inside(event.x, event.y)) {
+        if (index == 0) changeInstrument(3);
+        else changeInstrument(--index);
+    }
+    
+    else if (nextInstrumentRect.inside(event.x, event.y)) {
+        changeInstrument(++index % 4);
+    }
+    
 }
 
 void Module::loadSounds(vector<string> paths) {
@@ -37,7 +63,7 @@ void Module::unloadSounds() {
 }
 
 void Module::changeInstrument(int index) {
-    
+
     unloadSounds();
     switch (index) {
         case 0:
@@ -91,38 +117,38 @@ void Module::changeInstrument(int index) {
         }
             break;
     }
-    
+
 	cout << "changing instrument" << endl;
 }
 
 void Module::addParticle(int life, int x, int y) {
 	if (particles.size() < maxPopulation) {
-        // the following line is to make sure that when the particle is created it always goes downwards first (was causing problems with Particle::gravity(); 
-        if (y <= CONSOLE_HEIGHT*ofGetHeight() + life) y = CONSOLE_HEIGHT*ofGetHeight() + life + 1;
+        // the following line is to make sure that when the particle is created it always goes downwards first (was causing problems with Particle::gravity();
+        if (y <= consoleHeight + life) y = consoleHeight + life + 1;
         particles.push_back(Particle(index, particles.size(), x, y, life));
 	}
 }
 
 void Module::update() {
-    
+
     if (isFreezed())
         return;
-    
+
 	for (int i = 0; i < particles.size(); i++) {
-		
+
         Particle *p = &particles[i];
-		
+
         if (isLooping())
             p->loop();
-        
+
 		if (isGravityOn())
 			p->gravity();
-        
+
         if (p->getHealth() <= 0)
             particles.erase(particles.begin()+i);
-        
+
 	}
-    
+
 }
 
 void Module::draw() {
@@ -130,19 +156,23 @@ void Module::draw() {
     drawBackground();
 	drawBorders();
 	drawGrid();
+    drawChangeInstrumentButtons();
 }
 
 void Module::drawBackground() {
     ofPushStyle();
     ofSetColor(255 - (30 * index));
-    ofDrawRectangle(x0, y + CONSOLE_HEIGHT*ofGetHeight(), width, height);
+    ofDrawRectangle(x0, y + consoleHeight, width, height);
     ofPopStyle();
 }
 
-void Module::drawParticles() {
-	for (int i = 0; i < particles.size(); i++) {
-		particles[i].draw();
-    }
+void Module::drawBorders() {
+    ofPushStyle();
+    ofSetLineWidth(CONSOLE_BORDER_WIDTH);
+    ofSetHexColor(CONSOLE_BORDER_COLOR);
+    ofNoFill();
+    ofDrawRectangle(x0, y, width, height);
+    ofPopStyle();
 }
 
 void Module::drawGrid() {
@@ -151,18 +181,23 @@ void Module::drawGrid() {
 	int gridCellSize = round(float(width) / gridNumberElements);
 	for (int i = 1; i < gridNumberElements; i++) {
 		int gridCellX = x0 + (i)*gridCellSize + 2;
-//    	ofLine(gridCellX, ofGetHeight(), gridCellX, ofGetHeight()-GRID_HEIGHT); // small grids at bottom
-    	ofDrawLine(gridCellX, ofGetHeight(), gridCellX, CONSOLE_HEIGHT*ofGetHeight()); // top to bottom grids
+//    	ofLine(gridCellX, height, gridCellX, height-GRID_HEIGHT); // small grids at bottom
+    	ofDrawLine(gridCellX, height, gridCellX, consoleHeight); // top to bottom grids
 	}
 }
 
-void Module::drawBorders() {
-	ofPushStyle();
-	ofSetLineWidth(CONSOLE_BORDER_WIDTH);
-	ofSetHexColor(CONSOLE_BORDER_COLOR);
-	ofNoFill();
-	ofDrawRectangle(x0, y, width, ofGetHeight());
-	ofPopStyle();
+void Module::drawChangeInstrumentButtons() {
+    ofPushStyle();
+    ofSetColor(ofColor::fromHex(BUTTON_CHANGE_INSTRUMENT_COLOR), BUTTON_CHANGE_INSTRUMENT_COLOR_ALPHA);
+    ofDrawRectangle(previousInstrumentRect);
+    ofDrawRectangle(nextInstrumentRect);
+    ofPopStyle();
+}
+
+void Module::drawParticles() {
+    for (int i = 0; i < particles.size(); i++) {
+        particles[i].draw();
+    }
 }
 
 void Module::playSound(int index, float vol) {

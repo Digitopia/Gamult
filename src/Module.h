@@ -22,9 +22,10 @@ public:
 	void drawGrid();
 	void drawBorders();
 	void drawParticles();
+    void drawChangeInstrumentButtons();
     void playSound(int index, float vol);
 	void changeInstrument(int index);
-	
+
 	int getX0()                      { return x0; }
 	int getX1()                      { return x1; }
 	int getIndex()                   { return index; }
@@ -47,6 +48,8 @@ public:
     void unfreeze()                  { console->unfreeze(); }
     void enableGravity()             { console->enableGravity(); }
 
+		void touchDown(ofTouchEventArgs& event);
+
 private:
 
 	int x0, x1;
@@ -54,10 +57,15 @@ private:
 	int index;
 	int width;
 	int height;
+    int consoleHeight;
 	int maxPopulation;
 	ModuleConsole* console;
     vector<ofSoundPlayer> sounds;
 	vector<Particle> particles;
+
+    ofRectangle previousInstrumentRect;
+    ofRectangle nextInstrumentRect;
+
 };
 
 #endif
