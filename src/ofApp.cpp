@@ -7,6 +7,7 @@ int ofApp::mouseId = 0;
 unsigned int ofApp::inactivityCounter = 0;
 bool ofApp::multitouch = true;
 bool ofApp::inactive = false;
+unsigned int ofApp::moduleActive = 0;
 unsigned int ofApp::currentAlpha = DEFAULT_ALPHA;
 
 typedef map<int,Touch>::iterator touchesIterator;
@@ -29,7 +30,7 @@ void ofApp::setup() {
 
     #ifndef TARGET_OF_IOS
     oscReceiver.setup(RECEIVE_PORT);
-	oscSender.setup(HOST, SEND_PORT);
+    oscSender.setup(HOST, SEND_PORT);
     #endif
     
     #ifndef TARGET_OF_IOS
@@ -373,6 +374,14 @@ void ofApp::initModules() {
 
 }
 
+//void ofApp::preparePortrait() {
+//    
+//}
+//
+//void ofApp::prepareLandscape() {
+//    
+//}
+
 void ofApp::checkMultitouchData() {
 
     #ifndef TARGET_OF_IOS
@@ -635,4 +644,8 @@ bool ofApp::hasParticles() {
 void ofApp::deviceOrientationChanged(int newOrientation) {
     if (newOrientation == 3) ofSetOrientation(OF_ORIENTATION_90_LEFT);
     else if (newOrientation == 4) ofSetOrientation(OF_ORIENTATION_90_RIGHT);
+
+    ofLog() << "width is " << ofGetWidth();
+    ofLog() << "height is " << ofGetHeight();
+
 }
