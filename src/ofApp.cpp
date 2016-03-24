@@ -328,11 +328,10 @@ void ofApp::initModules() {
     moduleWidth = ofGetWidth()/ofApp::nModules;
     moduleHeight = ofGetHeight();
     int moduleHabitants = ofApp::nParticlesPerModule;
-
-    ofApp::modules[0] = new Module(0, 0*moduleWidth, 0, moduleWidth, moduleHeight, moduleHabitants, getSoundPaths(0), icons);
-    ofApp::modules[1] = new Module(1, 1*moduleWidth, 0, moduleWidth, moduleHeight, moduleHabitants, getSoundPaths(1), icons);
-    ofApp::modules[2] = new Module(2, 2*moduleWidth, 0, moduleWidth, moduleHeight, moduleHabitants, getSoundPaths(2), icons);
-    ofApp::modules[3] = new Module(3, 3*moduleWidth, 0, moduleWidth, moduleHeight, moduleHabitants, getSoundPaths(3), icons);
+    
+    for (unsigned int i = 0; i < ofApp::nModules; i++) {
+        ofApp::modules[i] = new Module(i, i*moduleWidth, i, moduleWidth, moduleHeight, moduleHabitants, getSoundPaths(i), icons);
+    }
 
 }
 
