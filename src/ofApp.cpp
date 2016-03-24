@@ -352,12 +352,6 @@ void ofApp::initModules() {
     sarons.push_back("sounds/SBPL4.wav");
     sarons.push_back("sounds/SBPL4.wav");
 	
-	vector< vector<string> > config;
-	config.push_back(bonangs);
-	config.push_back(genders);
-	config.push_back(gongs);
-	config.push_back(sarons);
-	
 	vector<string> icons;
 	icons.push_back("images/1.png");
 	icons.push_back("images/2.png");
