@@ -18,13 +18,11 @@ Module::Module(int index, float x, float y, float width, float height, int maxPo
     int w = round(BUTTON_CHANGE_INSTRUMENT_WIDTH * width);
     int h = round(BUTTON_CHANGE_INSTRUMENT_HEIGHT * height);
     int middleY = round((height - consoleHeight)/2 + consoleHeight);
-    previousInstrumentRect.set(x0, middleY - h, w, h);
-    nextInstrumentRect.set(x1, middleY - h, -w, h);
+    
+    previousInstrumentRect.set(x0, middleY - h/2, w, h);
+    nextInstrumentRect.set(x1, middleY - h/2, -w, h);
 
-    ofLog() << "height " << height << endl;
-    ofLog() << "getHeight() " << height << endl;
-
-	loadSounds(soundPaths);
+    loadSounds(soundPaths);
 
   ofAddListener(ofEvents().touchDown,  this, &Module::touchDown);
 
@@ -33,12 +31,13 @@ Module::Module(int index, float x, float y, float width, float height, int maxPo
 void Module::touchDown(ofTouchEventArgs& event) {
     
     if (previousInstrumentRect.inside(event.x, event.y)) {
-        if (index == 0) changeInstrument(3);
-        else changeInstrument(--index);
+        if (index == 0) return;
+        changeInstrument(--index);
     }
     
     else if (nextInstrumentRect.inside(event.x, event.y)) {
-        changeInstrument(++index % 4);
+        if (index == 4) return;
+        changeInstrument(++index);
     }
     
 }
@@ -122,7 +121,9 @@ void Module::changeInstrument(int index) {
 }
 
 void Module::addParticle(int life, int x, int y) {
-	if (particles.size() < maxPopulation) {
+	if (particles.size() < maxPopulation
+        && !previousInstrumentRect.inside(x, y)
+        && !nextInstrumentRect.inside(x, y)) {
         // the following line is to make sure that when the particle is created it always goes downwards first (was causing problems with Particle::gravity();
         if (y <= consoleHeight + life) y = consoleHeight + life + 1;
         particles.push_back(Particle(index, particles.size(), x, y, life));

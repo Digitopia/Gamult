@@ -590,38 +590,41 @@ int ofApp::getModuleId(int x) {
 }
 
 void ofApp::drawLine(int nth) {
-    
+
     vector<Particle*> nthParticles;
     for (int i = 0; i < ofApp::nModules; i++) {
         if (ofApp::modules[i]->getNumberOfParticles() > nth) {
             nthParticles.push_back(ofApp::modules[i]->getParticle(nth));
         }
     }
-    
+
     if (nthParticles.size() == 0)
         return;
-    
+
     ofPushStyle();
-    
+
     ofNoFill();
     ofSetLineWidth(POLY_WIDTH);
     ofSetColor(POLY_COLOR);
-    
+
     ofBeginShape();
-    
+
     // need four points at least otherwise the shape doesn't 'close' and therefore doesn't draw
-    ofCurveVertex(0, ofGetHeight()/2);
-    ofCurveVertex(0, ofGetHeight()/2);
-    
+
+    int middleY = round((ofGetHeight() - CONSOLE_HEIGHT*ofGetHeight())/2.0 + CONSOLE_HEIGHT*ofGetHeight());
+
+    ofCurveVertex(0, middleY);
+    ofCurveVertex(0, middleY);
+
     for (int i = 0; i < nthParticles.size(); i++) {
         ofCurveVertex(nthParticles[i]->getX(), nthParticles[i]->getY());
     }
-    
-    ofCurveVertex(ofGetWidth(), ofGetHeight()/2);
-    ofCurveVertex(ofGetWidth(), ofGetHeight()/2);
-    
+
+    ofCurveVertex(ofGetWidth(), middleY);
+    ofCurveVertex(ofGetWidth(), middleY);
+
     ofEndShape();
-    
+
     ofPopStyle();
 }
 
