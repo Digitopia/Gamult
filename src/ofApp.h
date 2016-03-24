@@ -82,6 +82,8 @@ public:
     bool hasParticles();
     void resetModules();
     void resetInactivityTime();
+    
+    static vector<string> getSoundPaths(unsigned int index);
 
 	static int nModules;
     static unsigned int moduleActive;
