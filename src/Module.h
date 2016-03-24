@@ -55,6 +55,7 @@ private:
 	int x0, x1;
 	int y;
 	int index;
+    int iSoundPaths;
 	int width;
 	int height;
     int consoleHeight;

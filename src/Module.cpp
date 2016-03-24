@@ -19,26 +19,31 @@ Module::Module(int index, float x, float y, float width, float height, int maxPo
     int h = round(BUTTON_CHANGE_INSTRUMENT_HEIGHT * height);
     int middleY = round((height - consoleHeight)/2 + consoleHeight);
     
+    #if defined(TARGET_OF_IPHONE)
     previousInstrumentRect.set(x0, middleY - h/2, w, h);
     nextInstrumentRect.set(x1, middleY - h/2, -w, h);
+    #endif
 
     loadSounds(soundPaths);
 
-  ofAddListener(ofEvents().touchDown,  this, &Module::touchDown);
+    ofAddListener(ofEvents().touchDown,  this, &Module::touchDown);
 
 }
 
+
 void Module::touchDown(ofTouchEventArgs& event) {
     
+    #if defined(TARGET_OF_IPHONE)
     if (previousInstrumentRect.inside(event.x, event.y)) {
-        if (index <= 0) return;
-        changeInstrument(--index);
+        if (iSoundPaths <= 0) return;
+        changeInstrument(--iSoundPaths);
     }
     
     else if (nextInstrumentRect.inside(event.x, event.y)) {
-        if (index >= 3) return;
-        changeInstrument(++index);
+        if (iSoundPaths >= 3) return;
+        changeInstrument(++iSoundPaths);
     }
+    #endif
     
 }
 
@@ -61,9 +66,9 @@ void Module::unloadSounds() {
     sounds.clear();
 }
 
-void Module::changeInstrument(int index) {
+void Module::changeInstrument(int iSoundPaths) {
     unloadSounds();
-    loadSounds(ofApp::getSoundPaths(index));
+    loadSounds(ofApp::getSoundPaths(iSoundPaths));
 	cout << "changing instrument" << endl;
 }
 
@@ -109,7 +114,14 @@ void Module::draw() {
 
 void Module::drawBackground() {
     ofPushStyle();
+    
+    // TODO: this is terrible design, but doing the trick for prototyping
+    #if !defined(TARGET_OF_IPHONE)
     ofSetColor(255 - (30 * index));
+    #else
+    ofSetColor(255 - (30 * iSoundPaths));
+    #endif
+    
     ofDrawRectangle(x0, y + consoleHeight, width, height);
     ofPopStyle();
 }
@@ -135,11 +147,14 @@ void Module::drawGrid() {
 }
 
 void Module::drawChangeInstrumentButtons() {
+    
+    #if defined(TARGET_OF_IPHONE)
     ofPushStyle();
     ofSetColor(ofColor::fromHex(BUTTON_CHANGE_INSTRUMENT_COLOR), BUTTON_CHANGE_INSTRUMENT_COLOR_ALPHA);
     ofDrawRectangle(previousInstrumentRect);
     ofDrawRectangle(nextInstrumentRect);
     ofPopStyle();
+    #endif
 }
 
 void Module::drawParticles() {
