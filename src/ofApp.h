@@ -82,8 +82,11 @@ public:
     bool hasParticles();
     void resetModules();
     void resetInactivityTime();
+    
+    static vector<string> getSoundPaths(unsigned int index);
 
 	static int nModules;
+    static unsigned int moduleActive;
 	static int nParticlesPerModule;
     static int maxParticleY; // TODO does this really needs to be static and here
 	static Module** modules; // TODO make this a vector or something

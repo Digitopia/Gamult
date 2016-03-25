@@ -1,10 +1,17 @@
 // #define TARGET_ACER_MULTITOUCH_SCREEN
 
 #if defined TARGET_OF_IOS
-    #define MODULES 4
-    #define UI_FONT_SIZE 12
-    #define TOUCH_MAX 40
-    #define TOUCH_MIN 10
+    #if defined TARGET_OF_IPHONE
+        #define MODULES 1
+        #define UI_FONT_SIZE 12
+        #define TOUCH_MAX 40
+        #define TOUCH_MIN 10
+    #else
+        #define MODULES 4
+        #define UI_FONT_SIZE 12
+        #define TOUCH_MAX 40
+        #define TOUCH_MIN 10
+    #endif
 
 #elif defined TARGET_ACER_MULTITOUCH_SCREEN
     #define MODULES 4
@@ -19,7 +26,6 @@
     #define TOUCH_MIN 0
 
 #endif
-
 
 // setup
 #define FRAME_RATE 60
@@ -50,6 +56,10 @@
 #define BUTTON_COLOR 0x8DCACB
 #define BUTTON_REMOVE_COLOR 0x274848
 #define BUTTON_WIDTH 1
+#define BUTTON_CHANGE_INSTRUMENT_WIDTH .08
+#define BUTTON_CHANGE_INSTRUMENT_HEIGHT .14
+#define BUTTON_CHANGE_INSTRUMENT_COLOR 0xA1DEDF
+#define BUTTON_CHANGE_INSTRUMENT_COLOR_ALPHA 200
 
 // touches
 #define TOUCH_COLOR 0x808080
