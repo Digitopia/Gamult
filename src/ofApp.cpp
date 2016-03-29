@@ -18,6 +18,7 @@ ofxOscReceiver ofApp::oscReceiver;
 #endif
 
 Module** ofApp::modules = new Module* [ofApp::nModules];
+UISwipeGestureRecognizer *swipe;
 
 void ofApp::setup() {
 
@@ -36,6 +37,11 @@ void ofApp::setup() {
     #ifndef TARGET_OF_IOS
     ofSetDataPathRoot("../Resources/data/");
     #endif
+    
+    #if defined TARGET_OF_IPHONE
+    //initialize swipe element
+    #endif
+    
 
     ofRegisterTouchEvents(this);
 
@@ -533,7 +539,7 @@ void ofApp::touchDown(ofTouchEventArgs &touch) {
 
     if (state == APP || state == BAR) {
 
-        cout << "down (" << id << ", " << x << ", " << y << ")" << endl;
+        //cout << "down (" << id << ", " << x << ", " << y << ")" << endl;
 
         if (y > CONSOLE_HEIGHT*ofGetHeight() && (state != BAR || y < aboutY) && modules[getModuleId(x)]->isNotFull()) {
             touches.insert(pair<int,Touch> (id, Touch(x, y)));
@@ -553,7 +559,7 @@ void ofApp::touchMoved(ofTouchEventArgs &touch) {
     int y = touch.y;
     int id = touch.id;
 
-    cout << "moved (" << id << ", " << x << ", " << y << ")" << endl;
+    //cout << "moved (" << id << ", " << x << ", " << y << ")" << endl;
 
     touchesIterator it = touches.find(id);
     if (it == touches.end()) return;
@@ -570,7 +576,7 @@ void ofApp::touchUp(ofTouchEventArgs &touch) {
 
     int id = touch.id;
 
-    cout << "up (" << id << ")" << endl;
+    //cout << "up (" << id << ")" << endl;
 
     touchesIterator it = touches.find(id);
 
