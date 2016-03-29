@@ -3,7 +3,7 @@
 
 int main() {
     
-    #ifdef TARGET_OF_IOS
+    #if defined TARGET_OF_IOS
     ofiOSWindowSettings window;
     window.enableRetina = true;
     window.enableHardwareOrientation = true;

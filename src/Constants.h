@@ -1,19 +1,25 @@
-// #define TARGET_ACER_MULTITOUCH_SCREEN
+// #define TARGET_SEMIBREVE
 
-#if defined TARGET_OF_IOS
-    #if defined TARGET_OF_IPHONE
-        #define MODULES 1
-        #define UI_FONT_SIZE 12
-        #define TOUCH_MAX 40
-        #define TOUCH_MIN 10
-    #else
-        #define MODULES 4
-        #define UI_FONT_SIZE 12
-        #define TOUCH_MAX 40
-        #define TOUCH_MIN 10
-    #endif
+// define helpers
+#if defined TARGET_OF_IOS && !defined TARGET_OF_IPHONE
+#define TARGET_OF_IPAD
+#elif !defined TARGET_OF_IOS
+#define TARGET_OF_OSX
+#endif
 
-#elif defined TARGET_ACER_MULTITOUCH_SCREEN
+#if defined TARGET_OF_IPHONE
+    #define MODULES 2
+    #define UI_FONT_SIZE 12
+    #define TOUCH_MAX 40
+    #define TOUCH_MIN 10
+
+#elif defined TARGET_OF_IPAD
+    #define MODULES 4
+    #define UI_FONT_SIZE 12
+    #define TOUCH_MAX 40
+    #define TOUCH_MIN 10
+
+#elif defined TARGET_SEMIBREVE
     #define MODULES 4
     #define UI_FONT_SIZE 14
     #define TOUCH_MAX 20

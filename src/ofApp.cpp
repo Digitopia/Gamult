@@ -12,38 +12,34 @@ unsigned int ofApp::currentAlpha = DEFAULT_ALPHA;
 
 typedef map<int,Touch>::iterator touchesIterator;
 
-#ifndef TARGET_OF_IOS
+Module** ofApp::modules = new Module* [ofApp::nModules];
+
+#if defined TARGET_SEMIBREVE
 ofxOscSender ofApp::oscSender;
 ofxOscReceiver ofApp::oscReceiver;
 #endif
 
-Module** ofApp::modules = new Module* [ofApp::nModules];
-
 void ofApp::setup() {
-
-	ofSetFrameRate(FRAME_RATE);
-	ofSetCircleResolution(CIRCLE_RESOLUTION);
-
-    #if defined(TARGET_OF_IOS) && !defined(TARGET_OF_IPHONE)
+    
+    #if defined TARGET_OF_OSX
+    ofSetDataPathRoot("../Resources/data/");
+    
+    #elif defined TARGET_OF_IPAD
     ofSetOrientation(OF_ORIENTATION_90_LEFT);
-    #endif
-
-    #ifndef TARGET_OF_IOS
+    
+    #elif defined TARGET_SEMIBREVE
     oscReceiver.setup(RECEIVE_PORT);
     oscSender.setup(HOST, SEND_PORT);
     #endif
 
-    #ifndef TARGET_OF_IOS
-    ofSetDataPathRoot("../Resources/data/");
-    #endif
+    ofSetFrameRate(FRAME_RATE);
+    ofSetCircleResolution(CIRCLE_RESOLUTION);
 
     ofRegisterTouchEvents(this);
 
-    if (multitouch) {
-        ofHideCursor();
-    }
+    if (multitouch) ofHideCursor();
 
-	initModules();
+	setupModules(true);
 
 	ofApp::maxParticleY = round(ofGetHeight() * (1-LIMIT_PARTICLE));
 
@@ -59,8 +55,7 @@ void ofApp::setup() {
     imgArrow.load("images/arrow.png");
     imgArrowDown.load("images/arrow_down.png");
 
-//    state = SPLASH_SCREEN;
-    state = APP;
+    state = APP; // state = SPLASH_SCREEN;
 
     inactivityState = ACTIVE;
 
@@ -70,18 +65,14 @@ void ofApp::setup() {
     arrowDownYBase = arrowDownY;
     arrowDownDir = 1;
 
-    // ofLog() << "width is " << ofGetWidth();
-    // ofLog() << "height is " << ofGetHeight();
-
 }
 
 void ofApp::update() {
 
-    #ifndef TARGET_OF_IOS
+    #if defined TARGET_SEMIBREVE
     handleInactivity();
-    #endif
-
     checkMultitouchData();
+    #endif
 
     if (state == BAR_ASCENDING && aboutY <= maxParticleY) {
         state = BAR;
@@ -177,7 +168,6 @@ void ofApp::resetModules() {
         modules[i]->resetFaderSpeed();
     }
 }
-
 
 void ofApp::draw() {
 
@@ -317,20 +307,24 @@ void ofApp::drawArrow(bool up) {
 
 }
 
-void ofApp::initModules() {
+void ofApp::setupModules(bool first) {
 
-    vector<string> icons;
-    icons.push_back("images/1.png");
-    icons.push_back("images/2.png");
-    icons.push_back("images/3.png");
-    icons.push_back("images/4.png");
+    int width = ofGetWidth()/ofApp::nModules;
+    int height = ofGetHeight();
+    int habitants = ofApp::nParticlesPerModule;
 
-    moduleWidth = ofGetWidth()/ofApp::nModules;
-    moduleHeight = ofGetHeight();
-    int moduleHabitants = ofApp::nParticlesPerModule;
-    
     for (unsigned int i = 0; i < ofApp::nModules; i++) {
-        ofApp::modules[i] = new Module(i, i*moduleWidth, i, moduleWidth, moduleHeight, moduleHabitants, getSoundPaths(i), icons);
+
+        int x = i*width;
+        int y = 0;
+
+        if (first) {
+            ofApp::modules[i] = new Module(i, x, y, width, height, habitants, getSoundPaths(i));
+        }
+        else {
+            ofApp::modules[i]->updateParticlesOnOrientationChange(x, y, width, height);
+            ofApp::modules[i]->setDimensions(x, y, width, height);
+        }
     }
 
 }
@@ -382,17 +376,18 @@ vector<string> ofApp::getSoundPaths(unsigned int index) {
 
 }
 
-//void ofApp::preparePortrait() {
-//
-//}
-//
-//void ofApp::prepareLandscape() {
-//
-//}
+void ofApp::preparePortrait() {
+    ofLog() << "going portrait" << endl;
+    setupModules(false);
+}
 
+void ofApp::prepareLandscape() {
+    ofLog() << "going landscape" << endl;
+    setupModules(false);
+}
+
+#if defined TARGET_SEMIBREVE
 void ofApp::checkMultitouchData() {
-
-    #ifndef TARGET_OF_IOS
 
 	while (oscReceiver.hasWaitingMessages()) {
 
@@ -437,8 +432,9 @@ void ofApp::checkMultitouchData() {
             ofNotifyEvent(ofEvents().touchUp, touchEvent, this);
         }
     }
-    #endif
+
 }
+#endif
 
 
 void ofApp::mousePressed(ofMouseEventArgs &mouse) {
@@ -651,10 +647,22 @@ bool ofApp::hasParticles() {
     return false;
 }
 
-// have it always in landscape
 void ofApp::deviceOrientationChanged(int newOrientation) {
-    if (newOrientation == 3) ofSetOrientation(OF_ORIENTATION_90_LEFT);
-    else if (newOrientation == 4) ofSetOrientation(OF_ORIENTATION_90_RIGHT);
+
+    // upside down is no good for anything
+    if (newOrientation == OF_ORIENTATION_180)
+        ofSetOrientation(OF_ORIENTATION_DEFAULT);
+    else {
+        ofSetOrientation(ofOrientation(newOrientation));
+    }
+
+    if (newOrientation == OF_ORIENTATION_90_LEFT || newOrientation == OF_ORIENTATION_90_RIGHT) {
+        prepareLandscape();
+    }
+
+    else {
+        preparePortrait();
+    }
 
     ofLog() << "width is " << ofGetWidth();
     ofLog() << "height is " << ofGetHeight();

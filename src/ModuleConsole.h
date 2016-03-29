@@ -9,12 +9,9 @@ class ModuleConsole {
 
 public:
 
-	ModuleConsole(int x, float width, int module, vector<string> iconPaths);
+	ModuleConsole(int x, float width, int module);
 	
-	void loadIcons(vector<string> paths);
-
 	void draw();
-	void drawIcons();
 	
 	bool isFreezed()   { return btnFreeze->getState(); }
 	bool isGravityOn() { return btnGravity->getState(); }
@@ -27,6 +24,8 @@ public:
     void resetFaderSpeed() { fadSpeed->resetFader(); }
     
     void mousePressed(ofMouseEventArgs& event);
+    
+    void setDimensions(int x, int width, bool first);
 
 private:
 
@@ -36,7 +35,6 @@ private:
 
 	int x, y;
 
-	vector<ofImage> icons;
 	vector<ofRectangle> rects;
 	
 	ofImage img;

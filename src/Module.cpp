@@ -1,39 +1,56 @@
 #include "ofApp.h"
 
-Module::Module(int index, float x, float y, float width, float height, int maxPopulation, vector<string> soundPaths, vector<string> iconPaths) {
+Module::Module(int index, int x, int y, int width, int height, int maxPopulation, vector<string> soundPaths) {
+	
+    this->index = index;
+    this->maxPopulation = maxPopulation;
+    this->console = NULL;
+    this->iSoundPaths = index;
+    
+    setDimensions(x, y, width, height);
+    loadSounds(soundPaths);
+    ofAddListener(ofEvents().touchDown, this, &Module::touchDown);
+    
+    this->console = new ModuleConsole(x0, width, index);
 
-	this->index = index;
-	this->x0 = x;
-	this->y = y;
-	this->width = width;
-	this->height = height;
-	this->maxPopulation = maxPopulation;
+}
 
-	this->console = new ModuleConsole(x0, width, index, iconPaths);
-
-    // util vars
-	this->x1 = x + width;
+void Module::setDimensions(int x, int y, int width, int height) {
+    
+    this->x0 = x;
+    this->y = y;
+    this->width = width;
+    this->height = height;
+    
+    if (this->console != NULL)
+        this->console->setDimensions(x, width, false);
+    
+    this->x1 = x + width;
     this->consoleHeight = CONSOLE_HEIGHT*height;
-
+    
     int w = round(BUTTON_CHANGE_INSTRUMENT_WIDTH * width);
     int h = round(BUTTON_CHANGE_INSTRUMENT_HEIGHT * height);
     int middleY = round((height - consoleHeight)/2 + consoleHeight);
     
-    #if defined(TARGET_OF_IPHONE)
+    #if defined TARGET_OF_IPHONE
     previousInstrumentRect.set(x0, middleY - h/2, w, h);
     nextInstrumentRect.set(x1, middleY - h/2, -w, h);
     #endif
 
-    loadSounds(soundPaths);
+}
 
-    ofAddListener(ofEvents().touchDown,  this, &Module::touchDown);
-
+void Module::updateParticlesOnOrientationChange(int x, int y, int width, int height) {
+    for (unsigned int i = 0; i < particles.size(); i++) {
+        int newX = ofMap(particles[i].getX(), x0, x1, x, x+width);
+        int newY = ofMap(particles[i].getY(), this->y, this->y+this->height, y, y+height);
+        particles[i].setXY(newX, newY);
+    }
 }
 
 
 void Module::touchDown(ofTouchEventArgs& event) {
     
-    #if defined(TARGET_OF_IPHONE)
+    #if defined TARGET_OF_IPHONE
     if (previousInstrumentRect.inside(event.x, event.y)) {
         if (iSoundPaths <= 0) return;
         changeInstrument(--iSoundPaths);
@@ -116,7 +133,7 @@ void Module::drawBackground() {
     ofPushStyle();
     
     // TODO: this is terrible design, but doing the trick for prototyping
-    #if !defined(TARGET_OF_IPHONE)
+    #if !defined TARGET_OF_IPHONE
     ofSetColor(255 - (30 * index));
     #else
     ofSetColor(255 - (30 * iSoundPaths));
@@ -148,7 +165,7 @@ void Module::drawGrid() {
 
 void Module::drawChangeInstrumentButtons() {
     
-    #if defined(TARGET_OF_IPHONE)
+    #if defined TARGET_OF_IPHONE
     ofPushStyle();
     ofSetColor(ofColor::fromHex(BUTTON_CHANGE_INSTRUMENT_COLOR), BUTTON_CHANGE_INSTRUMENT_COLOR_ALPHA);
     ofDrawRectangle(previousInstrumentRect);

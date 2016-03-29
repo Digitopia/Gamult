@@ -1,16 +1,12 @@
 #include "ofApp.h"
 
-Button::Button(buttonType type, int module, int size, float x, float y, string title) {
+Button::Button(buttonType type, int module, int size, int x, int y, string title) {
 
     this->type = type;
 	this->module = module;
-	this->x = x;
-	this->y = y;
 	this->title = title;
 	this->state = false;
-	this->size = size;
-
-	this->rect = ofRectangle(x, y, size, size);
+    setDimensions(size, x, y);
 
 	font.load(UI_FONT_FACE, UI_FONT_SIZE, true);
     
@@ -20,6 +16,13 @@ Button::Button(buttonType type, int module, int size, float x, float y, string t
 	ofAddListener(ofEvents().touchMoved, this, &Button::touchMoved);
 	ofAddListener(ofEvents().touchUp,    this, &Button::touchUp);
 
+}
+
+void Button::setDimensions(int size, int x, int y) {
+    this->size = size;
+    this->x = x;
+    this->y = y;
+    this->rect = ofRectangle(x, y, size, size);    
 }
 
 void Button::touchDown(ofTouchEventArgs& event) {
@@ -60,10 +63,8 @@ void Button::draw() {
 	
 	ofPushStyle();
 	
-	ofSetColor(UI_COLOR);
-	
+    ofSetColor(UI_COLOR);
 	ofSetLineWidth(BUTTON_WIDTH);
-	
 	ofNoFill();
 	
 	if (state)

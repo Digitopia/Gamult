@@ -56,7 +56,6 @@ void Particle::loop() {
 
 void Particle::draw() {
 	drawCircle();
-	drawLife();
 }
 
 void Particle::drawCircle() {
@@ -73,37 +72,17 @@ void Particle::drawCircle() {
 	
 }
 
-void Particle::drawLife() {
-/*
-	ofPushStyle();
-
-	ofSetColor(PARTICLE_LIFE_COLOR);
-	ofSetLineWidth(PARTICLE_WIDTH);
-	ofNoFill();
-	
-	ofPolyline polyline;
-	ofPoint pt(center.x, center.y);
-	float angleBegin = 0;
-//	float angleEnd = 360.-(counter*(360./life));
-	float angleEnd = 360.-((life-health)*(360./life));
-	int radius = life*2;
-	polyline.arc(pt, radius, radius, angleBegin, angleEnd, ARC_RESOLUTION);
-	polyline.draw();
-
-	ofPopStyle();
-    */
-}
-
+#if defined TARGET_SEMIBREVE
 void Particle::report(int idx, int note, int vel) {
-    #ifndef TARGET_OF_IOS
     ofxOscMessage m;
 	string addr = OSC_ADDRESS + ofToString(idx);
 	m.setAddress(addr);
 	m.addIntArg(note);
 	m.addIntArg(vel);
 	ofApp::oscSender.sendMessage(m);
-    #endif
+    
 }
+#endif
 
 void Particle::trigger(bool play, bool send) {
 	
@@ -113,14 +92,15 @@ void Particle::trigger(bool play, bool send) {
     
     float vol = ofMap(velocity, 5, 60, 0, 1); // TODO: check magic numbers
 
-    int idx = ofApp::modules[module]->getIndex();
-    
     if (play) {
         ofApp::modules[module]->playSound(note, vol);
     }
 
 	// TODO: still not sending the velocity properly
+    #if defined TARGET_SEMIBREVE
     if (send) {
+        int idx = ofApp::modules[module]->getIndex();
 		report(idx, note, (vol*100));
     }
+    #endif
 }

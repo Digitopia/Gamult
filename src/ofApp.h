@@ -3,7 +3,10 @@
 
 #include "ofMain.h"
 
-#ifndef TARGET_OF_IOS
+#if defined TARGET_OF_IOS
+#include "ofxiOS.h"
+#include "ofxiOSExtras.h"
+#elif defined TARGET_SEMIBREVE
 #include "ofxOsc.h"
 #endif
 
@@ -13,13 +16,8 @@
 #include "ModuleConsole.h"
 #include "Particle.h"
 #include "Touch.h"
+
 //#include "Constants.h"
-
-#ifdef TARGET_OF_IOS
-#include "ofxiOS.h"
-#include "ofxiOSExtras.h"
-#endif
-
 
 enum appState {
     SPLASH_SCREEN,
@@ -34,17 +32,18 @@ enum appState {
 };
 
 enum inactivityStateEnum {
-    ACTIVE, // default state
-    PRE_INACTIVE, // after a min of no interaction, resets controls and clears particles
-    INACTIVE, // when the auto generated animations are happening
-    POST_INACTIVE // when the auto generated animations have finished already (it's simply transitory, goes directly to ACTIVE after)
+    ACTIVE,         // default state
+    PRE_INACTIVE,   // after a min of no interaction, resets controls and clears particles
+    INACTIVE,       // when the auto generated animations are happening
+    POST_INACTIVE   // when the auto generated animations have finished already (it's simply transitory, goes directly to ACTIVE after)
 };
 
 
 class Touch; // TODO: something about the includes not working so that this needs to be here
 
-#ifdef TARGET_OF_IOS
+#if defined TARGET_OF_IOS
 class ofApp : public ofxiOSApp {
+
 #else
 class ofApp : public ofBaseApp {
 #endif
@@ -72,8 +71,8 @@ public:
     
 	void drawLines();
 	void drawLine(int nth);
-	void initModules();
-	void checkMultitouchData();
+	void setupModules(bool first);
+	
     int getModuleId(int x);
     void drawArrow(bool up);
     void drawBouncingArrow();
@@ -91,7 +90,8 @@ public:
     static int maxParticleY; // TODO does this really needs to be static and here
 	static Module** modules; // TODO make this a vector or something
 	
-    #ifndef TARGET_OF_IOS
+    #if defined TARGET_SEMIBREVE
+    void checkMultitouchData();
     static ofxOscSender oscSender;
 	static ofxOscReceiver oscReceiver;
     #endif
@@ -101,6 +101,10 @@ public:
     static bool multitouch;
     static unsigned int inactivityCounter;
     static unsigned int currentAlpha;
+    
+    void preparePortrait();
+    void prepareLandscape();
+
     
 private:
     
@@ -124,9 +128,6 @@ private:
     int arrowDownDir;
     
     int splashAlpha;
-    
-    int moduleWidth;
-    int moduleHeight;
     
     unsigned int inactivityThreshold;
     unsigned int inactivityThresholdWithinParticles;

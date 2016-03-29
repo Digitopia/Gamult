@@ -13,11 +13,12 @@ class Button {
 
 public:
 
-	Button(buttonType type, int module, int size, float x, float y, string title);
+	Button(buttonType type, int module, int size, int x, int y, string title);
 	void draw();
 	bool getState() { return state; }
 	void on() { state = true; }
 	void off() { state = false; }
+    void setDimensions(int size, int x, int y);
     
     void touchDown(ofTouchEventArgs& event);
 	void touchMoved(ofTouchEventArgs& event);

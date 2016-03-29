@@ -7,10 +7,13 @@ class Fader {
 
 public:
 
-	Fader(float x0, float y, int size, string title);
-	void draw();
+	Fader(int x0, int y, int size, string title);
+    void setDimensions(int x0, int y, int size);
+	
+    void draw();
     float getValue();
     void resetFader() { this->rect.x = this->x0+range/2-size/2; }
+    
 	
     void touchDown(ofTouchEventArgs& event);
 	void touchMoved(ofTouchEventArgs& event);

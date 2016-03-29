@@ -11,12 +11,14 @@ public:
 
 	void draw();
 	void drawCircle();
-	void drawLife();
 	void gravity();
     void loop();
 	void update();
 	
+    #if defined TARGET_SEMIBREVE
 	void report(int idx, int note, int vel);
+    #endif
+    
     void trigger(bool play, bool send);
     
 	int getVelocity() { return velocity; }
@@ -24,6 +26,7 @@ public:
 	int getHealth() { return health; }
 	int getX() { return center.x; }
 	int getY() { return center.y; }
+    void setXY(int x, int y) { center.x = x; center.y = y; }
 
 private:
 
