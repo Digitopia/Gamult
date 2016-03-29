@@ -13,6 +13,7 @@
 #include "ModuleConsole.h"
 #include "Particle.h"
 #include "Touch.h"
+#include "swipeRecognition.h"
 //#include "Constants.h"
 
 #ifdef TARGET_OF_IOS
