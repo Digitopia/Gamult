@@ -8,6 +8,7 @@ Module::Module(int index, float x, float y, float width, float height, int maxPo
 	this->width = width;
 	this->height = height;
 	this->maxPopulation = maxPopulation;
+    this->iSoundPaths = index;
 
 	this->console = new ModuleConsole(x0, width, index, iconPaths);
 
