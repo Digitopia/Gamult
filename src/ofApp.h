@@ -69,9 +69,12 @@ public:
     
     void keyPressed(int key);
     
-	void drawLines();
+    void drawParticles();
+    void drawModules();
+    void drawTouches();
+    void drawLines();
 	void drawLine(int nth);
-	void setupModules(bool first);
+	void setupModules();
 	
     int getModuleId(int x);
     void drawArrow(bool up);
@@ -81,6 +84,8 @@ public:
     bool hasParticles();
     void resetModules();
     void resetInactivityTime();
+    
+    void initModules();
     
     static vector<string> getSoundPaths(unsigned int index);
 
@@ -101,11 +106,7 @@ public:
     static bool multitouch;
     static unsigned int inactivityCounter;
     static unsigned int currentAlpha;
-    
-    void preparePortrait();
-    void prepareLandscape();
-
-    
+        
 private:
     
     map<int,Touch> touches;
@@ -131,6 +132,9 @@ private:
     
     unsigned int inactivityThreshold;
     unsigned int inactivityThresholdWithinParticles;
+    
+    ofRectangle previousInstrumentRect;
+    ofRectangle nextInstrumentRect;
     
 };
     

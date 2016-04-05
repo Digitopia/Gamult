@@ -27,6 +27,7 @@ public:
 	int getX() { return center.x; }
 	int getY() { return center.y; }
     void setXY(int x, int y) { center.x = x; center.y = y; }
+    void setModule(int module) { this->module = module; }
 
 private:
 

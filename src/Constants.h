@@ -8,7 +8,7 @@
 #endif
 
 #if defined TARGET_OF_IPHONE
-    #define MODULES 2
+    #define MODULES 3
     #define UI_FONT_SIZE 12
     #define TOUCH_MAX 40
     #define TOUCH_MIN 10

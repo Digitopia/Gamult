@@ -12,6 +12,8 @@ Module::Module(int index, int x, int y, int width, int height, int maxPopulation
     ofAddListener(ofEvents().touchDown, this, &Module::touchDown);
     
     this->console = new ModuleConsole(x0, width, index);
+    
+    this->active = true;
 
 }
 
@@ -28,14 +30,14 @@ void Module::setDimensions(int x, int y, int width, int height) {
     this->x1 = x + width;
     this->consoleHeight = CONSOLE_HEIGHT*height;
     
-    int w = round(BUTTON_CHANGE_INSTRUMENT_WIDTH * width);
-    int h = round(BUTTON_CHANGE_INSTRUMENT_HEIGHT * height);
-    int middleY = round((height - consoleHeight)/2 + consoleHeight);
-    
-    #if defined TARGET_OF_IPHONE
-    previousInstrumentRect.set(x0, middleY - h/2, w, h);
-    nextInstrumentRect.set(x1, middleY - h/2, -w, h);
-    #endif
+//    int w = round(BUTTON_CHANGE_INSTRUMENT_WIDTH * width);
+//    int h = round(BUTTON_CHANGE_INSTRUMENT_HEIGHT * height);
+//    int middleY = round((height - consoleHeight)/2 + consoleHeight);
+//    
+//    #if defined TARGET_OF_IPHONE
+//    previousInstrumentRect.set(x0, middleY - h/2, w, h);
+//    nextInstrumentRect.set(x1, middleY - h/2, -w, h);
+//    #endif
 
 }
 
@@ -50,17 +52,19 @@ void Module::updateParticlesOnOrientationChange(int x, int y, int width, int hei
 
 void Module::touchDown(ofTouchEventArgs& event) {
     
-    #if defined TARGET_OF_IPHONE
-    if (previousInstrumentRect.inside(event.x, event.y)) {
-        if (iSoundPaths <= 0) return;
-        changeInstrument(--iSoundPaths);
-    }
-    
-    else if (nextInstrumentRect.inside(event.x, event.y)) {
-        if (iSoundPaths >= 3) return;
-        changeInstrument(++iSoundPaths);
-    }
-    #endif
+//    #if defined TARGET_OF_IPHONE
+//    if (previousInstrumentRect.inside(event.x, event.y)) {
+//        if (iSoundPaths <= 0) return;
+////        changeInstrument(--iSoundPaths);
+//        changeInstrument(iSoundPaths-1);
+//    }
+//    
+//    else if (nextInstrumentRect.inside(event.x, event.y)) {
+//        if (iSoundPaths >= 3) return;
+////        changeInstrument(++iSoundPaths);
+//        changeInstrument(iSoundPaths+1);
+//    }
+//    #endif
     
 }
 
@@ -84,9 +88,10 @@ void Module::unloadSounds() {
 }
 
 void Module::changeInstrument(int iSoundPaths) {
-    unloadSounds();
-    loadSounds(ofApp::getSoundPaths(iSoundPaths));
-	cout << "changing instrument" << endl;
+//    unloadSounds();
+//    loadSounds(ofApp::getSoundPaths(iSoundPaths));
+//	cout << "changing instrument" << endl;
+//    ofApp::moduleActive = iSoundPaths; // TODO: decide if inside or outside module, not in both
 }
 
 void Module::addParticle(int life, int x, int y) {
@@ -165,6 +170,8 @@ void Module::drawGrid() {
 
 void Module::drawChangeInstrumentButtons() {
     
+    if (ofGetOrientation() != OF_ORIENTATION_DEFAULT) return;
+    
     #if defined TARGET_OF_IPHONE
     ofPushStyle();
     ofSetColor(ofColor::fromHex(BUTTON_CHANGE_INSTRUMENT_COLOR), BUTTON_CHANGE_INSTRUMENT_COLOR_ALPHA);
@@ -181,6 +188,7 @@ void Module::drawParticles() {
 }
 
 void Module::playSound(int index, float vol) {
+    if (!this->active) return;
     sounds[index].setVolume(vol);
     sounds[index].play();
 }

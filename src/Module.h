@@ -33,6 +33,8 @@ public:
     
     void removeParticle()            { particles.erase(particles.end() - 1); }
     void removeAllParticles()        { particles.clear(); }
+    void removeParticle(int i)       { particles.erase(particles.end() + i); }
+    void setParticles(vector<Particle> particles) { this->particles = particles; }
     
 	int getX0()                      { return x0; }
 	int getX1()                      { return x1; }
@@ -48,12 +50,18 @@ public:
 	int getNumberOfParticles()       { return particles.size(); }
 	vector<Particle> getParticles()  { return particles; }
 	Particle* getParticle(int i)     { return &particles[i]; }
+    Particle getParticleObj(int i)   { return particles[i]; }
     bool isFull()                    { return particles.size() == maxPopulation; }
     bool isNotFull()                 { return !isFull();}
+    void activate()                  { this->active = true; }
+    void deactivate()                { this->active = false; }
+    bool isActive()                  { return this->active; }
     
     void resetFaderSpeed()           { console->resetFaderSpeed(); }
     void unfreeze()                  { console->unfreeze(); }
     void enableGravity()             { console->enableGravity(); }
+    
+    void addParticle(Particle p)     { this->particles.push_back(p); }
     
 private:
 
@@ -68,6 +76,7 @@ private:
 	ModuleConsole* console;
     vector<ofSoundPlayer> sounds;
 	vector<Particle> particles;
+    bool active;
 
     ofRectangle previousInstrumentRect;
     ofRectangle nextInstrumentRect;

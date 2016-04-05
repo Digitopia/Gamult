@@ -39,7 +39,8 @@ void ofApp::setup() {
 
     if (multitouch) ofHideCursor();
 
-	setupModules(true);
+	initModules();
+    setupModules();
 
 	ofApp::maxParticleY = round(ofGetHeight() * (1-LIMIT_PARTICLE));
 
@@ -64,7 +65,16 @@ void ofApp::setup() {
     arrowDownY = ofGetHeight()/3*2;
     arrowDownYBase = arrowDownY;
     arrowDownDir = 1;
-
+    
+    #if defined TARGET_OF_IPHONE
+    int w = round(BUTTON_CHANGE_INSTRUMENT_WIDTH * ofGetWidth());
+    int h = round(BUTTON_CHANGE_INSTRUMENT_HEIGHT * ofGetHeight());
+    int consoleHeight = CONSOLE_HEIGHT*ofGetHeight();
+    int middleY = round((ofGetHeight() - consoleHeight)/2 + consoleHeight);
+    previousInstrumentRect.set(0, middleY - h/2, w, h);
+    nextInstrumentRect.set(ofGetWidth(), middleY - h/2, -w, h);
+    #endif
+    
 }
 
 void ofApp::update() {
@@ -175,7 +185,7 @@ void ofApp::draw() {
 
     if (state == SPLASH_SCREEN) {
         imgSplashScreen.draw(0, 0, ofGetWidth(), ofGetHeight());
-        if(ofGetElapsedTimeMillis() > 1500) state = SPLASH_FADE;
+        if (ofGetElapsedTimeMillis() > 1500) state = SPLASH_FADE;
         return;
     }
 
@@ -198,21 +208,20 @@ void ofApp::draw() {
         drawBouncingArrow();
         return;
     }
-
-    for (int i = 0; i < ofApp::nModules; i++) {
-        ofApp::modules[i]->draw();
-    }
-
+    
+    drawModules();
     drawLines();
-
-    for (int i = 0; i < ofApp::nModules; i++) {
-        ofApp::modules[i]->drawParticles();
+    drawParticles();
+    drawTouches();
+    
+    if (ofGetOrientation() == OF_ORIENTATION_DEFAULT) {
+        ofPushStyle();
+        ofSetColor(ofColor::fromHex(BUTTON_CHANGE_INSTRUMENT_COLOR), BUTTON_CHANGE_INSTRUMENT_COLOR_ALPHA);
+        ofDrawRectangle(previousInstrumentRect);
+        ofDrawRectangle(nextInstrumentRect);
+        ofPopStyle();
     }
-
-    for (touchesIterator it = touches.begin(); it != touches.end(); it++) {
-        it->second.draw();
-    }
-
+    
     if (state == BAR) {
         ofPushStyle();
         ofEnableAlphaBlending();
@@ -281,6 +290,38 @@ void ofApp::draw() {
 
 }
 
+void ofApp::drawParticles() {
+    
+    if (ofGetOrientation() == OF_ORIENTATION_DEFAULT) {
+        ofApp::modules[moduleActive]->drawParticles();
+    }
+    else {
+        for (int i = 0; i < ofApp::nModules; i++) {
+            ofApp::modules[i]->drawParticles();
+        }
+    }
+}
+
+void ofApp::drawTouches() {
+    for (touchesIterator it = touches.begin(); it != touches.end(); it++) {
+        it->second.draw();
+    }
+}
+
+
+void ofApp::drawModules() {
+    
+    if (ofGetOrientation() == OF_ORIENTATION_DEFAULT) {
+        ofApp::modules[moduleActive]->draw();
+    }
+    
+    else {
+        for (int i = 0; i < ofApp::nModules; i++) {
+            ofApp::modules[i]->draw();
+        }
+    }
+}
+
 void ofApp::drawBouncingArrow() {
     if (arrowDownY > arrowDownYBase + 5) arrowDownDir = -1;
     else if (arrowDownY < arrowDownYBase - 15) arrowDownDir = 1;
@@ -307,26 +348,38 @@ void ofApp::drawArrow(bool up) {
 
 }
 
-void ofApp::setupModules(bool first) {
-
+void ofApp::initModules() {
     int width = ofGetWidth()/ofApp::nModules;
     int height = ofGetHeight();
     int habitants = ofApp::nParticlesPerModule;
-
     for (unsigned int i = 0; i < ofApp::nModules; i++) {
-
         int x = i*width;
         int y = 0;
+        ofApp::modules[i] = new Module(i, x, y, width, height, habitants, getSoundPaths(i));
+    }
+}
 
-        if (first) {
-            ofApp::modules[i] = new Module(i, x, y, width, height, habitants, getSoundPaths(i));
-        }
-        else {
+void ofApp::setupModules() {
+    
+    ofLog() << ofGetWidth() << " " << ofGetHeight() << endl;
+    
+    if (ofGetOrientation() == OF_ORIENTATION_DEFAULT) {
+        ofLog() << "setting up in default orientation" << endl;
+        ofApp::modules[moduleActive]->setDimensions(0, 0, ofGetWidth(), ofGetHeight());
+        ofApp::modules[moduleActive]->updateParticlesOnOrientationChange(0, 0, ofGetWidth(), ofGetHeight());
+    }
+    else {
+        int width = ofGetWidth()/ofApp::nModules;
+        int height = ofGetHeight();
+        for (unsigned int i = 0; i < ofApp::nModules; i++) {
+            int x = i*width;
+            int y = 0;
             ofApp::modules[i]->updateParticlesOnOrientationChange(x, y, width, height);
             ofApp::modules[i]->setDimensions(x, y, width, height);
         }
     }
-
+    
+    drawModules();
 }
 
 vector<string> ofApp::getSoundPaths(unsigned int index) {
@@ -374,16 +427,6 @@ vector<string> ofApp::getSoundPaths(unsigned int index) {
 
 	return ret;
 
-}
-
-void ofApp::preparePortrait() {
-    ofLog() << "going portrait" << endl;
-    setupModules(false);
-}
-
-void ofApp::prepareLandscape() {
-    ofLog() << "going landscape" << endl;
-    setupModules(false);
 }
 
 #if defined TARGET_SEMIBREVE
@@ -536,6 +579,28 @@ void ofApp::touchDown(ofTouchEventArgs &touch) {
         }
 
     }
+    
+    #if defined TARGET_OF_IPHONE
+    if (ofGetOrientation() == OF_ORIENTATION_DEFAULT) {
+        int previousModuleActive = moduleActive;
+        if (previousInstrumentRect.inside(touch.x, touch.y)) {
+            if (moduleActive <= 0) return;
+            moduleActive--;
+        }
+        else if (nextInstrumentRect.inside(touch.x, touch.y)) {
+            if (moduleActive >= 3) return;
+            moduleActive++;
+        }
+        
+        if (previousModuleActive != moduleActive) {
+            for (unsigned int i = 0; i < ofApp::modules[previousModuleActive]->getNumberOfParticles(); i++) {
+                ofApp::modules[previousModuleActive]->getParticle(i)->setModule(moduleActive);
+            }
+            ofApp:modules[moduleActive]->setParticles(ofApp::modules[previousModuleActive]->getParticles());
+            ofApp::modules[previousModuleActive]->removeAllParticles();
+        }
+    }
+    #endif
 
 }
 
@@ -593,11 +658,17 @@ int ofApp::getModuleId(int x) {
 }
 
 void ofApp::drawLine(int nth) {
-
+    
     vector<Particle*> nthParticles;
-    for (int i = 0; i < ofApp::nModules; i++) {
-        if (ofApp::modules[i]->getNumberOfParticles() > nth) {
-            nthParticles.push_back(ofApp::modules[i]->getParticle(nth));
+    if (ofGetOrientation() == OF_ORIENTATION_DEFAULT) {
+        if (ofApp::modules[moduleActive]->getNumberOfParticles() > nth)
+            nthParticles.push_back(ofApp::modules[moduleActive]->getParticle(nth));
+    }
+    else {
+        for (int i = 0; i < ofApp::nModules; i++) {
+            if (ofApp::modules[i]->getNumberOfParticles() > nth) {
+                nthParticles.push_back(ofApp::modules[i]->getParticle(nth));
+            }
         }
     }
 
@@ -657,11 +728,18 @@ void ofApp::deviceOrientationChanged(int newOrientation) {
     }
 
     if (newOrientation == OF_ORIENTATION_90_LEFT || newOrientation == OF_ORIENTATION_90_RIGHT) {
-        prepareLandscape();
+        setupModules();
+        for (unsigned int i = 0; i < ofApp::nModules; i++) {
+            ofApp::modules[i]->activate();
+        }
     }
 
     else {
-        preparePortrait();
+        for (unsigned int i = 0; i < ofApp::nModules; i++) {
+            if (i == moduleActive) ofApp::modules[i]->activate();
+            else ofApp::modules[i]->deactivate();
+        }
+        setupModules();
     }
 
     ofLog() << "width is " << ofGetWidth();
