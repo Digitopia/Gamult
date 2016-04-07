@@ -84,6 +84,8 @@ public:
     void resetModules();
     void resetInactivityTime();
     
+    void onSwipe(swipeRecognitionArgs & args);
+    
     static vector<string> getSoundPaths(unsigned int index);
 
 	static int nModules;
@@ -131,6 +133,8 @@ private:
     
     unsigned int inactivityThreshold;
     unsigned int inactivityThresholdWithinParticles;
+    
+    swipeRecognition      swiper;
     
 };
     

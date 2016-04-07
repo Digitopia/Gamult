@@ -18,7 +18,7 @@ ofxOscReceiver ofApp::oscReceiver;
 #endif
 
 Module** ofApp::modules = new Module* [ofApp::nModules];
-UISwipeGestureRecognizer *swipe;
+//UISwipeGestureRecognizer *swipe;
 
 void ofApp::setup() {
 
@@ -78,6 +78,8 @@ void ofApp::setup() {
 
     // ofLog() << "width is " << ofGetWidth();
     // ofLog() << "height is " << ofGetHeight();
+    
+    swiper.setup();
 
 }
 
@@ -666,3 +668,11 @@ void ofApp::deviceOrientationChanged(int newOrientation) {
     ofLog() << "height is " << ofGetHeight();
 
 }
+
+void ofApp::onSwipe(swipeRecognitionArgs & args) {
+    
+    cout << " Swipe Event! Yes! " << endl;
+    
+    int direction = args.direction;
+
+ }
