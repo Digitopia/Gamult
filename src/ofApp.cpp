@@ -80,6 +80,7 @@ void ofApp::setup() {
     // ofLog() << "height is " << ofGetHeight();
     
     swiper.setup();
+    ofAddListener(swiper.swipeRecognized, this, &ofApp::onSwipe);
 
 }
 
@@ -674,5 +675,7 @@ void ofApp::onSwipe(swipeRecognitionArgs & args) {
     cout << " Swipe Event! Yes! " << endl;
     
     int direction = args.direction;
+    
+    ofApp::modules[0]->prepareInstrumentChange(direction);
 
  }

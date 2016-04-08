@@ -48,6 +48,21 @@ void Module::touchDown(ofTouchEventArgs& event) {
     
 }
 
+void Module::prepareInstrumentChange(int direction) {
+#if defined(TARGET_OF_IPHONE)
+    cout << "direction received: " << direction << endl;
+    if (direction == 2) {
+        if (iSoundPaths <= 0) return;
+        changeInstrument(--iSoundPaths);
+    }
+    
+    else if (direction == 1) {
+        if (iSoundPaths >= 3) return;
+        changeInstrument(++iSoundPaths);
+    }
+#endif
+}
+
 void Module::loadSounds(vector<string> paths) {
     for (int i = 0; i < paths.size(); i++) {
         ofSoundPlayer s;

@@ -24,6 +24,7 @@ public:
 	void drawParticles();
     void drawChangeInstrumentButtons();
     void playSound(int index, float vol);
+    void prepareInstrumentChange(int direction);
 	void changeInstrument(int index);
 
 	int getX0()                      { return x0; }
