@@ -42,8 +42,9 @@ void ofApp::setup() {
     //initialize swipe element
     #endif
     
-
+    #ifndef TARGET_OF_IOS
     ofRegisterTouchEvents(this);
+    #endif
 
     if (multitouch) {
         ofHideCursor();

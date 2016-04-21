@@ -51,12 +51,12 @@ void Module::touchDown(ofTouchEventArgs& event) {
 void Module::prepareInstrumentChange(int direction) {
 #if defined(TARGET_OF_IPHONE)
     cout << "direction received: " << direction << endl;
-    if (direction == 2) {
+    if (direction == 1) {
         if (iSoundPaths <= 0) return;
         changeInstrument(--iSoundPaths);
     }
     
-    else if (direction == 1) {
+    else if (direction == 2) {
         if (iSoundPaths >= 3) return;
         changeInstrument(++iSoundPaths);
     }
@@ -65,10 +65,11 @@ void Module::prepareInstrumentChange(int direction) {
 
 void Module::loadSounds(vector<string> paths) {
     for (int i = 0; i < paths.size(); i++) {
-        ofSoundPlayer s;
+       ofSoundPlayer s;
+        s.setMultiPlay(true);
         sounds.push_back(s);
 //        sounds[i].setMultiPlay(true);
-        sounds[i].load(paths[i], true);
+        sounds[i].load(paths[i], false);
     }
 }
 
