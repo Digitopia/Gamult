@@ -86,6 +86,7 @@ public:
     
 #ifdef TARGET_OF_IOS
     void onSwipe(swipeRecognitionArgs & args);
+    void detectShake();
 #endif
     
     static vector<string> getSoundPaths(unsigned int index);
@@ -139,6 +140,7 @@ private:
 #ifdef TARGET_OF_IOS
     swipeRecognition      swiper;
     bool swiping;
+    int accelCount;
 #endif
     
 };

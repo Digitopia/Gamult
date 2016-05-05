@@ -37,9 +37,13 @@ void ofApp::setup() {
     #ifndef TARGET_OF_IOS
     ofSetDataPathRoot("../Resources/data/");
     #endif
-    
-    #if defined TARGET_OF_IPHONE
-    //initialize swipe element
+
+    #ifdef TARGET_OF_IOS
+    swiper.setup();
+    ofAddListener(swiper.swipeRecognized, this, &ofApp::onSwipe);
+    swiping = false;
+    ofxAccelerometer.setup();
+    accelCount = 0;
     #endif
     
     #ifndef TARGET_OF_IOS
@@ -77,21 +81,16 @@ void ofApp::setup() {
     arrowDownYBase = arrowDownY;
     arrowDownDir = 1;
 
-    // ofLog() << "width is " << ofGetWidth();
-    // ofLog() << "height is " << ofGetHeight();
-#ifdef TARGET_OF_IOS
-    swiper.setup();
-    ofAddListener(swiper.swipeRecognized, this, &ofApp::onSwipe);
-    swiping = false;
-#endif
 
 }
 
 void ofApp::update() {
 
-    #ifndef TARGET_OF_IOS
+#ifndef TARGET_OF_IOS
     handleInactivity();
-    #endif
+#else
+    detectShake();
+#endif
 
     checkMultitouchData();
 
@@ -702,4 +701,21 @@ void ofApp::onSwipe(swipeRecognitionArgs & args) {
     }
 
  }
+
+void ofApp::detectShake(){
+    float accelX = ofxAccelerometer.getForce().x;
+    float accelY = ofxAccelerometer.getForce().y;
+    if(accelX < - 2 || accelX > 2 && accelY < -2 || accelY >2){
+        accelCount++;
+    }
+    else{
+        accelCount=0;
+    }
+    
+    if(accelCount>=4){
+        cout << "shake it baby, shake it" << endl;
+        resetModules();
+    }   
+
+}
 #endif
