@@ -36,6 +36,7 @@ class swipeRecognitionArgs{
 public:
     int direction;
     int totalSwipes;
+    int swipeOriginY;
 };
 
 class swipeRecognition {

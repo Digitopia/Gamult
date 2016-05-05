@@ -677,9 +677,13 @@ void ofApp::onSwipe(swipeRecognitionArgs & args) {
     
     cout << " Swipe Event! Yes! " << endl;
     
-    int direction = args.direction;
+    if(args.swipeOriginY > CONSOLE_HEIGHT * ofGetHeight()){
+        int direction = args.direction;
     
-    ofApp::modules[0]->prepareInstrumentChange(direction);
+        ofApp::modules[0]->prepareInstrumentChange(direction);
+    } else {
+        cout << "THOU SHALL NOT PASS!!" << endl;
+    }
 
  }
 #endif
