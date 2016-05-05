@@ -79,9 +79,10 @@ void ofApp::setup() {
 
     // ofLog() << "width is " << ofGetWidth();
     // ofLog() << "height is " << ofGetHeight();
-    
+#ifdef TARGET_OF_IOS
     swiper.setup();
     ofAddListener(swiper.swipeRecognized, this, &ofApp::onSwipe);
+#endif
 
 }
 
@@ -671,6 +672,7 @@ void ofApp::deviceOrientationChanged(int newOrientation) {
 
 }
 
+#ifdef TARGET_OF_IOS
 void ofApp::onSwipe(swipeRecognitionArgs & args) {
     
     cout << " Swipe Event! Yes! " << endl;
@@ -680,3 +682,4 @@ void ofApp::onSwipe(swipeRecognitionArgs & args) {
     ofApp::modules[0]->prepareInstrumentChange(direction);
 
  }
+#endif

@@ -13,12 +13,12 @@
 #include "ModuleConsole.h"
 #include "Particle.h"
 #include "Touch.h"
-#include "swipeRecognition.h"
 //#include "Constants.h"
 
 #ifdef TARGET_OF_IOS
 #include "ofxiOS.h"
 #include "ofxiOSExtras.h"
+#include "swipeRecognition.h"
 #endif
 
 
@@ -84,7 +84,9 @@ public:
     void resetModules();
     void resetInactivityTime();
     
+#ifdef TARGET_OF_IOS
     void onSwipe(swipeRecognitionArgs & args);
+#endif
     
     static vector<string> getSoundPaths(unsigned int index);
 
@@ -134,7 +136,9 @@ private:
     unsigned int inactivityThreshold;
     unsigned int inactivityThresholdWithinParticles;
     
+#ifdef TARGET_OF_IOS
     swipeRecognition      swiper;
+#endif
     
 };
     
