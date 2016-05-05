@@ -138,6 +138,7 @@ private:
     
 #ifdef TARGET_OF_IOS
     swipeRecognition      swiper;
+    bool swiping;
 #endif
     
 };

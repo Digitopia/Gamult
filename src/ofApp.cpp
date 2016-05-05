@@ -82,6 +82,7 @@ void ofApp::setup() {
 #ifdef TARGET_OF_IOS
     swiper.setup();
     ofAddListener(swiper.swipeRecognized, this, &ofApp::onSwipe);
+    swiping = false;
 #endif
 
 }
@@ -551,6 +552,9 @@ void ofApp::touchDown(ofTouchEventArgs &touch) {
         }
 
     }
+#ifdef TARGET_OF_IOS
+    swiping = false;
+#endif
 
 }
 
@@ -592,10 +596,19 @@ void ofApp::touchUp(ofTouchEventArgs &touch) {
     float increment = it->second.getIncrement();
 
     touches.erase(it);
-
+    
+#ifdef TARGET_OF_IOS
+    if (y > CONSOLE_HEIGHT*ofGetHeight() && y < ofApp::maxParticleY && !swiping) {
+        modules[getModuleId(x)]->addParticle(increment, x, y);
+        cout << "particle added" << endl;
+        swiping = false;
+    }
+#else
     if (y > CONSOLE_HEIGHT*ofGetHeight() && y < ofApp::maxParticleY) {
         modules[getModuleId(x)]->addParticle(increment, x, y);
+        cout << "particle added" << endl;
     }
+#endif
 
 }
 
@@ -677,10 +690,13 @@ void ofApp::onSwipe(swipeRecognitionArgs & args) {
     
     cout << " Swipe Event! Yes! " << endl;
     
-    if(args.swipeOriginY > CONSOLE_HEIGHT * ofGetHeight()){
+    // multiplying swipeOriginY by 2 because of retina display
+    if(args.swipeOriginY * 2 > CONSOLE_HEIGHT * ofGetHeight()){
         int direction = args.direction;
     
         ofApp::modules[0]->prepareInstrumentChange(direction);
+        
+        swiping = true;
     } else {
         cout << "THOU SHALL NOT PASS!!" << endl;
     }
