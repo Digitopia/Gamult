@@ -80,8 +80,9 @@ void ofApp::setup() {
     arrowDownY = ofGetHeight()/3*2;
     arrowDownYBase = arrowDownY;
     arrowDownDir = 1;
-
-
+    
+    // set Logger level
+    ofSetLogLevel(OF_LOG_SILENT);
 }
 
 void ofApp::update() {
@@ -126,7 +127,7 @@ void ofApp::update() {
 
 void ofApp::handleInactivity() {
 
-   // cout << inactivityState << endl;
+    ofLog(OF_LOG_VERBOSE) << "inactivityState: " << inactivityState << endl;
 
     // inactivity timer update
     if (inactivityState == ACTIVE || inactivityState == PRE_INACTIVE) {
@@ -409,7 +410,7 @@ void ofApp::checkMultitouchData() {
 
 		ofxOscMessage m;
 		oscReceiver.getNextMessage(&m);
-        // cout << m.getAddress() << endl;
+        ofLog(OF_LOG_VERBOSE) << m.getAddress() << endl;
 
         if (!multitouch)
             return;
@@ -428,7 +429,7 @@ void ofApp::checkMultitouchData() {
             x = m.getArgAsFloat(2) * ofGetWidth();
             y = m.getArgAsFloat(3) * ofGetHeight();
 
-            cout << "x is " << x << " and y is " << y << endl;
+            ofLog(OF_LOG_NOTICE) << "x is " << x << " and y is " << y << endl;
 
             touchEvent.x = x;
             touchEvent.y = y;
@@ -454,7 +455,7 @@ void ofApp::checkMultitouchData() {
 
 void ofApp::mousePressed(ofMouseEventArgs &mouse) {
     if (multitouch) return;
-    cout << "pressed" << endl;
+    ofLog(OF_LOG_NOTICE) << "pressed" << endl;
     ofTouchEventArgs touchEvent;
     touchEvent.id = ++mouseId;
     touchEvent.x = mouse.x;
@@ -465,7 +466,7 @@ void ofApp::mousePressed(ofMouseEventArgs &mouse) {
 
 void ofApp::mouseDragged(ofMouseEventArgs &mouse) {
     if (multitouch) return;
-    cout << "dragged" << endl;
+    ofLog(OF_LOG_NOTICE) << "dragged" << endl;
     ofTouchEventArgs touchEvent;
     touchEvent.id = mouseId;
     touchEvent.x = mouse.x;
@@ -476,7 +477,7 @@ void ofApp::mouseDragged(ofMouseEventArgs &mouse) {
 
 void ofApp::mouseReleased(ofMouseEventArgs &mouse) {
     if (multitouch) return;
-    cout << "released" << endl;
+    ofLog(OF_LOG_NOTICE) << "released" << endl;
     ofTouchEventArgs touchEvent;
     touchEvent.id = ofApp::mouseId;
     touchEvent.type = ofTouchEventArgs::up;
@@ -494,11 +495,11 @@ void ofApp::keyPressed(int key) {
         multitouch = !multitouch;
 
         if (multitouch) {
-            cout << "multitouch on" << endl;
+            ofLog(OF_LOG_NOTICE) << "multitouch on" << endl;
             ofHideCursor();
         }
         else {
-            cout << "multitouch off" << endl;
+            ofLog(OF_LOG_NOTICE) << "multitouch off" << endl;
             ofShowCursor();
         }
 
@@ -544,7 +545,7 @@ void ofApp::touchDown(ofTouchEventArgs &touch) {
 
     if (state == APP || state == BAR) {
 
-        //cout << "down (" << id << ", " << x << ", " << y << ")" << endl;
+        ofLog(OF_LOG_VERBOSE) << "down (" << id << ", " << x << ", " << y << ")" << endl;
 
         if (y > CONSOLE_HEIGHT*ofGetHeight() && (state != BAR || y < aboutY) && modules[getModuleId(x)]->isNotFull()) {
             touches.insert(pair<int,Touch> (id, Touch(x, y)));
@@ -567,7 +568,7 @@ void ofApp::touchMoved(ofTouchEventArgs &touch) {
     int y = touch.y;
     int id = touch.id;
 
-    //cout << "moved (" << id << ", " << x << ", " << y << ")" << endl;
+    ofLog(OF_LOG_VERBOSE) << "moved (" << id << ", " << x << ", " << y << ")" << endl;
 
     touchesIterator it = touches.find(id);
     if (it == touches.end()) return;
@@ -584,7 +585,7 @@ void ofApp::touchUp(ofTouchEventArgs &touch) {
 
     int id = touch.id;
 
-    //cout << "up (" << id << ")" << endl;
+    ofLog(OF_LOG_VERBOSE) << "up (" << id << ")" << endl;
 
     touchesIterator it = touches.find(id);
 
@@ -599,13 +600,13 @@ void ofApp::touchUp(ofTouchEventArgs &touch) {
 #ifdef TARGET_OF_IOS
     if (y > CONSOLE_HEIGHT*ofGetHeight() && y < ofApp::maxParticleY && !swiping) {
         modules[getModuleId(x)]->addParticle(increment, x, y);
-        cout << "particle added" << endl;
+        ofLog(OF_LOG_NOTICE) << "particle added" << endl; // ?? why is ofLog() greyed out ?
         swiping = false;
     }
 #else
     if (y > CONSOLE_HEIGHT*ofGetHeight() && y < ofApp::maxParticleY) {
         modules[getModuleId(x)]->addParticle(increment, x, y);
-        cout << "particle added" << endl;
+        ofLog(OF_LOG_NOTICE) << "particle added" << endl;
     }
 #endif
 
@@ -687,7 +688,7 @@ void ofApp::deviceOrientationChanged(int newOrientation) {
 #ifdef TARGET_OF_IOS
 void ofApp::onSwipe(swipeRecognitionArgs & args) {
     
-    cout << " Swipe Event! Yes! " << endl;
+    ofLog(OF_LOG_NOTICE) << " Swipe Event! Yes! " << endl;
     
     // multiplying swipeOriginY by 2 because of retina display
     if(args.swipeOriginY * 2 > CONSOLE_HEIGHT * ofGetHeight()){
@@ -697,7 +698,7 @@ void ofApp::onSwipe(swipeRecognitionArgs & args) {
         
         swiping = true;
     } else {
-        cout << "THOU SHALL NOT PASS!!" << endl;
+        ofLog(OF_LOG_NOTICE) << "THOU SHALL NOT PASS!!" << endl;
     }
 
  }
@@ -713,7 +714,7 @@ void ofApp::detectShake(){
     }
     
     if(accelCount>=4){
-        cout << "shake it baby, shake it" << endl;
+        ofLog(OF_LOG_NOTICE) << "shake it baby, shake it" << endl;
         resetModules();
     }   
 
