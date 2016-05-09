@@ -66,7 +66,7 @@ void Module::prepareInstrumentChange(int direction) {
 void Module::loadSounds(vector<string> paths) {
     for (int i = 0; i < paths.size(); i++) {
        ofSoundPlayer s;
-        s.setMultiPlay(true);
+//        s.setMultiPlay(true);
         sounds.push_back(s);
 //        sounds[i].setMultiPlay(true);
         sounds[i].load(paths[i], false);
@@ -181,6 +181,9 @@ void Module::drawParticles() {
 }
 
 void Module::playSound(int index, float vol) {
+#ifndef TARGET_OF_IOS
+    sounds[index].setMultiPlay(true);
+#endif
     sounds[index].setVolume(vol);
     sounds[index].play();
 }
