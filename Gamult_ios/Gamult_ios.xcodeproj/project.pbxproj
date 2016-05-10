@@ -14,6 +14,7 @@
 		53F323EB10A20EDB00E0DAE4 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F323EA10A20EDB00E0DAE4 /* OpenAL.framework */; };
 		678E130A17951536005B6D19 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 678E130917951536005B6D19 /* Icon.png */; };
 		67DFA53619F92A69003B3434 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67DFA53419F92A5E003B3434 /* Accelerate.framework */; };
+		B60BAFB81CAAD1FE006CAB37 /* swipeRecognition.mm in Sources */ = {isa = PBXBuildFile; fileRef = B60BAFB71CAAD1FE006CAB37 /* swipeRecognition.mm */; };
 		B6106C821C7F7244004F1D40 /* libofxiOS_iphoneos_Debug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B6106C7F1C7F71B9004F1D40 /* libofxiOS_iphoneos_Debug.a */; };
 		B66073311C665D250095E989 /* ofxOscBundle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B660732C1C665D250095E989 /* ofxOscBundle.cpp */; };
 		B66073321C665D250095E989 /* ofxOscMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B660732D1C665D250095E989 /* ofxOscMessage.cpp */; };
@@ -92,6 +93,8 @@
 		A448370217518E296FFB7E81 /* UdpSocket.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = UdpSocket.h; path = ../../../../../Desktop/of_v0.9.0_ios_release/addons/ofxOsc/libs/oscpack/src/ip/UdpSocket.h; sourceTree = SOURCE_ROOT; };
 		AA718B1456C1188D7211C955 /* OscTypes.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = OscTypes.cpp; path = ../../../../../Desktop/of_v0.9.0_ios_release/addons/ofxOsc/libs/oscpack/src/osc/OscTypes.cpp; sourceTree = SOURCE_ROOT; };
 		AA9D2DA1F5A58E88C516022B /* OscReceivedElements.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = OscReceivedElements.cpp; path = ../../../../../Desktop/of_v0.9.0_ios_release/addons/ofxOsc/libs/oscpack/src/osc/OscReceivedElements.cpp; sourceTree = SOURCE_ROOT; };
+		B60BAFB61CAAD1FE006CAB37 /* swipeRecognition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = swipeRecognition.h; path = ../swipeRecognition.h; sourceTree = "<group>"; };
+		B60BAFB71CAAD1FE006CAB37 /* swipeRecognition.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = swipeRecognition.mm; path = ../swipeRecognition.mm; sourceTree = "<group>"; };
 		B660732C1C665D250095E989 /* ofxOscBundle.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ofxOscBundle.cpp; path = ../../../addons/ofxOsc/src/ofxOscBundle.cpp; sourceTree = "<group>"; };
 		B660732D1C665D250095E989 /* ofxOscMessage.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ofxOscMessage.cpp; path = ../../../addons/ofxOsc/src/ofxOscMessage.cpp; sourceTree = "<group>"; };
 		B660732E1C665D250095E989 /* ofxOscParameterSync.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ofxOscParameterSync.cpp; path = ../../../addons/ofxOsc/src/ofxOscParameterSync.cpp; sourceTree = "<group>"; };
@@ -339,6 +342,8 @@
 		E4D8936A11527B74007E1F53 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				B60BAFB61CAAD1FE006CAB37 /* swipeRecognition.h */,
+				B60BAFB71CAAD1FE006CAB37 /* swipeRecognition.mm */,
 				BC9C7BC01C57DE43004E259B /* Button.cpp */,
 				BC9C7BC11C57DE43004E259B /* Button.h */,
 				BC9C7BC21C57DE43004E259B /* Constants.h */,
@@ -500,6 +505,7 @@
 				B66073411C665DDA0095E989 /* OscPrintReceivedElements.cpp in Sources */,
 				B66073421C665DDA0095E989 /* OscReceivedElements.cpp in Sources */,
 				B66073431C665DDA0095E989 /* OscTypes.cpp in Sources */,
+				B60BAFB81CAAD1FE006CAB37 /* swipeRecognition.mm in Sources */,
 				B660733A1C665D970095E989 /* NetworkingUtils.cpp in Sources */,
 				B660733B1C665D970095E989 /* UdpSocket.cpp in Sources */,
 				B66073371C665D670095E989 /* IpEndpointName.cpp in Sources */,

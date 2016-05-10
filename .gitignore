@@ -13,3 +13,6 @@ supervisord.pid
 releases/
 
 *.sublime-workspace
+
+Gamult_osx/DerivedData/
+Gamult_ios/DerivedData/

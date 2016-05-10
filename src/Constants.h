@@ -1,32 +1,19 @@
 // #define TARGET_SEMIBREVE
 
-// define helpers
-#if defined TARGET_OF_IOS && !defined TARGET_OF_IPHONE
-#define TARGET_OF_IPAD
-#elif !defined TARGET_OF_IOS
-#define TARGET_OF_OSX
-#endif
-
-#if defined TARGET_OF_IPHONE
-    #define MODULES 3
+#if defined TARGET_OF_IOS
+    #define NMODULES 4
     #define UI_FONT_SIZE 12
     #define TOUCH_MAX 40
     #define TOUCH_MIN 10
 
-#elif defined TARGET_OF_IPAD
-    #define MODULES 4
-    #define UI_FONT_SIZE 12
-    #define TOUCH_MAX 40
-    #define TOUCH_MIN 10
-
-#elif defined TARGET_SEMIBREVE
-    #define MODULES 4
+ #elif defined TARGET_SEMIBREVE
+    #define NMODULES 4
     #define UI_FONT_SIZE 14
     #define TOUCH_MAX 20
     #define TOUCH_MIN 0
 
 #else
-    #define MODULES 4
+    #define NMODULES 4
     #define UI_FONT_SIZE 14
     #define TOUCH_MAX 20
     #define TOUCH_MIN 0
@@ -52,7 +39,6 @@
 #define PARTICLES_PER_MODULE 10
 
 // user interface
-//#define UI_FONT_FACE "Raleway-Semibold.ttf"
 #define UI_FONT_FACE "Raleway-Medium.ttf"
 #define UI_COLOR 255 // color for buttons, faders, etc.
 
@@ -80,7 +66,7 @@
 
 // console
 #define CONSOLE_HEIGHT 0.18
-#define CONSOLE_SECTION_HEIGHT 0.75 //this is, in practice, the height at which the remove and clear buttons start
+#define CONSOLE_SECTION_HEIGHT 0.75 // this is, in practice, the height at which the remove and clear buttons start
 #define CONSOLE_COLOR 0xA1DEDF
 #define CONSOLE_BORDER_WIDTH 1
 #define CONSOLE_BORDER_COLOR 0x717171

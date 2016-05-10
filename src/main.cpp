@@ -2,7 +2,7 @@
 #include "ofApp.h"
 
 int main() {
-    
+
     #if defined TARGET_OF_IOS
     ofiOSWindowSettings window;
     window.enableRetina = true;
@@ -11,9 +11,10 @@ int main() {
     window.numOfAntiAliasingSamples = 4;
     ofCreateWindow(window);
     #else
-    ofSetupOpenGL(1024, 768, OF_FULLSCREEN);
+//    ofSetupOpenGL(1024, 768, OF_FULLSCREEN);
+    ofSetupOpenGL(1024, 768, OF_WINDOW);
     #endif
-
+    
     ofRunApp(new ofApp());
     return 0;
 }

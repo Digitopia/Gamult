@@ -31,8 +31,7 @@ void ModuleConsole::setDimensions(int x, int width, bool first) {
         btnRemove  = new Button(BUTTON_REMOVE,  module, width/2, x+1, CONSOLE_SECTION_HEIGHT*height,   "Remove");
         btnClear   = new Button(BUTTON_CLEAR, module, width/2, x + width/2 + 1, CONSOLE_SECTION_HEIGHT*height, "Clear");
         fadSpeed = new Fader(x+(width*0.1), y+buttonPositionOffset*2+buttonSize/2, faderSize, "Speed");
-    }
-    else {
+    } else {
         btnGravity->setDimensions(buttonSize, x+(width*0.1), y+buttonPositionOffset-buttonSize/2);
         btnFreeze->setDimensions(buttonSize, x+width*0.6, y+buttonPositionOffset-buttonSize/2);
         btnRemove->setDimensions(width/2, x+1, CONSOLE_SECTION_HEIGHT*height);
@@ -47,24 +46,24 @@ void ModuleConsole::setDimensions(int x, int width, bool first) {
 
 void ModuleConsole::draw() {
 
-	ofPushStyle();
+    ofPushStyle();
 
-	ofSetHexColor(CONSOLE_COLOR);
+    ofSetHexColor(CONSOLE_COLOR);
 
-	ofFill();
+    ofFill();
 
-	ofDrawRectangle(x, y, width, height);
+    ofDrawRectangle(x, y, width, height);
 
     ofSetHexColor(BUTTON_COLOR);
 
     ofDrawRectangle(x , height * 0.75, width, height * 0.25);
 
-	ofPopStyle();
+    ofPopStyle();
 
-	btnRemove->draw();
+    btnRemove->draw();
     btnClear->draw();
-	btnGravity->draw();
-	btnFreeze->draw();
-	fadSpeed->draw();
+    btnGravity->draw();
+    btnFreeze->draw();
+    fadSpeed->draw();
 
 }
