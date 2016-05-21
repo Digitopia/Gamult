@@ -45,6 +45,9 @@ void ofApp::setup() {
     swiping = false;
     ofxAccelerometer.setup();
     accelCount = 0;
+    if (ofxiOSGetDeviceType() == OFXIOS_DEVICE_IPAD) {
+        ofSetOrientation(OF_ORIENTATION_90_LEFT);
+    }
     #endif
 
     #if !defined TARGET_OF_IOS
