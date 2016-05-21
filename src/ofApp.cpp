@@ -21,35 +21,40 @@ ofxOscReceiver ofApp::oscReceiver;
 #endif
 
 void ofApp::setup() {
-    
+
     // ofSetLogLevel(OF_LOG_SILENT);
-    // ofSetLogLevel(OF_LOG_NOTICE);
     ofSetLogLevel(OF_LOG_NOTICE);
 
-    #if defined TARGET_OF_OSX
+    ofLogNotice() << "setup";
+
+    #if defined TARGET_OSX
+    ofLogNotice() << "Running OSX version";
     ofSetDataPathRoot("../Resources/data/");
     #endif
-    
+
     #if defined TARGET_SEMIBREVE
+    ofLogNotice() << "Running SEMIBREVE version";
     oscReceiver.setup(RECEIVE_PORT);
     oscSender.setup(HOST, SEND_PORT);
     #endif
 
     #if defined TARGET_OF_IOS
+    ofLogNotice() << "Running iOS version";
     swiper.setup();
     ofAddListener(swiper.swipeRecognized, this, &ofApp::onSwipe);
     swiping = false;
     ofxAccelerometer.setup();
     accelCount = 0;
     #endif
-        
+
     #if !defined TARGET_OF_IOS
+    ofLogNotice() << "Registering for touch events if not ios";
     ofRegisterTouchEvents(this);
     #endif
-    
+
     ofSetFrameRate(FRAME_RATE);
     ofSetCircleResolution(CIRCLE_RESOLUTION);
-    
+
     if (multitouch) ofHideCursor();
 
     initModules();
@@ -67,9 +72,7 @@ void ofApp::setup() {
     imgAbout.load("images/about.png");
     imgAbout.resize(ofGetWidth(), ofGetHeight());
     imgArrow.load("images/arrow_up.png");
-    imgArrow.resize(ofGetWidth(), ofGetHeight());
     imgArrowDown.load("images/arrow_down.png");
-    imgArrowDown.resize(ofGetWidth(), ofGetHeight());
 
     state = APP; // TODO: don't forget to revert to SPLASH_SCREEN for release
 
@@ -300,7 +303,14 @@ void ofApp::draw() {
 }
 
 void ofApp::drawParticles() {
+    
+    #if defined TARGET_OSX
+    for (int i = 0; i < ofApp::nModules; i++) {
+        ofApp::modules[i]->drawParticles();
+    }
+    #endif
 
+    #if defined TARGET_OF_IOS
     if (ofGetOrientation() == OF_ORIENTATION_DEFAULT) {
         ofApp::modules[moduleActive]->drawParticles();
     } else {
@@ -308,6 +318,8 @@ void ofApp::drawParticles() {
             ofApp::modules[i]->drawParticles();
         }
     }
+    #endif
+    
 }
 
 void ofApp::drawTouches() {
@@ -319,12 +331,12 @@ void ofApp::drawTouches() {
 
 void ofApp::drawModules() {
 
-    #if defined TARGET_OF_OSX
+    #if defined TARGET_OSX
     for (int i = 0; i < ofApp::nModules; i++) {
         ofApp::modules[i]->draw();
     }
     #endif
-    
+
     #if defined TARGET_OF_IOS
     if (ofxiOSGetDeviceType() == OFXIOS_DEVICE_IPHONE) {
         ofApp::modules[moduleActive]->draw();
@@ -381,6 +393,17 @@ void ofApp::initModules() {
 
 void ofApp::setupModules() {
 
+    #if defined TARGET_OSX
+    int width = ofGetWidth()/ofApp::nModules;
+    int height = ofGetHeight();
+    for (unsigned int i = 0; i < ofApp::nModules; i++) {
+        int x = i*width;
+        int y = 0;
+        ofApp::modules[i]->setDimensions(x, y, width, height);
+    }
+    #endif
+    
+    #if defined TARGET_OF_IOS
     if (ofGetOrientation() == OF_ORIENTATION_DEFAULT) {
         ofApp::modules[moduleActive]->setDimensions(0, 0, ofGetWidth(), ofGetHeight());
         ofApp::modules[moduleActive]->updateParticlesOnOrientationChange(0, 0, ofGetWidth(), ofGetHeight());
@@ -394,6 +417,7 @@ void ofApp::setupModules() {
             ofApp::modules[i]->setDimensions(x, y, width, height);
         }
     }
+    #endif
 
     drawModules();
 }
@@ -685,8 +709,18 @@ int ofApp::getModuleId(int x) {
 }
 
 void ofApp::drawLine(int nth) {
-
+    
     vector<Particle*> nthParticles;
+    
+    #if defined TARGET_OSX
+    for (int i = 0; i < ofApp::nModules; i++) {
+        if (ofApp::modules[i]->getNumberOfParticles() > nth) {
+            nthParticles.push_back(ofApp::modules[i]->getParticle(nth));
+        }
+    }
+    #endif
+    
+    #if defined TARGET_OF_IOS
     if (ofGetOrientation() == OF_ORIENTATION_DEFAULT) {
         if (ofApp::modules[moduleActive]->getNumberOfParticles() > nth)
             nthParticles.push_back(ofApp::modules[moduleActive]->getParticle(nth));
@@ -697,6 +731,7 @@ void ofApp::drawLine(int nth) {
             }
         }
     }
+    #endif
 
     if (nthParticles.size() == 0)
         return;
@@ -746,16 +781,14 @@ bool ofApp::hasParticles() {
 
 void ofApp::deviceOrientationChanged(int newOrientation) {
 
-    ofLogNotice("detected orientation change");
+    ofLogNotice() << "detected orientation change";
 
     #if defined TARGET_OF_IOS
-    if (ofxiOSGetDeviceType() != OFXIOS_DEVICE_IPAD) {
-        ofLogNotice("ignoring orientation change");
+    if (ofxiOSGetDeviceType() == OFXIOS_DEVICE_IPHONE) {
+        ofLogNotice() << "ignoring orientation change";
         return;
     }
     #endif
-    
-    ofSetOrientation(OF_ORIENTATION_90_LEFT);
 
     // upside down is no good for anything
     if (newOrientation == OF_ORIENTATION_180)
@@ -787,17 +820,17 @@ void ofApp::deviceOrientationChanged(int newOrientation) {
 #if defined TARGET_OF_IOS
 void ofApp::onSwipe(swipeRecognitionArgs& args) {
 
-    ofLogNotice() << " Swipe Event! Yes! " ;
+    ofLogNotice() << " Swipe Event! Yes!";
 
     // multiplying swipeOriginY by 2 because of retina display
     if (args.swipeOriginY * 2 > CONSOLE_HEIGHT * ofGetHeight()) {
-        int direction = args.direction;
+        int direction = args.direction  ;
 
         ofApp::modules[0]->prepareInstrumentChange(direction);
 
         swiping = true;
     } else {
-        ofLogNotice() << "THOU SHALL NOT PASS!!" ;
+        ofLogNotice() << "THOU SHALL NOT PASS!!";
     }
 
 }
@@ -812,7 +845,7 @@ void ofApp::detectShake() {
     }
 
     if (accelCount>=4) {
-        ofLogNotice() << "shake it baby, shake it" ;
+        ofLogNotice() << "shake it baby, shake it";
         resetModules();
     }
 
