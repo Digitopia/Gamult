@@ -28,7 +28,7 @@ public:
     void prepareInstrumentChange(int direction);
     void changeInstrument(int index);
     void setDimensions(int x, int y, int width, int height);
-    void updateParticlesOnOrientationChange(int x, int y, int width, int height);
+    void updateParticlesOnOrientationChange();
 
     void touchDown(ofTouchEventArgs& event);
 

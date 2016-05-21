@@ -83,6 +83,8 @@ public:
     bool hasParticles();
     void resetModules();
     void resetInactivityTime();
+    
+    void updateNewModuleActive(int x);
 
     void initModules();
 

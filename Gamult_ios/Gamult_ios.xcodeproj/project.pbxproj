@@ -121,7 +121,7 @@
 		BC9C7BC71C57DE43004E259B /* Module.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Module.h; path = ../../src/Module.h; sourceTree = "<group>"; };
 		BC9C7BC81C57DE43004E259B /* ModuleConsole.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = ModuleConsole.cpp; path = ../../src/ModuleConsole.cpp; sourceTree = "<group>"; };
 		BC9C7BC91C57DE43004E259B /* ModuleConsole.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ModuleConsole.h; path = ../../src/ModuleConsole.h; sourceTree = "<group>"; };
-		BC9C7BCA1C57DE43004E259B /* ofApp.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = ofApp.cpp; path = ../../src/ofApp.cpp; sourceTree = "<group>"; };
+		BC9C7BCA1C57DE43004E259B /* ofApp.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = ofApp.cpp; path = ../../src/ofApp.cpp; sourceTree = "<group>"; wrapsLines = 0; };
 		BC9C7BCB1C57DE43004E259B /* ofApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofApp.h; path = ../../src/ofApp.h; sourceTree = "<group>"; };
 		BC9C7BCC1C57DE43004E259B /* Particle.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = Particle.cpp; path = ../../src/Particle.cpp; sourceTree = "<group>"; };
 		BC9C7BCD1C57DE43004E259B /* Particle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Particle.h; path = ../../src/Particle.h; sourceTree = "<group>"; };

@@ -40,14 +40,17 @@ void ofApp::setup() {
 
     #if defined TARGET_OF_IOS
     ofLogNotice() << "Running iOS version";
-    swiper.setup();
-    ofAddListener(swiper.swipeRecognized, this, &ofApp::onSwipe);
-    swiping = false;
+    if (ofxiOSGetDeviceType() == OFXIOS_DEVICE_IPAD) {
+        ofLogNotice() << "Running iPad version";
+        ofSetOrientation(OF_ORIENTATION_90_LEFT);
+    } else {
+        ofLogNotice() << "Running iPhone version";
+        swiper.setup();
+        ofAddListener(swiper.swipeRecognized, this, &ofApp::onSwipe);
+        swiping = false;
+    }
     ofxAccelerometer.setup();
     accelCount = 0;
-    if (ofxiOSGetDeviceType() == OFXIOS_DEVICE_IPAD) {
-        ofSetOrientation(OF_ORIENTATION_90_LEFT);
-    }
     #endif
 
     #if !defined TARGET_OF_IOS
@@ -62,13 +65,8 @@ void ofApp::setup() {
 
     initModules();
     setupModules();
-
+    
     ofApp::maxParticleY = round(ofGetHeight() * (1-LIMIT_PARTICLE));
-
-    int barRectLength = 0.1*ofGetWidth(); // FIXME: avoid magic numbers, use a constant
-    int barRectHeight = barRectLength/4;  // FIXME: avoid magic numbers, use a constant
-
-    barRect.set(ofGetWidth()/2 - barRectLength/2, ofGetHeight() - barRectHeight, barRectLength, barRectHeight);
 
     imgSplashScreen.load("images/splash_screen.png");
     imgSplashScreen.resize(ofGetWidth(), ofGetHeight());
@@ -124,10 +122,20 @@ void ofApp::update() {
         it->second.update();
     }
 
+    #if defined TARGET_OF_IOS
+    if (ofxiOSGetDeviceType() == OFXIOS_DEVICE_IPAD && ofGetOrientation() == OF_ORIENTATION_DEFAULT) {
+        ofApp::modules[moduleActive]->update();
+    } else {
+        for (int i = 0; i < ofApp::nModules; i++) {
+            ofApp::modules[i]->update();
+        }
+    }
+    #else
     for (int i = 0; i < ofApp::nModules; i++) {
         ofApp::modules[i]->update();
     }
-
+    #endif
+    
 }
 
 void ofApp::handleInactivity() {
@@ -370,7 +378,11 @@ void ofApp::drawArrow(bool up) {
     ofEnableAlphaBlending();
 
     if (up) {
-        imgArrow.draw(barRect.x + ARROW_OFFSET, barRect.y + ARROW_OFFSET, barRect.width - 2*ARROW_OFFSET, barRect.height - 2*ARROW_OFFSET);
+        if (ofGetOrientation() == OF_ORIENTATION_DEFAULT || ofGetOrientation() == OF_ORIENTATION_180) {
+            imgArrow.draw(barRect.x + ARROW_OFFSET, barRect.y + ARROW_OFFSET, barRect.width - 2*ARROW_OFFSET, barRect.height - 2*ARROW_OFFSET);
+        } else {
+            imgArrow.draw(barRect.x + ARROW_OFFSET, barRect.y + ARROW_OFFSET, barRect.width - 2*ARROW_OFFSET, barRect.height - 2*ARROW_OFFSET);
+        }
     }
 
     else {
@@ -409,19 +421,22 @@ void ofApp::setupModules() {
     #if defined TARGET_OF_IOS
     if (ofGetOrientation() == OF_ORIENTATION_DEFAULT) {
         ofApp::modules[moduleActive]->setDimensions(0, 0, ofGetWidth(), ofGetHeight());
-        ofApp::modules[moduleActive]->updateParticlesOnOrientationChange(0, 0, ofGetWidth(), ofGetHeight());
     } else {
         int width = ofGetWidth()/ofApp::nModules;
         int height = ofGetHeight();
         for (unsigned int i = 0; i < ofApp::nModules; i++) {
             int x = i*width;
             int y = 0;
-            ofApp::modules[i]->updateParticlesOnOrientationChange(x, y, width, height);
             ofApp::modules[i]->setDimensions(x, y, width, height);
         }
     }
     #endif
 
+    // update down arrow on orientation change
+    int barRectLength = 0.1*ofGetWidth();
+    int barRectHeight = barRectLength/4;
+    barRect.set(ofGetWidth()/2 - barRectLength/2, ofGetHeight() - barRectHeight, barRectLength, barRectHeight);
+    
     drawModules();
 }
 
@@ -575,10 +590,28 @@ void ofApp::keyPressed(int key) {
 
 }
 
+void ofApp::updateNewModuleActive(int x) {
+    
+    // update new module active
+    #if defined TARGET_OF_IOS
+    if (ofxiOSGetDeviceType() == OFXIOS_DEVICE_IPAD && ofGetOrientation() != OF_ORIENTATION_DEFAULT) {
+        int moduleWidth = ofGetWidth() / float(ofApp::nModules);
+        int newModuleActive = floor(x/moduleWidth);
+        if (newModuleActive != moduleActive) {
+            ofLogNotice() << "new module active is now " << newModuleActive << endl;
+            moduleActive = newModuleActive;
+        }
+    }
+    #endif
+    
+}
+
 void ofApp::touchDown(ofTouchEventArgs& touch) {
+    
+    updateNewModuleActive(touch.x);
 
     resetInactivityTime();
-
+    
     if (state == SPLASH_SCREEN || state == SPLASH_FADE) {
         state = ABOUT;
         return;
@@ -650,6 +683,8 @@ void ofApp::touchDown(ofTouchEventArgs& touch) {
 }
 
 void ofApp::touchMoved(ofTouchEventArgs& touch) {
+    
+    updateNewModuleActive(touch.x);
 
     resetInactivityTime();
 
@@ -704,6 +739,13 @@ void ofApp::touchUp(ofTouchEventArgs& touch) {
 }
 
 int ofApp::getModuleId(int x) {
+    
+    #if defined TARGET_OF_IOS
+    if (ofxiOSGetDeviceType() == OFXIOS_DEVICE_IPAD) {
+        return moduleActive;
+    }
+    #endif
+    
     for (int i = 0; i < nModules; i++) {
         if (x >= modules[i]->getX0() && x < modules[i]->getX1())
             return i;
@@ -823,7 +865,7 @@ void ofApp::deviceOrientationChanged(int newOrientation) {
 #if defined TARGET_OF_IOS
 void ofApp::onSwipe(swipeRecognitionArgs& args) {
 
-    ofLogNotice() << " Swipe Event! Yes!";
+    ofLogNotice() << "Swipe Event! Yes!";
 
     // multiplying swipeOriginY by 2 because of retina display
     if (args.swipeOriginY * 2 > CONSOLE_HEIGHT * ofGetHeight()) {

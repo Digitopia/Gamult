@@ -19,6 +19,14 @@ Module::Module(int index, int x, int y, int width, int height, int maxPopulation
 
 void Module::setDimensions(int x, int y, int width, int height) {
 
+    // updates particles first
+    for (unsigned int i = 0; i < particles.size(); i++) {
+        int newX = ofMap(particles[i].getX(), x0, x1, x, x+width);
+        int newY = ofMap(particles[i].getY(), this->y, this->y+this->height, y, y+height);
+        particles[i].setXY(newX, newY);
+    }
+
+    // and then can safely update the dimensions
     this->x0 = x;
     this->y = y;
     this->width = width;
@@ -30,25 +38,7 @@ void Module::setDimensions(int x, int y, int width, int height) {
     this->x1 = x + width;
     this->consoleHeight = CONSOLE_HEIGHT*height;
 
-    //    int w = round(BUTTON_CHANGE_INSTRUMENT_WIDTH * width);
-    //    int h = round(BUTTON_CHANGE_INSTRUMENT_HEIGHT * height);
-    //    int middleY = round((height - consoleHeight)/2 + consoleHeight);
-    //
-    //    #if defined TARGET_OF_IOS
-    //    previousInstrumentRect.set(x0, middleY - h/2, w, h);
-    //    nextInstrumentRect.set(x1, middleY - h/2, -w, h);
-    //    #endif
-
 }
-
-void Module::updateParticlesOnOrientationChange(int x, int y, int width, int height) {
-    for (unsigned int i = 0; i < particles.size(); i++) {
-        int newX = ofMap(particles[i].getX(), x0, x1, x, x+width);
-        int newY = ofMap(particles[i].getY(), this->y, this->y+this->height, y, y+height);
-        particles[i].setXY(newX, newY);
-    }
-}
-
 
 void Module::touchDown(ofTouchEventArgs& event) {
 
