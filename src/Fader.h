@@ -8,10 +8,11 @@ class Fader {
 public:
 
     Fader(int x0, int y, int size, string title);
-    void setDimensions(int x0, int y, int size);
+    void setDimensions(int x0, int y, int size, bool first);
 
     void draw();
     float getValue();
+    void setValue(float value);
     void resetFader() { this->rect.x = this->x0+range/2-size/2; }
 
 

@@ -28,7 +28,7 @@ void ModuleConsole::setDimensions(int x, int width, bool first) {
     if (first) {
         btnGravity = new Button(BUTTON_TOGGLE, module, buttonSize, x+(width*0.1), y+buttonPositionOffset-buttonSize/2, "Gravity");
         btnFreeze  = new Button(BUTTON_TOGGLE, module, buttonSize, x+width*0.6, y+buttonPositionOffset-buttonSize/2, "Freeze");
-        btnRemove  = new Button(BUTTON_REMOVE,  module, width/2, x+1, CONSOLE_SECTION_HEIGHT*height,   "Remove");
+        btnRemove  = new Button(BUTTON_REMOVE, module, width/2, x+1, CONSOLE_SECTION_HEIGHT*height, "Remove");
         btnClear   = new Button(BUTTON_CLEAR, module, width/2, x + width/2 + 1, CONSOLE_SECTION_HEIGHT*height, "Clear");
         fadSpeed = new Fader(x+(width*0.1), y+buttonPositionOffset*2+buttonSize/2, faderSize, "Speed");
     } else {
@@ -36,11 +36,11 @@ void ModuleConsole::setDimensions(int x, int width, bool first) {
         btnFreeze->setDimensions(buttonSize, x+width*0.6, y+buttonPositionOffset-buttonSize/2);
         btnRemove->setDimensions(width/2, x+1, CONSOLE_SECTION_HEIGHT*height);
         btnClear->setDimensions(width/2, x + width/2 + 1, CONSOLE_SECTION_HEIGHT*height);
-        fadSpeed->setDimensions(x+(width*0.1), y+buttonPositionOffset*2+buttonSize/2, faderSize);
+        fadSpeed->setDimensions(x+(width*0.1), y+buttonPositionOffset*2+buttonSize/2, faderSize, false);
     }
 
     // TODO: dafuq
-    x = x + width/2;
+//    x = x + width/2;
 
 }
 

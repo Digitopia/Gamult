@@ -896,3 +896,14 @@ void ofApp::detectShake() {
 
 }
 #endif
+
+bool ofApp::iPadInPortrait() {
+    #if defined TARGET_OF_IOS
+    if (ofxiOSGetDeviceType() == OFXIOS_DEVICE_IPAD) {
+        if (ofGetOrientation() == OF_ORIENTATION_DEFAULT || ofGetOrientation() == OF_ORIENTATION_180) {
+            return true;
+        }
+    }
+    #endif
+    return false;
+}

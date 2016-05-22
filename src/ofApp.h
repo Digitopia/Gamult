@@ -106,6 +106,8 @@ public:
     static ofxOscSender oscSender;
     static ofxOscReceiver oscReceiver;
     #endif
+    
+    static bool iPadInPortrait();
 
     static int mouseId;
 

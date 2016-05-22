@@ -4,7 +4,7 @@
 Fader::Fader(int x0, int y, int size, string title) {
 
     this->title = title;
-    setDimensions(x0, y, size);
+    setDimensions(x0, y, size, true);
 
     this->id = -1; // -1 means there is no touch associated
 
@@ -16,14 +16,36 @@ Fader::Fader(int x0, int y, int size, string title) {
 
 }
 
-void Fader::setDimensions(int x0, int y, int size) {
-    this->x0 = x0;
+void Fader::setDimensions(int x0, int y, int size, bool first) {
+    
+    float oldValue;
+    if (first) {
+        rect = ofRectangle(0, y-size/2, size, size);
+        oldValue = ofMap(0.5, 0, 1, 0.1, 2.0);
+    } else {
+        oldValue = this->getValue();
+    }
+    
     this->y = y;
     this->size = size;
-    this->x0 = x0 + 0.15 * (ofGetWidth()/NMODULES) + size; //TODO - check a better way to get this. It makes sure the fader line starts in a point which will result in the fader rectangle being in line with the Freeze buton, that is, at 0.6 of module width
-    this->range = 0.7*(ofGetWidth()/NMODULES)-size;
-    this->rect = ofRectangle(this->x0+range/2-size/2, y-size/2, size, size);
+    
+    // TODO: check a better way to get this.
+    // It makes sure the fader line starts in a point which will result in the fader rectangle being in
+    // line with the Freeze buton, that is, at 0.6 of module width
+    
+    if (ofApp::iPadInPortrait()) {
+        this->x0 = x0 + 0.20 * (ofGetWidth()) + size;
+        this->range = 0.6*(ofGetWidth()) - size;
+    } else {
+        this->x0 = x0 + 0.20 * (ofGetWidth()/NMODULES) + size;
+        this->range = 0.6*(ofGetWidth()/NMODULES)-size;
+    }
+    
+    rect.setY(this->y - this->size/2);
+    rect.setSize(this->size, this->size);
     this->stringOrigin = x0;
+    this->setValue(oldValue);
+    
 }
 
 void Fader::touchDown(ofTouchEventArgs& event) {
@@ -51,6 +73,11 @@ void Fader::touchMoved(ofTouchEventArgs& event) {
         if (rect.x > x0 + range - size/2)
             rect.x = x0 + range - size/2;
     }
+}
+
+
+void Fader::setValue(float value) {
+    rect.setX(ofMap(value, 0.1, 2, x0-size/2, x0+range-size/2));
 }
 
 float Fader::getValue() {
