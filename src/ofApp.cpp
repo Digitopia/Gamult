@@ -658,7 +658,6 @@ void ofApp::touchDown(ofTouchEventArgs& touch) {
     swiping = false;
     #endif
 
-
     #if defined TARGET_OF_IOS
     if (ofGetOrientation() == OF_ORIENTATION_DEFAULT) {
         int previousModuleActive = moduleActive;
@@ -740,11 +739,9 @@ void ofApp::touchUp(ofTouchEventArgs& touch) {
 
 int ofApp::getModuleId(int x) {
     
-    #if defined TARGET_OF_IOS
-    if (ofxiOSGetDeviceType() == OFXIOS_DEVICE_IPAD) {
+    if (iPadInPortrait()) {
         return moduleActive;
     }
-    #endif
     
     for (int i = 0; i < nModules; i++) {
         if (x >= modules[i]->getX0() && x < modules[i]->getX1())

@@ -139,7 +139,6 @@ void Module::draw() {
     drawBackground();
     drawBorders();
     drawGrid();
-    drawChangeInstrumentButtons();
 }
 
 void Module::drawBackground() {
