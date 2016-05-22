@@ -38,6 +38,10 @@ void Fader::setDimensions(int x0, int y, int size, bool first) {
         this->x0 = x0 + 0.20 * (ofGetWidth()) + size;
         this->range = 0.6*(ofGetWidth()) - size;
     }
+    else {
+        this->x0 = x0 + 0.20 * (ofGetWidth()/NMODULES) + size;
+        this->range = 0.6*(ofGetWidth()/NMODULES)-size;
+    }
     #elif
         this->x0 = x0 + 0.20 * (ofGetWidth()/NMODULES) + size;
         this->range = 0.6*(ofGetWidth()/NMODULES)-size;
