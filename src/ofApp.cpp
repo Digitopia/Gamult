@@ -62,6 +62,8 @@ void ofApp::setup() {
     ofSetCircleResolution(CIRCLE_RESOLUTION);
 
     if (multitouch) ofHideCursor();
+    
+    ofLogNotice() << "nModules is " << nModules;
 
     initModules();
     setupModules();
@@ -396,6 +398,7 @@ void ofApp::drawArrow(bool up) {
 }
 
 void ofApp::initModules() {
+    
     int width = ofGetWidth()/ofApp::nModules;
     int height = ofGetHeight();
     int habitants = ofApp::nParticlesPerModule;

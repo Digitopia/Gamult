@@ -33,13 +33,16 @@ void Fader::setDimensions(int x0, int y, int size, bool first) {
     // It makes sure the fader line starts in a point which will result in the fader rectangle being in
     // line with the Freeze buton, that is, at 0.6 of module width
     
-    if (ofApp::iPadInPortrait()) {
+    #if defined TARGET_OF_IOS
+    if (ofApp::iPadInPortrait() || ofxiOSGetDeviceType() == OFXIOS_DEVICE_IPHONE) {
         this->x0 = x0 + 0.20 * (ofGetWidth()) + size;
         this->range = 0.6*(ofGetWidth()) - size;
-    } else {
+    }
+    #elif
         this->x0 = x0 + 0.20 * (ofGetWidth()/NMODULES) + size;
         this->range = 0.6*(ofGetWidth()/NMODULES)-size;
     }
+    #endif
     
     rect.setY(this->y - this->size/2);
     rect.setSize(this->size, this->size);

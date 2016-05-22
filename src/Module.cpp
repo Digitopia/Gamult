@@ -96,10 +96,9 @@ void Module::unloadSounds() {
 }
 
 void Module::changeInstrument(int iSoundPaths) {
-    //    unloadSounds();
-    //    loadSounds(ofApp::getSoundPaths(iSoundPaths));
-    //	ofLogNotice() << "changing instrument";
-    //    ofApp::moduleActive = iSoundPaths; // TODO: decide if inside or outside module, not in both
+    unloadSounds();
+    loadSounds(ofApp::getSoundPaths(iSoundPaths));
+    ofLogNotice() << "changing instrument";
 }
 
 void Module::addParticle(int life, int x, int y) {
