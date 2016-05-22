@@ -39,9 +39,6 @@ void ModuleConsole::setDimensions(int x, int width, bool first) {
         fadSpeed->setDimensions(x+(width*0.1), y+buttonPositionOffset*2+buttonSize/2, faderSize, false);
     }
 
-    // TODO: dafuq
-//    x = x + width/2;
-
 }
 
 void ModuleConsole::draw() {
