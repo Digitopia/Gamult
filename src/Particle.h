@@ -7,32 +7,36 @@ class Particle {
 
 public:
 
-	Particle(int module, int index, float x, float y, int life);
+    Particle(int module, int index, float x, float y, int life);
 
-	void draw();
-	void drawCircle();
-	void drawLife();
-	void gravity();
+    void draw();
+    void drawCircle();
+    void gravity();
     void loop();
-	void update();
-	
-	void report(int idx, int note, int vel);
+    void update();
+
+    #if defined TARGET_SEMIBREVE
+    void report(int idx, int note, int vel);
+    #endif
+
     void trigger(bool play, bool send);
-    
-	int getVelocity() { return velocity; }
-	int getLife() { return life; }
-	int getHealth() { return health; }
-	int getX() { return center.x; }
-	int getY() { return center.y; }
+
+    int getVelocity() { return velocity; }
+    int getLife() { return life; }
+    int getHealth() { return health; }
+    int getX() { return center.x; }
+    int getY() { return center.y; }
+    void setXY(int x, int y) { center.x = x; center.y = y; }
+    void setModule(int module) { this->module = module; }
 
 private:
 
-	int module;
-	int index;
-	int health;
-	int life;
-	float velocity;
-	ofVec2f center;
+    int module;
+    int index;
+    int health;
+    int life;
+    float velocity;
+    ofVec2f center;
     int id;
     int radius;
 

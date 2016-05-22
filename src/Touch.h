@@ -7,24 +7,24 @@
 
 class Touch {
 
-    public:
+public:
 
-        Touch(int x, int y);
+    Touch(int x, int y);
 
-        int getX() { return x; }
-        int getY() { return y; }
-        float getIncrement() { return increment; }
+    int getX() { return x; }
+    int getY() { return y; }
+    float getIncrement() { return increment; }
 
-        void setXY(int x, int y) { this->x = x; this->y = y;}
+    void setXY(int x, int y) { this->x = x; this->y = y;}
 
-        void update();
-        void draw();
+    void update();
+    void draw();
 
-    private:
+private:
 
-        int x;
-        int y;
-        float increment;
+    int x;
+    int y;
+    float increment;
 
 };
 

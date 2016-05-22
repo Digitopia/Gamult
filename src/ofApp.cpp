@@ -1,6 +1,6 @@
 #include "ofApp.h"
 
-int ofApp::nModules = MODULES;
+int ofApp::nModules = NMODULES;
 int ofApp::nParticlesPerModule = PARTICLES_PER_MODULE;
 int ofApp::maxParticleY = 0;
 int ofApp::mouseId = 0;
@@ -12,66 +12,72 @@ unsigned int ofApp::currentAlpha = DEFAULT_ALPHA;
 
 typedef map<int,Touch>::iterator touchesIterator;
 
-#ifndef TARGET_OF_IOS
+Module** ofApp::modules = new Module* [ofApp::nModules];
+//UISwipeGestureRecognizer *swipe;
+
+#if defined TARGET_SEMIBREVE
 ofxOscSender ofApp::oscSender;
 ofxOscReceiver ofApp::oscReceiver;
 #endif
 
-Module** ofApp::modules = new Module* [ofApp::nModules];
-//UISwipeGestureRecognizer *swipe;
-
 void ofApp::setup() {
 
-	ofSetFrameRate(FRAME_RATE);
-	ofSetCircleResolution(CIRCLE_RESOLUTION);
+    // ofSetLogLevel(OF_LOG_SILENT);
+    ofSetLogLevel(OF_LOG_NOTICE);
 
-    #if defined(TARGET_OF_IOS) && !defined(TARGET_OF_IPHONE)
-    ofSetOrientation(OF_ORIENTATION_90_LEFT);
+    ofLogNotice() << "setup";
+
+    #if defined TARGET_OSX
+    ofLogNotice() << "Running OSX version";
+    ofSetDataPathRoot("../Resources/data/");
     #endif
 
-    #ifndef TARGET_OF_IOS
+    #if defined TARGET_SEMIBREVE
+    ofLogNotice() << "Running SEMIBREVE version";
     oscReceiver.setup(RECEIVE_PORT);
     oscSender.setup(HOST, SEND_PORT);
     #endif
 
-    #ifndef TARGET_OF_IOS
-    ofSetDataPathRoot("../Resources/data/");
-    #endif
-
-    #ifdef TARGET_OF_IOS
-    swiper.setup();
-    ofAddListener(swiper.swipeRecognized, this, &ofApp::onSwipe);
-    swiping = false;
+    #if defined TARGET_OF_IOS
+    ofLogNotice() << "Running iOS version";
+    if (ofxiOSGetDeviceType() == OFXIOS_DEVICE_IPAD) {
+        ofLogNotice() << "Running iPad version";
+        ofSetOrientation(OF_ORIENTATION_90_LEFT);
+    } else {
+        ofLogNotice() << "Running iPhone version";
+        swiper.setup();
+        ofAddListener(swiper.swipeRecognized, this, &ofApp::onSwipe);
+        swiping = false;
+    }
     ofxAccelerometer.setup();
     accelCount = 0;
     #endif
-    
-    #ifndef TARGET_OF_IOS
+
+    #if !defined TARGET_OF_IOS
+    ofLogNotice() << "Registering for touch events if not ios";
     ofRegisterTouchEvents(this);
     #endif
 
-    if (multitouch) {
-        ofHideCursor();
-    }
+    ofSetFrameRate(FRAME_RATE);
+    ofSetCircleResolution(CIRCLE_RESOLUTION);
 
-	initModules();
+    if (multitouch) ofHideCursor();
+    
+    ofLogNotice() << "nModules is " << nModules;
 
-	ofApp::maxParticleY = round(ofGetHeight() * (1-LIMIT_PARTICLE));
+    initModules();
+    setupModules();
+    
+    ofApp::maxParticleY = round(ofGetHeight() * (1-LIMIT_PARTICLE));
 
-    int barRectLength = 0.1*ofGetWidth();
-    int barRectHeight = barRectLength/4;
-
-    barRect.set(ofGetWidth()/2 - barRectLength/2, ofGetHeight() - barRectHeight, barRectLength, barRectHeight);
-
-    imgSplashScreen.load("images/splash-screen.png");
-   // imgSplashScreen.resize(ofGetWidth(), ofGetHeight());
-    imgAbout.load("images/about7.png");
+    imgSplashScreen.load("images/splash_screen.png");
+    imgSplashScreen.resize(ofGetWidth(), ofGetHeight());
+    imgAbout.load("images/about.png");
     imgAbout.resize(ofGetWidth(), ofGetHeight());
-    imgArrow.load("images/arrow.png");
+    imgArrow.load("images/arrow_up.png");
     imgArrowDown.load("images/arrow_down.png");
 
-//    state = SPLASH_SCREEN;
-    state = APP;
+    state = APP; // TODO: don't forget to revert to SPLASH_SCREEN for release
 
     inactivityState = ACTIVE;
 
@@ -80,20 +86,19 @@ void ofApp::setup() {
     arrowDownY = ofGetHeight()/3*2;
     arrowDownYBase = arrowDownY;
     arrowDownDir = 1;
-    
-    // set Logger level
-    ofSetLogLevel(OF_LOG_SILENT);
+
 }
 
 void ofApp::update() {
 
-#ifndef TARGET_OF_IOS
+    #if defined TARGET_SEMIBREVE
     handleInactivity();
-#else
-    detectShake();
-#endif
-
     checkMultitouchData();
+    #endif
+
+    #if defined TARGET_OF_IOS
+    detectShake();
+    #endif
 
     if (state == BAR_ASCENDING && aboutY <= maxParticleY) {
         state = BAR;
@@ -119,15 +124,25 @@ void ofApp::update() {
         it->second.update();
     }
 
+    #if defined TARGET_OF_IOS
+    if (ofxiOSGetDeviceType() == OFXIOS_DEVICE_IPAD && ofGetOrientation() == OF_ORIENTATION_DEFAULT) {
+        ofApp::modules[moduleActive]->update();
+    } else {
+        for (int i = 0; i < ofApp::nModules; i++) {
+            ofApp::modules[i]->update();
+        }
+    }
+    #else
     for (int i = 0; i < ofApp::nModules; i++) {
         ofApp::modules[i]->update();
     }
-
+    #endif
+    
 }
 
 void ofApp::handleInactivity() {
 
-    ofLog(OF_LOG_VERBOSE) << "inactivityState: " << inactivityState << endl;
+    ofLogNotice() << "inactivityState: " << inactivityState;
 
     // inactivity timer update
     if (inactivityState == ACTIVE || inactivityState == PRE_INACTIVE) {
@@ -154,7 +169,7 @@ void ofApp::handleInactivity() {
 
         if (particleChance == 27) {
 
-            unsigned int rModule = ofRandom(0, MODULES);
+            unsigned int rModule = ofRandom(0, NMODULES);
             unsigned int rX = ofRandom(modules[rModule]->getX0(), modules[rModule]->getX1());
             // unsigned int rY = ofRandom(100, modules[rModules].getHeight());
             unsigned int rY = ofRandom(CONSOLE_HEIGHT*ofGetHeight(), ofGetHeight()*(1-LIMIT_PARTICLE));
@@ -177,7 +192,7 @@ void ofApp::handleInactivity() {
 
 void ofApp::resetInactivityTime() {
 
-    if(inactivityState == INACTIVE) inactivityState = POST_INACTIVE;
+    if (inactivityState == INACTIVE) inactivityState = POST_INACTIVE;
     inactivityCounter = 0;
 }
 
@@ -190,14 +205,13 @@ void ofApp::resetModules() {
     }
 }
 
-
 void ofApp::draw() {
 
     ofBackground(BACKGROUND_COLOR);
 
     if (state == SPLASH_SCREEN) {
         imgSplashScreen.draw(0, 0, ofGetWidth(), ofGetHeight());
-        if(ofGetElapsedTimeMillis() > 1500) state = SPLASH_FADE;
+        if (ofGetElapsedTimeMillis() > 1500) state = SPLASH_FADE;
         return;
     }
 
@@ -221,18 +235,17 @@ void ofApp::draw() {
         return;
     }
 
-    for (int i = 0; i < ofApp::nModules; i++) {
-        ofApp::modules[i]->draw();
-    }
-
+    drawModules();
     drawLines();
+    drawParticles();
+    drawTouches();
 
-    for (int i = 0; i < ofApp::nModules; i++) {
-        ofApp::modules[i]->drawParticles();
-    }
-
-    for (touchesIterator it = touches.begin(); it != touches.end(); it++) {
-        it->second.draw();
+    if (ofGetOrientation() == OF_ORIENTATION_DEFAULT) {
+        ofPushStyle();
+        ofSetColor(ofColor::fromHex(BUTTON_CHANGE_INSTRUMENT_COLOR), BUTTON_CHANGE_INSTRUMENT_COLOR_ALPHA);
+        ofDrawRectangle(previousInstrumentRect);
+        ofDrawRectangle(nextInstrumentRect);
+        ofPopStyle();
     }
 
     if (state == BAR) {
@@ -249,8 +262,7 @@ void ofApp::draw() {
         if (aboutY < 15) {
             aboutY = 0;
             state = ABOUT;
-        }
-        else {
+        } else {
             aboutY -= 15;
         }
         if (currentAlpha < 255) currentAlpha += 3;
@@ -303,6 +315,58 @@ void ofApp::draw() {
 
 }
 
+void ofApp::drawParticles() {
+    
+    #if defined TARGET_OSX
+    for (int i = 0; i < ofApp::nModules; i++) {
+        ofApp::modules[i]->drawParticles();
+    }
+    #endif
+
+    #if defined TARGET_OF_IOS
+    if (ofGetOrientation() == OF_ORIENTATION_DEFAULT) {
+        ofApp::modules[moduleActive]->drawParticles();
+    } else {
+        for (int i = 0; i < ofApp::nModules; i++) {
+            ofApp::modules[i]->drawParticles();
+        }
+    }
+    #endif
+    
+}
+
+void ofApp::drawTouches() {
+    for (touchesIterator it = touches.begin(); it != touches.end(); it++) {
+        it->second.draw();
+    }
+}
+
+
+void ofApp::drawModules() {
+
+    #if defined TARGET_OSX
+    for (int i = 0; i < ofApp::nModules; i++) {
+        ofApp::modules[i]->draw();
+    }
+    #endif
+
+    #if defined TARGET_OF_IOS
+    if (ofxiOSGetDeviceType() == OFXIOS_DEVICE_IPHONE) {
+        ofApp::modules[moduleActive]->draw();
+    }
+    else if (ofxiOSGetDeviceType() == OFXIOS_DEVICE_IPAD) {
+        if (ofGetOrientation() == OF_ORIENTATION_DEFAULT) {
+            ofApp::modules[moduleActive]->draw();
+        }
+        else {
+            for (int i = 0; i < ofApp::nModules; i++) {
+                ofApp::modules[i]->draw();
+            }
+        }
+    }
+    #endif
+}
+
 void ofApp::drawBouncingArrow() {
     if (arrowDownY > arrowDownYBase + 5) arrowDownDir = -1;
     else if (arrowDownY < arrowDownYBase - 15) arrowDownDir = 1;
@@ -316,7 +380,11 @@ void ofApp::drawArrow(bool up) {
     ofEnableAlphaBlending();
 
     if (up) {
-        imgArrow.draw(barRect.x + ARROW_OFFSET, barRect.y + ARROW_OFFSET, barRect.width - 2*ARROW_OFFSET, barRect.height - 2*ARROW_OFFSET);
+        if (ofGetOrientation() == OF_ORIENTATION_DEFAULT || ofGetOrientation() == OF_ORIENTATION_180) {
+            imgArrow.draw(barRect.x + ARROW_OFFSET, barRect.y + ARROW_OFFSET, barRect.width - 2*ARROW_OFFSET, barRect.height - 2*ARROW_OFFSET);
+        } else {
+            imgArrow.draw(barRect.x + ARROW_OFFSET, barRect.y + ARROW_OFFSET, barRect.width - 2*ARROW_OFFSET, barRect.height - 2*ARROW_OFFSET);
+        }
     }
 
     else {
@@ -330,87 +398,106 @@ void ofApp::drawArrow(bool up) {
 }
 
 void ofApp::initModules() {
-
-    vector<string> icons;
-    icons.push_back("images/1.png");
-    icons.push_back("images/2.png");
-    icons.push_back("images/3.png");
-    icons.push_back("images/4.png");
-
-    moduleWidth = ofGetWidth()/ofApp::nModules;
-    moduleHeight = ofGetHeight();
-    int moduleHabitants = ofApp::nParticlesPerModule;
     
+    int width = ofGetWidth()/ofApp::nModules;
+    int height = ofGetHeight();
+    int habitants = ofApp::nParticlesPerModule;
     for (unsigned int i = 0; i < ofApp::nModules; i++) {
-        ofApp::modules[i] = new Module(i, i*moduleWidth, i, moduleWidth, moduleHeight, moduleHabitants, getSoundPaths(i), icons);
+        int x = i*width;
+        int y = 0;
+        ofApp::modules[i] = new Module(i, x, y, width, height, habitants, getSoundPaths(i));
     }
+}
 
+void ofApp::setupModules() {
+
+    #if defined TARGET_OSX
+    int width = ofGetWidth()/ofApp::nModules;
+    int height = ofGetHeight();
+    for (unsigned int i = 0; i < ofApp::nModules; i++) {
+        int x = i*width;
+        int y = 0;
+        ofApp::modules[i]->setDimensions(x, y, width, height);
+    }
+    #endif
+    
+    #if defined TARGET_OF_IOS
+    if (ofGetOrientation() == OF_ORIENTATION_DEFAULT) {
+        ofApp::modules[moduleActive]->setDimensions(0, 0, ofGetWidth(), ofGetHeight());
+    } else {
+        int width = ofGetWidth()/ofApp::nModules;
+        int height = ofGetHeight();
+        for (unsigned int i = 0; i < ofApp::nModules; i++) {
+            int x = i*width;
+            int y = 0;
+            ofApp::modules[i]->setDimensions(x, y, width, height);
+        }
+    }
+    #endif
+
+    // update down arrow on orientation change
+    int barRectLength = 0.1*ofGetWidth();
+    int barRectHeight = barRectLength/4;
+    barRect.set(ofGetWidth()/2 - barRectLength/2, ofGetHeight() - barRectHeight, barRectLength, barRectHeight);
+    
+    drawModules();
 }
 
 vector<string> ofApp::getSoundPaths(unsigned int index) {
 
-	vector<string> ret;
+    vector<string> ret;
 
-	// bonangs
-	if (index == 0) {
-		ret.push_back("sounds/BBPL1.wav");
-		ret.push_back("sounds/BBPL2.wav");
-		ret.push_back("sounds/BBPL3.wav");
+    // bonangs
+    if (index == 0) {
+        ret.push_back("sounds/BBPL1.wav");
+        ret.push_back("sounds/BBPL2.wav");
+        ret.push_back("sounds/BBPL3.wav");
     }
 
-	// genders
-	else if (index == 1) {
-		ret.push_back("sounds/GBPL1.wav");
-		ret.push_back("sounds/GBPL2.wav");
-		ret.push_back("sounds/GBPL3.wav");
-		ret.push_back("sounds/GBPL5.wav");
-	    ret.push_back("sounds/GBPL2.wav");
-	    ret.push_back("sounds/GBPL3.wav");
-	}
+    // genders
+    else if (index == 1) {
+        ret.push_back("sounds/GBPL1.wav");
+        ret.push_back("sounds/GBPL2.wav");
+        ret.push_back("sounds/GBPL3.wav");
+        ret.push_back("sounds/GBPL5.wav");
+        ret.push_back("sounds/GBPL2.wav");
+        ret.push_back("sounds/GBPL3.wav");
+    }
 
-	// gongs
-	else if (index == 2) {
-		ret.push_back("sounds/GKPL1f.wav");
-		ret.push_back("sounds/GKPL2f.wav");
-		ret.push_back("sounds/GKPL3f.wav");
-		ret.push_back("sounds/GKPL5f.wav");
-    	ret.push_back("sounds/GKPL1f.wav");
-    	ret.push_back("sounds/GKPL2f.wav");
-    	ret.push_back("sounds/GKPL3f.wav");
-	}
+    // gongs
+    else if (index == 2) {
+        ret.push_back("sounds/GKPL1f.wav");
+        ret.push_back("sounds/GKPL2f.wav");
+        ret.push_back("sounds/GKPL3f.wav");
+        ret.push_back("sounds/GKPL5f.wav");
+        ret.push_back("sounds/GKPL1f.wav");
+        ret.push_back("sounds/GKPL2f.wav");
+        ret.push_back("sounds/GKPL3f.wav");
+    }
 
-	// sarons
-	else if (index == 3) {
-		ret.push_back("sounds/SBPL1.wav");
-		ret.push_back("sounds/SBPL2.wav");
-		ret.push_back("sounds/SBPL3.wav");
-		ret.push_back("sounds/SBPL4.wav");
-    	ret.push_back("sounds/SBPL3.wav");
-    	ret.push_back("sounds/SBPL4.wav");
-    	ret.push_back("sounds/SBPL4.wav");
-	}
+    // sarons
+    else if (index == 3) {
+        ret.push_back("sounds/SBPL1.wav");
+        ret.push_back("sounds/SBPL2.wav");
+        ret.push_back("sounds/SBPL3.wav");
+        ret.push_back("sounds/SBPL4.wav");
+        ret.push_back("sounds/SBPL3.wav");
+        ret.push_back("sounds/SBPL4.wav");
+        ret.push_back("sounds/SBPL4.wav");
+    }
 
-	return ret;
+    return ret;
 
 }
 
-//void ofApp::preparePortrait() {
-//
-//}
-//
-//void ofApp::prepareLandscape() {
-//
-//}
-
+#if defined TARGET_SEMIBREVE
 void ofApp::checkMultitouchData() {
 
-    #ifndef TARGET_OF_IOS
+    while (oscReceiver.hasWaitingMessages()) {
 
-	while (oscReceiver.hasWaitingMessages()) {
-
-		ofxOscMessage m;
-		oscReceiver.getNextMessage(&m);
-        ofLog(OF_LOG_VERBOSE) << m.getAddress() << endl;
+        ofxOscMessage m;
+        oscReceiver.getNextMessage(&m);
+        ofLogNotice() << m.getAddress() ;
 
         if (!multitouch)
             return;
@@ -429,7 +516,7 @@ void ofApp::checkMultitouchData() {
             x = m.getArgAsFloat(2) * ofGetWidth();
             y = m.getArgAsFloat(3) * ofGetHeight();
 
-            ofLog(OF_LOG_NOTICE) << "x is " << x << " and y is " << y << endl;
+            ofLogNotice() << "x is " << x << " and y is " << y ;
 
             touchEvent.x = x;
             touchEvent.y = y;
@@ -437,8 +524,7 @@ void ofApp::checkMultitouchData() {
             if (m.getAddress() == "/1/") {
                 touchEvent.type = ofTouchEventArgs::down;
                 ofNotifyEvent(ofEvents().touchDown, touchEvent, this);
-            }
-            else {
+            } else {
                 touchEvent.type = ofTouchEventArgs::move;
                 ofNotifyEvent(ofEvents().touchMoved, touchEvent, this);
             }
@@ -449,13 +535,14 @@ void ofApp::checkMultitouchData() {
             ofNotifyEvent(ofEvents().touchUp, touchEvent, this);
         }
     }
-    #endif
+
 }
+#endif
 
 
-void ofApp::mousePressed(ofMouseEventArgs &mouse) {
+void ofApp::mousePressed(ofMouseEventArgs& mouse) {
     if (multitouch) return;
-    ofLog(OF_LOG_NOTICE) << "pressed" << endl;
+    ofLogNotice() << "pressed" ;
     ofTouchEventArgs touchEvent;
     touchEvent.id = ++mouseId;
     touchEvent.x = mouse.x;
@@ -464,9 +551,9 @@ void ofApp::mousePressed(ofMouseEventArgs &mouse) {
     ofNotifyEvent(ofEvents().touchDown, touchEvent, this);
 }
 
-void ofApp::mouseDragged(ofMouseEventArgs &mouse) {
+void ofApp::mouseDragged(ofMouseEventArgs& mouse) {
     if (multitouch) return;
-    ofLog(OF_LOG_NOTICE) << "dragged" << endl;
+    ofLogNotice() << "dragged" ;
     ofTouchEventArgs touchEvent;
     touchEvent.id = mouseId;
     touchEvent.x = mouse.x;
@@ -475,16 +562,16 @@ void ofApp::mouseDragged(ofMouseEventArgs &mouse) {
     ofNotifyEvent(ofEvents().touchMoved, touchEvent, this);
 }
 
-void ofApp::mouseReleased(ofMouseEventArgs &mouse) {
+void ofApp::mouseReleased(ofMouseEventArgs& mouse) {
     if (multitouch) return;
-    ofLog(OF_LOG_NOTICE) << "released" << endl;
+    ofLogNotice() << "released" ;
     ofTouchEventArgs touchEvent;
     touchEvent.id = ofApp::mouseId;
     touchEvent.type = ofTouchEventArgs::up;
     ofNotifyEvent(ofEvents().touchUp, touchEvent, this);
 }
 
-void ofApp::mouseMoved(ofMouseEventArgs &mouse) {
+void ofApp::mouseMoved(ofMouseEventArgs& mouse) {
     resetInactivityTime();
 }
 
@@ -495,11 +582,10 @@ void ofApp::keyPressed(int key) {
         multitouch = !multitouch;
 
         if (multitouch) {
-            ofLog(OF_LOG_NOTICE) << "multitouch on" << endl;
+            ofLogNotice() << "multitouch on" ;
             ofHideCursor();
-        }
-        else {
-            ofLog(OF_LOG_NOTICE) << "multitouch off" << endl;
+        } else {
+            ofLogNotice() << "multitouch off" ;
             ofShowCursor();
         }
 
@@ -507,10 +593,28 @@ void ofApp::keyPressed(int key) {
 
 }
 
-void ofApp::touchDown(ofTouchEventArgs &touch) {
+void ofApp::updateNewModuleActive(int x) {
+    
+    // update new module active
+    #if defined TARGET_OF_IOS
+    if (ofxiOSGetDeviceType() == OFXIOS_DEVICE_IPAD && ofGetOrientation() != OF_ORIENTATION_DEFAULT) {
+        int moduleWidth = ofGetWidth() / float(ofApp::nModules);
+        int newModuleActive = floor(x/moduleWidth);
+        if (newModuleActive != moduleActive) {
+            ofLogNotice() << "new module active is now " << newModuleActive << endl;
+            moduleActive = newModuleActive;
+        }
+    }
+    #endif
+    
+}
+
+void ofApp::touchDown(ofTouchEventArgs& touch) {
+    
+    updateNewModuleActive(touch.x);
 
     resetInactivityTime();
-
+    
     if (state == SPLASH_SCREEN || state == SPLASH_FADE) {
         state = ABOUT;
         return;
@@ -545,20 +649,44 @@ void ofApp::touchDown(ofTouchEventArgs &touch) {
 
     if (state == APP || state == BAR) {
 
-        ofLog(OF_LOG_VERBOSE) << "down (" << id << ", " << x << ", " << y << ")" << endl;
+        ofLogNotice() << "down (" << id << ", " << x << ", " << y << ")" ;
 
         if (y > CONSOLE_HEIGHT*ofGetHeight() && (state != BAR || y < aboutY) && modules[getModuleId(x)]->isNotFull()) {
             touches.insert(pair<int,Touch> (id, Touch(x, y)));
         }
 
     }
-#ifdef TARGET_OF_IOS
+
+    #if defined TARGET_OF_IOS
     swiping = false;
-#endif
+    #endif
+
+    #if defined TARGET_OF_IOS
+    if (ofGetOrientation() == OF_ORIENTATION_DEFAULT) {
+        int previousModuleActive = moduleActive;
+        if (previousInstrumentRect.inside(touch.x, touch.y)) {
+            if (moduleActive <= 0) return;
+            moduleActive--;
+        } else if (nextInstrumentRect.inside(touch.x, touch.y)) {
+            if (moduleActive >= 3) return;
+            moduleActive++;
+        }
+
+        if (previousModuleActive != moduleActive) {
+            for (unsigned int i = 0; i < ofApp::modules[previousModuleActive]->getNumberOfParticles(); i++) {
+                ofApp::modules[previousModuleActive]->getParticle(i)->setModule(moduleActive);
+            }
+            ofApp::modules[moduleActive]->setParticles(ofApp::modules[previousModuleActive]->getParticles());
+            ofApp::modules[previousModuleActive]->removeAllParticles();
+        }
+    }
+    #endif
 
 }
 
-void ofApp::touchMoved(ofTouchEventArgs &touch) {
+void ofApp::touchMoved(ofTouchEventArgs& touch) {
+    
+    updateNewModuleActive(touch.x);
 
     resetInactivityTime();
 
@@ -568,7 +696,7 @@ void ofApp::touchMoved(ofTouchEventArgs &touch) {
     int y = touch.y;
     int id = touch.id;
 
-    ofLog(OF_LOG_VERBOSE) << "moved (" << id << ", " << x << ", " << y << ")" << endl;
+    ofLogNotice() << "moved (" << id << ", " << x << ", " << y << ")" ;
 
     touchesIterator it = touches.find(id);
     if (it == touches.end()) return;
@@ -577,7 +705,7 @@ void ofApp::touchMoved(ofTouchEventArgs &touch) {
 
 }
 
-void ofApp::touchUp(ofTouchEventArgs &touch) {
+void ofApp::touchUp(ofTouchEventArgs& touch) {
 
     resetInactivityTime();
 
@@ -585,7 +713,7 @@ void ofApp::touchUp(ofTouchEventArgs &touch) {
 
     int id = touch.id;
 
-    ofLog(OF_LOG_VERBOSE) << "up (" << id << ")" << endl;
+    ofLogNotice() << "up (" << id << ")" ;
 
     touchesIterator it = touches.find(id);
 
@@ -596,23 +724,28 @@ void ofApp::touchUp(ofTouchEventArgs &touch) {
     float increment = it->second.getIncrement();
 
     touches.erase(it);
-    
-#ifdef TARGET_OF_IOS
+
+    #if defined TARGET_OF_IOS
     if (y > CONSOLE_HEIGHT*ofGetHeight() && y < ofApp::maxParticleY && !swiping) {
         modules[getModuleId(x)]->addParticle(increment, x, y);
-        ofLog(OF_LOG_NOTICE) << "particle added" << endl; // ?? why is ofLog() greyed out ?
+        ofLogNotice() << "particle added" ;
         swiping = false;
     }
-#else
+    #else
     if (y > CONSOLE_HEIGHT*ofGetHeight() && y < ofApp::maxParticleY) {
         modules[getModuleId(x)]->addParticle(increment, x, y);
-        ofLog(OF_LOG_NOTICE) << "particle added" << endl;
+        ofLogNotice() << "particle added" ;
     }
-#endif
+    #endif
 
 }
 
 int ofApp::getModuleId(int x) {
+    
+    if (iPadInPortrait()) {
+        return moduleActive;
+    }
+    
     for (int i = 0; i < nModules; i++) {
         if (x >= modules[i]->getX0() && x < modules[i]->getX1())
             return i;
@@ -621,13 +754,29 @@ int ofApp::getModuleId(int x) {
 }
 
 void ofApp::drawLine(int nth) {
-
+    
     vector<Particle*> nthParticles;
+    
+    #if defined TARGET_OSX
     for (int i = 0; i < ofApp::nModules; i++) {
         if (ofApp::modules[i]->getNumberOfParticles() > nth) {
             nthParticles.push_back(ofApp::modules[i]->getParticle(nth));
         }
     }
+    #endif
+    
+    #if defined TARGET_OF_IOS
+    if (ofGetOrientation() == OF_ORIENTATION_DEFAULT) {
+        if (ofApp::modules[moduleActive]->getNumberOfParticles() > nth)
+            nthParticles.push_back(ofApp::modules[moduleActive]->getParticle(nth));
+    } else {
+        for (int i = 0; i < ofApp::nModules; i++) {
+            if (ofApp::modules[i]->getNumberOfParticles() > nth) {
+                nthParticles.push_back(ofApp::modules[i]->getParticle(nth));
+            }
+        }
+    }
+    #endif
 
     if (nthParticles.size() == 0)
         return;
@@ -675,48 +824,86 @@ bool ofApp::hasParticles() {
     return false;
 }
 
-// have it always in landscape
 void ofApp::deviceOrientationChanged(int newOrientation) {
-    if (newOrientation == 3) ofSetOrientation(OF_ORIENTATION_90_LEFT);
-    else if (newOrientation == 4) ofSetOrientation(OF_ORIENTATION_90_RIGHT);
 
-    ofLog() << "width is " << ofGetWidth();
-    ofLog() << "height is " << ofGetHeight();
+    ofLogNotice() << "detected orientation change";
+
+    #if defined TARGET_OF_IOS
+    if (ofxiOSGetDeviceType() == OFXIOS_DEVICE_IPHONE) {
+        ofLogNotice() << "ignoring orientation change";
+        return;
+    }
+    #endif
+
+    // upside down is no good for anything
+    if (newOrientation == OF_ORIENTATION_180)
+        ofSetOrientation(OF_ORIENTATION_DEFAULT);
+    else {
+        ofSetOrientation(ofOrientation(newOrientation));
+    }
+
+    if (newOrientation == OF_ORIENTATION_90_LEFT || newOrientation == OF_ORIENTATION_90_RIGHT) {
+        setupModules();
+        for (unsigned int i = 0; i < ofApp::nModules; i++) {
+            ofApp::modules[i]->activate();
+        }
+    }
+
+    else {
+        for (unsigned int i = 0; i < ofApp::nModules; i++) {
+            if (i == moduleActive) ofApp::modules[i]->activate();
+            else ofApp::modules[i]->deactivate();
+        }
+        setupModules();
+    }
+
+    ofLogNotice() << "width is " << ofGetWidth();
+    ofLogNotice() << "height is " << ofGetHeight();
 
 }
 
-#ifdef TARGET_OF_IOS
-void ofApp::onSwipe(swipeRecognitionArgs & args) {
-    
-    ofLog(OF_LOG_NOTICE) << " Swipe Event! Yes! " << endl;
-    
+#if defined TARGET_OF_IOS
+void ofApp::onSwipe(swipeRecognitionArgs& args) {
+
+    ofLogNotice() << "Swipe Event! Yes!";
+
     // multiplying swipeOriginY by 2 because of retina display
-    if(args.swipeOriginY * 2 > CONSOLE_HEIGHT * ofGetHeight()){
-        int direction = args.direction;
-    
+    if (args.swipeOriginY * 2 > CONSOLE_HEIGHT * ofGetHeight()) {
+        int direction = args.direction  ;
+
         ofApp::modules[0]->prepareInstrumentChange(direction);
-        
+
         swiping = true;
     } else {
-        ofLog(OF_LOG_NOTICE) << "THOU SHALL NOT PASS!!" << endl;
+        ofLogNotice() << "THOU SHALL NOT PASS!!";
     }
 
- }
+}
 
-void ofApp::detectShake(){
+void ofApp::detectShake() {
     float accelX = ofxAccelerometer.getForce().x;
     float accelY = ofxAccelerometer.getForce().y;
-    if(accelX < - 2 || accelX > 2 && accelY < -2 || accelY >2){
+    if (accelX < - 2 || accelX > 2 && accelY < -2 || accelY >2) {
         accelCount++;
-    }
-    else{
+    } else {
         accelCount=0;
     }
-    
-    if(accelCount>=4){
-        ofLog(OF_LOG_NOTICE) << "shake it baby, shake it" << endl;
+
+    if (accelCount>=4) {
+        ofLogNotice() << "shake it baby, shake it";
         resetModules();
-    }   
+    }
 
 }
 #endif
+
+bool ofApp::iPadInPortrait() {
+    #if defined TARGET_OF_IOS
+    if (ofxiOSGetDeviceType() == OFXIOS_DEVICE_IPAD) {
+        if (ofGetOrientation() == OF_ORIENTATION_DEFAULT || ofGetOrientation() == OF_ORIENTATION_180) {
+            return true;
+        }
+    }
+    #endif
+    return false;
+}
