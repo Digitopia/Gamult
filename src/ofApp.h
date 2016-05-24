@@ -19,6 +19,7 @@
 #include "ofxiOS.h"
 #include "ofxiOSExtras.h"
 #include "swipeRecognition.h"
+#include "ofxCocosDenshion.h"
 #endif
 
 

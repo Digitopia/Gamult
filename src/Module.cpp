@@ -15,6 +15,7 @@ Module::Module(int index, float x, float y, float width, float height, int maxPo
     // util vars
 	this->x1 = x + width;
     this->consoleHeight = CONSOLE_HEIGHT*height;
+    this->numberOfInstruments = soundPaths.size();
 
     int w = round(BUTTON_CHANGE_INSTRUMENT_WIDTH * width);
     int h = round(BUTTON_CHANGE_INSTRUMENT_HEIGHT * height);
@@ -64,6 +65,7 @@ void Module::prepareInstrumentChange(int direction) {
 }
 
 void Module::loadSounds(vector<string> paths) {
+#ifndef TARGET_OF_IOS
     for (int i = 0; i < paths.size(); i++) {
        ofSoundPlayer s;
 //        s.setMultiPlay(true);
@@ -71,21 +73,39 @@ void Module::loadSounds(vector<string> paths) {
 //        sounds[i].setMultiPlay(true);
         sounds[i].load(paths[i], false);
     }
+#else
+    ofxCocosDenshion s;
+    sounds.push_back(s);
+    s.setup();
+    for (int i = 0; i< paths.size(); i++) {
+        sounds[0].addSoundEffect(paths[i], 0.7);
+    }
+    sounds[0].loadAllAudio();
+#endif
 }
 
 void Module::unloadSounds() {
     for (int i = 0; i < sounds.size(); i++) {
+#ifndef TARGET_OF_IOS
         sounds[i].stop();
         cout << "stopping sound " << i << endl;
         sounds[i].unload();
         cout << "unloading sound " << i << endl;
     }
+#else
+        sounds[0].stopAllSounds();
+        cout << "stopping sound " << i << endl;
+        sounds[0].destroy();
+    }
+#endif
     sounds.clear();
+    
 }
 
 void Module::changeInstrument(int iSoundPaths) {
     unloadSounds();
     loadSounds(ofApp::getSoundPaths(iSoundPaths));
+    numberOfInstruments = ofApp::getSoundPaths(iSoundPaths).size();
 	cout << "changing instrument" << endl;
 }
 
@@ -154,7 +174,7 @@ void Module::drawBorders() {
 
 void Module::drawGrid() {
 	ofSetColor(GRID_COLOR);
-	int gridNumberElements = sounds.size();
+    int gridNumberElements = getNumberOfInstrumentNotes();
 	int gridCellSize = round(float(width) / gridNumberElements);
 	for (int i = 1; i < gridNumberElements; i++) {
 		int gridCellX = x0 + (i)*gridCellSize + 2;
@@ -183,7 +203,11 @@ void Module::drawParticles() {
 void Module::playSound(int index, float vol) {
 #ifndef TARGET_OF_IOS
     sounds[index].setMultiPlay(true);
-#endif
     sounds[index].setVolume(vol);
     sounds[index].play();
+#else
+    sounds[0].setSoundVolume(vol, 0.8f);
+    sounds[0].playSound(index);
+    cout << "index is " << index << endl;
+#endif
 }

@@ -4,6 +4,7 @@
 #include "ofMain.h"
 #include "ModuleConsole.h"
 #include "Particle.h"
+#include "ofxCocosDenshion.h"
 
 class Module {
 
@@ -36,7 +37,7 @@ public:
 	bool isFreezed()                 { return console->isFreezed(); }
 	bool isLooping()                 { return console->isLooping(); }
 	bool isGravityOn()               { return console->isGravityOn(); }
-	int getNumberOfInstrumentNotes() { return sounds.size(); }
+    int getNumberOfInstrumentNotes() { return numberOfInstruments; }
 	bool anyParticles()              { return particles.size() > 0; }
 	void removeParticle()            { particles.erase(particles.end() - 1); }
     void removeAllParticles()        { particles.clear(); }
@@ -61,8 +62,9 @@ private:
 	int height;
     int consoleHeight;
 	int maxPopulation;
+    int numberOfInstruments;
 	ModuleConsole* console;
-    vector<ofSoundPlayer> sounds;
+    vector<ofxCocosDenshion> sounds;
 	vector<Particle> particles;
 
     ofRectangle previousInstrumentRect;
