@@ -49,9 +49,7 @@ void swipeRecognition::gestureRecognized(swipeRecognitionArgs args){
         [gestureUp release];
         [gestureDown release];
         [gestureLeft release];
-        [gestureRight release];
-        
-        NSLog(@"initwithView was run! \n");
+        [gestureRight release];        
         
     }
     return self;

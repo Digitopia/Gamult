@@ -2,8 +2,8 @@
 #include "ofApp.h"
 
 int main() {
-    
-    #ifdef TARGET_OF_IOS
+
+    #if defined TARGET_OF_IOS
     ofiOSWindowSettings window;
     window.enableRetina = true;
     window.enableHardwareOrientation = true;
@@ -12,8 +12,9 @@ int main() {
     ofCreateWindow(window);
     #else
     ofSetupOpenGL(1024, 768, OF_FULLSCREEN);
+//    ofSetupOpenGL(500, 500, OF_WINDOW);
     #endif
-
+    
     ofRunApp(new ofApp());
     return 0;
 }
