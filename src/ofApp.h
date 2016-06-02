@@ -7,6 +7,7 @@
     #include "ofxiOS.h"
     #include "ofxiOSExtras.h"
     #include "swipeRecognition.h"
+#include "ofxCocosDenshion.h"
 #elif defined TARGET_SEMIBREVE
     #include "ofxOsc.h"
 #endif
@@ -17,19 +18,7 @@
 #include "ModuleConsole.h"
 #include "Particle.h"
 #include "Touch.h"
-<<<<<<< HEAD
 //#include "Constants.h"
-
-#ifdef TARGET_OF_IOS
-#include "ofxiOS.h"
-#include "ofxiOSExtras.h"
-#include "swipeRecognition.h"
-#include "ofxCocosDenshion.h"
-#endif
-
-=======
-#include "Constants.h"
->>>>>>> master
 
 enum appState {
     SPLASH_SCREEN,

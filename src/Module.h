@@ -4,7 +4,9 @@
 #include "ofMain.h"
 #include "ModuleConsole.h"
 #include "Particle.h"
+#ifdef TARGET_OF_IOS
 #include "ofxCocosDenshion.h"
+#endif
 
 class Module {
 
@@ -27,7 +29,6 @@ public:
 
     void playSound(int index, float vol);
     void prepareInstrumentChange(int direction);
-<<<<<<< HEAD
 	void changeInstrument(int index);
 
 	int getX0()                      { return x0; }
@@ -42,30 +43,16 @@ public:
     int getNumberOfInstrumentNotes() { return numberOfInstruments; }
 	bool anyParticles()              { return particles.size() > 0; }
 	void removeParticle()            { particles.erase(particles.end() - 1); }
-=======
-    void changeInstrument(int index);
+
     void setDimensions(int x, int y, int width, int height);
     void updateParticlesOnOrientationChange();
 
     void touchDown(ofTouchEventArgs& event);
 
-    void removeParticle()            { particles.erase(particles.end() - 1); }
->>>>>>> master
     void removeAllParticles()        { particles.clear(); }
     void removeParticle(int i)       { particles.erase(particles.end() + i); }
     void setParticles(vector<Particle> particles) { this->particles = particles; }
 
-    int getX0()                      { return x0; }
-    int getX1()                      { return x1; }
-    int getIndex()                   { return index; }
-    int getWidth()                   { return width; }
-    int getHeight()                  { return height; }
-    float getSpeed()                 { return console->getSpeed(); }
-    bool isFreezed()                 { return console->isFreezed(); }
-    bool isLooping()                 { return console->isLooping(); }
-    bool isGravityOn()               { return console->isGravityOn(); }
-    int getNumberOfInstrumentNotes() { return sounds.size(); }
-    bool anyParticles()              { return particles.size() > 0; }
     int getNumberOfParticles()       { return particles.size(); }
     vector<Particle> getParticles()  { return particles; }
     Particle* getParticle(int i)     { return &particles[i]; }
@@ -91,19 +78,19 @@ private:
     int width;
     int height;
     int consoleHeight;
-<<<<<<< HEAD
 	int maxPopulation;
     int numberOfInstruments;
 	ModuleConsole* console;
-    vector<ofxCocosDenshion> sounds;
+    
 	vector<Particle> particles;
-=======
-    int maxPopulation;
-    ModuleConsole* console;
+#ifdef TARGET_OF_IOS
+    vector<ofxCocosDenshion> sounds;
+#else
     vector<ofSoundPlayer> sounds;
-    vector<Particle> particles;
+#endif
+    
     bool active;
->>>>>>> master
+
 
     ofRectangle previousInstrumentRect;
     ofRectangle nextInstrumentRect;

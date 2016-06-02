@@ -11,14 +11,12 @@ Module::Module(int index, int x, int y, int width, int height, int maxPopulation
     loadSounds(soundPaths);
     ofAddListener(ofEvents().touchDown, this, &Module::touchDown);
 
-<<<<<<< HEAD
     // util vars
 	this->x1 = x + width;
     this->consoleHeight = CONSOLE_HEIGHT*height;
     this->numberOfInstruments = soundPaths.size();
-=======
     this->console = new ModuleConsole(x0, width, index);
->>>>>>> master
+
 
     this->active = true;
 
@@ -123,12 +121,8 @@ void Module::unloadSounds() {
 void Module::changeInstrument(int iSoundPaths) {
     unloadSounds();
     loadSounds(ofApp::getSoundPaths(iSoundPaths));
-<<<<<<< HEAD
     numberOfInstruments = ofApp::getSoundPaths(iSoundPaths).size();
-	cout << "changing instrument" << endl;
-=======
     ofLogNotice() << "changing instrument";
->>>>>>> master
 }
 
 void Module::addParticle(int life, int x, int y) {
@@ -194,7 +188,7 @@ void Module::drawBorders() {
 }
 
 void Module::drawGrid() {
-<<<<<<< HEAD
+
 	ofSetColor(GRID_COLOR);
     int gridNumberElements = getNumberOfInstrumentNotes();
 	int gridCellSize = round(float(width) / gridNumberElements);
@@ -203,16 +197,6 @@ void Module::drawGrid() {
 //    	ofLine(gridCellX, height, gridCellX, height-GRID_HEIGHT); // small grids at bottom
     	ofDrawLine(gridCellX, height, gridCellX, consoleHeight); // top to bottom grids
 	}
-=======
-    ofSetColor(GRID_COLOR);
-    int gridNumberElements = sounds.size();
-    int gridCellSize = round(float(width) / gridNumberElements);
-    for (int i = 1; i < gridNumberElements; i++) {
-        int gridCellX = x0 + (i)*gridCellSize + 2;
-        //    	ofLine(gridCellX, height, gridCellX, height-GRID_HEIGHT); // small grids at bottom
-        ofDrawLine(gridCellX, height, gridCellX, consoleHeight); // top to bottom grids
-    }
->>>>>>> master
 }
 
 void Module::drawChangeInstrumentButtons() {
@@ -238,10 +222,9 @@ void Module::playSound(int index, float vol) {
     if (!this->active) return;
     #if !defined TARGET_OF_IOS
     sounds[index].setMultiPlay(true);
-<<<<<<< HEAD
-=======
     #endif
->>>>>>> master
+
+#ifndef TARGET_OF_IOS
     sounds[index].setVolume(vol);
     sounds[index].play();
 #else
