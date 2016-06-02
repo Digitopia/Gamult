@@ -881,9 +881,10 @@ void ofApp::onSwipe(swipeRecognitionArgs& args) {
 }
 
 void ofApp::detectShake() {
+    float offset = 1.7;
     float accelX = ofxAccelerometer.getForce().x;
     float accelY = ofxAccelerometer.getForce().y;
-    if (accelX < - 2 || accelX > 2 && accelY < -2 || accelY >2) {
+    if ((accelX < - offset || accelX > offset) || (accelY < - offset || accelY > offset)) {
         accelCount++;
     } else {
         accelCount=0;
