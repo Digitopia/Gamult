@@ -23,11 +23,17 @@ void Button::setDimensions(int size, int x, int y) {
     this->x = x;
     this->y = y;
     this->rect = ofRectangle(x, y, size, size);
+#ifdef TARGET_OF_IOS
+    int offset = size*.6;
+#else
+    int offset = 0;
+#endif
+    this->rect2 = ofRectangle(x-offset/2, y-offset/2, size+offset, size+offset);
 }
 
 void Button::touchDown(ofTouchEventArgs& event) {
 
-    if (id == -1 && type == BUTTON_TOGGLE && rect.inside(event.x, event.y)) {
+    if (id == -1 && type == BUTTON_TOGGLE && rect2.inside(event.x, event.y)) {
         state = !state;
     }
 

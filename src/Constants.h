@@ -6,7 +6,7 @@
     #define TOUCH_MAX 40
     #define TOUCH_MIN 10
     #define BUTTON_SIZE .20
-    #define FADER_SIZE .16
+    #define FADER_SIZE .19
 
  #elif defined TARGET_SEMIBREVE
     #define NMODULES 4

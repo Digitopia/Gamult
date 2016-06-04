@@ -33,6 +33,7 @@ private:
     float y; // top left corner of the button
     string title;
     ofRectangle rect;
+    ofRectangle rect2; // rect2 is used to increse the area when clicking on a mobile device
     ofTrueTypeFont font;
     bool state;
     int id; // the id of the touch to which this fader is locked
