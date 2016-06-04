@@ -2,22 +2,27 @@
 
 #if defined TARGET_OF_IOS
     #define NMODULES 4
-    #define UI_FONT_SIZE 12
+    #define UI_FONT_SIZE 13
     #define TOUCH_MAX 40
     #define TOUCH_MIN 10
+    #define BUTTON_SIZE .20
+    #define FADER_SIZE .16
 
  #elif defined TARGET_SEMIBREVE
     #define NMODULES 4
     #define UI_FONT_SIZE 14
     #define TOUCH_MAX 20
     #define TOUCH_MIN 0
+    #define BUTTON_SIZE .18
+    #define FADER_SIZE .12
 
 #else
     #define NMODULES 4
     #define UI_FONT_SIZE 14
     #define TOUCH_MAX 20
     #define TOUCH_MIN 0
-
+    #define BUTTON_SIZE .18
+    #define FADER_SIZE .12
 #endif
 
 // setup
@@ -43,8 +48,6 @@
 #define UI_COLOR 255 // color for buttons, faders, etc.
 
 // buttons + fader
-#define BUTTON_SIZE .18
-#define FADER_SIZE .12
 #define BUTTON_COLOR 0x8DCACB
 #define BUTTON_REMOVE_COLOR 0x274848
 #define BUTTON_WIDTH 1
