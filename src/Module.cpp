@@ -68,13 +68,19 @@ void Module::prepareInstrumentChange(int direction) {
     #if defined TARGET_OF_IOS
     ofLogNotice() << "direction received: " << direction;
     if (direction == 1) {
-        if (iSoundPaths <= 0) return;
-        changeInstrument(--iSoundPaths);
+        if (iSoundPaths <= 0) {
+            changeInstrument(iSoundPaths = 3);
+        } else {
+            changeInstrument(--iSoundPaths);
+        }
     }
 
     else if (direction == 2) {
-        if (iSoundPaths >= 3) return;
-        changeInstrument(++iSoundPaths);
+        if (iSoundPaths >= 3) {
+            changeInstrument(iSoundPaths = 0);
+        } else {
+            changeInstrument(++iSoundPaths);
+        }
     }
     #endif
 
