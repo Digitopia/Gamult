@@ -1,14 +1,22 @@
+#pragma once
+
 #ifndef OFAPP_H
 #define OFAPP_H
 
 #include "ofMain.h"
 
 #if defined TARGET_OF_IOS
-    #include "ofxiOS.h"
-    #include "ofxiOSExtras.h"
-    #include "swipeRecognition.h"
-#elif defined TARGET_SEMIBREVE
-    #include "ofxOsc.h"
+#include "ofxiOS.h"
+#include "ofxiOSExtras.h"
+#include "swipeRecognition.h"
+#endif
+
+#if defined TARGET_SEMIBREVE
+#include "ofxOsc.h"
+#endif
+
+#if defined TARGET_ANDROID
+#include "ofxAndroid.h"
 #endif
 
 #include "Button.h"
@@ -38,11 +46,15 @@ enum inactivityStateEnum {
     POST_INACTIVE   // when the auto generated animations have finished already (it's simply transitory, goes directly to ACTIVE after)
 };
 
-// need to forwad declare Touch, because of Touch requiring ofApp and ofApp requiring Touch.
+// need to forward declare Touch, because of Touch requiring ofApp and ofApp requiring Touch.
 class Touch;
 
-#if defined TARGET_OF_IOS
+#if defined TARGET_ANDROID
+class ofApp : public ofxAndroidApp {
+
+#elif defined TARGET_OF_IOS
 class ofApp : public ofxiOSApp {
+
 #else
 class ofApp : public ofBaseApp {
 #endif
@@ -83,10 +95,11 @@ public:
     bool hasParticles();
     void resetModules();
     void resetInactivityTime();
-    
+
     void updateNewModuleActive(int x);
 
     void initModules();
+    void initImages();
 
     #if defined TARGET_OF_IOS
     void onSwipe(swipeRecognitionArgs& args);
@@ -95,19 +108,23 @@ public:
 
     static vector<string> getSoundPaths(unsigned int index);
 
-    static int nModules;
-    static unsigned int moduleActive;
-    static int nParticlesPerModule;
+    static unsigned int moduleActive; // NOTE: can this be a property of the Module instead?
     static int maxParticleY; // TODO does this really needs to be static and here
-    static Module** modules; // TODO make this a vector or something
+    static vector<Module*> modules;
 
     #if defined TARGET_SEMIBREVE
     void checkMultitouchData();
     static ofxOscSender oscSender;
     static ofxOscReceiver oscReceiver;
     #endif
-    
-    static bool iPadInPortrait();
+
+    // helper methods
+    static bool isIos();
+    static bool isAndroid();
+    static bool isPhone();
+    static bool isTablet();
+    static bool isTabletInPortrait();
+    static bool isTabletInLandscape();
 
     static int mouseId;
 

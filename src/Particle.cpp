@@ -79,7 +79,6 @@ void Particle::report(int idx, int note, int vel) {
     m.addIntArg(note);
     m.addIntArg(vel);
     ofApp::oscSender.sendMessage(m);
-
 }
 #endif
 
