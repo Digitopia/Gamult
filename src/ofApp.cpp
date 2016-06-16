@@ -422,7 +422,7 @@ void ofApp::setupModules() {
     #endif
     
     #if defined TARGET_OF_IOS
-    if (ofGetOrientation() == OF_ORIENTATION_DEFAULT) {
+    if (ofGetOrientation() == OF_ORIENTATION_DEFAULT || ofxiOSGetDeviceType() == OFXIOS_DEVICE_IPHONE) {
         ofApp::modules[moduleActive]->setDimensions(0, 0, ofGetWidth(), ofGetHeight());
     } else {
         int width = ofGetWidth()/ofApp::nModules;

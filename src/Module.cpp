@@ -97,7 +97,6 @@ void Module::loadSounds(vector<string> paths) {
     }
 #else
     ofxCocosDenshion s;
-    sounds.push_back(s);
     s.setup();
     for (int i = 0; i< paths.size(); i++) {
         sounds[0].addSoundEffect(paths[i], 0.7);
@@ -224,18 +223,12 @@ void Module::drawParticles() {
     }
 }
 
-void Module::playSound(int index, float vol) {
     if (!this->active) return;
     #if !defined TARGET_OF_IOS
-    sounds[index].setMultiPlay(true);
     #endif
 
 #ifndef TARGET_OF_IOS
-    sounds[index].setVolume(vol);
-    sounds[index].play();
 #else
     sounds[0].setSoundVolume(vol, 0.8f);
-    sounds[0].playSound(index);
-    cout << "index is " << index << endl;
 #endif
 }
