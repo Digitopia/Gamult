@@ -6,17 +6,17 @@
 #include "ofMain.h"
 
 #if defined TARGET_OF_IOS
-#include "ofxiOS.h"
-#include "ofxiOSExtras.h"
-#include "swipeRecognition.h"
+  #include "ofxiOS.h"
+  #include "ofxiOSExtras.h"
+  #include "swipeRecognition.h"
 #endif
 
 #if defined TARGET_SEMIBREVE
-#include "ofxOsc.h"
+  #include "ofxOsc.h"
 #endif
 
 #if defined TARGET_ANDROID
-#include "ofxAndroid.h"
+  #include "ofxAndroid.h"
 #endif
 
 #include "Button.h"
@@ -28,35 +28,33 @@
 #include "Constants.h"
 
 enum appState {
-    SPLASH_SCREEN,
-    SPLASH_FADE,
-    ABOUT,
-    ABOUT_DESCENDING,
-    ABOUT_ASCENDING,
-    APP,
-    BAR_ASCENDING,
-    BAR_DESCENDING,
-    BAR
+  SPLASH_SCREEN,
+  SPLASH_FADE,
+  ABOUT,
+  ABOUT_DESCENDING,
+  ABOUT_ASCENDING,
+  APP,
+  BAR_ASCENDING,
+  BAR_DESCENDING,
+  BAR
 };
 
 enum inactivityStateEnum {
-    ACTIVE,         // default state
-    PRE_INACTIVE,   // after a min of no interaction, resets controls and clears particles
-    INACTIVE,       // when the auto generated animations are happening
-    POST_INACTIVE   // when the auto generated animations have finished already (it's simply transitory, goes directly to ACTIVE after)
+  ACTIVE,         // default state
+  PRE_INACTIVE,   // after a min of no interaction, resets controls and clears particles
+  INACTIVE,       // when the auto generated animations are happening
+  POST_INACTIVE   // when the auto generated animations have finished already (it's simply transitory, goes directly to ACTIVE after)
 };
 
-// need to forward declare Touch, because of Touch requiring ofApp and ofApp requiring Touch.
+// NOTE: need to forward declare Touch, because of Touch requiring ofApp and ofApp requiring Touch.
 class Touch;
 
 #if defined TARGET_ANDROID
-class ofApp : public ofxAndroidApp {
-
+  class ofApp : public ofxAndroidApp {
 #elif defined TARGET_OF_IOS
-class ofApp : public ofxiOSApp {
-
+  class ofApp : public ofxiOSApp {
 #else
-class ofApp : public ofBaseApp {
+  class ofApp : public ofBaseApp {
 #endif
 
 public:
@@ -65,16 +63,16 @@ public:
     void update();
     void draw();
 
+    void mouseMoved(ofMouseEventArgs& mouse);
+    void mouseDragged(ofMouseEventArgs& mouse);
+    void mousePressed(ofMouseEventArgs& mouse);
+    void mouseReleased(ofMouseEventArgs& mouse);
+
     void touchDown(ofTouchEventArgs& touch);
     void touchMoved(ofTouchEventArgs& touch);
     void touchUp(ofTouchEventArgs& touch);
     void touchDoubleTap(ofTouchEventArgs& touch) {}
     void touchCancelled(ofTouchEventArgs& touch) {}
-
-    void mouseMoved(ofMouseEventArgs& mouse);
-    void mouseDragged(ofMouseEventArgs& mouse);
-    void mousePressed(ofMouseEventArgs& mouse);
-    void mouseReleased(ofMouseEventArgs& mouse);
 
     void deviceOrientationChanged(int newOrientation);
 
@@ -102,23 +100,25 @@ public:
     void initImages();
 
     #if defined TARGET_OF_IOS
-    void onSwipe(swipeRecognitionArgs& args);
-    void detectShake();
+      void onSwipe(swipeRecognitionArgs& args);
+      void detectShake();
+    #endif
+
+    #if defined TARGET_SEMIBREVE
+      void checkMultitouchData();
+      static ofxOscSender oscSender;
+      static ofxOscReceiver oscReceiver;
     #endif
 
     static vector<string> getSoundPaths(unsigned int index);
 
     static unsigned int moduleActive; // NOTE: can this be a property of the Module instead?
-    static int maxParticleY; // TODO does this really needs to be static and here
-    static vector<Module*> modules;
-
-    #if defined TARGET_SEMIBREVE
-    void checkMultitouchData();
-    static ofxOscSender oscSender;
-    static ofxOscReceiver oscReceiver;
-    #endif
+    static int maxParticleY; // TODO does this really needs to be static and here?
 
     // helper methods
+    // FIXME: Consider using an Utils rather than in ofApp
+    static bool isOsx();
+    static bool isSemibreve();
     static bool isIos();
     static bool isAndroid();
     static bool isPhone();
@@ -132,6 +132,8 @@ public:
     static bool multitouch;
     static unsigned int inactivityCounter;
     static unsigned int currentAlpha;
+
+    static vector<Module*> modules;
 
 private:
 
@@ -163,9 +165,9 @@ private:
     ofRectangle nextInstrumentRect;
 
     #if defined TARGET_OF_IOS
-    swipeRecognition swiper;
-    bool swiping;
-    int accelCount;
+      swipeRecognition swiper;
+      bool swiping;
+      int accelCount;
     #endif
 
 };
