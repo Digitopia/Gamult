@@ -13,7 +13,7 @@ class Button {
 
 public:
 
-    Button(buttonType type, int module, int size, int x, int y, string title);
+    Button(Module* module, buttonType type, string title);
     void draw();
     bool getState() { return state; }
     void on() { state = true; }
@@ -36,6 +36,7 @@ private:
     ofTrueTypeFont font;
     bool state;
     int id; // the id of the touch to which this fader is locked
+    Module* module;
 
 };
 

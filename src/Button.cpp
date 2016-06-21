@@ -1,16 +1,14 @@
 #include "ofApp.h"
 
-Button::Button(buttonType type, int module, int size, int x, int y, string title) {
+Button::Button(Module* module, buttonType type, string title) {
 
-    this->type = type;
     this->module = module;
+    this->type = type;
     this->title = title;
+
     this->state = false;
-    setDimensions(size, x, y);
-
-    font.load(UI_FONT_FACE, UI_FONT_SIZE, true);
-
     this->id = -1;
+    this->font.load(UI_FONT_FACE, UI_FONT_SIZE, true);
 
     ofAddListener(ofEvents().touchDown,  this, &Button::touchDown);
     ofAddListener(ofEvents().touchMoved, this, &Button::touchMoved);
@@ -18,10 +16,10 @@ Button::Button(buttonType type, int module, int size, int x, int y, string title
 
 }
 
-void Button::setDimensions(int size, int x, int y) {
-    this->size = size;
+void Button::setDimensions(int x, int y, int size) {
     this->x = x;
     this->y = y;
+    this->size = size;
     this->rect = ofRectangle(x, y, size, size);
 }
 
@@ -71,13 +69,18 @@ void Button::draw() {
         ofFill();
 
     if (type == BUTTON_TOGGLE) {
-        font.drawString(title, x+size*1.5, y+size-3);
         ofDrawRectangle(rect);
+        font.drawString(title, x+size*1.5, y+size-3);
     }
 
     if (type == BUTTON_REMOVE || type == BUTTON_CLEAR) {
 
         ofSetHexColor(BUTTON_REMOVE_COLOR);
+
+        ofLogNotice() << rect;
+        rect.setHeight(10);
+        ofDrawRectangle(rect);
+
         ofDrawRectangle(x, y, ofApp::modules[module]->getWidth()/2, CONSOLE_HEIGHT*ofGetHeight()*(1-CONSOLE_SECTION_HEIGHT));
 
         int lowerPartHeight = (1-CONSOLE_SECTION_HEIGHT) * CONSOLE_HEIGHT * ofGetHeight();

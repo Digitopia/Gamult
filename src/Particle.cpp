@@ -1,6 +1,6 @@
 #include "ofApp.h"
 
-Particle::Particle(int module, int index, float x, float y, int life) {
+Particle::Particle(Module* module, int index, float x, float y, int life) {
     this->module = module;
     this->index = index;
     this->center.x = x;
@@ -13,7 +13,7 @@ Particle::Particle(int module, int index, float x, float y, int life) {
 
 void Particle::gravity() {
 
-    float gravity = ofApp::modules[module]->getSpeed();
+    float gravity = module->getSpeed();
 
     if (center.y >= ofGetHeight()) {
         center.y = ofGetHeight();

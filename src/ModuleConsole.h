@@ -9,7 +9,7 @@ class ModuleConsole {
 
 public:
 
-    ModuleConsole(int x, float width, int module);
+    ModuleConsole(Module* module, int x, float width);
 
     void draw();
 
@@ -29,7 +29,7 @@ public:
 
 private:
 
-    int module;
+    Module* module;
     float width;
     float height;
 

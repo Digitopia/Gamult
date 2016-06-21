@@ -2,6 +2,7 @@
 #define FADER_H
 
 #include "ofMain.h"
+#include "Module.h"
 
 class Fader {
 
@@ -31,6 +32,7 @@ private:
     int size; // size in pixels of the square of the fader
     int range; // range in pixels of the line in which the fader moves
     int id; // the id of the touch to which this fader is locked
+    Module* module;
 
 };
 

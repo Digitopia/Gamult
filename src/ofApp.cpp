@@ -360,7 +360,7 @@ void ofApp::drawTouches() {
 
 void ofApp::drawModules() {
     for (unsigned int i = 0; i < modules.size(); i++)
-      modules[i]->draw();
+        modules[i]->draw();
 }
 
 void ofApp::drawBouncingArrow() {
@@ -773,16 +773,21 @@ void ofApp::deviceOrientationChanged(int newOrientation) {
     // it transitioning to landscape, activate back all modules
     if (newOrientation == OF_ORIENTATION_90_LEFT || newOrientation == OF_ORIENTATION_90_RIGHT) {
         for (unsigned int i = 0; i < modules.size(); i++) modules[i]->activate();
-        setupModules();
     }
     // it transitioning to portrait, deactivate all modules, except the one with which last interacted
     else {
         for (unsigned int i = 0; i < modules.size(); i++) {
-            if (i == moduleActive) modules[i]->activate();
-            else modules[i]->deactivate();
+            if (i == moduleActive) {
+                ofLogNotice() << "activating module " << i;
+                modules[i]->activate();
+            }
+            else {
+                ofLogNotice() << "deactivating module " << i;
+                modules[i]->deactivate();
+            }
         }
-        setupModules();
     }
+    setupModules();
 
 }
 

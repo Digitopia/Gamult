@@ -2,12 +2,13 @@
 #define PARTICLE_H
 
 #include "ofMain.h"
+#include "Module.h"
 
 class Particle {
 
 public:
 
-    Particle(int module, int index, float x, float y, int life);
+    Particle(Module* module, int index, float x, float y, int life);
 
     void draw();
     void drawCircle();
@@ -31,7 +32,7 @@ public:
 
 private:
 
-    int module;
+    Module* module;
     int index;
     int health;
     int life;

@@ -42,20 +42,6 @@ void Module::setDimensions(int x, int y, int width, int height) {
 
 void Module::touchDown(ofTouchEventArgs& event) {
 
-    //    #if defined TARGET_OF_IOS
-    //    if (previousInstrumentRect.inside(event.x, event.y)) {
-    //        if (iSoundPaths <= 0) return;
-    ////        changeInstrument(--iSoundPaths);
-    //        changeInstrument(iSoundPaths-1);
-    //    }
-    //
-    //    else if (nextInstrumentRect.inside(event.x, event.y)) {
-    //        if (iSoundPaths >= 3) return;
-    ////        changeInstrument(++iSoundPaths);
-    //        changeInstrument(iSoundPaths+1);
-    //    }
-    //    #endif
-
 }
 
 void Module::prepareInstrumentChange(int direction) {
@@ -112,6 +98,8 @@ void Module::addParticle(int life, int x, int y) {
 }
 
 void Module::update() {
+    
+    if (!active) return;
 
     if (isFreezed())
         return;
@@ -134,6 +122,7 @@ void Module::update() {
 }
 
 void Module::draw() {
+    if (!active) return;
     console->draw();
     drawBackground();
     drawBorders();
@@ -188,6 +177,7 @@ void Module::drawChangeInstrumentButtons() {
 }
 
 void Module::drawParticles() {
+    if (!active) return;
     for (int i = 0; i < particles.size(); i++) {
         particles[i].draw();
     }
