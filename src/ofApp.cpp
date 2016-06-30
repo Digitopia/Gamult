@@ -1,7 +1,5 @@
 #include "ofApp.h"
 
-int ofApp::nModules = NMODULES;
-int ofApp::nParticlesPerModule = PARTICLES_PER_MODULE;
 int ofApp::maxParticleY = 0;
 int ofApp::mouseId = 0;
 unsigned int ofApp::inactivityCounter = 0;
@@ -12,7 +10,7 @@ unsigned int ofApp::currentAlpha = DEFAULT_ALPHA;
 
 typedef map<int,Touch>::iterator touchesIterator;
 
-Module** ofApp::modules = new Module* [ofApp::nModules];
+vector<Module*> ofApp::modules;
 //UISwipeGestureRecognizer *swipe;
 
 #if defined TARGET_SEMIBREVE
@@ -22,7 +20,6 @@ ofxOscReceiver ofApp::oscReceiver;
 
 void ofApp::setup() {
 
-    // ofSetLogLevel(OF_LOG_SILENT);
     ofSetLogLevel(OF_LOG_NOTICE);
 
     ofLogNotice() << "setup";
@@ -40,7 +37,7 @@ void ofApp::setup() {
 
     #if defined TARGET_OF_IOS
     ofLogNotice() << "Running iOS version";
-    if (ofxiOSGetDeviceType() == OFXIOS_DEVICE_IPAD) {
+    if (ofApp::isTablet()) {
         ofLogNotice() << "Running iPad version";
         ofSetOrientation(OF_ORIENTATION_90_LEFT);
     } else {
@@ -62,20 +59,10 @@ void ofApp::setup() {
     ofSetCircleResolution(CIRCLE_RESOLUTION);
 
     if (multitouch) ofHideCursor();
-    
-    ofLogNotice() << "nModules is " << nModules;
 
     initModules();
     setupModules();
-    
-    ofApp::maxParticleY = round(ofGetHeight() * (1-LIMIT_PARTICLE));
-
-    imgSplashScreen.load("images/splash_screen.png");
-    imgSplashScreen.resize(ofGetWidth(), ofGetHeight());
-    imgAbout.load("images/about.png");
-    imgAbout.resize(ofGetWidth(), ofGetHeight());
-    imgArrow.load("images/arrow_up.png");
-    imgArrowDown.load("images/arrow_down.png");
+    initImages();
 
     state = APP; // TODO: don't forget to revert to SPLASH_SCREEN for release
 
@@ -86,7 +73,62 @@ void ofApp::setup() {
     arrowDownY = ofGetHeight()/3*2;
     arrowDownYBase = arrowDownY;
     arrowDownDir = 1;
+    ofApp::maxParticleY = round(ofGetHeight() * (1-LIMIT_PARTICLE));
 
+}
+
+
+void ofApp::initModules() {
+    
+    ofLogNotice() << "start initModules";
+    
+    int nModules = isPhone() ? 1 : 4;
+    ofLogNotice() << "Allocating " << nModules << " modules";
+    modules.reserve(nModules);
+    int width = ofGetWidth()/nModules;
+    int height = ofGetHeight();
+    int habitants = PARTICLES_PER_MODULE;
+    for (unsigned int i = 0; i < nModules; i++) {
+        int x = i*width;
+        int y = 0;
+        modules.push_back(new Module(i, x, y, width, height, habitants, getSoundPaths(i)));
+    }
+    
+    ofLogNotice() << "end initModules";
+    
+}
+
+void ofApp::setupModules() {
+    
+    ofLogNotice() << "start setupModules";
+    
+    if (isTabletInPortrait()) {
+        modules[moduleActive]->setDimensions(0, 0, ofGetWidth(), ofGetHeight());
+    }
+    else {
+        for (unsigned int i = 0; i < modules.size(); i++) {
+            int width = ofGetWidth()/modules.size();
+            modules[i]->setDimensions(i*width, 0, width, ofGetHeight());
+        }
+    }
+    
+    // update down arrow on orientation change
+    int barRectLength = 0.1*ofGetWidth();
+    int barRectHeight = barRectLength/4;
+    barRect.set(ofGetWidth()/2 - barRectLength/2, ofGetHeight() - barRectHeight, barRectLength, barRectHeight);
+    
+    ofLogNotice() << "end setupModules";
+}
+
+void ofApp::initImages() {
+    ofLogNotice() << "start initImages";
+    imgSplashScreen.load("images/splash_screen.png");
+    imgSplashScreen.resize(ofGetWidth(), ofGetHeight());
+    imgAbout.load("images/about.png");
+    imgAbout.resize(ofGetWidth(), ofGetHeight());
+    imgArrow.load("images/arrow_up.png");
+    imgArrowDown.load("images/arrow_down.png");
+    ofLogNotice() << "end initImages";
 }
 
 void ofApp::update() {
@@ -128,7 +170,7 @@ void ofApp::update() {
     if (ofxiOSGetDeviceType() == OFXIOS_DEVICE_IPAD && ofGetOrientation() == OF_ORIENTATION_DEFAULT) {
         ofApp::modules[moduleActive]->update();
     } else {
-        for (int i = 0; i < ofApp::nModules; i++) {
+        for (int i = 0; i < modules.size(); i++) {
             ofApp::modules[i]->update();
         }
     }
@@ -182,7 +224,7 @@ void ofApp::handleInactivity() {
 
     // POST_INACTIVE -> ACTIVE
     if (inactivityState == POST_INACTIVE) {
-        for (int i = 0; i < ofApp::nModules; i++) {
+        for (int i = 0; i < modules.size(); i++) {
             modules[i]->removeAllParticles();
         }
         inactivityState = ACTIVE;
@@ -197,7 +239,7 @@ void ofApp::resetInactivityTime() {
 }
 
 void ofApp::resetModules() {
-    for (unsigned int i = 0; i < nModules; i++) {
+    for (unsigned int i = 0; i < modules.size(); i++) {
         modules[i]->removeAllParticles();
         modules[i]->unfreeze();
         modules[i]->enableGravity();
@@ -316,23 +358,8 @@ void ofApp::draw() {
 }
 
 void ofApp::drawParticles() {
-    
-    #if defined TARGET_OSX
-    for (int i = 0; i < ofApp::nModules; i++) {
-        ofApp::modules[i]->drawParticles();
-    }
-    #endif
-
-    #if defined TARGET_OF_IOS
-    if (ofGetOrientation() == OF_ORIENTATION_DEFAULT) {
-        ofApp::modules[moduleActive]->drawParticles();
-    } else {
-        for (int i = 0; i < ofApp::nModules; i++) {
-            ofApp::modules[i]->drawParticles();
-        }
-    }
-    #endif
-    
+    for (unsigned int i = 0; i < modules.size(); i++)
+        modules[i]->drawParticles();
 }
 
 void ofApp::drawTouches() {
@@ -341,30 +368,9 @@ void ofApp::drawTouches() {
     }
 }
 
-
 void ofApp::drawModules() {
-
-    #if defined TARGET_OSX
-    for (int i = 0; i < ofApp::nModules; i++) {
-        ofApp::modules[i]->draw();
-    }
-    #endif
-
-    #if defined TARGET_OF_IOS
-    if (ofxiOSGetDeviceType() == OFXIOS_DEVICE_IPHONE) {
-        ofApp::modules[moduleActive]->draw();
-    }
-    else if (ofxiOSGetDeviceType() == OFXIOS_DEVICE_IPAD) {
-        if (ofGetOrientation() == OF_ORIENTATION_DEFAULT) {
-            ofApp::modules[moduleActive]->draw();
-        }
-        else {
-            for (int i = 0; i < ofApp::nModules; i++) {
-                ofApp::modules[i]->draw();
-            }
-        }
-    }
-    #endif
+    for (unsigned int i = 0; i < modules.size(); i++)
+        modules[i]->draw();
 }
 
 void ofApp::drawBouncingArrow() {
@@ -395,53 +401,6 @@ void ofApp::drawArrow(bool up) {
 
     ofPopStyle();
 
-}
-
-void ofApp::initModules() {
-    
-    int width = ofGetWidth()/ofApp::nModules;
-    int height = ofGetHeight();
-    int habitants = ofApp::nParticlesPerModule;
-    for (unsigned int i = 0; i < ofApp::nModules; i++) {
-        int x = i*width;
-        int y = 0;
-        ofApp::modules[i] = new Module(i, x, y, width, height, habitants, getSoundPaths(i));
-    }
-}
-
-void ofApp::setupModules() {
-
-    #if defined TARGET_OSX
-    int width = ofGetWidth()/ofApp::nModules;
-    int height = ofGetHeight();
-    for (unsigned int i = 0; i < ofApp::nModules; i++) {
-        int x = i*width;
-        int y = 0;
-        ofApp::modules[i]->setDimensions(x, y, width, height);
-    }
-    #endif
-    
-    #if defined TARGET_OF_IOS
-    if (ofGetOrientation() == OF_ORIENTATION_DEFAULT || ofxiOSGetDeviceType() == OFXIOS_DEVICE_IPHONE) {
-        ofApp::modules[moduleActive]->setDimensions(0, 0, ofGetWidth(), ofGetHeight());
-        ofApp::modules[moduleActive]->changeInstrument(moduleActive);
-    } else {
-        int width = ofGetWidth()/ofApp::nModules;
-        int height = ofGetHeight();
-        for (unsigned int i = 0; i < ofApp::nModules; i++) {
-            int x = i*width;
-            int y = 0;
-            ofApp::modules[i]->setDimensions(x, y, width, height);
-        }
-    }
-    #endif
-
-    // update down arrow on orientation change
-    int barRectLength = 0.1*ofGetWidth();
-    int barRectHeight = barRectLength/4;
-    barRect.set(ofGetWidth()/2 - barRectLength/2, ofGetHeight() - barRectHeight, barRectLength, barRectHeight);
-    
-    drawModules();
 }
 
 vector<string> ofApp::getSoundPaths(unsigned int index) {
@@ -596,17 +555,14 @@ void ofApp::keyPressed(int key) {
 
 void ofApp::updateNewModuleActive(int x) {
     
-    // update new module active
-    #if defined TARGET_OF_IOS
-    if (ofxiOSGetDeviceType() == OFXIOS_DEVICE_IPAD && ofGetOrientation() != OF_ORIENTATION_DEFAULT) {
-        int moduleWidth = ofGetWidth() / float(ofApp::nModules);
+    if (isTabletInLandscape()) {
+        int moduleWidth = ofGetWidth() / float(modules.size());
         int newModuleActive = floor(x/moduleWidth);
         if (newModuleActive != moduleActive) {
-            ofLogNotice() << "new module active is now " << newModuleActive << endl;
+            ofLogNotice() << "new module active is now " << newModuleActive;
             moduleActive = newModuleActive;
         }
     }
-    #endif
     
 }
 
@@ -660,27 +616,6 @@ void ofApp::touchDown(ofTouchEventArgs& touch) {
 
     #if defined TARGET_OF_IOS
     swiping = false;
-    #endif
-
-    #if defined TARGET_OF_IOS
-    if (ofGetOrientation() == OF_ORIENTATION_DEFAULT) {
-        int previousModuleActive = moduleActive;
-        if (previousInstrumentRect.inside(touch.x, touch.y)) {
-            if (moduleActive <= 0) return;
-            moduleActive--;
-        } else if (nextInstrumentRect.inside(touch.x, touch.y)) {
-            if (moduleActive >= 3) return;
-            moduleActive++;
-        }
-
-        if (previousModuleActive != moduleActive) {
-            for (unsigned int i = 0; i < ofApp::modules[previousModuleActive]->getNumberOfParticles(); i++) {
-                ofApp::modules[previousModuleActive]->getParticle(i)->setModule(moduleActive);
-            }
-            ofApp::modules[moduleActive]->setParticles(ofApp::modules[previousModuleActive]->getParticles());
-            ofApp::modules[previousModuleActive]->removeAllParticles();
-        }
-    }
     #endif
 
 }
@@ -743,11 +678,11 @@ void ofApp::touchUp(ofTouchEventArgs& touch) {
 
 int ofApp::getModuleId(int x) {
     
-    if (iPadInPortrait()) {
+    if (isTabletInPortrait()) {
         return moduleActive;
     }
     
-    for (int i = 0; i < nModules; i++) {
+    for (int i = 0; i < modules.size(); i++) {
         if (x >= modules[i]->getX0() && x < modules[i]->getX1())
             return i;
     }
@@ -771,7 +706,7 @@ void ofApp::drawLine(int nth) {
         if (ofApp::modules[moduleActive]->getNumberOfParticles() > nth)
             nthParticles.push_back(ofApp::modules[moduleActive]->getParticle(nth));
     } else {
-        for (int i = 0; i < ofApp::nModules; i++) {
+        for (int i = 0; i < modules.size(); i++) {
             if (ofApp::modules[i]->getNumberOfParticles() > nth) {
                 nthParticles.push_back(ofApp::modules[i]->getParticle(nth));
             }
@@ -817,7 +752,7 @@ void ofApp::drawLines() {
 
 
 bool ofApp::hasParticles() {
-    for (unsigned int i = 0; i < nModules; i++) {
+    for (unsigned int i = 0; i < modules.size(); i++) {
         if (modules[i]->anyParticles()) {
             return true;
         }
@@ -825,42 +760,42 @@ bool ofApp::hasParticles() {
     return false;
 }
 
+
 void ofApp::deviceOrientationChanged(int newOrientation) {
-
+    
     ofLogNotice() << "detected orientation change";
-
-    #if defined TARGET_OF_IOS
-    if (ofxiOSGetDeviceType() == OFXIOS_DEVICE_IPHONE) {
-        ofLogNotice() << "ignoring orientation change";
+    
+    if (isPhone()) {
+        ofLogNotice() << "ignoring orientation change since it's a phone";
         return;
     }
-    #endif
-
+    
     // upside down is no good for anything
     if (newOrientation == OF_ORIENTATION_180)
         ofSetOrientation(OF_ORIENTATION_DEFAULT);
     else {
         ofSetOrientation(ofOrientation(newOrientation));
     }
-
+    
+    // it transitioning to landscape, activate back all modules
     if (newOrientation == OF_ORIENTATION_90_LEFT || newOrientation == OF_ORIENTATION_90_RIGHT) {
-        setupModules();
-        for (unsigned int i = 0; i < ofApp::nModules; i++) {
-            ofApp::modules[i]->activate();
-        }
+        for (unsigned int i = 0; i < modules.size(); i++) modules[i]->activate();
     }
-
+    // it transitioning to portrait, deactivate all modules, except the one with which last interacted
     else {
-        for (unsigned int i = 0; i < ofApp::nModules; i++) {
-            if (i == moduleActive) ofApp::modules[i]->activate();
-            else ofApp::modules[i]->deactivate();
+        for (unsigned int i = 0; i < modules.size(); i++) {
+            if (i == moduleActive) {
+                ofLogNotice() << "activating module " << i;
+                modules[i]->activate();
+            }
+            else {
+                ofLogNotice() << "deactivating module " << i;
+                modules[i]->deactivate();
+            }
         }
-        setupModules();
     }
-
-    ofLogNotice() << "width is " << ofGetWidth();
-    ofLogNotice() << "height is " << ofGetHeight();
-
+    setupModules();
+    
 }
 
 #if defined TARGET_OF_IOS
@@ -899,13 +834,90 @@ void ofApp::detectShake() {
 }
 #endif
 
-bool ofApp::iPadInPortrait() {
-    #if defined TARGET_OF_IOS
+bool ofApp::isOsx() {
+#if defined TARGET_OSX
+    return true;
+#else
+    return false;
+#endif
+}
+
+bool ofApp::isSemibreve() {
+#if defined TARGET_SEMIBREVE
+    return true;
+#else
+    return false;
+#endif
+}
+
+bool ofApp::isIos() {
+#if defined TARGET_OF_IOS
+    return true;
+#else
+    return false;
+#endif
+}
+
+bool ofApp::isAndroid() {
+#if defined TARGET_ANDROID
+    return true;
+#else
+    return false;
+#endif
+}
+
+bool ofApp::isPhone() {
+#if defined TARGET_OF_IOS
+    if (ofxiOSGetDeviceType() == OFXIOS_DEVICE_IPHONE) return true;
+    else return false;
+#else
+    return false;
+#endif
+}
+
+bool ofApp::isTablet() {
+#if defined TARGET_OF_IOS
+    if (ofxiOSGetDeviceType() == OFXIOS_DEVICE_IPAD) return true;
+    return false;
+#else
+    return false;
+#endif
+}
+
+bool ofApp::isTabletInPortrait() {
+    
+    // check iPad in portrait
+#if defined TARGET_OF_IOS
     if (ofxiOSGetDeviceType() == OFXIOS_DEVICE_IPAD) {
         if (ofGetOrientation() == OF_ORIENTATION_DEFAULT || ofGetOrientation() == OF_ORIENTATION_180) {
             return true;
         }
     }
-    #endif
+#endif
+    
+    // check Android in portrait
+    // TODO
+    
+    // Otherwise, is false
     return false;
+    
+}
+
+bool ofApp::isTabletInLandscape() {
+    
+    // check iPad in portrait
+#if defined TARGET_OF_IOS
+    if (ofxiOSGetDeviceType() == OFXIOS_DEVICE_IPAD) {
+        if (ofGetOrientation() == OF_ORIENTATION_90_LEFT || ofGetOrientation() == OF_ORIENTATION_90_RIGHT) {
+            return true;
+        }
+    }
+#endif
+    
+    // check Android in portrait
+    // TODO: check for android tablet in portrait too
+    
+    // Otherwise, is false
+    return false;
+    
 }

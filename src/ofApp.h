@@ -18,7 +18,7 @@
 #include "ModuleConsole.h"
 #include "Particle.h"
 #include "Touch.h"
-//#include "Constants.h"
+#include "Constants.h"
 
 enum appState {
     SPLASH_SCREEN,
@@ -42,10 +42,12 @@ enum inactivityStateEnum {
 // need to forwad declare Touch, because of Touch requiring ofApp and ofApp requiring Touch.
 class Touch;
 
-#if defined TARGET_OF_IOS
-class ofApp : public ofxiOSApp {
+#if defined TARGET_ANDROID
+class ofApp : public ofxAndroidApp {
+#elif defined TARGET_OF_IOS
+    class ofApp : public ofxiOSApp {
 #else
-class ofApp : public ofBaseApp {
+        class ofApp : public ofBaseApp {
 #endif
 
 public:
@@ -53,17 +55,17 @@ public:
     void setup();
     void update();
     void draw();
+            
+    void mouseMoved(ofMouseEventArgs& mouse);
+    void mouseDragged(ofMouseEventArgs& mouse);
+    void mousePressed(ofMouseEventArgs& mouse);
+    void mouseReleased(ofMouseEventArgs& mouse);
 
     void touchDown(ofTouchEventArgs& touch);
     void touchMoved(ofTouchEventArgs& touch);
     void touchUp(ofTouchEventArgs& touch);
     void touchDoubleTap(ofTouchEventArgs& touch) {}
     void touchCancelled(ofTouchEventArgs& touch) {}
-
-    void mouseMoved(ofMouseEventArgs& mouse);
-    void mouseDragged(ofMouseEventArgs& mouse);
-    void mousePressed(ofMouseEventArgs& mouse);
-    void mouseReleased(ofMouseEventArgs& mouse);
 
     void deviceOrientationChanged(int newOrientation);
 
@@ -88,27 +90,34 @@ public:
     void updateNewModuleActive(int x);
 
     void initModules();
+    void initImages();
 
     #if defined TARGET_OF_IOS
     void onSwipe(swipeRecognitionArgs& args);
     void detectShake();
     #endif
-
-    static vector<string> getSoundPaths(unsigned int index);
-
-    static int nModules;
-    static unsigned int moduleActive;
-    static int nParticlesPerModule;
-    static int maxParticleY; // TODO does this really needs to be static and here
-    static Module** modules; // TODO make this a vector or something
-
+        
     #if defined TARGET_SEMIBREVE
     void checkMultitouchData();
     static ofxOscSender oscSender;
     static ofxOscReceiver oscReceiver;
     #endif
+
+    static vector<string> getSoundPaths(unsigned int index);
+
+    static unsigned int moduleActive;
+    static int maxParticleY; // TODO does this really needs to be static and here
     
-    static bool iPadInPortrait();
+    // helper methods
+    // FIXME: Consider using an Utils rather than in ofApp
+    static bool isOsx();
+    static bool isSemibreve();
+    static bool isIos();
+    static bool isAndroid();
+    static bool isPhone();
+    static bool isTablet();
+    static bool isTabletInPortrait();
+    static bool isTabletInLandscape();
 
     static int mouseId;
 
@@ -116,6 +125,8 @@ public:
     static bool multitouch;
     static unsigned int inactivityCounter;
     static unsigned int currentAlpha;
+            
+    static vector<Module*> modules;
 
 private:
 
