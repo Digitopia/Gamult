@@ -2,6 +2,9 @@
 #define BUTTON_H
 
 #include "ofMain.h"
+#include "Module.h"
+
+class Module;
 
 enum buttonType {
     BUTTON_TOGGLE,
@@ -27,15 +30,14 @@ public:
 private:
 
     buttonType type;
-    int module;
     int size;
-    float x; // top left corner of the button
-    float y; // top left corner of the button
+    float x;            // top left corner of the button
+    float y;            // top left corner of the button
     string title;
     ofRectangle rect;
     ofTrueTypeFont font;
     bool state;
-    int id; // the id of the touch to which this fader is locked
+    int id;             // the id of the touch to which this fader is locked
     Module* module;
 
 };

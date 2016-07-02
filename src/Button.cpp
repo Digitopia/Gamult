@@ -5,7 +5,6 @@ Button::Button(Module* module, buttonType type, string title) {
     this->module = module;
     this->type = type;
     this->title = title;
-
     this->state = false;
     this->id = -1;
     this->font.load(UI_FONT_FACE, UI_FONT_SIZE, true);
@@ -20,7 +19,14 @@ void Button::setDimensions(int x, int y, int size) {
     this->x = x;
     this->y = y;
     this->size = size;
-    this->rect = ofRectangle(x, y, size, size);
+
+    // this->rect = ofRectangle(x, y, size, size);
+    this->rect = ofRectangle(
+        x,
+        y,
+        module->getWidth()/2,
+        CONSOLE_HEIGHT*ofGetHeight()*(1-CONSOLE_SECTION_HEIGHT)
+    );
 }
 
 void Button::touchDown(ofTouchEventArgs& event) {
@@ -45,11 +51,11 @@ void Button::touchMoved(ofTouchEventArgs& event) {
 
 void Button::touchUp(ofTouchEventArgs& event) {
     if (event.id == id && state && (type == BUTTON_REMOVE || type == BUTTON_CLEAR)) {
-        if (ofApp::modules[module]->anyParticles()) {
+        if (module->anyParticles()) {
             if (type == BUTTON_REMOVE) {
-                ofApp::modules[module]->removeParticle();
+                module->removeParticle();
             } else {
-                ofApp::modules[module]->removeAllParticles();
+                module->removeAllParticles();
             }
         }
         state = false;
@@ -78,15 +84,24 @@ void Button::draw() {
         ofSetHexColor(BUTTON_REMOVE_COLOR);
 
         ofLogNotice() << rect;
-        rect.setHeight(10);
+//        rect.setHeight(10);
         ofDrawRectangle(rect);
 
-        ofDrawRectangle(x, y, ofApp::modules[module]->getWidth()/2, CONSOLE_HEIGHT*ofGetHeight()*(1-CONSOLE_SECTION_HEIGHT));
+        ofDrawRectangle(
+            x,
+            y,
+            module->getWidth()/2,
+            CONSOLE_HEIGHT*ofGetHeight()*(1-CONSOLE_SECTION_HEIGHT)
+        );
 
         int lowerPartHeight = (1-CONSOLE_SECTION_HEIGHT) * CONSOLE_HEIGHT * ofGetHeight();
 
         ofSetColor(UI_COLOR);
-        font.drawString(title, x+ofApp::modules[module]->getWidth()/4-(font.stringWidth(title)/2), y+(lowerPartHeight/2)+font.stringHeight(title)/2);
+        font.drawString(
+            this->title,
+            x + module->getWidth()/4 - (font.stringWidth(title)/2),
+            y + (lowerPartHeight/2) + font.stringHeight(title)/2
+        );
 
     }
 

@@ -1,17 +1,14 @@
 #include "ofApp.h"
 
-Module::Module(int index, int x, int y, int width, int height, int maxPopulation, vector<string> soundPaths) {
+Module::Module(int x, int y, int width, int height, int maxPopulation, vector<string> soundPaths) {
 
-    this->index = index;
     this->maxPopulation = maxPopulation;
     this->console = NULL;
-    this->iSoundPaths = index;
-
     setDimensions(x, y, width, height);
     loadSounds(soundPaths);
     ofAddListener(ofEvents().touchDown, this, &Module::touchDown);
 
-    this->console = new ModuleConsole(x0, width, index);
+    this->console = new ModuleConsole(this, x0, width);
 
     this->active = true;
 
@@ -93,7 +90,7 @@ void Module::addParticle(int life, int x, int y) {
             && !nextInstrumentRect.inside(x, y)) {
         // the following line is to make sure that when the particle is created it always goes downwards first (was causing problems with Particle::gravity();
         if (y <= consoleHeight + life) y = consoleHeight + life + 1;
-        particles.push_back(Particle(index, particles.size(), x, y, life));
+        particles.push_back(Particle(this, particles.size(), x, y, life));
     }
 }
 
@@ -130,16 +127,16 @@ void Module::draw() {
 }
 
 void Module::drawBackground() {
+    
     ofPushStyle();
 
-    // TODO: this is terrible design, but doing the trick for prototyping
-    #if !defined TARGET_OF_IOS
-    ofSetColor(255 - (30 * index));
-    #else
-    ofSetColor(255 - (30 * iSoundPaths));
-    #endif
-
+    if (ofApp::isPhone())
+        ofSetColor(255 - (30 * ofApp::moduleActive));
+    else
+        ofSetColor(255 - (30 * ofApp::getModuleIdx(this->x0)));
+    
     ofDrawRectangle(x0, y + consoleHeight, width, height);
+    
     ofPopStyle();
 }
 

@@ -1,8 +1,8 @@
 #include "ofApp.h"
 #include "Button.h"
 
-ModuleConsole::ModuleConsole(int x, float width, int module) {
-
+ModuleConsole::ModuleConsole(Module* module, int x, float width) {
+    
     this->module = module;
 
     setDimensions(x, width, true);
@@ -20,11 +20,11 @@ void ModuleConsole::setDimensions(int x, int width, bool first) {
     this->height = CONSOLE_HEIGHT * ofGetHeight();
 
     if (first) {
-        btnGravity = new Button(this, BUTTON_TOGGLE, "Gravity");
-        btnFreeze  = new Button(this, BUTTON_TOGGLE, "Freeze");
-        btnRemove  = new Button(this, BUTTON_REMOVE, "Remove"
-        btnClear   = new Button(this, BUTTON_CLEAR, "Clear" );
-        fadSpeed   = new Fader(this, "Speed" );
+        btnGravity = new Button(this->getModule(), BUTTON_TOGGLE, "Gravity");
+        btnFreeze  = new Button(this->getModule(), BUTTON_TOGGLE, "Freeze");
+        btnRemove  = new Button(this->getModule(), BUTTON_REMOVE, "Remove");
+        btnClear   = new Button(this->getModule(), BUTTON_CLEAR, "Clear");
+        fadSpeed   = new Fader("Speed");
     }
 
     int y = 0;
@@ -35,7 +35,7 @@ void ModuleConsole::setDimensions(int x, int width, bool first) {
     btnGravity->setDimensions(
         x + width*0.1,
         y + buttonPositionOffset -buttonSize/2,
-        buttonSize,
+        buttonSize
     );
 
     btnFreeze->setDimensions(
@@ -60,7 +60,7 @@ void ModuleConsole::setDimensions(int x, int width, bool first) {
         x + width*0.1,
         y + buttonPositionOffset*2 + buttonSize/2,
         faderSize,
-        false
+        first
     );
 
 }

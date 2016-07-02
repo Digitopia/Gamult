@@ -5,11 +5,13 @@
 #include "ModuleConsole.h"
 #include "Particle.h"
 
+//class ModuleConsole;
+
 class Module {
 
 public:
 
-    Module(int index, int x, int y, int width, int height, int maxPopulation, vector<string> soundPaths);
+    Module(int x, int y, int width, int height, int maxPopulation, vector<string> soundPaths);
 
     void loadSounds(vector<string> paths);
     void unloadSounds();
@@ -39,7 +41,6 @@ public:
 
     int getX0()                      { return x0; }
     int getX1()                      { return x1; }
-    int getIndex()                   { return index; }
     int getWidth()                   { return width; }
     int getHeight()                  { return height; }
     float getSpeed()                 { return console->getSpeed(); }
@@ -68,7 +69,6 @@ private:
 
     int x0, x1;
     int y;
-    int index;
     int iSoundPaths;
     int width;
     int height;

@@ -1,11 +1,9 @@
 #include "Fader.h"
 #include "ofApp.h"
 
-Fader::Fader(Module* module, string title) {
-
-    this->module = module;
+Fader::Fader(string title) {
+    
     this->title = title;
-
     this->font.load(UI_FONT_FACE, UI_FONT_SIZE, true);
     this->id = -1; // -1 means there is no touch associated
 

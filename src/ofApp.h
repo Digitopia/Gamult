@@ -19,15 +19,23 @@
   #include "ofxAndroid.h"
 #endif
 
-#include "Button.h"
-#include "Fader.h"
+// NOTE: need to forward declare Touch, because of Touch requiring ofApp and ofApp requiring Touch.
+class Button;
+class Fader;
+class Module;
+class ModuleConsole;
+class Particle;
+class Touch;
+
 #include "Module.h"
 #include "ModuleConsole.h"
+#include "Button.h"
+#include "Fader.h"
 #include "Particle.h"
 #include "Touch.h"
 #include "Constants.h"
 
-enum appState {
+enum appStateEnum {
   SPLASH_SCREEN,
   SPLASH_FADE,
   ABOUT,
@@ -45,9 +53,6 @@ enum inactivityStateEnum {
   INACTIVE,       // when the auto generated animations are happening
   POST_INACTIVE   // when the auto generated animations have finished already (it's simply transitory, goes directly to ACTIVE after)
 };
-
-// NOTE: need to forward declare Touch, because of Touch requiring ofApp and ofApp requiring Touch.
-class Touch;
 
 #if defined TARGET_ANDROID
   class ofApp : public ofxAndroidApp {
@@ -84,12 +89,13 @@ public:
     void drawLines();
     void drawLine(int nth);
     void setupModules();
+    void appStateHandler();
+    void inactivityHandler();
 
-    int getModuleId(int x);
+    static size_t getModuleIdx(unsigned int x);
     void drawArrow(bool up);
     void drawBouncingArrow();
-
-    void handleInactivity();
+    
     bool hasParticles();
     void resetModules();
     void resetInactivityTime();
@@ -101,11 +107,11 @@ public:
 
     #if defined TARGET_OF_IOS
       void onSwipe(swipeRecognitionArgs& args);
-      void detectShake();
+      void shakeHandler();
     #endif
 
     #if defined TARGET_SEMIBREVE
-      void checkMultitouchData();
+      void oscMultitouchHandler();
       static ofxOscSender oscSender;
       static ofxOscReceiver oscReceiver;
     #endif
@@ -139,7 +145,7 @@ private:
 
     map<int,Touch> touches;
 
-    appState state;
+    appStateEnum appState;
     inactivityStateEnum inactivityState;
 
     ofRectangle barRect;
