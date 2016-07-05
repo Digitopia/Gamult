@@ -31,9 +31,9 @@ private:
 
     buttonType type;
     int size;
-    float x;            // top left corner of the button
-    float y;            // top left corner of the button
+    int x, y;            // top left corner of the button
     string title;
+    int titleX, titleY;
     ofRectangle rect;
     ofTrueTypeFont font;
     bool state;

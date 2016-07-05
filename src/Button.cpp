@@ -16,17 +16,24 @@ Button::Button(Module* module, buttonType type, string title) {
 }
 
 void Button::setDimensions(int x, int y, int size) {
+    
     this->x = x;
     this->y = y;
     this->size = size;
 
-    // this->rect = ofRectangle(x, y, size, size);
-    this->rect = ofRectangle(
-        x,
-        y,
-        module->getWidth()/2,
-        CONSOLE_HEIGHT*ofGetHeight()*(1-CONSOLE_SECTION_HEIGHT)
-    );
+    if (type == BUTTON_TOGGLE) {
+        rect = ofRectangle(x, y, size, size);
+        titleX = x + size * 1.5;
+        titleY = y + size - 3;
+    }
+    
+    // TODO: this is most probably desnecessarily overly complicated
+    else if (this->type == BUTTON_REMOVE || this->type == BUTTON_CLEAR) {
+        int lowerPartHeight = (1-CONSOLE_SECTION_HEIGHT) * CONSOLE_HEIGHT * ofGetHeight();
+        titleX = x + module->getWidth()/4 - (font.stringWidth(title)/2);
+        titleY = y + (lowerPartHeight/2) + font.stringHeight(title)/2;
+        rect = ofRectangle(x, y, module->getWidth()/2, CONSOLE_HEIGHT*ofGetHeight()*(1-CONSOLE_SECTION_HEIGHT));
+    }
 }
 
 void Button::touchDown(ofTouchEventArgs& event) {
@@ -69,41 +76,19 @@ void Button::draw() {
 
     ofSetColor(UI_COLOR);
     ofSetLineWidth(BUTTON_WIDTH);
-    ofNoFill();
-
-    if (state)
-        ofFill();
-
-    if (type == BUTTON_TOGGLE) {
-        ofDrawRectangle(rect);
-        font.drawString(title, x+size*1.5, y+size-3);
-    }
-
+    
     if (type == BUTTON_REMOVE || type == BUTTON_CLEAR) {
-
         ofSetHexColor(BUTTON_REMOVE_COLOR);
-
-        ofLogNotice() << rect;
-//        rect.setHeight(10);
-        ofDrawRectangle(rect);
-
-        ofDrawRectangle(
-            x,
-            y,
-            module->getWidth()/2,
-            CONSOLE_HEIGHT*ofGetHeight()*(1-CONSOLE_SECTION_HEIGHT)
-        );
-
-        int lowerPartHeight = (1-CONSOLE_SECTION_HEIGHT) * CONSOLE_HEIGHT * ofGetHeight();
-
-        ofSetColor(UI_COLOR);
-        font.drawString(
-            this->title,
-            x + module->getWidth()/4 - (font.stringWidth(title)/2),
-            y + (lowerPartHeight/2) + font.stringHeight(title)/2
-        );
-
     }
+
+    if (state) ofFill();
+    else ofNoFill();
+    
+    ofDrawRectangle(rect);
+    
+    ofSetColor(UI_COLOR);
+    font.drawString(title, titleX, titleY);
 
     ofPopStyle();
+    
 }
