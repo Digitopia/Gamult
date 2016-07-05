@@ -11,6 +11,9 @@ Module::Module(int x, int y, int width, int height, int maxPopulation, vector<st
     this->console = new ModuleConsole(this, x0, width);
 
     this->active = true;
+    
+    // only needed for phone version
+    this->iSoundPaths = 0;
 
 }
 
@@ -34,6 +37,8 @@ void Module::setDimensions(int x, int y, int width, int height) {
 
     this->x1 = x + width;
     this->consoleHeight = CONSOLE_HEIGHT*height;
+    
+    this->backgroundColor = 255 - (30 * ofApp::getModuleIdx(x0));
 
 }
 
@@ -43,27 +48,27 @@ void Module::touchDown(ofTouchEventArgs& event) {
 
 void Module::prepareInstrumentChange(int direction) {
 
-    #if defined TARGET_OF_IOS
-    ofLogNotice() << "direction received: " << direction;
-    if (direction == 1) {
-        if (iSoundPaths <= 0) return;
-        changeInstrument(--iSoundPaths);
-    }
+    if (ofApp::isPhone()) {
+        ofLogNotice() << "Direction received: " << direction;
+        if (direction == 1) {
+            if (iSoundPaths <= 0) return;
+            changeInstrument(--iSoundPaths);
+        }
 
-    else if (direction == 2) {
-        if (iSoundPaths >= 3) return;
-        changeInstrument(++iSoundPaths);
+        else if (direction == 2) {
+            if (iSoundPaths >= 3) return;
+            changeInstrument(++iSoundPaths);
+        }
     }
-    #endif
 
 }
 
 void Module::loadSounds(vector<string> paths) {
     for (int i = 0; i < paths.size(); i++) {
         ofSoundPlayer s;
-        //        s.setMultiPlay(true);
+        // s.setMultiPlay(true);
         sounds.push_back(s);
-        //        sounds[i].setMultiPlay(true);
+        // sounds[i].setMultiPlay(true);
         sounds[i].load(paths[i], false);
     }
 }
@@ -71,9 +76,9 @@ void Module::loadSounds(vector<string> paths) {
 void Module::unloadSounds() {
     for (int i = 0; i < sounds.size(); i++) {
         sounds[i].stop();
-        ofLogNotice() << "stopping sound " << i;
+        ofLogNotice() << "Stopping sound " << i;
         sounds[i].unload();
-        ofLogNotice() << "unloading sound " << i;
+        ofLogNotice() << "Unloading sound " << i;
     }
     sounds.clear();
 }
@@ -81,14 +86,14 @@ void Module::unloadSounds() {
 void Module::changeInstrument(int iSoundPaths) {
     unloadSounds();
     loadSounds(ofApp::getSoundPaths(iSoundPaths));
-    ofLogNotice() << "changing instrument";
+    ofLogNotice() << "Changing instrument";
+    backgroundColor = 255 - (30 * iSoundPaths);
 }
 
 void Module::addParticle(int life, int x, int y) {
-    if (particles.size() < maxPopulation
-            && !previousInstrumentRect.inside(x, y)
-            && !nextInstrumentRect.inside(x, y)) {
-        // the following line is to make sure that when the particle is created it always goes downwards first (was causing problems with Particle::gravity();
+    if (particles.size() < maxPopulation) {
+        // NOTE: the following line is to make sure that when the particle is \
+        // created it always goes downwards first (was causing problems with Particle::gravity();
         if (y <= consoleHeight + life) y = consoleHeight + life + 1;
         particles.push_back(Particle(this, particles.size(), x, y, life));
     }
@@ -127,16 +132,9 @@ void Module::draw() {
 }
 
 void Module::drawBackground() {
-    
     ofPushStyle();
-
-    if (ofApp::isPhone())
-        ofSetColor(255 - (30 * ofApp::moduleActive));
-    else
-        ofSetColor(255 - (30 * ofApp::getModuleIdx(this->x0)));
-    
+    ofSetColor(backgroundColor);
     ofDrawRectangle(x0, y + consoleHeight, width, height);
-    
     ofPopStyle();
 }
 
@@ -155,22 +153,8 @@ void Module::drawGrid() {
     int gridCellSize = round(float(width) / gridNumberElements);
     for (int i = 1; i < gridNumberElements; i++) {
         int gridCellX = x0 + (i)*gridCellSize + 2;
-        //    	ofLine(gridCellX, height, gridCellX, height-GRID_HEIGHT); // small grids at bottom
         ofDrawLine(gridCellX, height, gridCellX, consoleHeight); // top to bottom grids
     }
-}
-
-void Module::drawChangeInstrumentButtons() {
-
-    if (ofGetOrientation() != OF_ORIENTATION_DEFAULT) return;
-
-    #if defined TARGET_OF_IOS
-    ofPushStyle();
-    ofSetColor(ofColor::fromHex(BUTTON_CHANGE_INSTRUMENT_COLOR), BUTTON_CHANGE_INSTRUMENT_COLOR_ALPHA);
-    ofDrawRectangle(previousInstrumentRect);
-    ofDrawRectangle(nextInstrumentRect);
-    ofPopStyle();
-    #endif
 }
 
 void Module::drawParticles() {
@@ -181,10 +165,14 @@ void Module::drawParticles() {
 }
 
 void Module::playSound(int index, float vol) {
+    
     if (!this->active) return;
-    #if !defined TARGET_OF_IOS
-    sounds[index].setMultiPlay(true);
-    #endif
+    
+    // TODO @Oscar
+    // The below line when enabled is outputting in the console:
+    // ofxiOSSoundPlayer: setMultiPlay(): sorry, no support for multiplay streams
+    // sounds[index].setMultiPlay(true);
+    
     sounds[index].setVolume(vol);
     sounds[index].play();
 }

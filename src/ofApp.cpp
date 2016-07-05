@@ -21,7 +21,7 @@ void ofApp::setup() {
 
     ofSetLogLevel(OF_LOG_NOTICE);
 
-    ofLogNotice() << "setup";
+    ofLogNotice() << "setup()";
 
     #if defined TARGET_OSX
     ofLogNotice() << "Running OSX version";
@@ -80,7 +80,7 @@ void ofApp::setup() {
 
 void ofApp::initModules() {
 
-    ofLogNotice() << "start initModules";
+    ofLogNotice() << "initModules() start";
 
     int nModules = isPhone() ? 1 : 4;
     ofLogNotice() << "Allocating " << nModules << " modules";
@@ -94,13 +94,13 @@ void ofApp::initModules() {
         modules.push_back(new Module(x, y, width, height, habitants, getSoundPaths(i)));
     }
 
-    ofLogNotice() << "end initModules";
+    ofLogNotice() << "initModules() end";
 
 }
 
 void ofApp::setupModules() {
 
-    ofLogNotice() << "start setupModules";
+    ofLogNotice() << "setupModules() start";
 
     if (isTabletInPortrait()) {
       modules[moduleActive]->setDimensions(0, 0, ofGetWidth(), ofGetHeight());
@@ -117,12 +117,12 @@ void ofApp::setupModules() {
     int barRectHeight = barRectLength/4;
     barRect.set(ofGetWidth()/2 - barRectLength/2, ofGetHeight() - barRectHeight, barRectLength, barRectHeight);
 
-    ofLogNotice() << "end setupModules";
+    ofLogNotice() << "setupModules() end";
 }
 
 void ofApp::initImages() {
     
-    ofLogNotice() << "start initImages";
+    ofLogNotice() << "initImages() start";
     
     imgSplashScreen.load("images/splash_screen.png");
     imgAbout.load("images/about.png");
@@ -133,7 +133,7 @@ void ofApp::initImages() {
     imgSplashScreen.resize(ofGetWidth(), ofGetHeight());
     imgAbout.resize(ofGetWidth(), ofGetHeight());
     
-    ofLogNotice() << "end initImages";
+    ofLogNotice() << "initImages() end";
     
 }
 
@@ -286,8 +286,6 @@ void ofApp::draw() {
     if (ofGetOrientation() == OF_ORIENTATION_DEFAULT) {
         ofPushStyle();
         ofSetColor(ofColor::fromHex(BUTTON_CHANGE_INSTRUMENT_COLOR), BUTTON_CHANGE_INSTRUMENT_COLOR_ALPHA);
-        ofDrawRectangle(previousInstrumentRect);
-        ofDrawRectangle(nextInstrumentRect);
         ofPopStyle();
     }
 
@@ -659,13 +657,13 @@ void ofApp::touchUp(ofTouchEventArgs& touch) {
     #if defined TARGET_OF_IOS
     if (y > CONSOLE_HEIGHT*ofGetHeight() && y < ofApp::maxParticleY && !swiping) {
         modules[getModuleIdx(x)]->addParticle(increment, x, y);
-        ofLogNotice() << "particle added" ;
+        ofLogNotice() << "Particle added" ;
         swiping = false;
     }
     #else
     if (y > CONSOLE_HEIGHT*ofGetHeight() && y < ofApp::maxParticleY) {
         modules[getModuleIdx(x)]->addParticle(increment, x, y);
-        ofLogNotice() << "particle added" ;
+        ofLogNotice() << "Particle added" ;
     }
     #endif
 
@@ -673,7 +671,7 @@ void ofApp::touchUp(ofTouchEventArgs& touch) {
 
 size_t ofApp::getModuleIdx(unsigned int x) {
 
-    if (isTabletInPortrait()) {
+    if (isPhone() || isTabletInPortrait()) {
         return moduleActive;
     }
 
@@ -681,7 +679,9 @@ size_t ofApp::getModuleIdx(unsigned int x) {
         if (x >= modules[i]->getX0() && x < modules[i]->getX1())
             return i;
     }
+    
     return -1;
+    
 }
 
 void ofApp::drawLine(int nth) {
@@ -746,10 +746,10 @@ bool ofApp::hasParticles() {
 
 void ofApp::deviceOrientationChanged(int newOrientation) {
 
-    ofLogNotice() << "detected orientation change";
+    ofLogNotice() << "Detected orientation change";
 
     if (isPhone()) {
-      ofLogNotice() << "ignoring orientation change since it's a phone";
+      ofLogNotice() << "Ignoring orientation change since it's a phone";
       return;
     }
 
@@ -768,11 +768,11 @@ void ofApp::deviceOrientationChanged(int newOrientation) {
     else {
         for (unsigned int i = 0; i < modules.size(); i++) {
             if (i == moduleActive) {
-                ofLogNotice() << "activating module " << i;
+                ofLogNotice() << "Activating module " << i;
                 modules[i]->activate();
             }
             else {
-                ofLogNotice() << "deactivating module " << i;
+                ofLogNotice() << "Deactivating module " << i;
                 modules[i]->deactivate();
             }
         }
@@ -784,17 +784,15 @@ void ofApp::deviceOrientationChanged(int newOrientation) {
 #if defined TARGET_OF_IOS
 void ofApp::onSwipe(swipeRecognitionArgs& args) {
 
-    ofLogNotice() << "Swipe Event! Yes!";
+    ofLogNotice() << "Detected swipe event";
 
     // multiplying swipeOriginY by 2 because of retina display
     if (args.swipeOriginY * 2 > CONSOLE_HEIGHT * ofGetHeight()) {
-        int direction = args.direction  ;
-
+        int direction = args.direction;
         modules[0]->prepareInstrumentChange(direction);
-
         swiping = true;
     } else {
-        ofLogNotice() << "THOU SHALL NOT PASS!!";
+        ofLogNotice() << "Ignoring swipe event";
     }
 
 }
@@ -805,14 +803,16 @@ void ofApp::shakeHandler() {
 
     float accelX = ofxAccelerometer.getForce().x;
     float accelY = ofxAccelerometer.getForce().y;
-    if (accelX < - 2 || accelX > 2 && accelY < -2 || accelY >2 ) {
+    
+    // TODO: @Oscar: Make operator precendence explicit!
+    if (accelX < - 2 || accelX > 2 && accelY < -2 || accelY > 2) {
         accelCount++;
     } else {
         accelCount = 0;
     }
 
     if (accelCount >= 4) {
-        ofLogNotice() << "shake detected";
+        ofLogNotice() << "Shake detected";
         resetModules();
     }
 

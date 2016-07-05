@@ -78,9 +78,7 @@ private:
     vector<ofSoundPlayer> sounds;
     vector<Particle> particles;
     bool active;
-
-    ofRectangle previousInstrumentRect;
-    ofRectangle nextInstrumentRect;
+    int backgroundColor;
 
 };
 

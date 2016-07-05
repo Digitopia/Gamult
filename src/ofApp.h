@@ -119,6 +119,7 @@ public:
     static vector<string> getSoundPaths(unsigned int index);
 
     static unsigned int moduleActive;
+    
     static int maxParticleY; // TODO does this really needs to be static and here?
 
     // helper methods
@@ -165,9 +166,6 @@ private:
 
     unsigned int inactivityThreshold;
     unsigned int inactivityThresholdWithinParticles;
-
-    ofRectangle previousInstrumentRect;
-    ofRectangle nextInstrumentRect;
 
     #if defined TARGET_OF_IOS
       swipeRecognition swiper;
