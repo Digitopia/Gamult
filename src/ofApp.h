@@ -118,7 +118,7 @@ public:
 
     static vector<string> getSoundPaths(unsigned int index);
 
-    static unsigned int moduleActive; // NOTE: can this be a property of the Module instead?
+    static unsigned int moduleActive;
     static int maxParticleY; // TODO does this really needs to be static and here?
 
     // helper methods
