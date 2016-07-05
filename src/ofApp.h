@@ -122,7 +122,6 @@ public:
     static int maxParticleY; // TODO does this really needs to be static and here?
 
     // helper methods
-    // FIXME: Consider using an Utils rather than in ofApp
     static bool isOsx();
     static bool isSemibreve();
     static bool isIos();
