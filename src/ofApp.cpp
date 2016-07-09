@@ -183,7 +183,7 @@ void ofApp::update() {
         }
     }
     #else
-    for (int i = 0; i < ofApp::nModules; i++) {
+    for (int i = 0; i < NMODULES; i++) {
         ofApp::modules[i]->update();
     }
     #endif
@@ -702,7 +702,7 @@ void ofApp::drawLine(int nth) {
     vector<Particle*> nthParticles;
     
     #if defined TARGET_OSX
-    for (int i = 0; i < ofApp::nModules; i++) {
+    for (int i = 0; i < NMODULES; i++) {
         if (ofApp::modules[i]->getNumberOfParticles() > nth) {
             nthParticles.push_back(ofApp::modules[i]->getParticle(nth));
         }
