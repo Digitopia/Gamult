@@ -1,3 +1,5 @@
+#pragma once
+
 #ifndef OFAPP_H
 #define OFAPP_H
 
@@ -7,45 +9,60 @@
     #include "ofxiOS.h"
     #include "ofxiOSExtras.h"
     #include "swipeRecognition.h"
-#include "ofxCocosDenshion.h"
+    #include "ofxCocosDenshion.h"
 #elif defined TARGET_SEMIBREVE
     #include "ofxOsc.h"
 #endif
 
-#include "Button.h"
-#include "Fader.h"
+#if defined TARGET_SEMIBREVE
+  #include "ofxOsc.h"
+#endif
+
+#if defined TARGET_ANDROID
+  #include "ofxAndroid.h"
+#endif
+
+// NOTE: need to forward declare Touch, because of Touch requiring ofApp and ofApp requiring Touch.
+class Button;
+class Fader;
+class Module;
+class ModuleConsole;
+class Particle;
+class Touch;
+
 #include "Module.h"
 #include "ModuleConsole.h"
+#include "Button.h"
+#include "Fader.h"
 #include "Particle.h"
 #include "Touch.h"
 //#include "Constants.h"
 
-enum appState {
-    SPLASH_SCREEN,
-    SPLASH_FADE,
-    ABOUT,
-    ABOUT_DESCENDING,
-    ABOUT_ASCENDING,
-    APP,
-    BAR_ASCENDING,
-    BAR_DESCENDING,
-    BAR
+enum appStateEnum {
+  SPLASH_SCREEN,
+  SPLASH_FADE,
+  ABOUT,
+  ABOUT_DESCENDING,
+  ABOUT_ASCENDING,
+  APP,
+  BAR_ASCENDING,
+  BAR_DESCENDING,
+  BAR
 };
 
 enum inactivityStateEnum {
-    ACTIVE,         // default state
-    PRE_INACTIVE,   // after a min of no interaction, resets controls and clears particles
-    INACTIVE,       // when the auto generated animations are happening
-    POST_INACTIVE   // when the auto generated animations have finished already (it's simply transitory, goes directly to ACTIVE after)
+  ACTIVE,         // default state
+  PRE_INACTIVE,   // after a min of no interaction, resets controls and clears particles
+  INACTIVE,       // when the auto generated animations are happening
+  POST_INACTIVE   // when the auto generated animations have finished already (it's simply transitory, goes directly to ACTIVE after)
 };
 
-// need to forwad declare Touch, because of Touch requiring ofApp and ofApp requiring Touch.
-class Touch;
-
-#if defined TARGET_OF_IOS
-class ofApp : public ofxiOSApp {
+#if defined TARGET_ANDROID
+  class ofApp : public ofxAndroidApp {
+#elif defined TARGET_OF_IOS
+  class ofApp : public ofxiOSApp {
 #else
-class ofApp : public ofBaseApp {
+  class ofApp : public ofBaseApp {
 #endif
 
 public:
@@ -54,16 +71,16 @@ public:
     void update();
     void draw();
 
+    void mouseMoved(ofMouseEventArgs& mouse);
+    void mouseDragged(ofMouseEventArgs& mouse);
+    void mousePressed(ofMouseEventArgs& mouse);
+    void mouseReleased(ofMouseEventArgs& mouse);
+
     void touchDown(ofTouchEventArgs& touch);
     void touchMoved(ofTouchEventArgs& touch);
     void touchUp(ofTouchEventArgs& touch);
     void touchDoubleTap(ofTouchEventArgs& touch) {}
     void touchCancelled(ofTouchEventArgs& touch) {}
-
-    void mouseMoved(ofMouseEventArgs& mouse);
-    void mouseDragged(ofMouseEventArgs& mouse);
-    void mousePressed(ofMouseEventArgs& mouse);
-    void mouseReleased(ofMouseEventArgs& mouse);
 
     void deviceOrientationChanged(int newOrientation);
 
@@ -75,40 +92,48 @@ public:
     void drawLines();
     void drawLine(int nth);
     void setupModules();
+    void appStateHandler();
+    void inactivityHandler();
 
-    int getModuleId(int x);
+    static size_t getModuleIdx(unsigned int x);
     void drawArrow(bool up);
     void drawBouncingArrow();
-
-    void handleInactivity();
+    
     bool hasParticles();
     void resetModules();
     void resetInactivityTime();
-    
+
     void updateNewModuleActive(int x);
 
     void initModules();
+    void initImages();
 
     #if defined TARGET_OF_IOS
-    void onSwipe(swipeRecognitionArgs& args);
-    void detectShake();
+      void onSwipe(swipeRecognitionArgs& args);
+      void shakeHandler();
+    #endif
+
+    #if defined TARGET_SEMIBREVE
+      void oscMultitouchHandler();
+      static ofxOscSender oscSender;
+      static ofxOscReceiver oscReceiver;
     #endif
 
     static vector<string> getSoundPaths(unsigned int index);
 
-    static int nModules;
     static unsigned int moduleActive;
-    static int nParticlesPerModule;
-    static int maxParticleY; // TODO does this really needs to be static and here
-    static Module** modules; // TODO make this a vector or something
-
-    #if defined TARGET_SEMIBREVE
-    void checkMultitouchData();
-    static ofxOscSender oscSender;
-    static ofxOscReceiver oscReceiver;
-    #endif
     
-    static bool iPadInPortrait();
+    static int maxParticleY; // TODO does this really needs to be static and here?
+
+    // helper methods
+    static bool isOsx();
+    static bool isSemibreve();
+    static bool isIos();
+    static bool isAndroid();
+    static bool isPhone();
+    static bool isTablet();
+    static bool isTabletInPortrait();
+    static bool isTabletInLandscape();
 
     static int mouseId;
 
@@ -117,11 +142,13 @@ public:
     static unsigned int inactivityCounter;
     static unsigned int currentAlpha;
 
+    static vector<Module*> modules;
+
 private:
 
     map<int,Touch> touches;
 
-    appState state;
+    appStateEnum appState;
     inactivityStateEnum inactivityState;
 
     ofRectangle barRect;
@@ -143,13 +170,10 @@ private:
     unsigned int inactivityThreshold;
     unsigned int inactivityThresholdWithinParticles;
 
-    ofRectangle previousInstrumentRect;
-    ofRectangle nextInstrumentRect;
-
     #if defined TARGET_OF_IOS
-    swipeRecognition swiper;
-    bool swiping;
-    int accelCount;
+      swipeRecognition swiper;
+      bool swiping;
+      int accelCount;
     #endif
 
 };

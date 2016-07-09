@@ -2,12 +2,15 @@
 #define PARTICLE_H
 
 #include "ofMain.h"
+#include "Module.h"
+
+class Module;
 
 class Particle {
 
 public:
 
-    Particle(int module, int index, float x, float y, int life);
+    Particle(Module* module, int index, float x, float y, int life);
 
     void draw();
     void drawCircle();
@@ -27,11 +30,11 @@ public:
     int getX() { return center.x; }
     int getY() { return center.y; }
     void setXY(int x, int y) { center.x = x; center.y = y; }
-    void setModule(int module) { this->module = module; }
+    void setModule(Module* module) { this->module = module; }
 
 private:
 
-    int module;
+    Module* module;
     int index;
     int health;
     int life;

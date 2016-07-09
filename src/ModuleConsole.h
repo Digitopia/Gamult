@@ -4,12 +4,15 @@
 #include "ofMain.h"
 #include "Button.h"
 #include "Fader.h"
+#include "Module.h"
+
+class Button;
 
 class ModuleConsole {
 
 public:
 
-    ModuleConsole(int x, float width, int module);
+    ModuleConsole(Module* module, int x, float width);
 
     void draw();
 
@@ -26,10 +29,11 @@ public:
     void mousePressed(ofMouseEventArgs& event);
 
     void setDimensions(int x, int width, bool first);
+    
+    Module* getModule() { return this->module; }
 
 private:
 
-    int module;
     float width;
     float height;
 
@@ -45,6 +49,8 @@ private:
     Button* btnClear;
 
     Fader* fadSpeed;
+    
+    Module* module;
 
 };
 
