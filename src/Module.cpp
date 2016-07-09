@@ -9,6 +9,7 @@ Module::Module(int x, int y, int width, int height, int maxPopulation, vector<st
     ofAddListener(ofEvents().touchDown, this, &Module::touchDown);
 
     this->console = new ModuleConsole(this, x0, width);
+    this->numberOfInstruments = soundPaths.size();
 
     this->active = true;
     

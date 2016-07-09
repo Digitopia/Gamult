@@ -249,6 +249,8 @@ void ofApp::resetModules() {
 }
 
 void ofApp::draw() {
+    
+    cout << "draw cycle" << endl;
 
     ofBackground(BACKGROUND_COLOR);
 
@@ -353,7 +355,7 @@ void ofApp::draw() {
         ofDisableAlphaBlending();
         ofPopStyle();
     }
-
+    
 }
 
 void ofApp::drawParticles() {
