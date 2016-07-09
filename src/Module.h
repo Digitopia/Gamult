@@ -14,7 +14,7 @@ public:
 
     Module(int index, int x, int y, int width, int height, int maxPopulation, vector<string> soundPaths);
 
-    void loadSounds(vector<string> paths);
+    void loadSounds();
     void unloadSounds();
     void update();
     void addParticle(int life, int x, int y);
@@ -57,6 +57,7 @@ public:
     vector<Particle> getParticles()  { return particles; }
     Particle* getParticle(int i)     { return &particles[i]; }
     Particle getParticleObj(int i)   { return particles[i]; }
+    vector<string> getSoundPaths()   { return soundPaths; }
     bool isFull()                    { return particles.size() == maxPopulation; }
     bool isNotFull()                 { return !isFull();}
     void activate()                  { this->active = true; }
@@ -90,7 +91,7 @@ private:
 #endif
     
     bool active;
-
+    vector<string> soundPaths;
 
     ofRectangle previousInstrumentRect;
     ofRectangle nextInstrumentRect;

@@ -6,9 +6,10 @@ Module::Module(int index, int x, int y, int width, int height, int maxPopulation
     this->maxPopulation = maxPopulation;
     this->console = NULL;
     this->iSoundPaths = index;
+    this->soundPaths = soundPaths;
 
     setDimensions(x, y, width, height);
-    loadSounds(soundPaths);
+    //loadSounds(soundPaths);
     ofAddListener(ofEvents().touchDown, this, &Module::touchDown);
 
     // util vars
@@ -16,7 +17,6 @@ Module::Module(int index, int x, int y, int width, int height, int maxPopulation
     this->consoleHeight = CONSOLE_HEIGHT*height;
     this->numberOfInstruments = soundPaths.size();
     this->console = new ModuleConsole(x0, width, index);
-
 
     this->active = true;
 
@@ -86,7 +86,8 @@ void Module::prepareInstrumentChange(int direction) {
 
 }
 
-void Module::loadSounds(vector<string> paths) {
+void Module::loadSounds() {
+    vector <string> paths = soundPaths;
 #ifndef TARGET_OF_IOS
     for (int i = 0; i < paths.size(); i++) {
         ofSoundPlayer s;
@@ -97,13 +98,32 @@ void Module::loadSounds(vector<string> paths) {
     }
 #else
     // cout << "setting up" << ofToString(paths) << endl;
-    ofxCocosDenshion s;
-    s.setup();
-    sounds.push_back(s);
-    for (int i = 0; i< paths.size(); i++) {
-        sounds[0].addSoundEffect(paths[i], 0.7);
+    if (ofxiOSGetDeviceType() == OFXIOS_DEVICE_IPAD) {
+        ofxCocosDenshion s;
+        sounds.push_back(s);
+        sounds[0].setup();
+        sounds[0].setManagerMode(1);
+        for (int i = 0; i < NMODULES; i++) {
+            vector <string> tempSoundPaths = ofApp::modules[i]->getSoundPaths();
+                for (int j = 0; j < tempSoundPaths.size(); j++) {
+                    sounds[0].addSoundEffect(tempSoundPaths[j], 0.7);
+                    cout << "now loading " << tempSoundPaths[j] << endl;
+            }
+        }
+        sounds[0].loadAllAudio();
+        
+    } else {
+        ofxCocosDenshion s;
+        sounds.push_back(s);
+        sounds[0].setup();
+        sounds[0].setManagerMode(0);
+        for (int i = 0; i< paths.size(); i++) {
+            sounds[0].addSoundEffect(paths[i], 0.7);
+            cout << "now loading " << paths[i] << endl;
+        }
+        sounds[0].loadAllAudio();
     }
-    sounds[0].loadAllAudio();
+    
 #endif
 }
 
@@ -126,8 +146,9 @@ void Module::unloadSounds() {
 }
 
 void Module::changeInstrument(int iSoundPaths) {
+    soundPaths = ofApp::getSoundPaths(iSoundPaths);
     unloadSounds();
-    loadSounds(ofApp::getSoundPaths(iSoundPaths));
+    loadSounds();
     numberOfInstruments = ofApp::getSoundPaths(iSoundPaths).size();
     ofLogNotice() << "changing instrument";
 }
@@ -235,8 +256,18 @@ void Module::playSound(int soundIndex, float vol) {
     sounds[soundIndex].setVolume(vol);
     sounds[soundIndex].play();
 #else
-    sounds[0].setSoundVolume(vol, 0.8f);
-    sounds[0].playSound(soundIndex);
+    if (ofxiOSGetDeviceType() == OFXIOS_DEVICE_IPAD) {
+        for(int i = 0; i < index; i++) {
+            for (int j = 0; j < ofApp::modules[i]->getSoundPaths().size(); j++) {
+                soundIndex++;
+            }
+        }
+        sounds[0].setSoundVolume(vol, 0.8f);
+        sounds[0].playSound(soundIndex);
+    } else {
+        sounds[0].setSoundVolume(vol, 0.8f);
+        sounds[0].playSound(soundIndex);
+    }
     cout << "index is " << soundIndex << " and module is " << this->index << endl;
 #endif
 }

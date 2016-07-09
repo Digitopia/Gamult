@@ -62,6 +62,7 @@ void ofApp::setup() {
 
     initModules();
     setupModules();
+    loadModuleSounds();
     initImages();
 
     state = APP; // TODO: don't forget to revert to SPLASH_SCREEN for release
@@ -118,6 +119,13 @@ void ofApp::setupModules() {
     barRect.set(ofGetWidth()/2 - barRectLength/2, ofGetHeight() - barRectHeight, barRectLength, barRectHeight);
     
     ofLogNotice() << "end setupModules";
+}
+
+void ofApp::loadModuleSounds() {
+
+    for (int i = 0; i < modules.size(); i++) {
+        modules[i]->loadSounds();
+    }
 }
 
 void ofApp::initImages() {

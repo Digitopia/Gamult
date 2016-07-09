@@ -77,6 +77,7 @@ public:
     void drawLines();
     void drawLine(int nth);
     void setupModules();
+    void loadModuleSounds();
 
     int getModuleId(int x);
     void drawArrow(bool up);
