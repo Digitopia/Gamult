@@ -88,6 +88,8 @@ void Module::prepareInstrumentChange(int direction) {
 
 void Module::loadSounds() {
     vector <string> paths = soundPaths;
+    
+// OSX + ANDROID
 #ifndef TARGET_OF_IOS
     for (int i = 0; i < paths.size(); i++) {
         ofSoundPlayer s;
@@ -96,8 +98,11 @@ void Module::loadSounds() {
         //        sounds[i].setMultiPlay(true);
         sounds[i].load(paths[i], false);
     }
+    
+// iOS
 #else
-    // cout << "setting up" << ofToString(paths) << endl;
+
+// iPAD
     if (ofxiOSGetDeviceType() == OFXIOS_DEVICE_IPAD) {
         ofxCocosDenshion s;
         sounds.push_back(s);
@@ -113,6 +118,8 @@ void Module::loadSounds() {
         sounds[0].loadAllAudio();
         
     } else {
+        
+//iPHONE
         ofxCocosDenshion s;
         sounds.push_back(s);
         sounds[0].setup();
@@ -128,7 +135,10 @@ void Module::loadSounds() {
 }
 
 void Module::unloadSounds() {
+    
     for (int i = 0; i < sounds.size(); i++) {
+        
+// OSX + ANDROID
 #ifndef TARGET_OF_IOS
         sounds[i].stop();
         ofLogNotice() << "stopping sound " << i;
@@ -136,6 +146,8 @@ void Module::unloadSounds() {
         ofLogNotice() << "unloading sound " << i;
     }
 #else
+    
+//iOS
         sounds[0].stopAllSounds();
         cout << "stopping sound " << i << endl;
         sounds[0].destroy();
