@@ -62,6 +62,7 @@ void ofApp::setup() {
     initModules();
     setupModules();
     loadModuleSounds();
+
     initImages();
 
     appState = APP; // TODO: don't forget to revert to SPLASH_SCREEN for release
@@ -79,11 +80,10 @@ void ofApp::setup() {
 
 }
 
-
 void ofApp::initModules() {
-    
-    ofLogNotice() << "start initModules";
-    
+
+    ofLogNotice() << "initModules() start";
+
     int nModules = isPhone() ? 1 : 4;
     ofLogNotice() << "Allocating " << nModules << " modules";
     modules.reserve(nModules);
@@ -96,13 +96,13 @@ void ofApp::initModules() {
         modules.push_back(new Module(i, x, y, width, height, habitants, getSoundPaths(i)));
     }
     
-    ofLogNotice() << "end initModules";
+    ofLogNotice() << "initModules() end";
     
 }
 
 void ofApp::setupModules() {
     
-    ofLogNotice() << "start setupModules";
+    ofLogNotice() << "setupModules() start";
     
     if (isTabletInPortrait()) {
         modules[moduleActive]->setDimensions(0, 0, ofGetWidth(), ofGetHeight());
@@ -189,7 +189,6 @@ void ofApp::update() {
 
     for (unsigned int i = 0; i < modules.size(); i++) {
         modules[i]->update();
-        
     }
 }
 
@@ -249,6 +248,7 @@ void ofApp::resetInactivityTime() {
 }
 
 void ofApp::resetModules() {
+    ofLogNotice("Resetting modules");
     for (unsigned int i = 0; i < modules.size(); i++) {
         modules[i]->removeAllParticles();
         modules[i]->unfreeze();
@@ -788,7 +788,6 @@ void ofApp::deviceOrientationChanged(int newOrientation) {
         }
     }
     setupModules();
-    
 }
 
 #if defined TARGET_OF_IOS
@@ -888,31 +887,31 @@ bool ofApp::isTabletInPortrait() {
             return true;
         }
     }
-#endif
-    
-    // check Android in portrait
-    // TODO
-    
-    // Otherwise, is false
-    return false;
-    
+  #endif
+
+  // check Android in portrait
+  // TODO
+
+  // Otherwise, is false
+  return false;
+
 }
 
 bool ofApp::isTabletInLandscape() {
-    
-    // check iPad in portrait
-#if defined TARGET_OF_IOS
-    if (ofxiOSGetDeviceType() == OFXIOS_DEVICE_IPAD) {
-        if (ofGetOrientation() == OF_ORIENTATION_90_LEFT || ofGetOrientation() == OF_ORIENTATION_90_RIGHT) {
-            return true;
-        }
-    }
-#endif
-    
-    // check Android in portrait
-    // TODO: check for android tablet in portrait too
-    
-    // Otherwise, is false
-    return false;
-    
+
+  // check iPad in portrait
+  #if defined TARGET_OF_IOS
+  if (ofxiOSGetDeviceType() == OFXIOS_DEVICE_IPAD) {
+      if (ofGetOrientation() == OF_ORIENTATION_90_LEFT || ofGetOrientation() == OF_ORIENTATION_90_RIGHT) {
+          return true;
+      }
+  }
+  #endif
+
+  // check Android in portrait
+  // TODO: check for android tablet in portrait too
+
+  // Otherwise, is false
+  return false;
+
 }

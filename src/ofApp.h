@@ -36,7 +36,7 @@ class Touch;
 #include "Fader.h"
 #include "Particle.h"
 #include "Touch.h"
-#include "Constants.h"
+//#include "Constants.h"
 
 enum appStateEnum {
   SPLASH_SCREEN,
@@ -56,9 +56,6 @@ enum inactivityStateEnum {
   INACTIVE,       // when the auto generated animations are happening
   POST_INACTIVE   // when the auto generated animations have finished already (it's simply transitory, goes directly to ACTIVE after)
 };
-
-// need to forwad declare Touch, because of Touch requiring ofApp and ofApp requiring Touch.
-class Touch;
 
 #if defined TARGET_ANDROID
 class ofApp : public ofxAndroidApp {
@@ -127,11 +124,10 @@ public:
     static vector<string> getSoundPaths(unsigned int index);
 
     static unsigned int moduleActive;
-    static int maxParticleY; // TODO does this really needs to be static and here
-    
-    // helper methods
-    // FIXME: Consider using an Utils rather than in ofApp
+            
+    static int maxParticleY; // TODO does this really needs to be static and here?
 
+    // helper methods
     static bool isOsx();
     static bool isSemibreve();
     static bool isIos();

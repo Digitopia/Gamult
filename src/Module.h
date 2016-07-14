@@ -90,6 +90,7 @@ private:
 #endif
     
     bool active;
+
     vector<string> soundPaths;
     int backgroundColor;
 

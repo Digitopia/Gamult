@@ -11,9 +11,9 @@ Module::Module(int index, int x, int y, int width, int height, int maxPopulation
     setDimensions(x, y, width, height);
     //loadSounds(soundPaths);
     ofAddListener(ofEvents().touchDown, this, &Module::touchDown);
-    
-    this->numberOfInstruments = soundPaths.size();
+
     this->console = new ModuleConsole(this, x0, width);
+    this->numberOfInstruments = soundPaths.size();
 
     this->active = true;
     
