@@ -1,16 +1,13 @@
 #include "ofApp.h"
 
-Button::Button(buttonType type, int module, int size, int x, int y, string title) {
+Button::Button(Module* module, buttonType type, string title) {
 
-    this->type = type;
     this->module = module;
+    this->type = type;
     this->title = title;
     this->state = false;
-    setDimensions(size, x, y);
-
-    font.load(UI_FONT_FACE, UI_FONT_SIZE, true);
-
     this->id = -1;
+    this->font.load(UI_FONT_FACE, UI_FONT_SIZE, true);
 
     ofAddListener(ofEvents().touchDown,  this, &Button::touchDown);
     ofAddListener(ofEvents().touchMoved, this, &Button::touchMoved);
@@ -18,17 +15,34 @@ Button::Button(buttonType type, int module, int size, int x, int y, string title
 
 }
 
-void Button::setDimensions(int size, int x, int y) {
-    this->size = size;
+void Button::setDimensions(int x, int y, int size) {
+    
     this->x = x;
     this->y = y;
     this->rect = ofRectangle(x, y, size, size);
+    
 #ifdef TARGET_OF_IOS
     int offset = size*.6;
 #else
     int offset = 0;
 #endif
     this->rect2 = ofRectangle(x-offset/2, y-offset/2, size+offset, size+offset);
+
+    this->size = size;
+
+    if (type == BUTTON_TOGGLE) {
+        rect = ofRectangle(x, y, size, size);
+        titleX = x + size * 1.5;
+        titleY = y + size - 3;
+    }
+    
+    // TODO: this is most probably unnecessarily overly complicated
+    else if (this->type == BUTTON_REMOVE || this->type == BUTTON_CLEAR) {
+        int lowerPartHeight = (1-CONSOLE_SECTION_HEIGHT) * CONSOLE_HEIGHT * ofGetHeight();
+        titleX = x + module->getWidth()/4 - (font.stringWidth(title)/2);
+        titleY = y + (lowerPartHeight/2) + font.stringHeight(title)/2;
+        rect = ofRectangle(x, y, module->getWidth()/2, CONSOLE_HEIGHT*ofGetHeight()*(1-CONSOLE_SECTION_HEIGHT));
+    }
 }
 
 void Button::touchDown(ofTouchEventArgs& event) {
@@ -53,11 +67,11 @@ void Button::touchMoved(ofTouchEventArgs& event) {
 
 void Button::touchUp(ofTouchEventArgs& event) {
     if (event.id == id && state && (type == BUTTON_REMOVE || type == BUTTON_CLEAR)) {
-        if (ofApp::modules[module]->anyParticles()) {
+        if (module->anyParticles()) {
             if (type == BUTTON_REMOVE) {
-                ofApp::modules[module]->removeParticle();
+                module->removeParticle();
             } else {
-                ofApp::modules[module]->removeAllParticles();
+                module->removeAllParticles();
             }
         }
         state = false;
@@ -71,27 +85,19 @@ void Button::draw() {
 
     ofSetColor(UI_COLOR);
     ofSetLineWidth(BUTTON_WIDTH);
-    ofNoFill();
-
-    if (state)
-        ofFill();
-
-    if (type == BUTTON_TOGGLE) {
-        font.drawString(title, x+size*1.5, y+size-3);
-        ofDrawRectangle(rect);
-    }
-
+    
     if (type == BUTTON_REMOVE || type == BUTTON_CLEAR) {
-
         ofSetHexColor(BUTTON_REMOVE_COLOR);
-        ofDrawRectangle(x, y, ofApp::modules[module]->getWidth()/2, CONSOLE_HEIGHT*ofGetHeight()*(1-CONSOLE_SECTION_HEIGHT));
-
-        int lowerPartHeight = (1-CONSOLE_SECTION_HEIGHT) * CONSOLE_HEIGHT * ofGetHeight();
-
-        ofSetColor(UI_COLOR);
-        font.drawString(title, x+ofApp::modules[module]->getWidth()/4-(font.stringWidth(title)/2), y+(lowerPartHeight/2)+font.stringHeight(title)/2);
-
     }
+
+    if (state) ofFill();
+    else ofNoFill();
+    
+    ofDrawRectangle(rect);
+    
+    ofSetColor(UI_COLOR);
+    font.drawString(title, titleX, titleY);
 
     ofPopStyle();
+    
 }

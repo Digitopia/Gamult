@@ -1,6 +1,6 @@
 #include "ofApp.h"
 
-Particle::Particle(int module, int index, float x, float y, int life) {
+Particle::Particle(Module* module, int index, float x, float y, int life) {
     this->module = module;
     this->index = index;
     this->center.x = x;
@@ -13,7 +13,7 @@ Particle::Particle(int module, int index, float x, float y, int life) {
 
 void Particle::gravity() {
 
-    float gravity = ofApp::modules[module]->getSpeed();
+    float gravity = module->getSpeed();
 
     if (center.y >= ofGetHeight()) {
         center.y = ofGetHeight();
@@ -37,7 +37,7 @@ void Particle::gravity() {
 
 void Particle::loop() {
 
-    float loopCoef = ofApp::modules[module]->getSpeed();
+    float loopCoef = module->getSpeed();
 
     if (center.y >= ofGetHeight()) {
         trigger(true, true);
@@ -79,20 +79,19 @@ void Particle::report(int idx, int note, int vel) {
     m.addIntArg(note);
     m.addIntArg(vel);
     ofApp::oscSender.sendMessage(m);
-
 }
 #endif
 
 void Particle::trigger(bool play, bool send) {
 
     // segment particle position x to the amount of notes the instrument has
-    float notef = ofMap(center.x, ofApp::modules[module]->getX0(), ofApp::modules[module]->getX1(), 0, ofApp::modules[module]->getNumberOfInstrumentNotes());
+    float notef = ofMap(center.x, module->getX0(), module->getX1(), 0, module->getNumberOfInstrumentNotes());
     int note = floor(notef);
 
     float vol = ofMap(velocity, 5, 60, 0, 1); // TODO: check magic numbers
 
     if (play) {
-        ofApp::modules[module]->playSound(note, vol);
+        module->playSound(note, vol);
     }
 
     // TODO: still not sending the velocity properly

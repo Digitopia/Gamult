@@ -1,3 +1,5 @@
+#pragma once
+
 #ifndef OFAPP_H
 #define OFAPP_H
 
@@ -7,36 +9,52 @@
     #include "ofxiOS.h"
     #include "ofxiOSExtras.h"
     #include "swipeRecognition.h"
-#include "ofxCocosDenshion.h"
+    #include "ofxCocosDenshion.h"
 #elif defined TARGET_SEMIBREVE
     #include "ofxOsc.h"
 #endif
 
-#include "Button.h"
-#include "Fader.h"
+#if defined TARGET_SEMIBREVE
+  #include "ofxOsc.h"
+#endif
+
+#if defined TARGET_ANDROID
+  #include "ofxAndroid.h"
+#endif
+
+// NOTE: need to forward declare Touch, because of Touch requiring ofApp and ofApp requiring Touch.
+class Button;
+class Fader;
+class Module;
+class ModuleConsole;
+class Particle;
+class Touch;
+
 #include "Module.h"
 #include "ModuleConsole.h"
+#include "Button.h"
+#include "Fader.h"
 #include "Particle.h"
 #include "Touch.h"
 #include "Constants.h"
 
-enum appState {
-    SPLASH_SCREEN,
-    SPLASH_FADE,
-    ABOUT,
-    ABOUT_DESCENDING,
-    ABOUT_ASCENDING,
-    APP,
-    BAR_ASCENDING,
-    BAR_DESCENDING,
-    BAR
+enum appStateEnum {
+  SPLASH_SCREEN,
+  SPLASH_FADE,
+  ABOUT,
+  ABOUT_DESCENDING,
+  ABOUT_ASCENDING,
+  APP,
+  BAR_ASCENDING,
+  BAR_DESCENDING,
+  BAR
 };
 
 enum inactivityStateEnum {
-    ACTIVE,         // default state
-    PRE_INACTIVE,   // after a min of no interaction, resets controls and clears particles
-    INACTIVE,       // when the auto generated animations are happening
-    POST_INACTIVE   // when the auto generated animations have finished already (it's simply transitory, goes directly to ACTIVE after)
+  ACTIVE,         // default state
+  PRE_INACTIVE,   // after a min of no interaction, resets controls and clears particles
+  INACTIVE,       // when the auto generated animations are happening
+  POST_INACTIVE   // when the auto generated animations have finished already (it's simply transitory, goes directly to ACTIVE after)
 };
 
 // need to forwad declare Touch, because of Touch requiring ofApp and ofApp requiring Touch.
@@ -78,30 +96,32 @@ public:
     void drawLine(int nth);
     void setupModules();
     void loadModuleSounds();
+            
+    void appStateHandler();
+    void inactivityHandler();
 
-    int getModuleId(int x);
+    static size_t getModuleIdx(unsigned int x);
     void drawArrow(bool up);
     void drawBouncingArrow();
-
-    void handleInactivity();
+    
     bool hasParticles();
     void resetModules();
     void resetInactivityTime();
-    
+
     void updateNewModuleActive(int x);
 
     void initModules();
     void initImages();
 
     #if defined TARGET_OF_IOS
-    void onSwipe(swipeRecognitionArgs& args);
-    void detectShake();
+      void onSwipe(swipeRecognitionArgs& args);
+      void shakeHandler();
     #endif
-        
+
     #if defined TARGET_SEMIBREVE
-    void checkMultitouchData();
-    static ofxOscSender oscSender;
-    static ofxOscReceiver oscReceiver;
+      void oscMultitouchHandler();
+      static ofxOscSender oscSender;
+      static ofxOscReceiver oscReceiver;
     #endif
 
     static vector<string> getSoundPaths(unsigned int index);
@@ -111,6 +131,7 @@ public:
     
     // helper methods
     // FIXME: Consider using an Utils rather than in ofApp
+
     static bool isOsx();
     static bool isSemibreve();
     static bool isIos();
@@ -133,7 +154,7 @@ private:
 
     map<int,Touch> touches;
 
-    appState state;
+    appStateEnum appState;
     inactivityStateEnum inactivityState;
 
     ofRectangle barRect;
@@ -155,13 +176,10 @@ private:
     unsigned int inactivityThreshold;
     unsigned int inactivityThresholdWithinParticles;
 
-    ofRectangle previousInstrumentRect;
-    ofRectangle nextInstrumentRect;
-
     #if defined TARGET_OF_IOS
-    swipeRecognition swiper;
-    bool swiping;
-    int accelCount;
+      swipeRecognition swiper;
+      bool swiping;
+      int accelCount;
     #endif
 
 };
