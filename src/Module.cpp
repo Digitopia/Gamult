@@ -69,23 +69,21 @@ void Module::prepareInstrumentChange(int direction) {
 }
 
 void Module::loadSounds() {
+    
     vector <string> paths = soundPaths;
     
-// OSX + ANDROID
-#ifndef TARGET_OF_IOS
-    for (int i = 0; i < paths.size(); i++) {
-        ofSoundPlayer s;
-        // s.setMultiPlay(true);
-        sounds.push_back(s);
-        // sounds[i].setMultiPlay(true);
-        sounds[i].load(paths[i], false);
+    #if !defined TARGET_OF_IOS
+        for (int i = 0; i < paths.size(); i++) {
+            ofSoundPlayer s;
+            // s.setMultiPlay(true);
+            sounds.push_back(s);
+            // sounds[i].setMultiPlay(true);
+            sounds[i].load(paths[i], false);
+        }
     }
     
-// iOS
-#else
-
-// iPAD
-    if (ofxiOSGetDeviceType() == OFXIOS_DEVICE_IPAD) {
+    #else
+    if (ofApp::isTablet()) {
         ofxCocosDenshion s;
         sounds.push_back(s);
         sounds[0].setup();
@@ -100,8 +98,6 @@ void Module::loadSounds() {
         sounds[0].loadAllAudio();
         
     } else {
-        
-//iPHONE
         ofxCocosDenshion s;
         sounds.push_back(s);
         sounds[0].setup();
@@ -112,29 +108,23 @@ void Module::loadSounds() {
         }
         sounds[0].loadAllAudio();
     }
-    
-#endif
+    #endif
 }
 
 void Module::unloadSounds() {
     
     for (int i = 0; i < sounds.size(); i++) {
-        
-// OSX + ANDROID
-#ifndef TARGET_OF_IOS
-        sounds[i].stop();
-        ofLogNotice() << "Stopping sound " << i;
-        sounds[i].unload();
-        ofLogNotice() << "Unloading sound " << i;
+        #if !defined TARGET_OF_IOS
+            sounds[i].stop();
+            ofLogNotice() << "Stopping sound " << i;
+            sounds[i].unload();
+            ofLogNotice() << "Unloading sound " << i;
+        #else
+            sounds[0].stopAllSounds();
+            ofLogNotice() << "stopping sound " << i << endl;
+            sounds[0].destroy();
     }
-#else
-    
-//iOS
-        sounds[0].stopAllSounds();
-        ofLogNotice() << "stopping sound " << i << endl;
-        sounds[0].destroy();
-    }
-#endif
+    #endif
     sounds.clear();
     
 }
@@ -223,16 +213,15 @@ void Module::drawParticles() {
 }
 
 void Module::playSound(int soundIndex, float vol) {
+    
     if (!this->active) return;
+    
     #if !defined TARGET_OF_IOS
     sounds[soundIndex].setMultiPlay(true);
-    #endif
-
-#ifndef TARGET_OF_IOS
     sounds[soundIndex].setVolume(vol);
     sounds[soundIndex].play();
-#else
-    if (ofxiOSGetDeviceType() == OFXIOS_DEVICE_IPAD) {
+    #else
+    if (ofApp::isTablet()) {
         for(int i = 0; i < index; i++) {
             for (int j = 0; j < ofApp::modules[i]->getSoundPaths().size(); j++) {
                 soundIndex++;
@@ -245,5 +234,5 @@ void Module::playSound(int soundIndex, float vol) {
         sounds[0].playSound(soundIndex);
     }
     ofLogNotice() << "index is " << soundIndex << " and module is " << this->index;
-#endif
+    #endif
 }

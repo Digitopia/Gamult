@@ -83,11 +83,11 @@ private:
 	ModuleConsole* console;
 	vector<Particle> particles;
     
-#ifdef TARGET_OF_IOS
+    #if defined TARGET_OF_IOS
     vector<ofxCocosDenshion> sounds;
-#else
+    #else
     vector<ofSoundPlayer> sounds;
-#endif
+    #endif
     
     bool active;
 
