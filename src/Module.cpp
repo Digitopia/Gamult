@@ -94,7 +94,7 @@ void Module::loadSounds() {
             vector <string> tempSoundPaths = ofApp::modules[i]->getSoundPaths();
                 for (int j = 0; j < tempSoundPaths.size(); j++) {
                     sounds[0].addSoundEffect(tempSoundPaths[j], 0.7);
-                    ofLogNotice() << "now loading " << tempSoundPaths[j] << endl;
+                    ofLogNotice() << "now loading " << tempSoundPaths[j];
             }
         }
         sounds[0].loadAllAudio();
@@ -108,7 +108,7 @@ void Module::loadSounds() {
         sounds[0].setManagerMode(0);
         for (int i = 0; i< paths.size(); i++) {
             sounds[0].addSoundEffect(paths[i], 0.7);
-            ofLogNotice() << "now loading " << paths[i] << endl;
+            ofLogNotice() << "now loading " << paths[i];
         }
         sounds[0].loadAllAudio();
     }
@@ -244,6 +244,6 @@ void Module::playSound(int soundIndex, float vol) {
         sounds[0].setSoundVolume(vol, 0.8f);
         sounds[0].playSound(soundIndex);
     }
-    ofLogNotice() << "index is " << soundIndex << " and module is " << this->index << endl;
+    ofLogNotice() << "index is " << soundIndex << " and module is " << this->index;
 #endif
 }
