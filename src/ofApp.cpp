@@ -12,6 +12,8 @@ typedef map<int,Touch>::iterator touchesIterator;
 
 vector<Module*> ofApp::modules;
 
+#define ofLogNotice() ofLogNotice() << ofGetTimestampString("[%H:%M:%S.%i] ")
+
 #if defined TARGET_SEMIBREVE
 ofxOscSender ofApp::oscSender;
 ofxOscReceiver ofApp::oscReceiver;
