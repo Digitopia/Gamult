@@ -19,6 +19,8 @@ Module::Module(int index, int x, int y, int width, int height, int maxPopulation
     
     // only needed for phone version
     this->iSoundPaths = 0;
+    
+    this->mostRecent = false;
 
 }
 
@@ -73,15 +75,13 @@ void Module::loadSounds() {
     vector <string> paths = soundPaths;
     
     #if !defined TARGET_OF_IOS
-        for (int i = 0; i < paths.size(); i++) {
-            ofSoundPlayer s;
-            // s.setMultiPlay(true);
-            sounds.push_back(s);
-            // sounds[i].setMultiPlay(true);
-            sounds[i].load(paths[i], false);
-        }
+    for (int i = 0; i < paths.size(); i++) {
+        ofSoundPlayer s;
+        // s.setMultiPlay(true);
+        sounds.push_back(s);
+        // sounds[i].setMultiPlay(true);
+        sounds[i].load(paths[i], false);
     }
-    
     #else
     if (ofApp::isTablet()) {
         ofxCocosDenshion s;
@@ -115,16 +115,16 @@ void Module::unloadSounds() {
     
     for (int i = 0; i < sounds.size(); i++) {
         #if !defined TARGET_OF_IOS
-            sounds[i].stop();
-            ofLogNotice() << "Stopping sound " << i;
-            sounds[i].unload();
-            ofLogNotice() << "Unloading sound " << i;
+        sounds[i].stop();
+        ofLogNotice() << "Stopping sound " << i;
+        sounds[i].unload();
+        ofLogNotice() << "Unloading sound " << i;
         #else
-            sounds[0].stopAllSounds();
-            ofLogNotice() << "stopping sound " << i << endl;
-            sounds[0].destroy();
+        sounds[0].stopAllSounds();
+        ofLogNotice() << "stopping sound " << i << endl;
+        sounds[0].destroy();
+        #endif
     }
-    #endif
     sounds.clear();
     
 }
@@ -188,7 +188,9 @@ void Module::drawBackground() {
 
 void Module::drawBorders() {
     ofPushStyle();
-    ofSetLineWidth(CONSOLE_BORDER_WIDTH);
+    
+    if (this->mostRecent) ofSetLineWidth(CONSOLE_BORDER_WIDTH_MOST_RECENT);
+    else ofSetLineWidth(CONSOLE_BORDER_WIDTH);
     ofSetHexColor(CONSOLE_BORDER_COLOR);
     ofNoFill();
     ofDrawRectangle(x0, y, width, height);
