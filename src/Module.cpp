@@ -75,16 +75,16 @@ void Module::loadSounds() {
 #ifndef TARGET_OF_IOS
     for (int i = 0; i < paths.size(); i++) {
         ofSoundPlayer s;
-        // s.setMultiPlay(true);
+        //s.setMultiPlay(true);
         sounds.push_back(s);
-        // sounds[i].setMultiPlay(true);
+        sounds[i].setMultiPlay(true);
         sounds[i].load(paths[i], false);
     }
     
 // iOS
 #else
 
-// iPAD
+    // iPAD
     if (ofxiOSGetDeviceType() == OFXIOS_DEVICE_IPAD) {
         ofxCocosDenshion s;
         sounds.push_back(s);
@@ -101,7 +101,7 @@ void Module::loadSounds() {
         
     } else {
         
-//iPHONE
+        //iPHONE
         ofxCocosDenshion s;
         sounds.push_back(s);
         sounds[0].setup();
@@ -227,8 +227,12 @@ void Module::playSound(int soundIndex, float vol) {
     #if !defined TARGET_OF_IOS
     sounds[soundIndex].setMultiPlay(true);
     #endif
-
+    
+    float soundPan = ((1.8f*(float)index/(float)NMODULES) + ((float)soundIndex/(float)numberOfInstruments)*((1.8f)/(float)NMODULES));
+    soundPan = soundPan - 0.9f;
+    ofLogNotice() << "soundPan is " << soundPan << endl;
 #ifndef TARGET_OF_IOS
+    sounds[soundIndex].setPan(soundPan);
     sounds[soundIndex].setVolume(vol);
     sounds[soundIndex].play();
 #else
