@@ -72,6 +72,7 @@
 #define CONSOLE_SECTION_HEIGHT 0.75 // this is, in practice, the height at which the remove and clear buttons start
 #define CONSOLE_COLOR 0xA1DEDF
 #define CONSOLE_BORDER_WIDTH 1
+#define CONSOLE_BORDER_WIDTH_MOST_RECENT 2
 #define CONSOLE_BORDER_COLOR 0x717171
 
 // grid

@@ -68,6 +68,9 @@ public:
     void enableGravity()             { console->enableGravity(); }
     
     void addParticle(Particle p)     { this->particles.push_back(p); }
+    
+    void makeMostRecent()   { this->mostRecent = true;  }
+    void unmakeMostRecent() { this->mostRecent = false; }
 
 private:
 
@@ -83,13 +86,14 @@ private:
 	ModuleConsole* console;
 	vector<Particle> particles;
     
-#ifdef TARGET_OF_IOS
+    #if defined TARGET_OF_IOS
     vector<ofxCocosDenshion> sounds;
-#else
+    #else
     vector<ofSoundPlayer> sounds;
-#endif
+    #endif
     
-    bool active;
+    bool active;     // is it being drawn and updated
+    bool mostRecent; // is it the module with which the user interacted most recently
 
     vector<string> soundPaths;
     int backgroundColor;

@@ -12,6 +12,8 @@ typedef map<int,Touch>::iterator touchesIterator;
 
 vector<Module*> ofApp::modules;
 
+#define ofLogNotice() ofLogNotice() << ofGetTimestampString("[%H:%M:%S.%i] ")
+
 #if defined TARGET_SEMIBREVE
 ofxOscSender ofApp::oscSender;
 ofxOscReceiver ofApp::oscReceiver;
@@ -248,7 +250,7 @@ void ofApp::resetInactivityTime() {
 }
 
 void ofApp::resetModules() {
-    ofLogNotice("Resetting modules");
+    ofLogNotice() << "Resetting modules";
     for (unsigned int i = 0; i < modules.size(); i++) {
         modules[i]->removeAllParticles();
         modules[i]->unfreeze();
@@ -562,7 +564,9 @@ void ofApp::updateNewModuleActive(int x) {
         int newModuleActive = floor(x/moduleWidth);
         if (newModuleActive != moduleActive) {
             ofLogNotice() << "new module active is now " << newModuleActive;
+            modules[moduleActive]->unmakeMostRecent();
             moduleActive = newModuleActive;
+            modules[moduleActive]->makeMostRecent();
         }
     }
 
