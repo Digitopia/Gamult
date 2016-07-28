@@ -229,23 +229,29 @@ void Module::playSound(int soundIndex, float vol) {
     #endif
     
     float soundPan = ((1.8f*(float)index/(float)NMODULES) + ((float)soundIndex/(float)numberOfInstruments)*((1.8f)/(float)NMODULES));
+#ifndef TARGET_OF_IOS
     soundPan = soundPan - 0.9f;
     ofLogNotice() << "soundPan is " << soundPan << endl;
-#ifndef TARGET_OF_IOS
     sounds[soundIndex].setPan(soundPan);
-
     sounds[soundIndex].setVolume(vol);
     sounds[soundIndex].play();
     #else
+    soundPan += 0.1;
+    soundPan /= 2.0f;
     if (ofApp::isTablet()) {
         for(int i = 0; i < index; i++) {
             for (int j = 0; j < ofApp::modules[i]->getSoundPaths().size(); j++) {
                 soundIndex++;
             }
         }
+        ofLogNotice() << "soundPan is " << soundPan << endl;
+        sounds[0].setSoundPan(soundIndex, soundPan);
         sounds[0].setSoundVolume(vol, 0.8f);
         sounds[0].playSound(soundIndex);
     } else {
+        soundPan *= NMODULES;
+        ofLogNotice() << "soundPan is " << soundPan << endl;
+        sounds[0].setSoundPan(soundIndex, soundPan);
         sounds[0].setSoundVolume(vol, 0.8f);
         sounds[0].playSound(soundIndex);
     }
