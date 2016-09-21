@@ -1,0 +1,7 @@
+set solib-search-path /Users/Nuno/Development/openFrameworks/apps/Gamult/Gamult_android/obj/local/armeabi-v7a:/Users/Nuno/Development/openFrameworks/apps/Gamult/Gamult_android/libs/armeabi-v7a
+set sysroot /Users/Nuno/Development/android_ndks/android-ndk-r10e/platforms/android-19/arch-x86/
+directory /Users/Nuno/Development/android_ndks/android-ndk-r10e/platforms/android-19/arch-arm/usr/include
+directory /Users/Nuno/Development/openFrameworks/apps/Gamult/Gamult_android/src
+directory /Users/Nuno/Development/android_ndks/android-ndk-r10e/sources/cxx-stl/system
+directory /Users/Nuno/Development/openFrameworks/apps/Gamult/Gamult_android/libs/armeabi-v7a
+

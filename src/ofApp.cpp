@@ -67,8 +67,8 @@ void ofApp::setup() {
 
     initImages();
 
-    appState = APP; // TODO: don't forget to revert to SPLASH_SCREEN for release
-    // appState = SPLASH_SCREEN;
+    // appState = APP; // TODO: don't forget to revert to SPLASH_SCREEN for release
+    appState = SPLASH_SCREEN;
 
     inactivityState = ACTIVE;
 
@@ -97,15 +97,15 @@ void ofApp::initModules() {
         int y = 0;
         modules.push_back(new Module(i, x, y, width, height, habitants, getSoundPaths(i)));
     }
-    
+
     ofLogNotice() << "initModules() end";
-    
+
 }
 
 void ofApp::setupModules() {
-    
+
     ofLogNotice() << "setupModules() start";
-    
+
     if (isTabletInPortrait()) {
         modules[moduleActive]->setDimensions(0, 0, ofGetWidth(), ofGetHeight());
     }
@@ -115,12 +115,12 @@ void ofApp::setupModules() {
             modules[i]->setDimensions(i*width, 0, width, ofGetHeight());
         }
     }
-    
+
     // update down arrow on orientation change
     int barRectLength = 0.1*ofGetWidth();
     int barRectHeight = barRectLength/4;
     barRect.set(ofGetWidth()/2 - barRectLength/2, ofGetHeight() - barRectHeight, barRectLength, barRectHeight);
-    
+
     ofLogNotice() << "setupModules() end";
 }
 
@@ -132,20 +132,20 @@ void ofApp::loadModuleSounds() {
 }
 
 void ofApp::initImages() {
-    
+
     ofLogNotice() << "initImages() start";
-    
+
     imgSplashScreen.load("images/splash_screen.png");
     imgAbout.load("images/about.png");
     imgArrow.load("images/arrow_up.png");
     imgArrowDown.load("images/arrow_down.png");
-    
+
     // TODO: try to avoid resize as slows downs starting of app
     imgSplashScreen.resize(ofGetWidth(), ofGetHeight());
     imgAbout.resize(ofGetWidth(), ofGetHeight());
-    
+
     ofLogNotice() << "initImages() end";
-    
+
 }
 
 void ofApp::appStateHandler() {
@@ -153,19 +153,19 @@ void ofApp::appStateHandler() {
     if (appState == BAR_ASCENDING && aboutY <= maxParticleY) {
         appState = BAR;
     }
-    
+
     if (appState == BAR_DESCENDING && aboutY >= ofGetHeight()) {
         appState = APP;
     }
-    
+
     if (appState == ABOUT_ASCENDING && aboutY <= 0) {
         appState = ABOUT;
     }
-    
+
     if (appState == ABOUT_DESCENDING && aboutY >= ofGetHeight()) {
         appState = APP;
     }
-    
+
     if (appState == ABOUT || appState == SPLASH_SCREEN) {
         return;
     }
@@ -182,7 +182,7 @@ void ofApp::update() {
     #if defined TARGET_OF_IOS
     shakeHandler();
     #endif
-    
+
     appStateHandler();
 
     for (touchesIterator it = touches.begin(); it != touches.end(); it++) {
@@ -364,7 +364,7 @@ void ofApp::draw() {
         ofDisableAlphaBlending();
         ofPopStyle();
     }
-    
+
 }
 
 void ofApp::drawParticles() {
@@ -692,9 +692,9 @@ size_t ofApp::getModuleIdx(unsigned int x) {
         if (x >= modules[i]->getX0() && x < modules[i]->getX1())
             return i;
     }
-    
+
     return -1;
-    
+
 }
 
 void ofApp::drawLine(int nth) {
@@ -758,7 +758,7 @@ bool ofApp::hasParticles() {
 }
 
 void ofApp::deviceOrientationChanged(int newOrientation) {
-    
+
     ofLogNotice() << "Detected orientation change";
 
     if (isPhone()) {

@@ -36,7 +36,7 @@ class Touch;
 #include "Fader.h"
 #include "Particle.h"
 #include "Touch.h"
-//#include "Constants.h"
+// #include "Constants.h"
 
 enum appStateEnum {
   SPLASH_SCREEN,
@@ -62,7 +62,7 @@ class ofApp : public ofxAndroidApp {
 #elif defined TARGET_OF_IOS
     class ofApp : public ofxiOSApp {
 #else
-        class ofApp : public ofBaseApp {
+    class ofApp : public ofBaseApp {
 #endif
 
 public:
@@ -70,7 +70,7 @@ public:
     void setup();
     void update();
     void draw();
-            
+
     void mouseMoved(ofMouseEventArgs& mouse);
     void mouseDragged(ofMouseEventArgs& mouse);
     void mousePressed(ofMouseEventArgs& mouse);
@@ -93,14 +93,14 @@ public:
     void drawLine(int nth);
     void setupModules();
     void loadModuleSounds();
-            
+
     void appStateHandler();
     void inactivityHandler();
 
     static size_t getModuleIdx(unsigned int x);
     void drawArrow(bool up);
     void drawBouncingArrow();
-    
+
     bool hasParticles();
     void resetModules();
     void resetInactivityTime();
@@ -124,7 +124,7 @@ public:
     static vector<string> getSoundPaths(unsigned int index);
 
     static unsigned int moduleActive;
-            
+
     static int maxParticleY; // TODO does this really needs to be static and here?
 
     // helper methods
@@ -143,7 +143,7 @@ public:
     static bool multitouch;
     static unsigned int inactivityCounter;
     static unsigned int currentAlpha;
-            
+
     static vector<Module*> modules;
 
 private:
