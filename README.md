@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/Digitopia/Gamult.png?label=ready&title=Ready)](https://waffle.io/Digitopia/Gamult)
 Gamult for OSX
 
 © Digitópia -  Casa da Música
