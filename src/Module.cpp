@@ -74,6 +74,8 @@ void Module::loadSounds() {
     
     vector <string> paths = soundPaths;
     
+#ifndef TARGET_OF_IOS
+    
     for (int i = 0; i < paths.size(); i++) {
         ofSoundPlayer s;
         //s.setMultiPlay(true);
@@ -81,17 +83,25 @@ void Module::loadSounds() {
         sounds[i].setMultiPlay(true);
         sounds[i].load(paths[i], false);
     }
+#else
+    for (int i = 0; i < paths.size(); i++) {
+        sounds.load(paths[i]);
+    }
+#endif
 }
 
 void Module::unloadSounds() {
-    
+
+#ifndef TARGET_OF_IOS
     for (int i = 0; i < sounds.size(); i++) {
         sounds[i].stop();
         ofLogNotice() << "Stopping sound " << i;
         sounds[i].unload();
         ofLogNotice() << "Unloading sound " << i;
+            sounds.clear();
     }
-    sounds.clear();
+#endif
+
     
 }
 
@@ -186,7 +196,6 @@ void Module::playSound(int soundIndex, float vol) {
     
     #if !defined TARGET_OF_IOS
     sounds[soundIndex].setMultiPlay(true);
-    #endif
     
     float soundPan = ((1.8f*(float)index/(float)NMODULES) + ((float)soundIndex/(float)numberOfInstruments)*((1.8f)/(float)NMODULES));
     soundPan = soundPan - 0.9f;
@@ -194,4 +203,7 @@ void Module::playSound(int soundIndex, float vol) {
     sounds[soundIndex].setPan(soundPan);
     sounds[soundIndex].setVolume(vol);
     sounds[soundIndex].play();
+#else
+    sounds.play(soundPaths[soundIndex]);
+#endif
     }

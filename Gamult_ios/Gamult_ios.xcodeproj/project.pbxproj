@@ -28,6 +28,8 @@
 		B66073411C665DDA0095E989 /* OscPrintReceivedElements.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B660733D1C665DDA0095E989 /* OscPrintReceivedElements.cpp */; };
 		B66073421C665DDA0095E989 /* OscReceivedElements.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B660733E1C665DDA0095E989 /* OscReceivedElements.cpp */; };
 		B66073431C665DDA0095E989 /* OscTypes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B660733F1C665DDA0095E989 /* OscTypes.cpp */; };
+		B6D4637B1DA6FA0B00428A78 /* SimpleAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B6D463781DA6FA0B00428A78 /* SimpleAudioPlayer.m */; };
+		B6D4637C1DA6FA0B00428A78 /* Wrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = B6D4637A1DA6FA0B00428A78 /* Wrapper.mm */; };
 		BB16EBD20F2B2A9500518274 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB16EBD10F2B2A9500518274 /* OpenGLES.framework */; };
 		BB16EBD90F2B2AB500518274 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB16EBD80F2B2AB500518274 /* QuartzCore.framework */; };
 		BBE5EAB80F49AD8400F28951 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBE5EAB70F49AD8400F28951 /* AudioToolbox.framework */; };
@@ -108,6 +110,10 @@
 		B660733E1C665DDA0095E989 /* OscReceivedElements.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = OscReceivedElements.cpp; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscReceivedElements.cpp; sourceTree = "<group>"; };
 		B660733F1C665DDA0095E989 /* OscTypes.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = OscTypes.cpp; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscTypes.cpp; sourceTree = "<group>"; };
 		B6CBDF371CE4D08E00DDDCE4 /* ofxCocosDenshion.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = ofxCocosDenshion.mm; path = ../../../addons/ofxCocosDenshion/src/ofxCocosDenshion.mm; sourceTree = "<group>"; };
+		B6D463771DA6FA0B00428A78 /* SimpleAudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleAudioPlayer.h; sourceTree = "<group>"; };
+		B6D463781DA6FA0B00428A78 /* SimpleAudioPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleAudioPlayer.m; sourceTree = "<group>"; };
+		B6D463791DA6FA0B00428A78 /* Wrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Wrapper.h; sourceTree = "<group>"; };
+		B6D4637A1DA6FA0B00428A78 /* Wrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Wrapper.mm; sourceTree = "<group>"; };
 		BB16EBD10F2B2A9500518274 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BB16EBD80F2B2AB500518274 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		BB24DDC910DA781C00E9C588 /* ofxiOS-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "ofxiOS-Info.plist"; sourceTree = "<group>"; };
@@ -354,6 +360,10 @@
 		E4D8936A11527B74007E1F53 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				B6D463771DA6FA0B00428A78 /* SimpleAudioPlayer.h */,
+				B6D463781DA6FA0B00428A78 /* SimpleAudioPlayer.m */,
+				B6D463791DA6FA0B00428A78 /* Wrapper.h */,
+				B6D4637A1DA6FA0B00428A78 /* Wrapper.mm */,
 				B60BAFB61CAAD1FE006CAB37 /* swipeRecognition.h */,
 				B60BAFB71CAAD1FE006CAB37 /* swipeRecognition.mm */,
 				BC9C7BC01C57DE43004E259B /* Button.cpp */,
@@ -514,6 +524,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B66073401C665DDA0095E989 /* OscOutboundPacketStream.cpp in Sources */,
+				B6D4637B1DA6FA0B00428A78 /* SimpleAudioPlayer.m in Sources */,
 				B66073411C665DDA0095E989 /* OscPrintReceivedElements.cpp in Sources */,
 				B66073421C665DDA0095E989 /* OscReceivedElements.cpp in Sources */,
 				B66073431C665DDA0095E989 /* OscTypes.cpp in Sources */,
@@ -530,6 +541,7 @@
 				BC9C7BD11C57DE43004E259B /* Fader.cpp in Sources */,
 				BC9C7BD61C57DE43004E259B /* Particle.cpp in Sources */,
 				BC9C7BD21C57DE43004E259B /* main.cpp in Sources */,
+				B6D4637C1DA6FA0B00428A78 /* Wrapper.mm in Sources */,
 				BC9C7BD41C57DE43004E259B /* ModuleConsole.cpp in Sources */,
 				BC9C7BD71C57DE43004E259B /* Touch.cpp in Sources */,
 				BC9C7BD01C57DE43004E259B /* Button.cpp in Sources */,

@@ -4,6 +4,7 @@
 #include "ofMain.h"
 #include "ModuleConsole.h"
 #include "Particle.h"
+#include "Wrapper.h"
 
 //class ModuleConsole;
 
@@ -83,7 +84,11 @@ private:
 	ModuleConsole* console;
 	vector<Particle> particles;
 
+#ifndef TARGET_OF_IOS
     vector<ofSoundPlayer> sounds;
+#else
+    Wrapper sounds;
+#endif
     
     bool active;     // is it being drawn and updated
     bool mostRecent; // is it the module with which the user interacted most recently
