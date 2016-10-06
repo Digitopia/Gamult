@@ -22,7 +22,7 @@
 
 -(void) playAudioSample:(NSString *)sampleName gain:(float)gain;
 
--(void) playAudioSample:(NSString *)sampleName gain:(float)gain pitch:(float)pitch;
+-(void) playAudioSample:(NSString *)sampleName gain:(float)gain pan:(float)pan;
 
 -(void) shutdownAudioSamplePlayer;
 

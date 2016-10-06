@@ -12,7 +12,7 @@ class Wrapper {
     
         void load(string audioPath);
     
-        void play(string name);
+        void play(string name, float volume, float pan);
 };
 
 

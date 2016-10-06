@@ -193,17 +193,16 @@ void Module::drawParticles() {
 void Module::playSound(int soundIndex, float vol) {
     
     if (!this->active) return;
-    
-    #if !defined TARGET_OF_IOS
-    sounds[soundIndex].setMultiPlay(true);
-    
     float soundPan = ((1.8f*(float)index/(float)NMODULES) + ((float)soundIndex/(float)numberOfInstruments)*((1.8f)/(float)NMODULES));
     soundPan = soundPan - 0.9f;
     ofLogNotice() << "soundPan is " << soundPan << endl;
+    
+    #if !defined TARGET_OF_IOS
+    sounds[soundIndex].setMultiPlay(true);
     sounds[soundIndex].setPan(soundPan);
     sounds[soundIndex].setVolume(vol);
     sounds[soundIndex].play();
 #else
-    sounds.play(soundPaths[soundIndex]);
+    sounds.play(soundPaths[soundIndex], vol, soundPan);
 #endif
     }

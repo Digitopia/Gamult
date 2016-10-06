@@ -283,7 +283,7 @@ void AudioInterruptionListenerCallback(void* user_data, UInt32 interruption_stat
     /* Play the sample with the default pitch and specified gain. */
     [self playAudioSample:sampleName gain:gain pitch:kDefaultPitch];
 }
-- (void) playAudioSample:(NSString *)sampleName gain:(float)gain pitch:(float)pitch
+- (void) playAudioSample:(NSString *)sampleName gain:(float)gain pan:(float)pan
 {
     /* Buffers contain audio data, sources play the data.
      To play an audio sample, we need to attach a buffer to a source.
@@ -291,9 +291,11 @@ void AudioInterruptionListenerCallback(void* user_data, UInt32 interruption_stat
      */
     ALuint source = [self getNextAvailableSource];
     
+    float sourcePosAL[] = {pan, 0.0f, 0.0f};
+    
     /* Set the source parameters */
-    alSourcef(source, AL_PITCH, pitch);
     alSourcef(source, AL_GAIN, gain);
+    alSourcefv(source, AL_POSITION, sourcePosAL);
     
     /* Retrieve the buffer ID we generated when preloading the sample. */
     ALuint outputBuffer = (ALuint)[[audioSampleBuffers objectForKey:sampleName] intValue];
