@@ -4,9 +4,6 @@
 #include "ofMain.h"
 #include "ModuleConsole.h"
 #include "Particle.h"
-#ifdef TARGET_OF_IOS
-#include "ofxCocosDenshion.h"
-#endif
 
 //class ModuleConsole;
 
@@ -85,12 +82,8 @@ private:
     int numberOfInstruments;
 	ModuleConsole* console;
 	vector<Particle> particles;
-    
-    #if defined TARGET_OF_IOS
-    vector<ofxCocosDenshion> sounds;
-    #else
+
     vector<ofSoundPlayer> sounds;
-    #endif
     
     bool active;     // is it being drawn and updated
     bool mostRecent; // is it the module with which the user interacted most recently

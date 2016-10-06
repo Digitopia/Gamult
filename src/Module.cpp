@@ -74,7 +74,6 @@ void Module::loadSounds() {
     
     vector <string> paths = soundPaths;
     
-    #if !defined TARGET_OF_IOS
     for (int i = 0; i < paths.size(); i++) {
         ofSoundPlayer s;
         //s.setMultiPlay(true);
@@ -82,54 +81,15 @@ void Module::loadSounds() {
         sounds[i].setMultiPlay(true);
         sounds[i].load(paths[i], false);
     }
-    
-// iOS
-#else
-
-    // iPAD
-    if (ofApp::isTablet()) {
-        ofxCocosDenshion s;
-        sounds.push_back(s);
-        sounds[0].setup();
-        sounds[0].setManagerMode(1);
-        for (int i = 0; i < NMODULES; i++) {
-            vector <string> tempSoundPaths = ofApp::modules[i]->getSoundPaths();
-                for (int j = 0; j < tempSoundPaths.size(); j++) {
-                    sounds[0].addSoundEffect(tempSoundPaths[j], 0.7);
-                    ofLogNotice() << "now loading " << tempSoundPaths[j];
-            }
-        }
-        sounds[0].loadAllAudio();
-        
-    } else {
-        
-        //iPHONE
-        ofxCocosDenshion s;
-        sounds.push_back(s);
-        sounds[0].setup();
-        sounds[0].setManagerMode(0);
-        for (int i = 0; i< paths.size(); i++) {
-            sounds[0].addSoundEffect(paths[i], 0.7);
-            ofLogNotice() << "now loading " << paths[i];
-        }
-        sounds[0].loadAllAudio();
-    }
-    #endif
 }
 
 void Module::unloadSounds() {
     
     for (int i = 0; i < sounds.size(); i++) {
-        #if !defined TARGET_OF_IOS
         sounds[i].stop();
         ofLogNotice() << "Stopping sound " << i;
         sounds[i].unload();
         ofLogNotice() << "Unloading sound " << i;
-        #else
-        sounds[0].stopAllSounds();
-        ofLogNotice() << "stopping sound " << i << endl;
-        sounds[0].destroy();
-        #endif
     }
     sounds.clear();
     
@@ -229,32 +189,9 @@ void Module::playSound(int soundIndex, float vol) {
     #endif
     
     float soundPan = ((1.8f*(float)index/(float)NMODULES) + ((float)soundIndex/(float)numberOfInstruments)*((1.8f)/(float)NMODULES));
-#ifndef TARGET_OF_IOS
     soundPan = soundPan - 0.9f;
     ofLogNotice() << "soundPan is " << soundPan << endl;
     sounds[soundIndex].setPan(soundPan);
     sounds[soundIndex].setVolume(vol);
     sounds[soundIndex].play();
-    #else
-    soundPan += 0.1;
-    soundPan /= 2.0f;
-    if (ofApp::isTablet()) {
-        for(int i = 0; i < index; i++) {
-            for (int j = 0; j < ofApp::modules[i]->getSoundPaths().size(); j++) {
-                soundIndex++;
-            }
-        }
-        ofLogNotice() << "soundPan is " << soundPan << endl;
-        sounds[0].setSoundPan(soundIndex, soundPan);
-        sounds[0].setSoundVolume(vol, 0.8f);
-        sounds[0].playSound(soundIndex);
-    } else {
-        soundPan *= NMODULES;
-        ofLogNotice() << "soundPan is " << soundPan << endl;
-        sounds[0].setSoundPan(soundIndex, soundPan);
-        sounds[0].setSoundVolume(vol, 0.8f);
-        sounds[0].playSound(soundIndex);
     }
-    ofLogNotice() << "index is " << soundIndex << " and module is " << this->index;
-    #endif
-}
