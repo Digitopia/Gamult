@@ -85,7 +85,7 @@ void Module::loadSounds() {
     }
 #else
     for (int i = 0; i < paths.size(); i++) {
-        sounds.load(paths[i]);
+        sounds[i].load(paths[i]);
     }
 #endif
 }
@@ -195,12 +195,12 @@ void Module::playSound(int soundIndex, float vol) {
     if (!this->active) return;
     float soundPan;
     if(ofApp::isPhone()){
-        soundPan = 180.0*(float)soundIndex/((float)numberOfInstruments-90.0f);
+        soundPan = 1.8*(float)soundIndex/((float)numberOfInstruments-0.9f);
     }
     else {
         soundPan = ((1.8f*(float)index/(float)NMODULES) + ((float)soundIndex/(float)numberOfInstruments)*((1.8f)/(float)NMODULES));
     }
-    soundPan = soundPan + 90.0f;
+    soundPan = soundPan -0.9f;
     ofLogNotice() << "soundPan is " << soundPan << endl;
     
     #if !defined TARGET_OF_IOS
@@ -209,6 +209,6 @@ void Module::playSound(int soundIndex, float vol) {
     sounds[soundIndex].setVolume(vol);
     sounds[soundIndex].play();
 #else
-    sounds.play(soundPaths[soundIndex], vol, soundPan);
+    sounds[soundIndex].play(soundPaths[soundIndex], vol, soundPan);
 #endif
     }
