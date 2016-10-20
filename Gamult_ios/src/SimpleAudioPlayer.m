@@ -14,7 +14,7 @@
 #define kMaxBuffers 256
 
 #define kDefaultGain 1.0f
-#define kDefaultPitch 1.0f
+#define kDefaultDistance 25.0f
 
 @implementation SimpleAudioPlayer
 
@@ -275,13 +275,13 @@ void AudioInterruptionListenerCallback(void* user_data, UInt32 interruption_stat
 - (void) playAudioSample:(NSString *)sampleName
 {
     /* Play the sample with the default pitch and gain. */
-    [self playAudioSample:sampleName gain:kDefaultGain pitch:kDefaultPitch];
+    [self playAudioSample:sampleName gain:kDefaultGain pan:0.0f];
 }
 
 - (void) playAudioSample:(NSString *)sampleName gain:(float)gain
 {
     /* Play the sample with the default pitch and specified gain. */
-    [self playAudioSample:sampleName gain:gain pitch:kDefaultPitch];
+    [self playAudioSample:sampleName gain:gain pan:0.0f];
 }
 - (void) playAudioSample:(NSString *)sampleName gain:(float)gain pan:(float)pan
 {
@@ -291,11 +291,15 @@ void AudioInterruptionListenerCallback(void* user_data, UInt32 interruption_stat
      */
     ALuint source = [self getNextAvailableSource];
     
-    float sourcePosAL[] = {pan, 0.0f, 0.0f};
+    float sourcePosAL[] = {pan, kDefaultDistance, pan};
     
     /* Set the source parameters */
     alSourcef(source, AL_GAIN, gain);
     alSourcefv(source, AL_POSITION, sourcePosAL);
+    
+    float listenerPosAL[] = {0., 0., 0.};
+    // Move our listener coordinates
+    alListenerfv(AL_POSITION, listenerPosAL);
     
     /* Retrieve the buffer ID we generated when preloading the sample. */
     ALuint outputBuffer = (ALuint)[[audioSampleBuffers objectForKey:sampleName] intValue];

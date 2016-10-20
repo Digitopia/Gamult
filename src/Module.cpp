@@ -193,8 +193,14 @@ void Module::drawParticles() {
 void Module::playSound(int soundIndex, float vol) {
     
     if (!this->active) return;
-    float soundPan = ((1.8f*(float)index/(float)NMODULES) + ((float)soundIndex/(float)numberOfInstruments)*((1.8f)/(float)NMODULES));
-    soundPan = soundPan - 0.9f;
+    float soundPan;
+    if(ofApp::isPhone()){
+        soundPan = 180.0*(float)soundIndex/((float)numberOfInstruments-90.0f);
+    }
+    else {
+        soundPan = ((1.8f*(float)index/(float)NMODULES) + ((float)soundIndex/(float)numberOfInstruments)*((1.8f)/(float)NMODULES));
+    }
+    soundPan = soundPan + 90.0f;
     ofLogNotice() << "soundPan is " << soundPan << endl;
     
     #if !defined TARGET_OF_IOS
