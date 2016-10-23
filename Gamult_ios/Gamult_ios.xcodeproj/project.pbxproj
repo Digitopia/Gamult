@@ -584,7 +584,7 @@
 					"$(OF_PATH)/addons/ofxCocosDenshion/libs/CocosDenshion/include/iOS",
 				);
 				INFOPLIST_FILE = "ofxiOS-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = "$(OF_PATH)/addons/ofxCocosDenshion/libs";
 				PRODUCT_BUNDLE_IDENTIFIER = com.casadamusica.Gamult;
 				PRODUCT_NAME = Gamult;
@@ -617,7 +617,7 @@
 					"$(OF_PATH)/addons/ofxCocosDenshion/libs/CocosDenshion/include/iOS",
 				);
 				INFOPLIST_FILE = "ofxiOS-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = "$(OF_PATH)/addons/ofxCocosDenshion/libs";
 				PRODUCT_BUNDLE_IDENTIFIER = com.casadamusica.Gamult;
 				PRODUCT_NAME = Gamult;
