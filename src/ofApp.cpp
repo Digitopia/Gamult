@@ -12,8 +12,6 @@ typedef map<int,Touch>::iterator touchesIterator;
 
 vector<Module*> ofApp::modules;
 
-#define ofLogNotice() ofLogNotice() << ofGetTimestampString("[%H:%M:%S.%i] ")
-
 #if defined TARGET_SEMIBREVE
 ofxOscSender ofApp::oscSender;
 ofxOscReceiver ofApp::oscReceiver;
@@ -759,7 +757,7 @@ bool ofApp::hasParticles() {
 
 void ofApp::deviceOrientationChanged(int newOrientation) {
 
-    ofLogNotice() << "Detected orientation change";
+    ofLogNotice() << "Detected orientation change " << newOrientation;
 
     if (isPhone()) {
       ofLogNotice() << "Ignoring orientation change since it's a phone";
