@@ -16,10 +16,10 @@ Module::Module(int index, int x, int y, int width, int height, int maxPopulation
     this->numberOfInstruments = soundPaths.size();
 
     this->active = true;
-    
+
     // only needed for phone version
     this->iSoundPaths = 0;
-    
+
     this->mostRecent = false;
 
 }
@@ -44,7 +44,7 @@ void Module::setDimensions(int x, int y, int width, int height) {
 
     this->x1 = x + width;
     this->consoleHeight = CONSOLE_HEIGHT*height;
-    
+
     this->backgroundColor = 255 - (30 * ofApp::getModuleIdx(x0));
 
 }
@@ -71,9 +71,9 @@ void Module::prepareInstrumentChange(int direction) {
 }
 
 void Module::loadSounds() {
-    
+
     vector <string> paths = soundPaths;
-    
+
     #if !defined TARGET_OF_IOS
     for (int i = 0; i < paths.size(); i++) {
         ofSoundPlayer s;
@@ -82,7 +82,7 @@ void Module::loadSounds() {
         sounds[i].setMultiPlay(true);
         sounds[i].load(paths[i], false);
     }
-    
+
 // iOS
 #else
 
@@ -100,9 +100,9 @@ void Module::loadSounds() {
             }
         }
         sounds[0].loadAllAudio();
-        
+
     } else {
-        
+
         //iPHONE
         ofxCocosDenshion s;
         sounds.push_back(s);
@@ -118,7 +118,7 @@ void Module::loadSounds() {
 }
 
 void Module::unloadSounds() {
-    
+
     for (int i = 0; i < sounds.size(); i++) {
         #if !defined TARGET_OF_IOS
         sounds[i].stop();
@@ -127,12 +127,12 @@ void Module::unloadSounds() {
         ofLogNotice() << "Unloading sound " << i;
         #else
         sounds[0].stopAllSounds();
-        ofLogNotice() << "stopping sound " << i << endl;
+        ofLogNotice() << "stopping sound " << i;
         sounds[0].destroy();
         #endif
     }
     sounds.clear();
-    
+
 }
 
 void Module::changeInstrument(int iSoundPaths) {
@@ -154,7 +154,7 @@ void Module::addParticle(int life, int x, int y) {
 }
 
 void Module::update() {
-    
+
     if (!active) return;
 
     if (isFreezed())
@@ -194,7 +194,7 @@ void Module::drawBackground() {
 
 void Module::drawBorders() {
     ofPushStyle();
-    
+
     if (this->mostRecent) ofSetLineWidth(CONSOLE_BORDER_WIDTH_MOST_RECENT);
     else ofSetLineWidth(CONSOLE_BORDER_WIDTH);
     ofSetHexColor(CONSOLE_BORDER_COLOR);
@@ -221,17 +221,17 @@ void Module::drawParticles() {
 }
 
 void Module::playSound(int soundIndex, float vol) {
-    
+
     if (!this->active) return;
-    
+
     #if !defined TARGET_OF_IOS
     sounds[soundIndex].setMultiPlay(true);
     #endif
-    
+
     float soundPan = ((1.8f*(float)index/(float)NMODULES) + ((float)soundIndex/(float)numberOfInstruments)*((1.8f)/(float)NMODULES));
 #ifndef TARGET_OF_IOS
     soundPan = soundPan - 0.9f;
-    ofLogNotice() << "soundPan is " << soundPan << endl;
+    ofLogNotice() << "soundPan is " << soundPan;
     sounds[soundIndex].setPan(soundPan);
     sounds[soundIndex].setVolume(vol);
     sounds[soundIndex].play();
@@ -244,13 +244,13 @@ void Module::playSound(int soundIndex, float vol) {
                 soundIndex++;
             }
         }
-        ofLogNotice() << "soundPan is " << soundPan << endl;
+        ofLogNotice() << "soundPan is " << soundPan;
         sounds[0].setSoundPan(soundIndex, soundPan);
         sounds[0].setSoundVolume(vol, 0.8f);
         sounds[0].playSound(soundIndex);
     } else {
         soundPan *= NMODULES;
-        ofLogNotice() << "soundPan is " << soundPan << endl;
+        ofLogNotice() << "soundPan is " << soundPan;
         sounds[0].setSoundPan(soundIndex, soundPan);
         sounds[0].setSoundVolume(vol, 0.8f);
         sounds[0].playSound(soundIndex);
