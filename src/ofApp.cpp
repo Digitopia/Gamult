@@ -763,6 +763,10 @@ void ofApp::deviceOrientationChanged(int newOrientation) {
       ofLogNotice() << "Ignoring orientation change since it's a phone";
       return;
     }
+    
+    if (newOrientation == OF_ORIENTATION_UNKNOWN) {
+        return;
+    }
 
     // upside down is no good for anything
     if (newOrientation == OF_ORIENTATION_180)
