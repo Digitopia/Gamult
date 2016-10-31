@@ -10,7 +10,7 @@
 
 #define kSampleRate 44100
 
-#define kMaxConcurrentSources 32
+#define kMaxConcurrentSources 200
 #define kMaxBuffers 256
 
 #define kDefaultGain 1.0f
@@ -197,7 +197,7 @@ void AudioInterruptionListenerCallback(void* user_data, UInt32 interruption_stat
     alGenBuffers(1, &outputBuffer);
     
     /* Now, copy the audio data into the output buffer. */
-    alBufferData(outputBuffer, AL_FORMAT_STEREO16, audioData, audioFileSizeInBytes, kSampleRate);
+    alBufferData(outputBuffer, AL_FORMAT_MONO16, audioData, audioFileSizeInBytes, kSampleRate);
     
     /* We can now keep a reference to our output buffer ID. */
     [audioSampleBuffers setObject:[NSNumber numberWithInt:outputBuffer] forKey:sampleName];
@@ -297,12 +297,14 @@ void AudioInterruptionListenerCallback(void* user_data, UInt32 interruption_stat
     alSourcef(source, AL_GAIN, gain);
     alSourcefv(source, AL_POSITION, sourcePosAL);
     
-    float listenerPosAL[] = {0., 0., 0.};
+    //float listenerPosAL[] = {0., 0., 0.};
     // Move our listener coordinates
-    alListenerfv(AL_POSITION, listenerPosAL);
+   // alListenerfv(AL_POSITION, listenerPosAL);
     
     /* Retrieve the buffer ID we generated when preloading the sample. */
     ALuint outputBuffer = (ALuint)[[audioSampleBuffers objectForKey:sampleName] intValue];
+    
+    alSourcef(source, AL_REFERENCE_DISTANCE, 50.0f);
     
     /* Attach the buffer to a source. */
     alSourcei(source, AL_BUFFER, outputBuffer);

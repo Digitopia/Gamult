@@ -87,7 +87,7 @@ private:
 #ifndef TARGET_OF_IOS
     vector<ofSoundPlayer> sounds;
 #else
-    vector <Wrapper> sounds;
+    Wrapper sounds;
 #endif
     
     bool active;     // is it being drawn and updated
