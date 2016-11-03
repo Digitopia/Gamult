@@ -360,7 +360,9 @@ void ofApp::draw() {
         ofPushStyle();
         ofSetColor(IMAGE_COLOR, DEFAULT_ALPHA);
         ofEnableAlphaBlending();
+    #ifndef TARGET_OF_IOS
         ofDrawRectangle(barRect);
+    #endif
         ofDisableAlphaBlending();
         ofPopStyle();
     }
@@ -391,7 +393,7 @@ void ofApp::drawBouncingArrow() {
 }
 
 void ofApp::drawArrow(bool up) {
-
+#ifndef TARGET_OF_IOS
     ofPushStyle();
     ofEnableAlphaBlending();
 
@@ -410,7 +412,7 @@ void ofApp::drawArrow(bool up) {
     ofDisableAlphaBlending();
 
     ofPopStyle();
-
+#endif
 }
 
 vector<string> ofApp::getSoundPaths(unsigned int index) {
@@ -651,7 +653,7 @@ void ofApp::touchUp(ofTouchEventArgs& touch) {
 
     resetInactivityTime();
 
-    if (appState != APP && appState != BAR) return;
+    if (appState != APP && appState != BAR && appState != ABOUT_ASCENDING) return; //adding ABOUT_ASCENDING because of swipe on iOS
 
     int id = touch.id;
 
@@ -802,8 +804,17 @@ void ofApp::onSwipe(swipeRecognitionArgs& args) {
     // multiplying swipeOriginY by 2 because of retina display
     if (args.swipeOriginY * 2 > CONSOLE_HEIGHT * ofGetHeight()) {
         int direction = args.direction;
+        if(direction == 4)
+        {
+            if(appState == APP) {
+                appState = ABOUT_ASCENDING;
+                swiping = true;
+            }
+        }
+        else {
         modules[0]->prepareInstrumentChange(direction);
         swiping = true;
+        }
     } else {
         ofLogNotice() << "Ignoring swipe event";
     }
