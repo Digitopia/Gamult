@@ -141,8 +141,10 @@ void ofApp::initImages() {
     imgArrowDown.load("images/arrow_down.png");
 
     // TODO: try to avoid resize as slows downs starting of app
+#ifndef TARGET_OF_IOS
     imgSplashScreen.resize(ofGetWidth(), ofGetHeight());
     imgAbout.resize(ofGetWidth(), ofGetHeight());
+#endif
 
     ofLogNotice() << "initImages() end";
 
