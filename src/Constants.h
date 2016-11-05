@@ -41,7 +41,7 @@
 #define OSC_ADDRESS "/GML/"
 
 // app
-#define PARTICLES_PER_MODULE 10
+#define PARTICLES_PER_MODULE 7
 
 // user interface
 #define UI_FONT_FACE "Raleway-Medium.ttf"

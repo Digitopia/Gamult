@@ -329,7 +329,17 @@ void AudioInterruptionListenerCallback(void* user_data, UInt32 interruption_stat
         }
     }
     
-    /* If we do not find an unused source, use the first source in the audioSampleSources array. */
+    /* If we do not find an unused source, check if there is a source playing for more than 2.5 seconds. */
+    for (NSNumber *sourceID in audioSampleSources) {
+        float result;
+        alGetSourcef(sourceID, AL_SAMPLE_OFFSET, &result);
+        if (result >= 44100)
+        {
+            return [sourceID unsignedIntValue];
+        }
+    }
+
+    /* In this case, use the first source in the audioSampleSources array. */
     ALuint sourceID = [[audioSampleSources objectAtIndex:0] unsignedIntegerValue];
     alSourceStop(sourceID);
     return sourceID;
