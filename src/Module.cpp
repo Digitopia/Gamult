@@ -200,7 +200,7 @@ void Module::playSound(int soundIndex, float vol) {
         ofLogNotice() << "numberOfInstruments is " << numberOfInstruments << endl;
     }
     else {
-        soundPan = ((1.8f*(float)index/(float)NMODULES) + ((float)soundIndex/(float)numberOfInstruments)*((1.8f)/(float)NMODULES));
+        soundPan = ((50.0f*(float)index/((float)NMODULES)-1) + ((float)soundIndex/(float)numberOfInstruments)*((50.0f)/(float)NMODULES))-25.0f;
     }
     //soundPan = soundPan -0.9f;
     ofLogNotice() << "soundPan is " << soundPan << endl;

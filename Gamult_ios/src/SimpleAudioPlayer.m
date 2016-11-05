@@ -10,7 +10,7 @@
 
 #define kSampleRate 44100
 
-#define kMaxConcurrentSources 200
+#define kMaxConcurrentSources 32
 #define kMaxBuffers 256
 
 #define kDefaultGain 1.0f

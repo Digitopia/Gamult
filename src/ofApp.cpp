@@ -49,6 +49,7 @@ void ofApp::setup() {
     }
     ofxAccelerometer.setup();
     accelCount = 0;
+    crop = 0;
     #endif
 
     if (!ofApp::isIos()) {
@@ -134,18 +135,20 @@ void ofApp::loadModuleSounds() {
 void ofApp::initImages() {
 
     ofLogNotice() << "initImages() start";
-
+    if(ofApp::isPhone()) {
+        imgSplashScreen.load("images/ssiPhone.png");
+        imgAbout.load("images/aboutiPhone.png");
+    } else {
     imgSplashScreen.load("images/splash_screen.png");
     imgAbout.load("images/about.png");
+    }
     imgArrow.load("images/arrow_up.png");
     imgArrowDown.load("images/arrow_down.png");
 
     // TODO: try to avoid resize as slows downs starting of app
-#ifndef TARGET_OF_IOS
-    imgSplashScreen.resize(ofGetWidth(), ofGetHeight());
-    imgAbout.resize(ofGetWidth(), ofGetHeight());
-#endif
 
+    if(ofApp::isPhone) imgAbout.resize(ofGetWidth(), (int)((float)ofGetWidth()*3080/1080)); //3080/1080 is the original image ratio
+    
     ofLogNotice() << "initImages() end";
 
 }
@@ -158,6 +161,7 @@ void ofApp::appStateHandler() {
 
     if (appState == BAR_DESCENDING && aboutY >= ofGetHeight()) {
         appState = APP;
+        crop = 0;
     }
 
     if (appState == ABOUT_ASCENDING && aboutY <= 0) {
@@ -166,6 +170,7 @@ void ofApp::appStateHandler() {
 
     if (appState == ABOUT_DESCENDING && aboutY >= ofGetHeight()) {
         appState = APP;
+        crop = 0;
     }
 
     if (appState == ABOUT || appState == SPLASH_SCREEN) {
@@ -275,7 +280,12 @@ void ofApp::draw() {
         ofPushStyle();
         ofEnableAlphaBlending();
         ofSetColor(255, 255, 255, 255);
-        imgAbout.draw(0, 0, ofGetWidth(), ofGetHeight());
+        if(ofApp::isPhone()){
+            imgAbout.drawSubsection(0.0f, 0.0f, (float)ofGetWidth(), (float)ofGetHeight(), 0.0f, (float)crop);
+        }
+        else {
+            imgAbout.draw(0, 0, ofGetWidth(), ofGetHeight());
+        }
         splashAlpha -= 2;
         ofSetColor(255, 255, 255, splashAlpha);
         imgSplashScreen.draw(0, 0, ofGetWidth(), ofGetHeight());
@@ -286,7 +296,12 @@ void ofApp::draw() {
     }
 
     else if (appState == ABOUT) {
-        imgAbout.draw(0, 0, ofGetWidth(), ofGetHeight());
+        if(ofApp::isPhone()){
+            imgAbout.drawSubsection(0.0f, 0.0f, (float)ofGetWidth(), (float)ofGetHeight(), 0.0f, (float)crop);
+        }
+        else {
+            imgAbout.draw(0, 0, ofGetWidth(), ofGetHeight());
+        }
         drawBouncingArrow();
         return;
     }
@@ -306,7 +321,13 @@ void ofApp::draw() {
         ofPushStyle();
         ofEnableAlphaBlending();
         ofSetColor(255, 255, 255, DEFAULT_ALPHA);
-        imgAbout.draw(0, aboutY, ofGetWidth(), ofGetHeight());
+        if(ofApp::isPhone()){
+            imgAbout.drawSubsection(0.0f, aboutY, (float)ofGetWidth(), (float)ofGetHeight(), 0.0f, (float)crop);
+        }
+        else {
+            imgAbout.draw(0, aboutY, ofGetWidth(), ofGetHeight());
+        }
+        
         ofDisableAlphaBlending();
         drawArrow(false);
         ofPopStyle();
@@ -323,14 +344,24 @@ void ofApp::draw() {
         ofPushStyle();
         ofEnableAlphaBlending();
         ofSetColor(255, 255, 255, currentAlpha);
-        imgAbout.draw(0, aboutY, ofGetWidth(), ofGetHeight());
+        if(ofApp::isPhone()){
+            imgAbout.drawSubsection(0.0f, aboutY, (float)ofGetWidth(), (float)ofGetHeight(), 0.0f, (float)crop);
+        }
+        else {
+            imgAbout.draw(0, aboutY, ofGetWidth(), ofGetHeight());
+        }
         ofDisableAlphaBlending();
         ofPopStyle();
     }
 
     else if (appState == ABOUT_DESCENDING) {
         aboutY += 20;
-        imgAbout.draw(0, aboutY, ofGetWidth(), ofGetHeight());
+        if(ofApp::isPhone()){
+            imgAbout.drawSubsection(0.0f, aboutY, (float)ofGetWidth(), (float)ofGetHeight(), 0.0f, (float)crop);
+        }
+        else {
+            imgAbout.draw(0, aboutY, ofGetWidth(), ofGetHeight());
+        }
     }
 
     else if (appState == BAR_ASCENDING) {
@@ -338,7 +369,12 @@ void ofApp::draw() {
         ofEnableAlphaBlending();
         ofSetColor(255, 255, 255, DEFAULT_ALPHA);
         aboutY -= 5;
-        imgAbout.draw(0, aboutY, ofGetWidth(), ofGetHeight());
+        if(ofApp::isPhone()){
+            imgAbout.drawSubsection(0.0f, aboutY, (float)ofGetWidth(), (float)ofGetHeight(), 0.0f, (float)crop);
+        }
+        else {
+            imgAbout.draw(0, aboutY, ofGetWidth(), ofGetHeight());
+        }
         drawArrow(false);
         ofDisableAlphaBlending();
         ofPopStyle();
@@ -349,7 +385,12 @@ void ofApp::draw() {
         ofEnableAlphaBlending();
         ofSetColor(255, 255, 255, DEFAULT_ALPHA);
         aboutY += 5;
-        imgAbout.draw(0, aboutY, ofGetWidth(), ofGetHeight());
+        if(ofApp::isPhone()){
+            imgAbout.drawSubsection(0.0f, aboutY, (float)ofGetWidth(), (float)ofGetHeight(), 0.0f, (float)crop);
+        }
+        else {
+            imgAbout.draw(0, aboutY, ofGetWidth(), ofGetHeight());
+        }
         drawArrow(true);
 
         ofDisableAlphaBlending();
@@ -581,6 +622,7 @@ void ofApp::touchDown(ofTouchEventArgs& touch) {
     updateNewModuleActive(touch.x);
 
     resetInactivityTime();
+    
 
     if (appState == SPLASH_SCREEN || appState == SPLASH_FADE) {
         appState = ABOUT;
@@ -593,6 +635,8 @@ void ofApp::touchDown(ofTouchEventArgs& touch) {
 
     if (appState == ABOUT) {
         ofRectangle arrowDownRect(ofGetWidth()/2 - imgArrowDown.getWidth()/2, arrowDownY, imgArrowDown.getWidth(), imgArrowDown.getHeight());
+        // register starting Y to scroll from
+        pY = touch.y;
         if (arrowDownRect.inside(x, y)) {
             appState = ABOUT_DESCENDING;
         }
@@ -635,6 +679,17 @@ void ofApp::touchMoved(ofTouchEventArgs& touch) {
     updateNewModuleActive(touch.x);
 
     resetInactivityTime();
+    
+    if(appState == ABOUT) {
+        crop -= touch.y - pY;
+        
+        if(crop > (imgAbout.getHeight() - ofGetHeight())) {
+            crop = (imgAbout.getHeight() - ofGetHeight());
+        } else if(crop < 0) crop = 0;
+        
+        pY = touch.y;
+        
+    }
 
     if (appState != APP && appState != BAR) return;
 
@@ -814,8 +869,8 @@ void ofApp::onSwipe(swipeRecognitionArgs& args) {
             }
         }
         else {
-        modules[0]->prepareInstrumentChange(direction);
-        swiping = true;
+            modules[0]->prepareInstrumentChange(direction);
+            swiping = true;
         }
     } else {
         ofLogNotice() << "Ignoring swipe event";

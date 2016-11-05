@@ -168,6 +168,10 @@ private:
 
     int splashAlpha;
 
+    int crop;
+        
+    int pY; //for toucMoved() to scroll aboutImage on iPhone;
+        
     unsigned int inactivityThreshold;
     unsigned int inactivityThresholdWithinParticles;
 
