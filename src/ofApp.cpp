@@ -68,8 +68,8 @@ void ofApp::setup() {
 
     initImages();
 
-    // appState = APP; // TODO: don't forget to revert to SPLASH_SCREEN for release
-    appState = SPLASH_SCREEN;
+    appState = APP; // TODO: don't forget to revert to SPLASH_SCREEN for release
+    //appState = SPLASH_SCREEN;
 
     inactivityState = ACTIVE;
 
@@ -79,7 +79,10 @@ void ofApp::setup() {
     arrowDownY = ofGetHeight()/3*2;
     arrowDownYBase = arrowDownY;
     arrowDownDir = 1;
+    showSwipeInfo = true;
     ofApp::maxParticleY = round(ofGetHeight() * (1-LIMIT_PARTICLE));
+
+    swipeFont.load(UI_FONT_FACE, 20);
 
 }
 
@@ -145,10 +148,12 @@ void ofApp::initImages() {
     imgArrow.load("images/arrow_up.png");
     imgArrowDown.load("images/arrow_down.png");
 
+    imgSwipeInfo.load("images/swipe_info.png");
+
     // TODO: try to avoid resize as slows downs starting of app
 
     if(ofApp::isPhone) imgAbout.resize(ofGetWidth(), (int)((float)ofGetWidth()*3080/1080)); //3080/1080 is the original image ratio
-    
+
     ofLogNotice() << "initImages() end";
 
 }
@@ -311,6 +316,17 @@ void ofApp::draw() {
     drawParticles();
     drawTouches();
 
+    if (showSwipeInfo) {
+        ofPushStyle();
+        ofSetHexColor(CONSOLE_COLOR);
+        int swipeSize = 150;
+        int padding = 60;
+        imgSwipeInfo.draw(ofGetWidth()/2-swipeSize/2, ofGetHeight()/2, swipeSize, swipeSize);
+        swipeFont.drawString("Click (and hold) to  create particles", 120, ofGetHeight()/2 - padding);
+        swipeFont.drawString("Swipe left and right to change instrument", 60, ofGetHeight()/2 + swipeSize + padding);
+        ofPopStyle();
+    }
+
     if (ofGetOrientation() == OF_ORIENTATION_DEFAULT) {
         ofPushStyle();
         ofSetColor(ofColor::fromHex(BUTTON_CHANGE_INSTRUMENT_COLOR), BUTTON_CHANGE_INSTRUMENT_COLOR_ALPHA);
@@ -327,7 +343,7 @@ void ofApp::draw() {
         else {
             imgAbout.draw(0, aboutY, ofGetWidth(), ofGetHeight());
         }
-        
+
         ofDisableAlphaBlending();
         drawArrow(false);
         ofPopStyle();
@@ -622,7 +638,7 @@ void ofApp::touchDown(ofTouchEventArgs& touch) {
     updateNewModuleActive(touch.x);
 
     resetInactivityTime();
-    
+
 
     if (appState == SPLASH_SCREEN || appState == SPLASH_FADE) {
         appState = ABOUT;
@@ -660,6 +676,9 @@ void ofApp::touchDown(ofTouchEventArgs& touch) {
 
     if (appState == APP || appState == BAR) {
 
+        // NOTE: dismiess swipe info after first touch
+        if (showSwipeInfo) showSwipeInfo = false;
+
         ofLogNotice() << "down (" << id << ", " << x << ", " << y << ")" ;
 
         if (y > CONSOLE_HEIGHT*ofGetHeight() && (appState != BAR || y < aboutY) && modules[getModuleIdx(x)]->isNotFull()) {
@@ -679,16 +698,16 @@ void ofApp::touchMoved(ofTouchEventArgs& touch) {
     updateNewModuleActive(touch.x);
 
     resetInactivityTime();
-    
+
     if(appState == ABOUT) {
         crop -= touch.y - pY;
-        
+
         if(crop > (imgAbout.getHeight() - ofGetHeight())) {
             crop = (imgAbout.getHeight() - ofGetHeight());
         } else if(crop < 0) crop = 0;
-        
+
         pY = touch.y;
-        
+
     }
 
     if (appState != APP && appState != BAR) return;

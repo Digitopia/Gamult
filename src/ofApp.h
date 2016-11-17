@@ -159,6 +159,7 @@ private:
     ofImage imgSplashScreen;
     ofImage imgArrow;
     ofImage imgArrowDown;
+    ofImage imgSwipeInfo;
 
     int barY;
     int aboutY;
@@ -166,12 +167,16 @@ private:
     int arrowDownYBase;
     int arrowDownDir;
 
+    ofTrueTypeFont swipeFont;
+
     int splashAlpha;
 
     int crop;
-        
+
     int pY; //for toucMoved() to scroll aboutImage on iPhone;
-        
+
+    bool showSwipeInfo;
+
     unsigned int inactivityThreshold;
     unsigned int inactivityThresholdWithinParticles;
 
