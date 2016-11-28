@@ -4,7 +4,10 @@
 #include "ofMain.h"
 #include "ModuleConsole.h"
 #include "Particle.h"
+
+#ifdef TARGET_OF_IOS
 #include "Wrapper.h"
+#endif
 
 //class ModuleConsole;
 
