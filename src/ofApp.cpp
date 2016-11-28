@@ -973,6 +973,8 @@ bool ofApp::isPhone() {
   #if defined TARGET_OF_IOS
     if (ofxiOSGetDeviceType() == OFXIOS_DEVICE_IPHONE) return true;
     else return false;
+  #elif defined TARGET_ANDROID
+    return true;
   #else
     return false;
   #endif
