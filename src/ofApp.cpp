@@ -12,7 +12,7 @@ typedef map<int,Touch>::iterator touchesIterator;
 
 vector<Module*> ofApp::modules;
 
-#define ofLogNotice() ofLogNotice() << ofGetTimestampString("[%H:%M:%S.%i] ")
+// #define ofLogNotice() ofLogNotice() << ofGetTimestampString("[%H:%M:%S.%i] ")
 
 #if defined TARGET_SEMIBREVE
 ofxOscSender ofApp::oscSender;
@@ -315,15 +315,33 @@ void ofApp::draw() {
     drawLines();
     drawParticles();
     drawTouches();
+    
+    #ifdef OF_TARGET_IPHONE
+    #endif
+    
 
     if (showSwipeInfo) {
         ofPushStyle();
+
         ofSetHexColor(CONSOLE_COLOR);
+
         int swipeSize = 150;
-        int padding = 60;
+        int padding = 80;
+
         imgSwipeInfo.draw(ofGetWidth()/2-swipeSize/2, ofGetHeight()/2, swipeSize, swipeSize);
-        swipeFont.drawString("Click (and hold) to  create particles", 120, ofGetHeight()/2 - padding);
-        swipeFont.drawString("Swipe left and right to change instrument", 60, ofGetHeight()/2 + swipeSize + padding);
+
+        string s1 = "Click (and hold) to create particles";
+        int s1w = swipeFont.getStringBoundingBox(s1, 0, 0).width;
+        int s1x = (ofGetWidth() - s1w)  /2;
+        int s1y = ofGetHeight()/2 - padding;
+        swipeFont.drawString(s1, s1x, s1y);
+
+        string s2 = "Swipe left and right to change instrument";
+        int s2w = swipeFont.getStringBoundingBox(s2, 0, 0).width;
+        int s2x = (ofGetWidth() - s2w)/2;
+        int s2y = ofGetHeight()/2 + swipeSize + padding;
+        swipeFont.drawString(s2, s2x, s2y);
+
         ofPopStyle();
     }
 
