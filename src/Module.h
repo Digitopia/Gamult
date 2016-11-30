@@ -32,12 +32,12 @@ public:
 
     void playSound(int index, float vol);
     void prepareInstrumentChange(int direction);
-	void changeInstrument(int index);
+	  void changeInstrument(int index);
     void setDimensions(int x, int y, int width, int height);
     void updateParticlesOnOrientationChange();
-    
+
     void touchDown(ofTouchEventArgs& event);
-    
+
     void removeParticle()            { particles.erase(particles.end() - 1); }
     void removeAllParticles()        { particles.clear(); }
     void removeParticle(int i)       { particles.erase(particles.end() + i); }
@@ -67,9 +67,9 @@ public:
     void resetFaderSpeed()           { console->resetFaderSpeed(); }
     void unfreeze()                  { console->unfreeze(); }
     void enableGravity()             { console->enableGravity(); }
-    
+
     void addParticle(Particle p)     { this->particles.push_back(p); }
-    
+
     void makeMostRecent()   { this->mostRecent = true;  }
     void unmakeMostRecent() { this->mostRecent = false; }
 
@@ -92,7 +92,7 @@ private:
 #else
     Wrapper sounds;
 #endif
-    
+
     bool active;     // is it being drawn and updated
     bool mostRecent; // is it the module with which the user interacted most recently
 
