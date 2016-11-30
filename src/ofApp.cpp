@@ -130,7 +130,7 @@ void ofApp::setupModules() {
 
 void ofApp::loadModuleSounds() {
 
-    for (int i = 0; i < modules.size(); i++) {
+    for (unsigned int i = 0; i < modules.size(); i++) {
         modules[i]->loadSounds();
     }
 }
@@ -138,7 +138,7 @@ void ofApp::loadModuleSounds() {
 void ofApp::initImages() {
 
     ofLogNotice() << "initImages() start";
-    if(ofApp::isPhone()) {
+    if(ofApp::isPhone() && ofApp::isIos()) {
         imgSplashScreen.load("images/ssiPhone.png");
         imgAbout.load("images/aboutiPhone.png");
     } else {
@@ -248,7 +248,7 @@ void ofApp::inactivityHandler() {
 
     // POST_INACTIVE -> ACTIVE
     if (inactivityState == POST_INACTIVE) {
-        for (int i = 0; i < modules.size(); i++) {
+        for (unsigned int i = 0; i < modules.size(); i++) {
             modules[i]->removeAllParticles();
         }
         inactivityState = ACTIVE;
@@ -315,10 +315,10 @@ void ofApp::draw() {
     drawLines();
     drawParticles();
     drawTouches();
-    
+
     #ifdef OF_TARGET_IPHONE
     #endif
-    
+
 
     if (showSwipeInfo) {
         ofPushStyle();
@@ -784,7 +784,7 @@ size_t ofApp::getModuleIdx(unsigned int x) {
         return moduleActive;
     }
 
-    for (int i = 0; i < modules.size(); i++) {
+    for (unsigned int i = 0; i < modules.size(); i++) {
         if (x >= modules[i]->getX0() && x < modules[i]->getX1())
             return i;
     }
@@ -801,7 +801,7 @@ void ofApp::drawLine(int nth) {
         if (modules[moduleActive]->getNumberOfParticles() > nth)
             nthParticles.push_back(modules[moduleActive]->getParticle(nth));
     } else {
-        for (int i = 0; i < modules.size(); i++) {
+        for (unsigned int i = 0; i < modules.size(); i++) {
             if (modules[i]->getNumberOfParticles() > nth) {
                 nthParticles.push_back(modules[i]->getParticle(nth));
             }
@@ -861,6 +861,9 @@ void ofApp::deviceOrientationChanged(int newOrientation) {
       ofLogNotice() << "Ignoring orientation change since it's a phone";
       return;
     }
+
+    if (newOrientation != OF_ORIENTATION_DEFAULT)
+        return;
 
     // upside down is no good for anything
     if (newOrientation == OF_ORIENTATION_180)

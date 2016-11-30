@@ -120,6 +120,24 @@ public:
       static ofxOscReceiver oscReceiver;
     #endif
 
+    #ifdef TARGET_ANDROID
+	    void pause(){}
+	    void stop(){}
+	    void resume(){}
+	    void reloadTextures(){}
+
+	    bool backPressed(){}
+	    void okPressed(){}
+	    void cancelPressed(){}
+
+	    // void touchDown(int x, int y, int id);
+	    // void touchMoved(int x, int y, int id);
+	    // void touchUp(int x, int y, int id);
+	    // void touchDoubleTap(int x, int y, int id);
+	    // void touchCancelled(int x, int y, int id);
+	    void swipe(ofxAndroidSwipeDir swipeDir, int id){}
+	  #endif
+
     static vector<string> getSoundPaths(unsigned int index);
 
     static unsigned int moduleActive;
