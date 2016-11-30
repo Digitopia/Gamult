@@ -706,7 +706,7 @@ void ofApp::touchDown(ofTouchEventArgs& touch) {
 
     if (appState == APP || appState == BAR) {
 
-        // NOTE: dismiess swipe info after first touch
+        // NOTE: dismiss swipe info after first touch
         if (showSwipeInfo) showSwipeInfo = false;
 
         ofLogNotice() << "down (" << id << ", " << x << ", " << y << ")" ;
