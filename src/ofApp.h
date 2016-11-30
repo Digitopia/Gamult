@@ -89,7 +89,7 @@ public:
     void drawModules();
     void drawTouches();
     void drawLines();
-    void drawLine(int nth);
+    void drawLine(uint nth);
     void setupModules();
     void loadModuleSounds();
 
@@ -126,7 +126,7 @@ public:
 	    void resume(){}
 	    void reloadTextures(){}
 
-	    bool backPressed(){}
+	    // bool backPressed(){}
 	    void okPressed(){}
 	    void cancelPressed(){}
 

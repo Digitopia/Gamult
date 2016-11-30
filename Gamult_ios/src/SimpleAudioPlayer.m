@@ -107,7 +107,7 @@ static NSMutableDictionary *audioSampleBuffers;
         
         /* Generate the sound sources which will be used to play concurrent sounds. */
         NSUInteger sourceID;
-        for (int i = 0; i < kMaxConcurrentSources; i++) {
+        for (unsigned int i = 0; i < kMaxConcurrentSources; i++) {
             /* Create a single OpenAL source */
             alGenSources(1, &sourceID);
             /* Add the source to the audioSampleSources array */

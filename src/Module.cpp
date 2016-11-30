@@ -16,10 +16,10 @@ Module::Module(int index, int x, int y, int width, int height, int maxPopulation
     this->numberOfInstruments = soundPaths.size();
 
     this->active = true;
-    
+
     // only needed for phone version
     this->iSoundPaths = 0;
-    
+
     this->mostRecent = false;
 
 }
@@ -44,7 +44,7 @@ void Module::setDimensions(int x, int y, int width, int height) {
 
     this->x1 = x + width;
     this->consoleHeight = CONSOLE_HEIGHT*height;
-    
+
     this->backgroundColor = 255 - (30 * ofApp::getModuleIdx(x0));
 
 }
@@ -71,12 +71,12 @@ void Module::prepareInstrumentChange(int direction) {
 }
 
 void Module::loadSounds() {
-    
+
     vector <string> paths = soundPaths;
-    
+
 #ifndef TARGET_OF_IOS
-    
-    for (int i = 0; i < paths.size(); i++) {
+
+    for (unsigned int i = 0; i < paths.size(); i++) {
         ofSoundPlayer s;
         //s.setMultiPlay(true);
         sounds.push_back(s);
@@ -84,7 +84,7 @@ void Module::loadSounds() {
         sounds[i].load(paths[i], false);
     }
 #else
-    for (int i = 0; i < paths.size(); i++) {
+    for (unsigned int i = 0; i < paths.size(); i++) {
         sounds.load(paths[i]);
     }
 #endif
@@ -93,7 +93,7 @@ void Module::loadSounds() {
 void Module::unloadSounds() {
 
 #ifndef TARGET_OF_IOS
-    for (int i = 0; i < sounds.size(); i++) {
+    for (unsigned int i = 0; i < sounds.size(); i++) {
         sounds[i].stop();
         ofLogNotice() << "Stopping sound " << i;
         sounds[i].unload();
@@ -102,7 +102,7 @@ void Module::unloadSounds() {
     }
 #endif
 
-    
+
 }
 
 void Module::changeInstrument(int iSoundPaths) {
@@ -114,9 +114,9 @@ void Module::changeInstrument(int iSoundPaths) {
     backgroundColor = 255 - (30 * iSoundPaths);
 }
 
-void Module::addParticle(int life, int x, int y) {
+void Module::addParticle(uint life, uint x, uint y) {
     if (particles.size() < maxPopulation) {
-        // NOTE: the following line is to make sure that when the particle is \
+        // NOTE: the following line is to make sure that when the particle is
         // created it always goes downwards first (was causing problems with Particle::gravity();
         if (y <= consoleHeight + life) y = consoleHeight + life + 1;
         particles.push_back(Particle(this, particles.size(), x, y, life));
@@ -124,13 +124,13 @@ void Module::addParticle(int life, int x, int y) {
 }
 
 void Module::update() {
-    
+
     if (!active) return;
 
     if (isFreezed())
         return;
 
-    for (int i = 0; i < particles.size(); i++) {
+    for (unsigned int i = 0; i < particles.size(); i++) {
 
         Particle* p = &particles[i];
 
@@ -164,7 +164,7 @@ void Module::drawBackground() {
 
 void Module::drawBorders() {
     ofPushStyle();
-    
+
     if (this->mostRecent) ofSetLineWidth(CONSOLE_BORDER_WIDTH_MOST_RECENT);
     else ofSetLineWidth(CONSOLE_BORDER_WIDTH);
     ofSetHexColor(CONSOLE_BORDER_COLOR);
@@ -185,13 +185,13 @@ void Module::drawGrid() {
 
 void Module::drawParticles() {
     if (!active) return;
-    for (int i = 0; i < particles.size(); i++) {
+    for (unsigned int i = 0; i < particles.size(); i++) {
         particles[i].draw();
     }
 }
 
 void Module::playSound(int soundIndex, float vol) {
-    
+
     if (!this->active) return;
     float soundPan;
     if(ofApp::isPhone()){
@@ -204,7 +204,7 @@ void Module::playSound(int soundIndex, float vol) {
     }
     //soundPan = soundPan -0.9f;
     ofLogNotice() << "soundPan is " << soundPan << endl;
-    
+
     #if !defined TARGET_OF_IOS
     sounds[soundIndex].setMultiPlay(true);
     sounds[soundIndex].setPan(soundPan);

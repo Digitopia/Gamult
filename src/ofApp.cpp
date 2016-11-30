@@ -103,13 +103,13 @@ void ofApp::initModules() {
 
     ofLogNotice() << "initModules() start";
 
-    int nModules = isPhone() ? 1 : 4;
+    uint nModules = isPhone() ? 1 : 4;
     ofLogNotice() << "Allocating " << nModules << " modules";
     modules.reserve(nModules);
-    int width = ofGetWidth()/nModules;
-    int height = ofGetHeight();
-    int habitants = PARTICLES_PER_MODULE;
-    for (unsigned int i = 0; i < nModules; i++) {
+    uint width = ofGetWidth()/nModules;
+    uint height = ofGetHeight();
+    uint habitants = PARTICLES_PER_MODULE;
+    for (uint i = 0; i < nModules; i++) {
         int x = i*width;
         int y = 0;
         modules.push_back(new Module(i, x, y, width, height, habitants, getSoundPaths(i)));
@@ -165,7 +165,7 @@ void ofApp::initImages() {
 
     // TODO: try to avoid resize as slows downs starting of app
 
-    if (ofApp::isPhone) imgAbout.resize(ofGetWidth(), (int)((float)ofGetWidth()*3080/1080)); //3080/1080 is the original image ratio
+    if (ofApp::isPhone()) imgAbout.resize(ofGetWidth(), (int)((float)ofGetWidth()*3080/1080)); //3080/1080 is the original image ratio
 
     ofLogNotice() << "initImages() end";
 
@@ -652,8 +652,8 @@ void ofApp::keyPressed(int key) {
 void ofApp::updateNewModuleActive(int x) {
 
     if (isTabletInLandscape()) {
-        int moduleWidth = ofGetWidth() / float(modules.size());
-        int newModuleActive = floor(x/moduleWidth);
+        uint moduleWidth = ofGetWidth() / float(modules.size());
+        uint newModuleActive = floor(x/moduleWidth);
         if (newModuleActive != moduleActive) {
             ofLogNotice() << "new module active is now " << newModuleActive;
             modules[moduleActive]->unmakeMostRecent();
@@ -669,7 +669,6 @@ void ofApp::touchDown(ofTouchEventArgs& touch) {
     updateNewModuleActive(touch.x);
 
     resetInactivityTime();
-
 
     if (appState == SPLASH_SCREEN || appState == SPLASH_FADE) {
         appState = ABOUT;
@@ -806,7 +805,7 @@ size_t ofApp::getModuleIdx(unsigned int x) {
 
 }
 
-void ofApp::drawLine(int nth) {
+void ofApp::drawLine(uint nth) {
 
     vector<Particle*> nthParticles;
 
@@ -839,7 +838,7 @@ void ofApp::drawLine(int nth) {
     ofCurveVertex(0, middleY);
     ofCurveVertex(0, middleY);
 
-    for (int i = 0; i < nthParticles.size(); i++) {
+    for (unsigned int i = 0; i < nthParticles.size(); i++) {
         ofCurveVertex(nthParticles[i]->getX(), nthParticles[i]->getY());
     }
 
@@ -852,7 +851,7 @@ void ofApp::drawLine(int nth) {
 }
 
 void ofApp::drawLines() {
-    for (int i = 0; i < PARTICLES_PER_MODULE; i++) {
+    for (unsigned int i = 0; i < PARTICLES_PER_MODULE; i++) {
         drawLine(i);
     }
 }
