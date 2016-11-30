@@ -2,7 +2,7 @@
 #include "ofApp.h"
 
 Fader::Fader(string title) {
-    
+
     this->title = title;
     this->font.load(UI_FONT_FACE, UI_FONT_SIZE, true);
     this->id = -1; // -1 means there is no touch associated
@@ -30,7 +30,6 @@ void Fader::setDimensions(int x0, int y, int size, bool first) {
     // It makes sure the fader line starts in a point which will result in the fader rectangle being in
     // line with the Freeze buton, that is, at 0.6 of module width
 
-    #if defined TARGET_OF_IOS
     if (ofApp::isTabletInPortrait() || ofApp::isPhone()) {
         this->x0 = x0 + 0.20 * (ofGetWidth()) + size;
         this->range = 0.6*(ofGetWidth()) - size;
@@ -39,10 +38,6 @@ void Fader::setDimensions(int x0, int y, int size, bool first) {
         this->x0 = x0 + 0.20 * (ofGetWidth()/NMODULES) + size;
         this->range = 0.6*(ofGetWidth()/NMODULES)-size;
     }
-    #else
-    this->x0 = x0 + 0.20 * (ofGetWidth()/NMODULES) + size;
-    this->range = 0.6*(ofGetWidth()/NMODULES)-size;
-    #endif
 
     rect.setY(this->y - this->size/2);
     rect.setSize(this->size, this->size);

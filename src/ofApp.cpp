@@ -25,6 +25,21 @@ void ofApp::setup() {
 
     ofLogNotice() << "setup()";
 
+    if (ofApp::isSemibreve()) ofLogNotice() << "Going to run Semibreve version";
+
+    if (ofApp::isOsx())     ofLogNotice() << "OSX detected";
+    if (ofApp::isIos())     ofLogNotice() << "iOS detected";
+    if (ofApp::isAndroid()) ofLogNotice() << "Android detected";
+
+    if (ofApp::isPhone())   ofLogNotice() << "Phone detected";
+    if (ofApp::isTablet())  ofLogNotice() << "Tablet detected";
+
+    // if (ofApp::isIphone())  ofLogNotice() << "iPhone detected";
+    // if (ofApp::isIpad())    ofLogNotice() << "iPad detected";
+
+    // if (ofApp::isAndroidPhone())   ofLogNotice() << "Android phone detected";
+    // if (ofApp::isAndroidTablet())  ofLogNotice() << "Android tablet detected";
+
     #if defined TARGET_OSX
     ofLogNotice() << "Running OSX version";
     ofSetDataPathRoot("../Resources/data/");
@@ -37,8 +52,6 @@ void ofApp::setup() {
     #endif
 
     #if defined TARGET_OF_IOS
-    ofLogNotice() << "Running iOS version";
-    if (ofApp::isTablet()) {
         ofLogNotice() << "Running iPad version";
         ofSetOrientation(OF_ORIENTATION_90_LEFT);
     } else {
@@ -68,8 +81,8 @@ void ofApp::setup() {
 
     initImages();
 
-    appState = APP; // TODO: don't forget to revert to SPLASH_SCREEN for release
-    //appState = SPLASH_SCREEN;
+    // appState = APP; // TODO: don't forget to revert to SPLASH_SCREEN for release
+    appState = SPLASH_SCREEN;
 
     inactivityState = ACTIVE;
 
@@ -138,9 +151,9 @@ void ofApp::loadModuleSounds() {
 void ofApp::initImages() {
 
     ofLogNotice() << "initImages() start";
-    if(ofApp::isPhone() && ofApp::isIos()) {
+    if (ofApp::isPhone()) {
         imgSplashScreen.load("images/ssiPhone.png");
-        imgAbout.load("images/aboutiPhone.png");
+        imgAbout.load("images/about_phone.png");
     } else {
     imgSplashScreen.load("images/splash_screen.png");
     imgAbout.load("images/about.png");
@@ -152,7 +165,7 @@ void ofApp::initImages() {
 
     // TODO: try to avoid resize as slows downs starting of app
 
-    if(ofApp::isPhone) imgAbout.resize(ofGetWidth(), (int)((float)ofGetWidth()*3080/1080)); //3080/1080 is the original image ratio
+    if (ofApp::isPhone) imgAbout.resize(ofGetWidth(), (int)((float)ofGetWidth()*3080/1080)); //3080/1080 is the original image ratio
 
     ofLogNotice() << "initImages() end";
 
