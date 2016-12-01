@@ -566,33 +566,33 @@ vector<string> ofApp::getSoundPaths(unsigned int index) {
     // genders
     else if (index == 1) {
         ret.push_back("sounds/02_Gender/A_01_GBSL1.wav");
-        ret.push_back("sounds/02_Gender/A_01_GBSL2.wav");
-        ret.push_back("sounds/02_Gender/A_01_GBSL3.wav");
-        ret.push_back("sounds/02_Gender/A_01_GBSL5.wav");
-        ret.push_back("sounds/02_Gender/A_01_GBSL6.wav");
-        ret.push_back("sounds/02_Gender/A_01_GBSL1h.wav");
+        ret.push_back("sounds/02_Gender/A_02_GBSL2.wav");
+        ret.push_back("sounds/02_Gender/A_03_GBSL3.wav");
+        ret.push_back("sounds/02_Gender/A_04_GBSL5.wav");
+        ret.push_back("sounds/02_Gender/A_05_GBSL6.wav");
+        ret.push_back("sounds/02_Gender/A_06_GBSL1h.wav");
     }
     
     // gongs
     else if (index == 2) {
         ret.push_back("sounds/03_Bonang/A_01_BBSL1.wav");
-        ret.push_back("sounds/03_Bonang/A_01_BBSL2.wav");
-        ret.push_back("sounds/03_Bonang/A_01_BBSL3.wav");
-        ret.push_back("sounds/03_Bonang/A_01_BBSL5.wav");
-        ret.push_back("sounds/03_Bonang/A_01_BBSL6.wav");
-        ret.push_back("sounds/03_Bonang/A_01_BBSL1h.wav");
-        ret.push_back("sounds/03_Bonang/A_01_BBSL2h.wav");
+        ret.push_back("sounds/03_Bonang/A_02_BBSL2.wav");
+        ret.push_back("sounds/03_Bonang/A_03_BBSL3.wav");
+        ret.push_back("sounds/03_Bonang/A_04_BBSL5.wav");
+        ret.push_back("sounds/03_Bonang/A_05_BBSL6.wav");
+        ret.push_back("sounds/03_Bonang/A_06_BBSL1h.wav");
+        ret.push_back("sounds/03_Bonang/A_07_BBSL2h.wav");
     }
     
     // sarons
     else if (index == 3) {
         ret.push_back("sounds/04_Saron/A_01_SBSL6l.wav");
-        ret.push_back("sounds/04_Saron/A_01_SBSL1.wav");
-        ret.push_back("sounds/04_Saron/A_01_SBSL2.wav");
-        ret.push_back("sounds/04_Saron/A_01_SBSL3.wav");
-        ret.push_back("sounds/04_Saron/A_01_SBSL5.wav");
-        ret.push_back("sounds/04_Saron/A_01_SBSL6.wav");
-        ret.push_back("sounds/04_Saron/A_01_SBSL1h.wav");
+        ret.push_back("sounds/04_Saron/A_02_SBSL1.wav");
+        ret.push_back("sounds/04_Saron/A_03_SBSL2.wav");
+        ret.push_back("sounds/04_Saron/A_04_SBSL3.wav");
+        ret.push_back("sounds/04_Saron/A_05_SBSL5.wav");
+        ret.push_back("sounds/04_Saron/A_06_SBSL6.wav");
+        ret.push_back("sounds/04_Saron/A_07_SBSL1h.wav");
     }
     
     return ret;
