@@ -52,6 +52,7 @@ void ofApp::setup() {
     #endif
 
     #if defined TARGET_OF_IOS
+     if (ofApp::isTablet()) {
         ofLogNotice() << "Running iPad version";
         ofSetOrientation(OF_ORIENTATION_90_LEFT);
     } else {
@@ -507,6 +508,7 @@ void ofApp::drawArrow(bool up) {
 
 vector<string> ofApp::getSoundPaths(unsigned int index) {
 
+#ifndef TARGET_OF_IOS
     vector<string> ret;
 
     // bonangs
@@ -549,6 +551,53 @@ vector<string> ofApp::getSoundPaths(unsigned int index) {
     }
 
     return ret;
+    
+#else
+    
+    vector<string> ret;
+    
+    // bonangs
+    if (index == 0) {
+        ret.push_back("sounds/01_Kenong/A_KSL2.wav");
+        ret.push_back("sounds/01_Kenong/A_KSL3.wav");
+        ret.push_back("sounds/01_Kenong/A_KSL5.wav");
+    }
+    
+    // genders
+    else if (index == 1) {
+        ret.push_back("sounds/02_Gender/A_01_GBSL1.wav");
+        ret.push_back("sounds/02_Gender/A_01_GBSL2.wav");
+        ret.push_back("sounds/02_Gender/A_01_GBSL3.wav");
+        ret.push_back("sounds/02_Gender/A_01_GBSL5.wav");
+        ret.push_back("sounds/02_Gender/A_01_GBSL6.wav");
+        ret.push_back("sounds/02_Gender/A_01_GBSL1h.wav");
+    }
+    
+    // gongs
+    else if (index == 2) {
+        ret.push_back("sounds/03_Bonang/A_01_BBSL1.wav");
+        ret.push_back("sounds/03_Bonang/A_01_BBSL2.wav");
+        ret.push_back("sounds/03_Bonang/A_01_BBSL3.wav");
+        ret.push_back("sounds/03_Bonang/A_01_BBSL5.wav");
+        ret.push_back("sounds/03_Bonang/A_01_BBSL6.wav");
+        ret.push_back("sounds/03_Bonang/A_01_BBSL1h.wav");
+        ret.push_back("sounds/03_Bonang/A_01_BBSL2h.wav");
+    }
+    
+    // sarons
+    else if (index == 3) {
+        ret.push_back("sounds/04_Saron/A_01_SBSL6l.wav");
+        ret.push_back("sounds/04_Saron/A_01_SBSL1.wav");
+        ret.push_back("sounds/04_Saron/A_01_SBSL2.wav");
+        ret.push_back("sounds/04_Saron/A_01_SBSL3.wav");
+        ret.push_back("sounds/04_Saron/A_01_SBSL5.wav");
+        ret.push_back("sounds/04_Saron/A_01_SBSL6.wav");
+        ret.push_back("sounds/04_Saron/A_01_SBSL1h.wav");
+    }
+    
+    return ret;
+    
+#endif
 
 }
 
