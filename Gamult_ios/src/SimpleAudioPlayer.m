@@ -27,6 +27,8 @@ static ALCcontext *openALContext;
 static NSMutableArray *audioSampleSources;
 static NSMutableDictionary *audioSampleBuffers;
 
+NSInteger counter;
+
 #pragma mark Singleton Methods
 
 + (SimpleAudioPlayer *) sharedInstance
@@ -329,17 +331,23 @@ void AudioInterruptionListenerCallback(void* user_data, UInt32 interruption_stat
         }
     }
     
-    /* If we do not find an unused source, check if there is a source playing for more than 2.5 seconds. */
+    /* If we do not find an unused source, check if there is a source playing for more than 2 seconds. */
     for (NSNumber *sourceID in audioSampleSources) {
-        float result;
-        alGetSourcef(sourceID, AL_SAMPLE_OFFSET, &result);
-        if (result >= 44100)
+        //TODO: this definitely needs checking up;
+        NSLog(@"option 2");
+        ALint result;
+        alGetSourcei([sourceID unsignedIntValue], AL_SAMPLE_OFFSET, &result);
+        NSLog(@"RESULT is: %d", result);
+        if (result >= 88200) // 88200 = 44100 * 2
         {
+            NSLog(@"stopping this source");
+            alSourceStop(sourceID);
             return [sourceID unsignedIntValue];
         }
     }
 
     /* In this case, use the first source in the audioSampleSources array. */
+    NSLog(@"option 3");
     ALuint sourceID = [[audioSampleSources objectAtIndex:0] unsignedIntegerValue];
     alSourceStop(sourceID);
     return sourceID;
