@@ -71,11 +71,11 @@ void Module::prepareInstrumentChange(int direction) {
 }
 
 void Module::loadSounds() {
-
+    
     vector <string> paths = soundPaths;
-
+    
 #ifndef TARGET_OF_IOS
-
+    
     for (unsigned int i = 0; i < paths.size(); i++) {
         ofSoundPlayer s;
         //s.setMultiPlay(true);
@@ -91,14 +91,14 @@ void Module::loadSounds() {
 }
 
 void Module::unloadSounds() {
-
+    
 #ifndef TARGET_OF_IOS
     for (unsigned int i = 0; i < sounds.size(); i++) {
         sounds[i].stop();
         ofLogNotice() << "Stopping sound " << i;
         sounds[i].unload();
         ofLogNotice() << "Unloading sound " << i;
-            sounds.clear();
+        sounds.clear();
     }
 #endif
     
@@ -190,7 +190,7 @@ void Module::drawParticles() {
 }
 
 void Module::playSound(int soundIndex, float vol) {
-
+    
     if (!this->active) return;
     float soundPan;
     if(ofApp::isPhone()){
@@ -201,8 +201,8 @@ void Module::playSound(int soundIndex, float vol) {
     }
     //soundPan = soundPan -0.9f;
     ofLogNotice() << "soundPan is " << soundPan << endl;
-
-    #if !defined TARGET_OF_IOS
+    
+#if !defined TARGET_OF_IOS
     sounds[soundIndex].setMultiPlay(true);
     sounds[soundIndex].setPan(soundPan);
     sounds[soundIndex].setVolume(vol);
@@ -211,4 +211,4 @@ void Module::playSound(int soundIndex, float vol) {
     sounds.play(soundPaths[soundIndex], vol, soundPan);
     ofLogNotice() << "soundPath is " << soundPaths[soundIndex] << endl;
 #endif
-    }
+}

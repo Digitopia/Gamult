@@ -1,15 +1,17 @@
-/gen
-/obj
-/libs
-/jni
+
+gen/
+obj/
+libs/
+jni/
 .gradle/
 .idea/
+
 local.properties
 
 res/raw/
 
 # ignore everything from bin/ except data/ folder
-# TODO: There should be a better way than this...
+
 /bin/AndroidManifest.xml
 /bin/PORTOphone.apk
 /bin/R.txt

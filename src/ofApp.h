@@ -5,6 +5,8 @@
 
 #include "ofMain.h"
 
+#define ofLogNotice() ofLogNotice() << ofGetTimestampString("[%H:%M:%S.%i] ")
+
 #if defined TARGET_OF_IOS
     #include "ofxiOS.h"
     #include "ofxiOSExtras.h"
