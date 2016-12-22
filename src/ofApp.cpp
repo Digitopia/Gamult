@@ -758,7 +758,7 @@ void ofApp::touchDown(ofTouchEventArgs& touch) {
         // NOTE: dismiss swipe info after first touch
         if (showSwipeInfo) showSwipeInfo = false;
 
-        ofLogNotice() << "down (" << id << ", " << x << ", " << y << ")" ;
+        //ofLogNotice() << "down (" << id << ", " << x << ", " << y << ")" ;
 
         if (y > CONSOLE_HEIGHT*ofGetHeight() && (appState != BAR || y < aboutY) && modules[getModuleIdx(x)]->isNotFull()) {
             touches.insert(pair<int,Touch> (id, Touch(x, y)));
@@ -795,7 +795,7 @@ void ofApp::touchMoved(ofTouchEventArgs& touch) {
     int y = touch.y;
     int id = touch.id;
 
-    ofLogNotice() << "touchMoved (" << id << ", " << x << ", " << y << ")" ;
+    //ofLogNotice() << "touchMoved (" << id << ", " << x << ", " << y << ")" ;
 
     touchesIterator it = touches.find(id);
     if (it == touches.end()) return;
@@ -812,7 +812,7 @@ void ofApp::touchUp(ofTouchEventArgs& touch) {
 
     int id = touch.id;
 
-    ofLogNotice() << "touchUp (" << id << ")" ;
+    //ofLogNotice() << "touchUp (" << id << ")" ;
 
     touchesIterator it = touches.find(id);
 

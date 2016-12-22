@@ -2,11 +2,12 @@
 
 #if defined TARGET_OF_IOS || defined TARGET_ANDROID
     #define NMODULES 4
-    #define UI_FONT_SIZE 20
+    #define UI_FONT_SIZE 13
     #define TOUCH_MAX 40
     #define TOUCH_MIN 10
     #define BUTTON_SIZE .20
     #define FADER_SIZE .19
+    #define PARTICLES_PER_MODULE 7
 
  #elif defined TARGET_SEMIBREVE
     #define NMODULES 4
@@ -15,6 +16,7 @@
     #define TOUCH_MIN 0
     #define BUTTON_SIZE .18
     #define FADER_SIZE .12
+    #define PARTICLES_PER_MODULE 10
 
 // OSX
 #else
@@ -24,6 +26,7 @@
     #define TOUCH_MIN 0
     #define BUTTON_SIZE .18
     #define FADER_SIZE .12
+    #define PARTICLES_PER_MODULE 10
 #endif
 
 // setup
@@ -41,20 +44,20 @@
 #define SEND_PORT 5000
 #define OSC_ADDRESS "/GML/"
 
-// app
-#define PARTICLES_PER_MODULE 7
-
 // user interface
 #define UI_FONT_FACE "Raleway-Medium.ttf"
 #define UI_COLOR 255 // color for buttons, faders, etc.
 
 // buttons + fader
 #define BUTTON_COLOR 0x8DCACB
+//#define BUTTON_COLOR 0xCE7831
+//#define BUTTON_REMOVE_COLOR 0xa05c24
 #define BUTTON_REMOVE_COLOR 0x274848
 #define BUTTON_WIDTH 1
 #define BUTTON_CHANGE_INSTRUMENT_WIDTH .08
 #define BUTTON_CHANGE_INSTRUMENT_HEIGHT .14
 #define BUTTON_CHANGE_INSTRUMENT_COLOR 0xA1DEDF
+//#define BUTTON_CHANGE_INSTRUMENT_COLOR 0xCE7831
 #define BUTTON_CHANGE_INSTRUMENT_COLOR_ALPHA 200
 
 // touches
@@ -63,6 +66,7 @@
 
 // particle
 #define PARTICLE_COLOR_INNER 0xA1DEDF
+//#define PARTICLE_COLOR_INNER 0xa05c24
 #define PARTICLE_COLOR_OUTER 0
 #define PARTICLE_LIMIT_COLOR 0xFF3300
 #define PARTICLE_LIMIT_ALPHA TOUCH_ALPHA
@@ -72,6 +76,7 @@
 #define CONSOLE_HEIGHT 0.18
 #define CONSOLE_SECTION_HEIGHT 0.75 // this is, in practice, the height at which the remove and clear buttons start
 #define CONSOLE_COLOR 0xA1DEDF
+//#define CONSOLE_COLOR 0xCE7831
 #define CONSOLE_BORDER_WIDTH 1
 #define CONSOLE_BORDER_WIDTH_MOST_RECENT 2
 #define CONSOLE_BORDER_COLOR 0x717171

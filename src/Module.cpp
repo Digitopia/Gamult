@@ -101,8 +101,7 @@ void Module::unloadSounds() {
             sounds.clear();
     }
 #endif
-
-
+    
 }
 
 void Module::changeInstrument(int iSoundPaths) {
@@ -196,8 +195,6 @@ void Module::playSound(int soundIndex, float vol) {
     float soundPan;
     if(ofApp::isPhone()){
         soundPan = 50.0f*(float)soundIndex/(((float)numberOfInstruments) - 1.0f)-25.0f;
-        ofLogNotice() << "soundIndex is " << soundIndex << endl;
-        ofLogNotice() << "numberOfInstruments is " << numberOfInstruments << endl;
     }
     else {
         soundPan = ((50.0f*(float)index/((float)NMODULES)-1) + ((float)soundIndex/(float)numberOfInstruments)*((50.0f)/(float)NMODULES))-25.0f;

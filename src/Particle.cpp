@@ -88,7 +88,7 @@ void Particle::trigger(bool play, bool send) {
     float notef = ofMap(center.x, module->getX0(), module->getX1(), 0, module->getNumberOfInstrumentNotes());
     int note = floor(notef);
 
-    float vol = ofMap(velocity, 5, 60, 0, 0.8); // TODO: check magic numbers
+    float vol = ofMap(velocity, 5, 60, 0.2, 0.8); // TODO: check magic numbers
 
     if (play) {
         module->playSound(note, vol);

@@ -10,7 +10,7 @@
 
 #define kSampleRate 44100
 
-#define kMaxConcurrentSources 32
+#define kMaxConcurrentSources 31
 #define kMaxBuffers 256
 
 #define kDefaultGain 1.0f
@@ -334,15 +334,13 @@ void AudioInterruptionListenerCallback(void* user_data, UInt32 interruption_stat
     /* If we do not find an unused source, check if there is a source playing for more than 2 seconds. */
     for (NSNumber *sourceID in audioSampleSources) {
         //TODO: this definitely needs checking up;
-        NSLog(@"option 2");
         ALint result;
         alGetSourcei([sourceID unsignedIntValue], AL_SAMPLE_OFFSET, &result);
-        NSLog(@"RESULT is: %d", result);
-        if (result >= 88200) // 88200 = 44100 * 2
+        if (result >= 110250) // 110250 = 44100 * 2,5
         {
-            NSLog(@"stopping this source");
+            NSLog(@"option 2: stopping this source with a result of %d", result);
             alSourceStop(sourceID);
-            return [sourceID unsignedIntValue];
+            return sourceID;
         }
     }
 
