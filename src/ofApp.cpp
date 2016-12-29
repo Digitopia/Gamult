@@ -925,8 +925,8 @@ void ofApp::deviceOrientationChanged(int newOrientation) {
         return;
     }
 
-    if (newOrientation != OF_ORIENTATION_DEFAULT)
-        return;
+//    if (newOrientation != OF_ORIENTATION_DEFAULT)
+//       return;
 
     // upside down is no good for anything
     if (newOrientation == OF_ORIENTATION_180)
