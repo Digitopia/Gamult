@@ -7,7 +7,7 @@ Button::Button(Module* module, buttonType type, string title) {
     this->title = title;
     this->state = false;
     this->id = -1;
-    this->font.load(UI_FONT_FACE, UI_FONT_SIZE, true);
+    this->font.load(UI_FONT_FACE, ofApp::getFontSize(), true);
 
     ofAddListener(ofEvents().touchDown,  this, &Button::touchDown);
     ofAddListener(ofEvents().touchMoved, this, &Button::touchMoved);

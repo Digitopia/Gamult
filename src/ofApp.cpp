@@ -81,7 +81,7 @@ void ofApp::setup() {
     initImages();
 
     // appState = APP; // TODO: don't forget to revert to SPLASH_SCREEN for release
-    appState = SPLASH_SCREEN;
+    appState = ABOUT;
 
     inactivityState = ACTIVE;
 
@@ -151,10 +151,10 @@ void ofApp::initImages() {
 
     ofLogNotice() << "initImages() start";
     if (ofApp::isPhone()) {
-        imgSplashScreen.load("images/ssiPhone.png");
+        //imgSplashScreen.load("images/ssiPhone.png");
         imgAbout.load("images/about_phone.png");
     } else {
-    imgSplashScreen.load("images/splash_screen.png");
+    //imgSplashScreen.load("images/splash_screen.png");
     imgAbout.load("images/about.png");
     }
     imgArrow.load("images/arrow_up.png");
@@ -1091,4 +1091,32 @@ bool ofApp::isTabletInLandscape() {
   // Otherwise, is false
   return false;
 
+}
+
+int ofApp::getFontSize() {
+    if(ofApp::isPhone())
+    {
+        if (ofGetWidth() <= 640) //640 is the width for iPhone 5, 5s and SE
+        {
+            return 24;
+        } else if(ofGetWidth() <= 750) //750 is the width for iPhone 6, 6s and 7
+        {
+            return 28;
+        } else if(ofGetWidth() <= 1242) //1242 is the width for iPhone 6 plus, 6s plus and 7 plus
+        {
+            return 34;
+        } else return 38;
+    }
+    else
+    { if(ofGetWidth() <= 1024)//1024 is the width for iPad 2
+        {
+            return 12;
+        } else if(ofGetWidth() <= 1536) //1536 is the width for iPad Mini and iPad Air
+            {
+                return 22;
+            } else
+            {
+                return 24;
+            }
+    }
 }

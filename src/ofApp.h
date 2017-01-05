@@ -110,6 +110,8 @@ public:
 
     void initModules();
     void initImages();
+        
+    static int getFontSize();
 
     #if defined TARGET_OF_IOS
       void onSwipe(swipeRecognitionArgs& args);
@@ -155,6 +157,7 @@ public:
     static bool isTablet();
     static bool isTabletInPortrait();
     static bool isTabletInLandscape();
+        
 
     static int mouseId;
 

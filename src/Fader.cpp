@@ -4,7 +4,7 @@
 Fader::Fader(string title) {
 
     this->title = title;
-    this->font.load(UI_FONT_FACE, UI_FONT_SIZE, true);
+    this->font.load(UI_FONT_FACE, ofApp::getFontSize(), true);
     this->id = -1; // -1 means there is no touch associated
 
     ofAddListener(ofEvents().touchDown,  this, &Fader::touchDown);
