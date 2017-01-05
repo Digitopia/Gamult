@@ -348,12 +348,13 @@ void ofApp::draw() {
         int s1y = ofGetHeight()/2 - padding;
         swipeFont.drawString(s1, s1x, s1y);
 
-        string s2 = "Swipe left and right to change instrument";
-        int s2w = swipeFont.getStringBoundingBox(s2, 0, 0).width;
-        int s2x = (ofGetWidth() - s2w)/2;
-        int s2y = ofGetHeight()/2 + swipeSize + padding;
-        swipeFont.drawString(s2, s2x, s2y);
-
+        if(ofApp::isPhone()) {
+            string s2 = "Swipe left and right to change instrument";
+            int s2w = swipeFont.getStringBoundingBox(s2, 0, 0).width;
+            int s2x = (ofGetWidth() - s2w)/2;
+            int s2y = ofGetHeight()/2 + swipeSize + padding;
+            swipeFont.drawString(s2, s2x, s2y);
+        }
         ofPopStyle();
     }
 
