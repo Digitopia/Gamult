@@ -53,6 +53,9 @@ void ofApp::setup() {
      if (ofApp::isTablet()) {
         ofLogNotice() << "Running iPad version";
         ofSetOrientation(OF_ORIENTATION_90_LEFT);
+         swiper.setup();
+         ofAddListener(swiper.swipeRecognized, this, &ofApp::onSwipe);
+         swiping = false;
     } else {
         ofLogNotice() << "Running iPhone version";
         swiper.setup();
@@ -94,7 +97,10 @@ void ofApp::setup() {
     showSwipeInfo = true;
     ofApp::maxParticleY = round(ofGetHeight() * (1-LIMIT_PARTICLE));
 
-    swipeFont.load(UI_FONT_FACE, 20);
+    uint swipeFontSize;
+    if (isTablet()) swipeFontSize = 26;
+    else swipeFontSize = 20;
+    swipeFont.load(UI_FONT_FACE, swipeFontSize);
 
 }
 
@@ -160,7 +166,10 @@ void ofApp::initImages() {
     imgArrow.load("images/arrow_up.png");
     imgArrowDown.load("images/arrow_down.png");
 
-    imgSwipeInfo.load("images/swipe_info.png");
+    if (isPhone()) imgSwipeInfo.load("images/swipe_info.png");
+    else {
+        imgSwipeInfo.load("images/touch_info.png");
+    }
 
     // TODO: try to avoid resize as slows downs starting of app
 
@@ -335,26 +344,29 @@ void ofApp::draw() {
     if (showSwipeInfo) {
         ofPushStyle();
 
-        ofSetHexColor(CONSOLE_COLOR);
+        if (isTablet()) ofSetHexColor(0xffffff);
+        else ofSetHexColor(CONSOLE_COLOR);
 
         int swipeSize = 150;
         int padding = 80;
 
         imgSwipeInfo.draw(ofGetWidth()/2-swipeSize/2, ofGetHeight()/2, swipeSize, swipeSize);
 
-        string s1 = "Click (and hold) to create particles";
+        string s1 = "Click and hold to create particles";
         int s1w = swipeFont.getStringBoundingBox(s1, 0, 0).width;
         int s1x = (ofGetWidth() - s1w)  /2;
         int s1y = ofGetHeight()/2 - padding;
         swipeFont.drawString(s1, s1x, s1y);
 
-        if(ofApp::isPhone()) {
-            string s2 = "Swipe left and right to change instrument";
-            int s2w = swipeFont.getStringBoundingBox(s2, 0, 0).width;
-            int s2x = (ofGetWidth() - s2w)/2;
-            int s2y = ofGetHeight()/2 + swipeSize + padding;
-            swipeFont.drawString(s2, s2x, s2y);
-        }
+        string s2;
+        if (ofApp::isPhone()) s2 = "Swipe left and right to change instrument";
+        else s2 = "Rotate device to control one instrument at a time";
+
+        int s2w = swipeFont.getStringBoundingBox(s2, 0, 0).width;
+        int s2x = (ofGetWidth() - s2w)/2;
+        int s2y = ofGetHeight()/2 + swipeSize + padding;
+        swipeFont.drawString(s2, s2x, s2y);
+
         ofPopStyle();
     }
 
@@ -550,18 +562,18 @@ vector<string> ofApp::getSoundPaths(unsigned int index) {
     }
 
     return ret;
-    
+
 #else
-    
+
     vector<string> ret;
-    
+
     // bonangs
     if (index == 0) {
         ret.push_back("sounds/01_Kenong/A_KSL2.wav");
         ret.push_back("sounds/01_Kenong/A_KSL3.wav");
         ret.push_back("sounds/01_Kenong/A_KSL5.wav");
     }
-    
+
     // genders
     else if (index == 1) {
         ret.push_back("sounds/02_Gender/A_01_GBSL1.wav");
@@ -571,7 +583,7 @@ vector<string> ofApp::getSoundPaths(unsigned int index) {
         ret.push_back("sounds/02_Gender/A_05_GBSL6.wav");
         ret.push_back("sounds/02_Gender/A_06_GBSL1h.wav");
     }
-    
+
     // gongs
     else if (index == 2) {
         ret.push_back("sounds/03_Bonang/A_01_BBSL1.wav");
@@ -582,7 +594,7 @@ vector<string> ofApp::getSoundPaths(unsigned int index) {
         ret.push_back("sounds/03_Bonang/A_06_BBSL1h.wav");
         ret.push_back("sounds/03_Bonang/A_07_BBSL2h.wav");
     }
-    
+
     // sarons
     else if (index == 3) {
         ret.push_back("sounds/04_Saron/A_01_SBSL6l.wav");
@@ -593,9 +605,9 @@ vector<string> ofApp::getSoundPaths(unsigned int index) {
         ret.push_back("sounds/04_Saron/A_06_SBSL6.wav");
         ret.push_back("sounds/04_Saron/A_07_SBSL1h.wav");
     }
-    
+
     return ret;
-    
+
 #endif
 
 }
@@ -921,18 +933,23 @@ void ofApp::deviceOrientationChanged(int newOrientation) {
       ofLogNotice() << "Ignoring orientation change since it's a phone";
       return;
     }
-    
+
     if (newOrientation == OF_ORIENTATION_UNKNOWN) {
         return;
     }
 
-//    if (newOrientation != OF_ORIENTATION_DEFAULT)
-//       return;
+    if (isTablet() && appState != APP) {
+        if (newOrientation == OF_ORIENTATION_90_LEFT || newOrientation == OF_ORIENTATION_90_RIGHT) {
+            ofLogNotice() << "Ignoring orientation change in tablet in app ";
+            return;
+        }
+    }
 
     // upside down is no good for anything
-    if (newOrientation == OF_ORIENTATION_180)
+    if (isPhone() && newOrientation == OF_ORIENTATION_180)
         ofSetOrientation(OF_ORIENTATION_DEFAULT);
     else {
+        ofLogNotice() << "Changing orientation change";
         ofSetOrientation(ofOrientation(newOrientation));
     }
 
@@ -956,6 +973,7 @@ void ofApp::deviceOrientationChanged(int newOrientation) {
             }
         }
     }
+
     setupModules();
 }
 
@@ -967,16 +985,18 @@ void ofApp::onSwipe(swipeRecognitionArgs& args) {
     // multiplying swipeOriginY by 2 because of retina display
     if (args.swipeOriginY * 2 > CONSOLE_HEIGHT * ofGetHeight()) {
         int direction = args.direction;
-        if(direction == 4)
+        if (direction == 4)
         {
-            if(appState == APP) {
+            if (appState == APP) {
                 appState = ABOUT_ASCENDING;
                 swiping = true;
+                ofLogNotice() << "setting swiping true";
             }
         }
         else {
             modules[0]->prepareInstrumentChange(direction);
             swiping = true;
+            ofLogNotice() << "prepare instrument change";
         }
     } else {
         ofLogNotice() << "Ignoring swipe event";
