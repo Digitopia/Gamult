@@ -519,96 +519,94 @@ void ofApp::drawArrow(bool up) {
 
 vector<string> ofApp::getSoundPaths(unsigned int index) {
 
-#ifndef TARGET_OF_IOS
     vector<string> ret;
 
-    // bonangs
-    if (index == 0) {
-        ret.push_back("sounds/BBPL1.wav");
-        ret.push_back("sounds/BBPL2.wav");
-        ret.push_back("sounds/BBPL3.wav");
+    if (!isIos()) {
+
+      // bonangs
+      if (index == 0) {
+          ret.push_back("sounds/BBPL1.wav");
+          ret.push_back("sounds/BBPL2.wav");
+          ret.push_back("sounds/BBPL3.wav");
+      }
+
+      // genders
+      else if (index == 1) {
+          ret.push_back("sounds/GBPL1.wav");
+          ret.push_back("sounds/GBPL2.wav");
+          ret.push_back("sounds/GBPL3.wav");
+          ret.push_back("sounds/GBPL5.wav");
+          ret.push_back("sounds/GBPL2.wav");
+          ret.push_back("sounds/GBPL3.wav");
+      }
+
+      // gongs
+      else if (index == 2) {
+          ret.push_back("sounds/GKPL1f.wav");
+          ret.push_back("sounds/GKPL2f.wav");
+          ret.push_back("sounds/GKPL3f.wav");
+          ret.push_back("sounds/GKPL5f.wav");
+          ret.push_back("sounds/GKPL1f.wav");
+          ret.push_back("sounds/GKPL2f.wav");
+          ret.push_back("sounds/GKPL3f.wav");
+      }
+
+      // sarons
+      else if (index == 3) {
+          ret.push_back("sounds/SBPL1.wav");
+          ret.push_back("sounds/SBPL2.wav");
+          ret.push_back("sounds/SBPL3.wav");
+          ret.push_back("sounds/SBPL4.wav");
+          ret.push_back("sounds/SBPL3.wav");
+          ret.push_back("sounds/SBPL4.wav");
+          ret.push_back("sounds/SBPL4.wav");
+      }
     }
 
-    // genders
-    else if (index == 1) {
-        ret.push_back("sounds/GBPL1.wav");
-        ret.push_back("sounds/GBPL2.wav");
-        ret.push_back("sounds/GBPL3.wav");
-        ret.push_back("sounds/GBPL5.wav");
-        ret.push_back("sounds/GBPL2.wav");
-        ret.push_back("sounds/GBPL3.wav");
-    }
+    else {
 
-    // gongs
-    else if (index == 2) {
-        ret.push_back("sounds/GKPL1f.wav");
-        ret.push_back("sounds/GKPL2f.wav");
-        ret.push_back("sounds/GKPL3f.wav");
-        ret.push_back("sounds/GKPL5f.wav");
-        ret.push_back("sounds/GKPL1f.wav");
-        ret.push_back("sounds/GKPL2f.wav");
-        ret.push_back("sounds/GKPL3f.wav");
-    }
 
-    // sarons
-    else if (index == 3) {
-        ret.push_back("sounds/SBPL1.wav");
-        ret.push_back("sounds/SBPL2.wav");
-        ret.push_back("sounds/SBPL3.wav");
-        ret.push_back("sounds/SBPL4.wav");
-        ret.push_back("sounds/SBPL3.wav");
-        ret.push_back("sounds/SBPL4.wav");
-        ret.push_back("sounds/SBPL4.wav");
+      // bonangs
+      if (index == 0) {
+          ret.push_back("sounds/01_Kenong/A_KSL2.wav");
+          ret.push_back("sounds/01_Kenong/A_KSL3.wav");
+          ret.push_back("sounds/01_Kenong/A_KSL5.wav");
+      }
+
+      // genders
+      else if (index == 1) {
+          ret.push_back("sounds/02_Gender/A_01_GBSL1.wav");
+          ret.push_back("sounds/02_Gender/A_02_GBSL2.wav");
+          ret.push_back("sounds/02_Gender/A_03_GBSL3.wav");
+          ret.push_back("sounds/02_Gender/A_04_GBSL5.wav");
+          ret.push_back("sounds/02_Gender/A_05_GBSL6.wav");
+          ret.push_back("sounds/02_Gender/A_06_GBSL1h.wav");
+      }
+
+      // gongs
+      else if (index == 2) {
+          ret.push_back("sounds/03_Bonang/A_01_BBSL1.wav");
+          ret.push_back("sounds/03_Bonang/A_02_BBSL2.wav");
+          ret.push_back("sounds/03_Bonang/A_03_BBSL3.wav");
+          ret.push_back("sounds/03_Bonang/A_04_BBSL5.wav");
+          ret.push_back("sounds/03_Bonang/A_05_BBSL6.wav");
+          ret.push_back("sounds/03_Bonang/A_06_BBSL1h.wav");
+          ret.push_back("sounds/03_Bonang/A_07_BBSL2h.wav");
+      }
+
+      // sarons
+      else if (index == 3) {
+          ret.push_back("sounds/04_Saron/A_01_SBSL6l.wav");
+          ret.push_back("sounds/04_Saron/A_02_SBSL1.wav");
+          ret.push_back("sounds/04_Saron/A_03_SBSL2.wav");
+          ret.push_back("sounds/04_Saron/A_04_SBSL3.wav");
+          ret.push_back("sounds/04_Saron/A_05_SBSL5.wav");
+          ret.push_back("sounds/04_Saron/A_06_SBSL6.wav");
+          ret.push_back("sounds/04_Saron/A_07_SBSL1h.wav");
+      }
     }
 
     return ret;
-
-#else
-
-    vector<string> ret;
-
-    // bonangs
-    if (index == 0) {
-        ret.push_back("sounds/01_Kenong/A_KSL2.wav");
-        ret.push_back("sounds/01_Kenong/A_KSL3.wav");
-        ret.push_back("sounds/01_Kenong/A_KSL5.wav");
-    }
-
-    // genders
-    else if (index == 1) {
-        ret.push_back("sounds/02_Gender/A_01_GBSL1.wav");
-        ret.push_back("sounds/02_Gender/A_02_GBSL2.wav");
-        ret.push_back("sounds/02_Gender/A_03_GBSL3.wav");
-        ret.push_back("sounds/02_Gender/A_04_GBSL5.wav");
-        ret.push_back("sounds/02_Gender/A_05_GBSL6.wav");
-        ret.push_back("sounds/02_Gender/A_06_GBSL1h.wav");
-    }
-
-    // gongs
-    else if (index == 2) {
-        ret.push_back("sounds/03_Bonang/A_01_BBSL1.wav");
-        ret.push_back("sounds/03_Bonang/A_02_BBSL2.wav");
-        ret.push_back("sounds/03_Bonang/A_03_BBSL3.wav");
-        ret.push_back("sounds/03_Bonang/A_04_BBSL5.wav");
-        ret.push_back("sounds/03_Bonang/A_05_BBSL6.wav");
-        ret.push_back("sounds/03_Bonang/A_06_BBSL1h.wav");
-        ret.push_back("sounds/03_Bonang/A_07_BBSL2h.wav");
-    }
-
-    // sarons
-    else if (index == 3) {
-        ret.push_back("sounds/04_Saron/A_01_SBSL6l.wav");
-        ret.push_back("sounds/04_Saron/A_02_SBSL1.wav");
-        ret.push_back("sounds/04_Saron/A_03_SBSL2.wav");
-        ret.push_back("sounds/04_Saron/A_04_SBSL3.wav");
-        ret.push_back("sounds/04_Saron/A_05_SBSL5.wav");
-        ret.push_back("sounds/04_Saron/A_06_SBSL6.wav");
-        ret.push_back("sounds/04_Saron/A_07_SBSL1h.wav");
-    }
-
-    return ret;
-
-#endif
 
 }
 
