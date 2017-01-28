@@ -1,20 +1,20 @@
 
-#import "swipeRecognition.h"
+#import "SwipeRecognition.h"
 
 #include "ofApp.h"
 
-swipeRecognition::swipeRecognition() { }
+SwipeRecognition::SwipeRecognition() { }
 
 //the following code is an adaptation of rjraffa's ofxGestureRecognizer addon
 
-void swipeRecognition::setup(){
+void SwipeRecognition::setup(){
     EAGLView *view = ofxiPhoneGetGLView();
     swipeRecognizer = [[ofxSwipeGestureRecognizer alloc] initWithView:view];
     [swipeRecognizer setNotifier:this];
     
 };
 
-void swipeRecognition::gestureRecognized(swipeRecognitionArgs args){
+void SwipeRecognition::gestureRecognized(SwipeRecognitionArgs args){
     ofNotifyEvent(swipeRecognized, args);
 };
 
@@ -55,7 +55,7 @@ void swipeRecognition::gestureRecognized(swipeRecognitionArgs args){
     return self;
 }
 
-- (void) setNotifier:(swipeRecognition *)_notifier{
+- (void) setNotifier:(SwipeRecognition *)_notifier{
     notifier = _notifier;
 }
 
@@ -71,7 +71,7 @@ void swipeRecognition::gestureRecognized(swipeRecognitionArgs args){
         directionUp = gUp.direction;
         swipes++;
         
-        swipeRecognitionArgs args;
+        SwipeRecognitionArgs args;
         args.direction = directionUp;
         args.totalSwipes = swipes;
         notifier->gestureRecognized(args);
@@ -88,7 +88,7 @@ void swipeRecognition::gestureRecognized(swipeRecognitionArgs args){
         directionDown = gDown.direction;
         swipes++;
         
-        swipeRecognitionArgs args;
+        SwipeRecognitionArgs args;
         args.direction = directionDown;
         args.totalSwipes = swipes;
         notifier->gestureRecognized(args);
@@ -110,7 +110,7 @@ void swipeRecognition::gestureRecognized(swipeRecognitionArgs args){
         directionLeft = gLeft.direction;
         swipes++;
         
-        swipeRecognitionArgs args;
+        SwipeRecognitionArgs args;
         args.direction = directionLeft;
         args.totalSwipes = swipes;
         args.swipeOriginY = pt.y;
@@ -133,7 +133,7 @@ void swipeRecognition::gestureRecognized(swipeRecognitionArgs args){
         directionRight = gRight.direction;
         swipes++;
         
-        swipeRecognitionArgs args;
+        SwipeRecognitionArgs args;
         args.direction = directionRight;
         args.totalSwipes = swipes;
         args.swipeOriginY = pt.y;

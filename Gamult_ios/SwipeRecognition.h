@@ -2,14 +2,14 @@
 
 #include "ofxiOSExtras.h"
 
-class swipeRecognition;
+class SwipeRecognition;
 
 @interface ofxSwipeGestureRecognizer : NSObject {
     UISwipeGestureRecognizer *gestureUp;
     UISwipeGestureRecognizer *gestureDown;
     UISwipeGestureRecognizer *gestureLeft;
     UISwipeGestureRecognizer *gestureRight;
-    swipeRecognition *notifier;
+    SwipeRecognition *notifier;
     
 @public
     NSInteger              directionUp;
@@ -23,7 +23,7 @@ class swipeRecognition;
 @property(nonatomic) NSUInteger numberOfTouchesRequired;
 
 -(id)initWithView:(UIView*)view;
--(void)setNotifier:     (swipeRecognition *) _notifier;
+-(void)setNotifier:     (SwipeRecognition *) _notifier;
 -(void)swipeUp:         (UISwipeGestureRecognizer *)gUp;
 -(void)swipeDown:       (UISwipeGestureRecognizer *)gDown;
 -(void)swipeLeft:       (UISwipeGestureRecognizer *)gLeft;
@@ -31,19 +31,19 @@ class swipeRecognition;
 
 @end
 
-class swipeRecognitionArgs{
+class SwipeRecognitionArgs{
 public:
     int direction;
     int totalSwipes;
     int swipeOriginY;
 };
 
-class swipeRecognition {
+class SwipeRecognition {
 public:
-    swipeRecognition();
+    SwipeRecognition();
     void setup();
     ofxSwipeGestureRecognizer * swipeRecognizer;
-    void gestureRecognized(swipeRecognitionArgs args);
+    void gestureRecognized(SwipeRecognitionArgs args);
     
-    ofEvent<swipeRecognitionArgs> swipeRecognized;
+    ofEvent<SwipeRecognitionArgs> swipeRecognized;
 };

@@ -10,7 +10,7 @@
 #if defined TARGET_OF_IOS
     #include "ofxiOS.h"
     #include "ofxiOSExtras.h"
-    #include "swipeRecognition.h"
+    #include "SwipeRecognition.h"
 #elif defined TARGET_SEMIBREVE
     #include "ofxOsc.h"
 #endif
@@ -114,7 +114,7 @@ public:
     static int getFontSize();
 
     #if defined TARGET_OF_IOS
-      void onSwipe(swipeRecognitionArgs& args);
+      void onSwipe(SwipeRecognitionArgs& args);
       void shakeHandler();
     #endif
 
@@ -204,7 +204,7 @@ private:
     unsigned int inactivityThresholdWithinParticles;
 
     #if defined TARGET_OF_IOS
-      swipeRecognition swiper;
+      SwipeRecognition swiper;
       bool swiping;
       int accelCount;
     #endif

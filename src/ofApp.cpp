@@ -1,15 +1,13 @@
 #include "ofApp.h"
 
+// Statics initialization
 int ofApp::maxParticleY = 0;
 int ofApp::mouseId = 0;
-unsigned int ofApp::inactivityCounter = 0;
+uint ofApp::inactivityCounter = 0;
 bool ofApp::multitouch = true;
 bool ofApp::inactive = false;
-unsigned int ofApp::moduleActive = 0;
-unsigned int ofApp::currentAlpha = DEFAULT_ALPHA;
-
-typedef map<int,Touch>::iterator touchesIterator;
-
+uint ofApp::moduleActive = 0;
+uint ofApp::currentAlpha = DEFAULT_ALPHA;
 vector<Module*> ofApp::modules;
 
 #if defined TARGET_SEMIBREVE
@@ -17,9 +15,11 @@ ofxOscSender ofApp::oscSender;
 ofxOscReceiver ofApp::oscReceiver;
 #endif
 
+typedef map<int,Touch>::iterator touchesIterator;
+
 void ofApp::setup() {
 
-    ofSetLogLevel(OF_LOG_NOTICE);
+    ofSetLogLevel(OF_LOG_SILENT);
 
     ofLogNotice() << "setup()";
 
@@ -83,7 +83,6 @@ void ofApp::setup() {
 
     initImages();
 
-    // appState = APP; // TODO: don't forget to revert to SPLASH_SCREEN for release
     appState = ABOUT;
 
     inactivityState = ACTIVE;
@@ -138,7 +137,7 @@ void ofApp::setupModules() {
         }
     }
 
-    // update down arrow on orientation change
+    // Update down arrow on orientation change
     int barRectLength = 0.1*ofGetWidth();
     int barRectHeight = barRectLength/4;
     barRect.set(ofGetWidth()/2 - barRectLength/2, ofGetHeight() - barRectHeight, barRectLength, barRectHeight);
@@ -157,10 +156,8 @@ void ofApp::initImages() {
 
     ofLogNotice() << "initImages() start";
     if (ofApp::isPhone()) {
-        //imgSplashScreen.load("images/ssiPhone.png");
         imgAbout.load("images/about_phone.png");
     } else {
-    //imgSplashScreen.load("images/splash_screen.png");
     imgAbout.load("images/about.png");
     }
     imgArrow.load("images/arrow_up.png");
@@ -172,8 +169,8 @@ void ofApp::initImages() {
     }
 
     // TODO: try to avoid resize as slows downs starting of app
-
-    if (ofApp::isPhone()) imgAbout.resize(ofGetWidth(), (int)((float)ofGetWidth()*3080/1080)); //3080/1080 is the original image ratio
+    // NOTE: 3080/1080 is the original image ratio
+    if (ofApp::isPhone()) imgAbout.resize(ofGetWidth(), (int)((float)ofGetWidth()*3080/1080));
 
     ofLogNotice() << "initImages() end";
 
@@ -254,14 +251,12 @@ void ofApp::inactivityHandler() {
 
         int particleChance = ofRandom(0, 1499);
 
+        // NOTE: magic number!
         if (particleChance == 27) {
-
             unsigned int rModule = ofRandom(0, NMODULES);
             unsigned int rX = ofRandom(modules[rModule]->getX0(), modules[rModule]->getX1());
-            // unsigned int rY = ofRandom(100, modules[rModules].getHeight());
             unsigned int rY = ofRandom(CONSOLE_HEIGHT*ofGetHeight(), ofGetHeight()*(1-LIMIT_PARTICLE));
             unsigned int rIncrement = ofRandom(INACTIVITY_TOUCH_MIN, INACTIVITY_TOUCH_MAX);
-
             modules[getModuleIdx(rX)]->addParticle(rIncrement, rX, rY);
         }
 
@@ -628,7 +623,6 @@ void ofApp::oscMultitouchHandler() {
         touchEvent.id = id;
 
         // TODO: change numbers to 'add', 'update' and 'remove' preprends
-        // Can't open and edit Max since already past trial
 
         if (m.getAddress() == "/1/" || m.getAddress() == "/2/") {
 
@@ -767,7 +761,7 @@ void ofApp::touchDown(ofTouchEventArgs& touch) {
         // NOTE: dismiss swipe info after first touch
         if (showSwipeInfo) showSwipeInfo = false;
 
-        //ofLogNotice() << "down (" << id << ", " << x << ", " << y << ")" ;
+        // ofLogNotice() << "down (" << id << ", " << x << ", " << y << ")" ;
 
         if (y > CONSOLE_HEIGHT*ofGetHeight() && (appState != BAR || y < aboutY) && modules[getModuleIdx(x)]->isNotFull()) {
             touches.insert(pair<int,Touch> (id, Touch(x, y)));
@@ -804,7 +798,7 @@ void ofApp::touchMoved(ofTouchEventArgs& touch) {
     int y = touch.y;
     int id = touch.id;
 
-    //ofLogNotice() << "touchMoved (" << id << ", " << x << ", " << y << ")" ;
+    // ofLogNotice() << "touchMoved (" << id << ", " << x << ", " << y << ")" ;
 
     touchesIterator it = touches.find(id);
     if (it == touches.end()) return;
@@ -821,7 +815,7 @@ void ofApp::touchUp(ofTouchEventArgs& touch) {
 
     int id = touch.id;
 
-    //ofLogNotice() << "touchUp (" << id << ")" ;
+    // ofLogNotice() << "touchUp (" << id << ")" ;
 
     touchesIterator it = touches.find(id);
 
@@ -889,7 +883,7 @@ void ofApp::drawLine(uint nth) {
 
     ofBeginShape();
 
-    // need four points at least otherwise the shape doesn't 'close' and therefore doesn't draw
+    // Need four points at least otherwise the shape doesn't 'close' and therefore doesn't draw
 
     int middleY = round((ofGetHeight() - CONSOLE_HEIGHT*ofGetHeight())/2.0 + CONSOLE_HEIGHT*ofGetHeight());
 
@@ -976,7 +970,7 @@ void ofApp::deviceOrientationChanged(int newOrientation) {
 }
 
 #if defined TARGET_OF_IOS
-void ofApp::onSwipe(swipeRecognitionArgs& args) {
+void ofApp::onSwipe(SwipeRecognitionArgs& args) {
 
     ofLogNotice() << "Detected swipe event";
 
@@ -1097,7 +1091,7 @@ bool ofApp::isTabletInPortrait() {
 
 bool ofApp::isTabletInLandscape() {
 
-  // check iPad in portrait
+  // iPad in portrait
   #if defined TARGET_OF_IOS
   if (ofxiOSGetDeviceType() == OFXIOS_DEVICE_IPAD) {
       if (ofGetOrientation() == OF_ORIENTATION_90_LEFT || ofGetOrientation() == OF_ORIENTATION_90_RIGHT) {
@@ -1106,7 +1100,7 @@ bool ofApp::isTabletInLandscape() {
   }
   #endif
 
-  // check Android in portrait
+  // Android in portrait
   // TODO: check for android tablet in portrait too
 
   // Otherwise, is false
@@ -1115,29 +1109,16 @@ bool ofApp::isTabletInLandscape() {
 }
 
 int ofApp::getFontSize() {
-    if(ofApp::isPhone())
-    {
-        if (ofGetWidth() <= 640) //640 is the width for iPhone 5, 5s and SE
-        {
-            return 24;
-        } else if(ofGetWidth() <= 750) //750 is the width for iPhone 6, 6s and 7
-        {
-            return 28;
-        } else if(ofGetWidth() <= 1242) //1242 is the width for iPhone 6 plus, 6s plus and 7 plus
-        {
-            return 34;
-        } else return 38;
+    uint width = ofGetWidth();
+    if (ofApp::isPhone()) {
+        if     (width <= 640)  return 24; // iPhone 5, 5s and SE
+        else if(width <= 750)  return 28; // iPhone 6, 6s and 7
+        else if(width <= 1242) return 34; // iPhone 6+, 6s+ and 7+
+        else return 38;
     }
-    else
-    { if(ofGetWidth() <= 1024)//1024 is the width for iPad 2
-        {
-            return 12;
-        } else if(ofGetWidth() <= 1536) //1536 is the width for iPad Mini and iPad Air
-            {
-                return 22;
-            } else
-            {
-                return 24;
-            }
+    else {
+        if     (width <= 1024) return 12; // iPad 2
+        else if(width <= 1536) return 22; // iPad Mini and iPad Air
+        else return 24;
     }
 }
