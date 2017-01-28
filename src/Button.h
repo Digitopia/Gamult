@@ -31,14 +31,14 @@ private:
 
     buttonType type;
     int size;
-    int x, y;            // top left corner of the button
+    int x, y; // top left corner of the button
     string title;
     int titleX, titleY;
     ofRectangle rect;
     ofRectangle rect2; // rect2 is used to increse the area when clicking on a mobile device
     ofTrueTypeFont font;
     bool state;
-    int id;             // the id of the touch to which this fader is locked
+    int id; // the id of the touch to which this fader is locked
     Module* module;
 
 };
