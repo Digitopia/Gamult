@@ -1,11 +1,3 @@
-//
-//  simpleAudioPlayer.m
-//  simpleAudioPlayer
-//
-//  Created by Oscar Rodrigues on 08/09/16.
-//  Copyright © 2016 Oscar Rodrigues. All rights reserved.
-//
-
 #import "SimpleAudioPlayer.h"
 
 #define kSampleRate 44100
