@@ -9,7 +9,6 @@ Module::Module(int index, int x, int y, int width, int height, int maxPopulation
     this->soundPaths = soundPaths;
 
     setDimensions(x, y, width, height);
-    //loadSounds(soundPaths);
     ofAddListener(ofEvents().touchDown, this, &Module::touchDown);
 
     this->console = new ModuleConsole(this, x0, width);
@@ -71,11 +70,11 @@ void Module::prepareInstrumentChange(int direction) {
 }
 
 void Module::loadSounds() {
-    
+
     vector <string> paths = soundPaths;
-    
+
 #ifndef TARGET_OF_IOS
-    
+
     for (unsigned int i = 0; i < paths.size(); i++) {
         ofSoundPlayer s;
         //s.setMultiPlay(true);
@@ -91,7 +90,7 @@ void Module::loadSounds() {
 }
 
 void Module::unloadSounds() {
-    
+
 #ifndef TARGET_OF_IOS
     for (unsigned int i = 0; i < sounds.size(); i++) {
         sounds[i].stop();
@@ -101,7 +100,7 @@ void Module::unloadSounds() {
         sounds.clear();
     }
 #endif
-    
+
 }
 
 void Module::changeInstrument(int iSoundPaths) {
@@ -190,7 +189,7 @@ void Module::drawParticles() {
 }
 
 void Module::playSound(int soundIndex, float vol) {
-    
+
     if (!this->active) return;
     float soundPan;
     if(ofApp::isPhone()){
@@ -199,9 +198,8 @@ void Module::playSound(int soundIndex, float vol) {
     else {
         soundPan = ((50.0f*(float)index/((float)NMODULES)-1) + ((float)soundIndex/(float)numberOfInstruments)*((50.0f)/(float)NMODULES))-25.0f;
     }
-    //soundPan = soundPan -0.9f;
     ofLogNotice() << "soundPan is " << soundPan << endl;
-    
+
 #if !defined TARGET_OF_IOS
     sounds[soundIndex].setMultiPlay(true);
     sounds[soundIndex].setPan(soundPan);
