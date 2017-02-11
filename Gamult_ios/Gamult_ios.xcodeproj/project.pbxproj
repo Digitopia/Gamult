@@ -33,6 +33,7 @@
 		BB16EBD20F2B2A9500518274 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB16EBD10F2B2A9500518274 /* OpenGLES.framework */; };
 		BB16EBD90F2B2AB500518274 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB16EBD80F2B2AB500518274 /* QuartzCore.framework */; };
 		BBE5EAB80F49AD8400F28951 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBE5EAB70F49AD8400F28951 /* AudioToolbox.framework */; };
+		BC2165341E4F7A45006D9A3A /* ofxImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC2165331E4F7A45006D9A3A /* ofxImage.cpp */; };
 		BC9C7BD01C57DE43004E259B /* Button.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC9C7BC01C57DE43004E259B /* Button.cpp */; };
 		BC9C7BD11C57DE43004E259B /* Fader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC9C7BC31C57DE43004E259B /* Fader.cpp */; };
 		BC9C7BD21C57DE43004E259B /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC9C7BC51C57DE43004E259B /* main.cpp */; };
@@ -118,6 +119,7 @@
 		BB16EBD80F2B2AB500518274 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		BB24DDC910DA781C00E9C588 /* ofxiOS-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "ofxiOS-Info.plist"; sourceTree = "<group>"; };
 		BBE5EAB70F49AD8400F28951 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		BC2165331E4F7A45006D9A3A /* ofxImage.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = ofxImage.cpp; sourceTree = "<group>"; };
 		BC597C191CF207CA00A7DDD7 /* CDAudioManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDAudioManager.m; path = ../../../addons/ofxCocosDenshion/libs/CocosDenshion/src/iOS/CDAudioManager.m; sourceTree = "<group>"; };
 		BC597C1A1CF207CA00A7DDD7 /* CDOpenALSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDOpenALSupport.m; path = ../../../addons/ofxCocosDenshion/libs/CocosDenshion/src/iOS/CDOpenALSupport.m; sourceTree = "<group>"; };
 		BC597C1B1CF207CA00A7DDD7 /* CocosDenshion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CocosDenshion.m; path = ../../../addons/ofxCocosDenshion/libs/CocosDenshion/src/iOS/CocosDenshion.m; sourceTree = "<group>"; };
@@ -139,6 +141,7 @@
 		BC9C7BCD1C57DE43004E259B /* Particle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Particle.h; path = ../../src/Particle.h; sourceTree = "<group>"; };
 		BC9C7BCE1C57DE43004E259B /* Touch.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = Touch.cpp; path = ../../src/Touch.cpp; sourceTree = "<group>"; };
 		BC9C7BCF1C57DE43004E259B /* Touch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Touch.h; path = ../../src/Touch.h; sourceTree = "<group>"; };
+		BCBE7D801E4652230086E304 /* ofxImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxImage.h; sourceTree = "<group>"; };
 		BCE6FACA2409D8F6F1A41D1D /* OscHostEndianness.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = OscHostEndianness.h; path = ../../../../../Desktop/of_v0.9.0_ios_release/addons/ofxOsc/libs/oscpack/src/osc/OscHostEndianness.h; sourceTree = SOURCE_ROOT; };
 		BE6757AEBCA99F84DFA0780A /* ofxOscReceiver.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxOscReceiver.cpp; path = ../../../../../Desktop/of_v0.9.0_ios_release/addons/ofxOsc/src/ofxOscReceiver.cpp; sourceTree = SOURCE_ROOT; };
 		C072DAD19B235F2ADBA03812 /* ofxOscMessage.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxOscMessage.h; path = ../../../../../Desktop/of_v0.9.0_ios_release/addons/ofxOsc/src/ofxOscMessage.h; sourceTree = SOURCE_ROOT; };
@@ -382,6 +385,8 @@
 				BC9C7BCD1C57DE43004E259B /* Particle.h */,
 				BC9C7BCE1C57DE43004E259B /* Touch.cpp */,
 				BC9C7BCF1C57DE43004E259B /* Touch.h */,
+				BCBE7D801E4652230086E304 /* ofxImage.h */,
+				BC2165331E4F7A45006D9A3A /* ofxImage.cpp */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -544,6 +549,7 @@
 				B6D4637C1DA6FA0B00428A78 /* Wrapper.mm in Sources */,
 				BC9C7BD41C57DE43004E259B /* ModuleConsole.cpp in Sources */,
 				BC9C7BD71C57DE43004E259B /* Touch.cpp in Sources */,
+				BC2165341E4F7A45006D9A3A /* ofxImage.cpp in Sources */,
 				BC9C7BD01C57DE43004E259B /* Button.cpp in Sources */,
 				BC9C7BD51C57DE43004E259B /* ofApp.cpp in Sources */,
 			);

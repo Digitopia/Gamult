@@ -4,7 +4,7 @@
 Fader::Fader(string title) {
 
     this->title = title;
-    this->font.load(UI_FONT_FACE, ofApp::getFontSize(), true);
+    this->font.load(UI_FONT_FACE, ofApp::getFontSize()-2, true); // NOTE: -2 is a hack so that pt text fits in
     this->id = -1; // -1 means there is no touch associated
 
     ofAddListener(ofEvents().touchDown,  this, &Fader::touchDown);

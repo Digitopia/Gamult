@@ -29,7 +29,7 @@ public:
     void mousePressed(ofMouseEventArgs& event);
 
     void setDimensions(int x, int width, bool first);
-    
+
     Module* getModule() { return this->module; }
 
 private:
@@ -41,15 +41,13 @@ private:
 
     vector<ofRectangle> rects;
 
-    ofImage img;
-
     Button* btnGravity;
     Button* btnFreeze;
     Button* btnRemove;
     Button* btnClear;
 
     Fader* fadSpeed;
-    
+
     Module* module;
 
 };
