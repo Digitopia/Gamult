@@ -2,7 +2,7 @@
 #include "Button.h"
 
 ModuleConsole::ModuleConsole(Module* module, int x, float width) {
-    
+
     this->module = module;
 
     setDimensions(x, width, true);
@@ -20,11 +20,34 @@ void ModuleConsole::setDimensions(int x, int width, bool first) {
     this->height = CONSOLE_HEIGHT * ofGetHeight();
 
     if (first) {
-        btnGravity = new Button(this->getModule(), BUTTON_TOGGLE, "Gravity");
-        btnFreeze  = new Button(this->getModule(), BUTTON_TOGGLE, "Freeze");
-        btnRemove  = new Button(this->getModule(), BUTTON_REMOVE, "Remove");
-        btnClear   = new Button(this->getModule(), BUTTON_CLEAR, "Clear");
-        fadSpeed   = new Fader("Speed");
+
+        btnGravity = new Button(
+            this->getModule(),
+            BUTTON_TOGGLE,
+            ofApp::translations["BUTTON_GRAVITY_TEXT"]
+        );
+
+        btnFreeze = new Button(
+            this->getModule(),
+            BUTTON_TOGGLE,
+            ofApp::translations["BUTTON_FREEZE_TEXT"]
+        );
+
+        btnRemove = new Button(
+            this->getModule(),
+            BUTTON_REMOVE,
+            ofApp::translations["BUTTON_REMOVE_TEXT"]
+        );
+
+        btnClear = new Button(
+            this->getModule(),
+            BUTTON_CLEAR,
+            ofApp::translations["BUTTON_CLEAR_TEXT"]
+        );
+
+        fadSpeed = new Fader(
+            ofApp::translations["FADER_SPEED_TEXT"]
+        );
     }
 
     int y = 0;
@@ -47,7 +70,7 @@ void ModuleConsole::setDimensions(int x, int width, bool first) {
     btnRemove->setDimensions(
         x+1,
         CONSOLE_SECTION_HEIGHT*height,
-        width/2
+        width/2-20
     );
 
     btnClear->setDimensions(

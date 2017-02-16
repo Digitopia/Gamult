@@ -173,7 +173,7 @@ void Module::drawBorders() {
 
 void Module::drawGrid() {
 	ofSetColor(GRID_COLOR);
-    int gridNumberElements = getNumberOfInstrumentNotes();
+    int gridNumberElements  = getNumberOfInstrumentNotes();
 	int gridCellSize = round(float(width) / gridNumberElements);
 	for (int i = 1; i < gridNumberElements; i++) {
 		int gridCellX = x0 + (i)*gridCellSize + 2;
@@ -198,7 +198,7 @@ void Module::playSound(int soundIndex, float vol) {
     else {
         soundPan = ((50.0f*(float)index/((float)NMODULES)-1) + ((float)soundIndex/(float)numberOfInstruments)*((50.0f)/(float)NMODULES))-25.0f;
     }
-    ofLogNotice() << "soundPan is " << soundPan << endl;
+    ofLogNotice() << "soundPan is " << soundPan;
 
 #if !defined TARGET_OF_IOS
     sounds[soundIndex].setMultiPlay(true);
@@ -207,6 +207,6 @@ void Module::playSound(int soundIndex, float vol) {
     sounds[soundIndex].play();
 #else
     sounds.play(soundPaths[soundIndex], vol, soundPan);
-    ofLogNotice() << "soundPath is " << soundPaths[soundIndex] << endl;
+    ofLogNotice() << "soundPath is " << soundPaths[soundIndex];
 #endif
 }

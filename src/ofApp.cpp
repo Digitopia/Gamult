@@ -9,6 +9,8 @@ bool ofApp::inactive = false;
 uint ofApp::moduleActive = 0;
 uint ofApp::currentAlpha = DEFAULT_ALPHA;
 vector<Module*> ofApp::modules;
+string ofApp::language;
+map<string,string> ofApp::translations;
 
 #if defined TARGET_SEMIBREVE
 ofxOscSender ofApp::oscSender;
@@ -19,7 +21,7 @@ typedef map<int,Touch>::iterator touchesIterator;
 
 void ofApp::setup() {
 
-    ofSetLogLevel(OF_LOG_SILENT);
+    ofSetLogLevel(OF_LOG_NOTICE);
 
     ofLogNotice() << "setup()";
 
@@ -77,6 +79,11 @@ void ofApp::setup() {
 
     if (multitouch) ofHideCursor();
 
+    ofApp::language = ofApp::getSystemLanguage();
+//    ofApp::language = "pt";
+    ofLogNotice() << "Language is " << ofApp::language;
+
+    initTranslations();
     initModules();
     setupModules();
     loadModuleSounds();
@@ -101,6 +108,31 @@ void ofApp::setup() {
     else swipeFontSize = 20;
     swipeFont.load(UI_FONT_FACE, swipeFontSize);
 
+}
+
+void ofApp::initTranslations() {
+
+    map<string, string> pt;
+    pt["BUTTON_FREEZE_TEXT"]  = "Congelar";
+    pt["BUTTON_GRAVITY_TEXT"] = "Gravidade";
+    pt["BUTTON_REMOVE_TEXT"]  = "Remover";
+    pt["BUTTON_CLEAR_TEXT"]   = "Limpar";
+    pt["FADER_SPEED_TEXT"]    = "Velocidade";
+    pt["SWIPE_INFO_TOP_LINE"] = "Carregar e manter para criar partículas";
+    pt["SWIPE_INFO_BOTTOM_LINE_PHONE"]  = "Deslize para mudar de instrumento";
+    pt["SWIPE_INFO_BOTTOM_LINE_TABLET"] = "Rodar dispositivo para controlar um só instrumento de cada vez";
+
+    map<string, string> en;
+    en["BUTTON_FREEZE_TEXT"]  = "Freeze";
+    en["BUTTON_GRAVITY_TEXT"] = "Gravity";
+    en["BUTTON_REMOVE_TEXT"]  = "Remove";
+    en["BUTTON_CLEAR_TEXT"]   = "Clear";
+    en["FADER_SPEED_TEXT"]    = "Speed";
+    en["SWIPE_INFO_TOP_LINE"] = "Click and hold to create particles";
+    en["SWIPE_INFO_BOTTOM_LINE_PHONE"]  = "Swipe left and right to change instrument";
+    en["SWIPE_INFO_BOTTOM_LINE_TABLET"] = "Rotate device to control one instrument at a time";
+
+    ofApp::translations = ofApp::language == "pt" ? pt : en;
 }
 
 void ofApp::initModules() {
@@ -347,27 +379,21 @@ void ofApp::draw() {
 
         imgSwipeInfo.draw(ofGetWidth()/2-swipeSize/2, ofGetHeight()/2, swipeSize, swipeSize);
 
-        string s1 = "Click and hold to create particles";
+        string s1 = ofApp::translations["SWIPE_INFO_TOP_LINE"];
         int s1w = swipeFont.getStringBoundingBox(s1, 0, 0).width;
-        int s1x = (ofGetWidth() - s1w)  /2;
+        int s1x = (ofGetWidth() - s1w) / 2;
         int s1y = ofGetHeight()/2 - padding;
         swipeFont.drawString(s1, s1x, s1y);
 
         string s2;
-        if (ofApp::isPhone()) s2 = "Swipe left and right to change instrument";
-        else s2 = "Rotate device to control one instrument at a time";
+        if (ofApp::isPhone()) s2 = ofApp::translations["SWIPE_INFO_BOTTOM_LINE_PHONE"];
+        else s2 = ofApp::translations["SWIPE_INFO_BOTTOM_LINE_TABLET"];
 
         int s2w = swipeFont.getStringBoundingBox(s2, 0, 0).width;
         int s2x = (ofGetWidth() - s2w)/2;
         int s2y = ofGetHeight()/2 + swipeSize + padding;
         swipeFont.drawString(s2, s2x, s2y);
 
-        ofPopStyle();
-    }
-
-    if (ofGetOrientation() == OF_ORIENTATION_DEFAULT) {
-        ofPushStyle();
-        ofSetColor(ofColor::fromHex(BUTTON_CHANGE_INSTRUMENT_COLOR), BUTTON_CHANGE_INSTRUMENT_COLOR_ALPHA);
         ofPopStyle();
     }
 
@@ -1121,4 +1147,16 @@ int ofApp::getFontSize() {
         else if(width <= 1536) return 22; // iPad Mini and iPad Air
         else return 24;
     }
+}
+
+string ofApp::getSystemLanguage() {
+
+    // NOTE: Apparently one can mix Objective-C in C++ with no problem
+
+    NSString *lang = [[NSLocale preferredLanguages] objectAtIndex:0];
+
+    // Convert NSString to C++ std:string
+    string ret = string([lang UTF8String]);
+
+    return ret;
 }

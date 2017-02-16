@@ -37,6 +37,7 @@ class Touch;
 #include "Fader.h"
 #include "Particle.h"
 #include "Touch.h"
+#include "ofxImage.h"
 // #include "Constants.h"
 
 enum appStateEnum {
@@ -108,14 +109,16 @@ public:
 
     void updateNewModuleActive(int x);
 
+    void initTranslations();
     void initModules();
     void initImages();
-        
+
     static int getFontSize();
 
     #if defined TARGET_OF_IOS
       void onSwipe(SwipeRecognitionArgs& args);
       void shakeHandler();
+      static string getSystemLanguage();
     #endif
 
     #if defined TARGET_SEMIBREVE
@@ -157,7 +160,6 @@ public:
     static bool isTablet();
     static bool isTabletInPortrait();
     static bool isTabletInLandscape();
-        
 
     static int mouseId;
 
@@ -165,6 +167,8 @@ public:
     static bool multitouch;
     static unsigned int inactivityCounter;
     static unsigned int currentAlpha;
+    static string language;
+    static map<string,string> translations;
 
     static vector<Module*> modules;
 
@@ -178,11 +182,11 @@ private:
     ofRectangle barRect;
     ofRectangle aboutRect;
 
-    ofImage imgAbout;
-    ofImage imgSplashScreen;
-    ofImage imgArrow;
-    ofImage imgArrowDown;
-    ofImage imgSwipeInfo;
+    ofxImage imgAbout;
+    ofxImage imgSplashScreen;
+    ofxImage imgArrow;
+    ofxImage imgArrowDown;
+    ofxImage imgSwipeInfo;
 
     int barY;
     int aboutY;
