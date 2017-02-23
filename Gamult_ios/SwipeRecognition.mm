@@ -67,6 +67,9 @@ void SwipeRecognition::gestureRecognized(SwipeRecognitionArgs args){
         NSLog(@"Direction is: %i ", gUp.direction);//Lets you know the numeric value of the gesture direction for confirmation (1=up).
 
         //do something for a UP swipe gesture
+        
+        EAGLView *view = ofxiPhoneGetGLView();
+        CGPoint pt = [gestureUp locationOfTouch:0 inView:view];
 
         directionUp = gUp.direction;
         swipes++;
@@ -74,6 +77,7 @@ void SwipeRecognition::gestureRecognized(SwipeRecognitionArgs args){
         SwipeRecognitionArgs args;
         args.direction = directionUp;
         args.totalSwipes = swipes;
+        args.swipeOriginY = pt.y;
         notifier->gestureRecognized(args);
     }
 }
