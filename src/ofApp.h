@@ -98,6 +98,8 @@ public:
 
     void appStateHandler();
     void inactivityHandler();
+    void setLanguageBBoxes();
+    void changeLanguage(string language);
 
     static size_t getModuleIdx(unsigned int x);
     void drawArrow(bool up);
@@ -180,7 +182,7 @@ private:
     inactivityStateEnum inactivityState;
 
     ofRectangle barRect;
-    ofRectangle aboutRect;
+    ofRectangle ptLangRect, enLangRect;
 
     ofxImage imgAbout;
     ofxImage imgSplashScreen;

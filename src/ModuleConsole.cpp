@@ -85,7 +85,13 @@ void ModuleConsole::setDimensions(int x, int width, bool first) {
         faderSize,
         first
     );
-
+    
+    btnGravity->setTitle(ofApp::translations["BUTTON_GRAVITY_TEXT"]);
+    btnFreeze->setTitle(ofApp::translations["BUTTON_FREEZE_TEXT"]);
+    btnRemove->setTitle(ofApp::translations["BUTTON_REMOVE_TEXT"]);
+    btnClear->setTitle(ofApp::translations["BUTTON_CLEAR_TEXT"]);
+    fadSpeed->setTitle(ofApp::translations["FADER_SPEED_TEXT"]);
+    
 }
 
 void ModuleConsole::draw() {
