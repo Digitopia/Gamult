@@ -80,7 +80,7 @@ void ofApp::setup() {
     if (multitouch) ofHideCursor();
 
     ofApp::language = ofApp::getSystemLanguage();
-//    ofApp::language = "pt";
+    // ofApp::language = "pt";
     ofLogNotice() << "Language is " << ofApp::language;
 
     initTranslations();
@@ -319,6 +319,37 @@ void ofApp::resetModules() {
     }
 }
 
+void ofApp::setLanguageBBoxes() {
+
+    // NOTE: extremely hacky solution but it works and gets the job done, so keep calm and don't worry
+    
+    int y = ofGetHeight() * 0.078;
+
+    if (crop < y) {
+
+        y -= crop;
+        int w = ofGetWidth() * 0.1;
+        int h = ofGetHeight() * 0.05;
+
+        ptLangRect.set(ofGetWidth()*0.715, y, w, h);
+        enLangRect.set(ofGetWidth()*0.815, y, w, h);
+
+        // NOTE: uncomment for debug
+        // ofNoFill();
+        // ofDrawRectangle(ptLangRect);
+        // ofDrawRectangle(enLangRect);
+
+    }
+    else {
+        // NOTE: this way .inside() never gets triggered
+        ptLangRect.set(0, 0, 0, 0);
+        enLangRect.set(0, 0, 0, 0);
+    }
+    
+    // ofLogNotice() << "crop is " << crop;
+
+}
+
 void ofApp::draw() {
 
     ofBackground(BACKGROUND_COLOR);
@@ -351,6 +382,7 @@ void ofApp::draw() {
     else if (appState == ABOUT) {
         if(ofApp::isPhone()){
             imgAbout.drawSubsection(0.0f, 0.0f, (float)ofGetWidth(), (float)ofGetHeight(), 0.0f, (float)crop);
+            setLanguageBBoxes();
         }
         else {
             imgAbout.draw(0, 0, ofGetWidth(), ofGetHeight());
@@ -764,6 +796,10 @@ void ofApp::touchDown(ofTouchEventArgs& touch) {
         if (arrowDownRect.inside(x, y)) {
             appState = ABOUT_DESCENDING;
         }
+
+        if (ptLangRect.inside(x,y)) changeLanguage("pt");
+        else if (enLangRect.inside(x,y)) changeLanguage("en");
+        
         return;
     }
 
@@ -786,7 +822,7 @@ void ofApp::touchDown(ofTouchEventArgs& touch) {
 
         // NOTE: dismiss swipe info after first touch
         if (showSwipeInfo) showSwipeInfo = false;
-
+        
         // ofLogNotice() << "down (" << id << ", " << x << ", " << y << ")" ;
 
         if (y > CONSOLE_HEIGHT*ofGetHeight() && (appState != BAR || y < aboutY) && modules[getModuleIdx(x)]->isNotFull()) {
@@ -799,6 +835,15 @@ void ofApp::touchDown(ofTouchEventArgs& touch) {
     swiping = false;
     #endif
 
+}
+
+void ofApp::changeLanguage(string language) {
+    ofLogNotice() << "Changing language to " << language;
+    if (language == ofApp::language) return;
+    ofApp::language = language;
+    initTranslations();
+    initImages();
+    setupModules();
 }
 
 void ofApp::touchMoved(ofTouchEventArgs& touch) {

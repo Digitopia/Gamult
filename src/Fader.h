@@ -14,6 +14,7 @@ public:
     float getValue();
     void setValue(float value);
     void resetFader() { this->rect.x = this->x0+range/2-size/2; }
+    void setTitle(string title) { this->title = title; }
 
     void touchDown(ofTouchEventArgs& event);
     void touchMoved(ofTouchEventArgs& event);

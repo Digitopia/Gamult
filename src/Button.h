@@ -22,6 +22,7 @@ public:
     void on() { state = true; }
     void off() { state = false; }
     void setDimensions(int size, int x, int y);
+    void setTitle(string title) { this->title = title; }
 
     void touchDown(ofTouchEventArgs& event);
     void touchMoved(ofTouchEventArgs& event);
