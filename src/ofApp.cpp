@@ -1002,8 +1002,8 @@ void ofApp::deviceOrientationChanged(int newOrientation) {
     }
 
     if (isTablet() && appState != APP) {
-        if (newOrientation == OF_ORIENTATION_90_LEFT || newOrientation == OF_ORIENTATION_90_RIGHT) {
-            ofLogNotice() << "Ignoring orientation change in tablet in app ";
+        if (newOrientation == OF_ORIENTATION_DEFAULT || newOrientation == OF_ORIENTATION_180) {
+            ofLogNotice() << "!!!Ignoring orientation change in tablet in app ";
             return;
         }
     }
@@ -1018,12 +1018,12 @@ void ofApp::deviceOrientationChanged(int newOrientation) {
 
     // it transitioning to landscape, activate back all modules
     if (newOrientation == OF_ORIENTATION_90_LEFT || newOrientation == OF_ORIENTATION_90_RIGHT) {
-        imgAbout.rotate90(3);
+        //imgAbout.rotate90(3);
         for (unsigned int i = 0; i < modules.size(); i++) modules[i]->activate();
     }
     // it transitioning to portrait, deactivate all modules, except the one with which last interacted
     else {
-        imgAbout.rotate90(1);
+        //imgAbout.rotate90(1);
         for (unsigned int i = 0; i < modules.size(); i++) {
             if (i == moduleActive) {
 
