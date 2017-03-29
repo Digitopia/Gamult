@@ -2,7 +2,7 @@
 
 #if defined TARGET_OF_IOS || defined TARGET_ANDROID
     #define NMODULES 4
-    #define UI_FONT_SIZE 13
+    #define UI_FONT_SIZE 12
     #define TOUCH_MAX 40
     #define TOUCH_MIN 10
     #define BUTTON_SIZE .20
@@ -11,7 +11,7 @@
 
  #elif defined TARGET_SEMIBREVE
     #define NMODULES 4
-    #define UI_FONT_SIZE 14
+    #define UI_FONT_SIZE 13
     #define TOUCH_MAX 20
     #define TOUCH_MIN 0
     #define BUTTON_SIZE .18

@@ -14,6 +14,8 @@ Fader::Fader(string title) {
 }
 
 void Fader::setDimensions(int x0, int y, int size, bool first) {
+    
+    this->font.load(UI_FONT_FACE, ofApp::getFontSize()-2, true); // NOTE: -2 is a hack so that pt text fits in
 
     float oldValue;
     if (first) {

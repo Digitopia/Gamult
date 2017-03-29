@@ -21,6 +21,8 @@ void Button::setDimensions(int x, int y, int size) {
     this->y = y;
     this->rect = ofRectangle(x, y, size, size);
     
+    this->font.load(UI_FONT_FACE, ofApp::getFontSize(), true);
+    
 #ifdef TARGET_OF_IOS
     int offset = size*.6;
 #else
@@ -32,8 +34,8 @@ void Button::setDimensions(int x, int y, int size) {
 
     if (type == BUTTON_TOGGLE) {
         rect = ofRectangle(x, y, size, size);
-        titleX = x + size * 1.5;
-        titleY = y + size - 3;
+        titleX = x + size * 1.25;
+        titleY = y + size - 8;
     }
     
     // TODO: this is most probably unnecessarily overly complicated

@@ -1181,15 +1181,25 @@ bool ofApp::isTabletInLandscape() {
 int ofApp::getFontSize() {
     uint width = ofGetWidth();
     if (ofApp::isPhone()) {
-        if     (width <= 640)  return 24; // iPhone 5, 5s and SE
-        else if(width <= 750)  return 28; // iPhone 6, 6s and 7
-        else if(width <= 1242) return 34; // iPhone 6+, 6s+ and 7+
+        if      (width <= 640)  return 24; // iPhone 5, 5s and SE
+        else if (width <= 750)  return 28; // iPhone 6, 6s and 7
+        else if (width <= 1242) return 34; // iPhone 6+, 6s+ and 7+
         else return 38;
     }
     else {
-        if     (width <= 1024) return 12; // iPad 2
-        else if(width <= 1536) return 22; // iPad Mini and iPad Air
-        else return 24;
+        if (isTabletInPortrait()) {
+            ofLogNotice() << "getFontSize in portrait mode!";
+            if      (width <= 1024) return 12; // iPad 2
+            else if (width <= 1536) return 22; // iPad Mini and iPad Air
+            else return 24;
+        }
+        else {
+            ofLogNotice() << "getFontSize in landscape mode!";
+            uint offset = 2;
+            if      (width <= 1024) return 12-offset;   // iPad 2
+            else if (width <= 1536) return 22-offset*2; // iPad Mini and iPad Air
+            else return 24-offset*2;
+        }
     }
 }
 
