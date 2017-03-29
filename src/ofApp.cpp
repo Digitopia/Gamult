@@ -1202,6 +1202,7 @@ string ofApp::getSystemLanguage() {
 
     // Convert NSString to C++ std:string
     string ret = string([lang UTF8String]);
+    if (ret == "pt-PT" || ret == "pt-BR") ret = "pt";
 
     return ret;
 }
