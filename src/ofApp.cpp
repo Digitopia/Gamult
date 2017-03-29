@@ -235,7 +235,7 @@ void ofApp::appStateHandler() {
 }
 
 void ofApp::update() {
-
+    
     #if defined TARGET_SEMIBREVE
     inactivityHandler();
     oscMultitouchHandler();
@@ -322,7 +322,7 @@ void ofApp::resetModules() {
 void ofApp::setLanguageBBoxes() {
 
     // NOTE: extremely hacky solution but it works and gets the job done, so keep calm and don't worry
-    
+
     int y = ofGetHeight() * 0.078;
 
     if (crop < y) {
@@ -345,7 +345,7 @@ void ofApp::setLanguageBBoxes() {
         ptLangRect.set(0, 0, 0, 0);
         enLangRect.set(0, 0, 0, 0);
     }
-    
+
     // ofLogNotice() << "crop is " << crop;
 
 }
@@ -765,7 +765,7 @@ void ofApp::updateNewModuleActive(int x) {
         uint moduleWidth = ofGetWidth() / float(modules.size());
         uint newModuleActive = floor(x/moduleWidth);
         if (newModuleActive != moduleActive) {
-            ofLogNotice() << "new module active is now " << newModuleActive;
+            ofLogNotice() << "New module active is now " << newModuleActive;
             modules[moduleActive]->unmakeMostRecent();
             moduleActive = newModuleActive;
             modules[moduleActive]->makeMostRecent();
@@ -776,7 +776,7 @@ void ofApp::updateNewModuleActive(int x) {
 
 void ofApp::touchDown(ofTouchEventArgs& touch) {
 
-    updateNewModuleActive(touch.x);
+    if (appState == APP) updateNewModuleActive(touch.x);
 
     resetInactivityTime();
 
@@ -799,7 +799,7 @@ void ofApp::touchDown(ofTouchEventArgs& touch) {
 
         if (ptLangRect.inside(x,y)) changeLanguage("pt");
         else if (enLangRect.inside(x,y)) changeLanguage("en");
-        
+
         return;
     }
 
@@ -822,7 +822,7 @@ void ofApp::touchDown(ofTouchEventArgs& touch) {
 
         // NOTE: dismiss swipe info after first touch
         if (showSwipeInfo) showSwipeInfo = false;
-        
+
         // ofLogNotice() << "down (" << id << ", " << x << ", " << y << ")" ;
 
         if (y > CONSOLE_HEIGHT*ofGetHeight() && (appState != BAR || y < aboutY) && modules[getModuleIdx(x)]->isNotFull()) {
@@ -848,7 +848,7 @@ void ofApp::changeLanguage(string language) {
 
 void ofApp::touchMoved(ofTouchEventArgs& touch) {
 
-    updateNewModuleActive(touch.x);
+    if (appState == APP) updateNewModuleActive(touch.x);
 
     resetInactivityTime();
 
@@ -1042,24 +1042,23 @@ void ofApp::deviceOrientationChanged(int newOrientation) {
 
 #if defined TARGET_OF_IOS
 void ofApp::onSwipe(SwipeRecognitionArgs& args) {
+    
+    if (appState != APP) return;
 
     ofLogNotice() << "Detected swipe event";
 
     // multiplying swipeOriginY by 2 because of retina display
     if (args.swipeOriginY * 2 > CONSOLE_HEIGHT * ofGetHeight()) {
         int direction = args.direction;
-        if (direction == 4)
-        {
-            if (appState == APP) {
-                appState = ABOUT_ASCENDING;
-                swiping = true;
-                ofLogNotice() << "setting swiping true";
-            }
+        if (direction == 4) {
+            appState = ABOUT_ASCENDING;
+            swiping = true;
+            ofLogNotice() << "Setting swiping true";
         }
         else {
             modules[0]->prepareInstrumentChange(direction);
             swiping = true;
-            ofLogNotice() << "prepare instrument change";
+            ofLogNotice() << "Prepare instrument change";
         }
     } else {
         ofLogNotice() << "Ignoring swipe event";
@@ -1195,13 +1194,16 @@ int ofApp::getFontSize() {
 }
 
 string ofApp::getSystemLanguage() {
-
-    // NOTE: Apparently one can mix Objective-C in C++ with no problem
+ 
+    // NOTE: Apparently one can mix Objective-C in C++ with no problem!
 
     NSString *lang = [[NSLocale preferredLanguages] objectAtIndex:0];
 
-    // Convert NSString to C++ std:string
+    // Convert NSString to C++ std::string
     string ret = string([lang UTF8String]);
+    
+    ofLogNotice() << "language in getSystemLanguage is " << ret;
+
     if (ret == "pt-PT" || ret == "pt-BR") ret = "pt";
 
     return ret;
