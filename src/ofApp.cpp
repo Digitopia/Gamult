@@ -323,21 +323,35 @@ void ofApp::setLanguageBBoxes() {
 
     // NOTE: extremely hacky solution but it works and gets the job done, so keep calm and don't worry
 
-    int y = ofGetHeight() * 0.078;
+    int y;
+    if(ofApp::isPhone()) {
+        y = ofGetHeight() * 0.078;
+    } else if (ofApp::isTablet()) {
+        y = ofGetHeight() * 0.35;
+    }
+    
 
     if (crop < y) {
 
         y -= crop;
-        int w = ofGetWidth() * 0.1;
-        int h = ofGetHeight() * 0.05;
+        
 
-        ptLangRect.set(ofGetWidth()*0.715, y, w, h);
-        enLangRect.set(ofGetWidth()*0.815, y, w, h);
+        if(ofApp::isPhone()) {
+            int w = ofGetWidth() * 0.1;
+            int h = ofGetHeight() * 0.05;
+            ptLangRect.set(ofGetWidth()*0.715, y, w, h);
+            enLangRect.set(ofGetWidth()*0.815, y, w, h);
+        } else if (ofApp::isTablet()) {
+            int w = ofGetWidth() * 0.05;
+            int h = ofGetHeight() * 0.05;
+            ptLangRect.set(ofGetWidth()*0.03, y, w, h);
+            enLangRect.set(ofGetWidth()*0.08, y, w, h);
+        }
 
         // NOTE: uncomment for debug
-        // ofNoFill();
-        // ofDrawRectangle(ptLangRect);
-        // ofDrawRectangle(enLangRect);
+        //ofNoFill();
+        //ofDrawRectangle(ptLangRect);
+        //ofDrawRectangle(enLangRect);
 
     }
     else {
@@ -382,11 +396,11 @@ void ofApp::draw() {
     else if (appState == ABOUT) {
         if(ofApp::isPhone()){
             imgAbout.drawSubsection(0.0f, 0.0f, (float)ofGetWidth(), (float)ofGetHeight(), 0.0f, (float)crop);
-            setLanguageBBoxes();
         }
         else {
             imgAbout.draw(0, 0, ofGetWidth(), ofGetHeight());
         }
+        setLanguageBBoxes();
         drawBouncingArrow();
         return;
     }
