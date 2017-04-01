@@ -1213,16 +1213,16 @@ int ofApp::getFontSize() {
     else {
         if (isTabletInPortrait()) {
             ofLogNotice() << "getFontSize in portrait mode!";
-            if      (width <= 1024) return 12; // iPad 2
-            else if (width <= 1536) return 22; // iPad Mini and iPad Air
-            else return 24;
+            if      (width <= 1024) return 14; // iPad 2
+            else if (width <= 1536) return 24; // iPad Mini and iPad Air
+            else return 26;
         }
         else {
             ofLogNotice() << "getFontSize in landscape mode!";
             uint offset = 2;
-            if      (width <= 1024) return 12-offset;   // iPad 2
-            else if (width <= 1536) return 22-offset*2; // iPad Mini and iPad Air
-            else return 24-offset*2;
+            if      (width <= 1024) return 14-offset;   // iPad 2
+            else if (width <= 1536) return 24-offset*2; // iPad Mini and iPad Air
+            else return 26-offset*2;
         }
     }
 }
