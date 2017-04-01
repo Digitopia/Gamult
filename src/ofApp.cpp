@@ -324,34 +324,44 @@ void ofApp::setLanguageBBoxes() {
     // NOTE: extremely hacky solution but it works and gets the job done, so keep calm and don't worry
 
     int y;
+    
     if(ofApp::isPhone()) {
         y = ofGetHeight() * 0.078;
     } else if (ofApp::isTablet()) {
         y = ofGetHeight() * 0.35;
     }
-    
 
     if (crop < y) {
 
         y -= crop;
         
-
-        if(ofApp::isPhone()) {
-            int w = ofGetWidth() * 0.1;
-            int h = ofGetHeight() * 0.05;
-            ptLangRect.set(ofGetWidth()*0.715, y, w, h);
-            enLangRect.set(ofGetWidth()*0.815, y, w, h);
+        float w, h, xPt, xEn;
+        
+        if (ofApp::isPhone()) {
+            w = 0.1;
+            h = 0.05;
+            xPt = 0.715;
+            xEn = 0.815;
         } else if (ofApp::isTablet()) {
-            int w = ofGetWidth() * 0.05;
-            int h = ofGetHeight() * 0.05;
-            ptLangRect.set(ofGetWidth()*0.03, y, w, h);
-            enLangRect.set(ofGetWidth()*0.08, y, w, h);
+            w = 0.05;
+            h = 0.05;
+            xPt = 0.03;
+            xEn = 0.08;
         }
+        
+        // Vars were just percentages, so update them to actual pixel sizes
+        w = ofGetWidth() * w;
+        h = ofGetHeight() * h;
+        xPt = ofGetWidth() * xPt;
+        xEn = ofGetWidth() * xEn;
+        
+        ptLangRect.set(xPt, y, w, h);
+        enLangRect.set(xEn, y, w, h);
 
         // NOTE: uncomment for debug
-        //ofNoFill();
-        //ofDrawRectangle(ptLangRect);
-        //ofDrawRectangle(enLangRect);
+        // ofNoFill();
+        // ofDrawRectangle(ptLangRect);
+        // ofDrawRectangle(enLangRect);
 
     }
     else {
