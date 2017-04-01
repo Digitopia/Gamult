@@ -427,7 +427,7 @@ void ofApp::draw() {
     if (showSwipeInfo) {
         ofPushStyle();
 
-        if (isTablet()) ofSetHexColor(0xffffff);
+        if (isTablet()) ofSetColor(47); // NOTE: previous white font color wasn't readable on iPad;
         else ofSetHexColor(CONSOLE_COLOR);
 
         int swipeSize = 150;
