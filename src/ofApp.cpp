@@ -9,7 +9,7 @@ bool ofApp::inactive = false;
 uint ofApp::moduleActive = 0;
 uint ofApp::currentAlpha = DEFAULT_ALPHA;
 vector<Module*> ofApp::modules;
-string ofApp::language;
+string ofApp::language = "en";
 map<string,string> ofApp::translations;
 
 #if defined TARGET_SEMIBREVE
@@ -80,7 +80,6 @@ void ofApp::setup() {
     if (multitouch) ofHideCursor();
 
     ofApp::language = ofApp::getSystemLanguage();
-    // ofApp::language = "pt";
     ofLogNotice() << "Language is " << ofApp::language;
 
     initTranslations();
@@ -1224,17 +1223,28 @@ int ofApp::getFontSize() {
 }
 
 string ofApp::getSystemLanguage() {
+
+    string ret;
+
+#if defined TARGET_OF_IOS
  
     // NOTE: Apparently one can mix Objective-C in C++ with no problem!
 
     NSString *lang = [[NSLocale preferredLanguages] objectAtIndex:0];
 
     // Convert NSString to C++ std::string
-    string ret = string([lang UTF8String]);
+    ret = string([lang UTF8String]);
     
     ofLogNotice() << "language in getSystemLanguage is " << ret;
 
     if (ret == "pt-PT" || ret == "pt-BR") ret = "pt";
 
+#else
+
+    ret = ofApp::language;
+
+#endif
+
     return ret;
 }
+

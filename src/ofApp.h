@@ -116,11 +116,11 @@ public:
     void initImages();
 
     static int getFontSize();
+    static string getSystemLanguage();
 
     #if defined TARGET_OF_IOS
       void onSwipe(SwipeRecognitionArgs& args);
       void shakeHandler();
-      static string getSystemLanguage();
     #endif
 
     #if defined TARGET_SEMIBREVE
