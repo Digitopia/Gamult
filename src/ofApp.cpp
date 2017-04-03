@@ -420,10 +420,6 @@ void ofApp::draw() {
     drawParticles();
     drawTouches();
 
-    #ifdef OF_TARGET_IPHONE
-    #endif
-
-
     if (showSwipeInfo) {
         ofPushStyle();
 
