@@ -419,7 +419,7 @@ void ofApp::draw() {
     drawParticles();
     drawTouches();
 
-    if (showSwipeInfo) {
+    if (showSwipeInfo)  {
         ofPushStyle();
 
         if (isTablet()) ofSetColor(47); // NOTE: previous white font color wasn't readable on iPad;
@@ -529,16 +529,17 @@ void ofApp::draw() {
     }
 
     else if (appState == APP) {
-        currentAlpha = DEFAULT_ALPHA;
-        drawArrow(true);
-        ofPushStyle();
-        ofSetColor(IMAGE_COLOR, DEFAULT_ALPHA);
-        ofEnableAlphaBlending();
-    #ifndef TARGET_OF_IOS
-        ofDrawRectangle(barRect);
-    #endif
-        ofDisableAlphaBlending();
-        ofPopStyle();
+
+        if (isOsx()) {
+            currentAlpha = DEFAULT_ALPHA;
+            drawArrow(true);
+            ofPushStyle();
+            ofSetColor(IMAGE_COLOR, DEFAULT_ALPHA);
+            ofEnableAlphaBlending();
+            ofDrawRectangle(barRect);
+            ofDisableAlphaBlending();
+            ofPopStyle();
+        }
     }
 
 }
