@@ -1070,7 +1070,7 @@ void ofApp::onSwipe(SwipeRecognitionArgs& args) {
     // multiplying swipeOriginY by 2 because of retina display
     if (args.swipeOriginY * 2 > CONSOLE_HEIGHT * ofGetHeight()) {
         int direction = args.direction;
-        if (direction == 4) {
+        if (direction == 4 && !ofApp::isTabletInPortrait()) {
             appState = ABOUT_ASCENDING;
             swiping = true;
             ofLogNotice() << "Setting swiping true";
