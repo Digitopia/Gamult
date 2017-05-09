@@ -1085,6 +1085,26 @@ void ofApp::onSwipe(SwipeRecognitionArgs& args) {
     }
 
 }
+#elif defined TARGET_ANDROID
+void ofApp::swipe(ofxAndroidSwipeDir swipeDir, int id){
+    int dir;
+    if (swipeDir == OFX_ANDROID_SWIPE_UP) {
+        appState = ABOUT_ASCENDING;
+        ofLogNotice() << "Setting swiping true";
+    }
+    else if (swipeDir == OFX_ANDROID_SWIPE_LEFT) {
+        dir = 2;
+    }
+    else if (swipeDir == OFX_ANDROID_SWIPE_RIGHT) {
+        dir = 1;
+    }
+
+    if (dir == 1 || dir == 2) {
+        ofLogNotice() << "Prepare instrument change";
+        modules[0]->prepareInstrumentChange(dir);
+    }
+}
+
 #endif
 
 #if defined TARGET_OF_IOS

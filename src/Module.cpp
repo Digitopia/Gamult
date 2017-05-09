@@ -57,12 +57,12 @@ void Module::prepareInstrumentChange(int direction) {
     if (ofApp::isPhone()) {
         ofLogNotice() << "Direction received: " << direction;
         if (direction == 1) {
-            if (iSoundPaths <= 0) changeInstrument(iSoundPaths = 4);
+            if (iSoundPaths <= 0) iSoundPaths = 4;
             changeInstrument(--iSoundPaths);
         }
 
         else if (direction == 2) {
-            if (iSoundPaths >= 3) changeInstrument(iSoundPaths = -1);
+            if (iSoundPaths >= 3) iSoundPaths = -1;
             changeInstrument(++iSoundPaths);
         }
     }
