@@ -11,6 +11,7 @@
     #include "ofxiOS.h"
     #include "ofxiOSExtras.h"
     #include "SwipeRecognition.h"
+    #include "ofxImage.h"
 #elif defined TARGET_SEMIBREVE
     #include "ofxOsc.h"
 #endif
@@ -37,7 +38,6 @@ class Touch;
 #include "Fader.h"
 #include "Particle.h"
 #include "Touch.h"
-#include "ofxImage.h"
 // #include "Constants.h"
 
 enum appStateEnum {
@@ -184,11 +184,19 @@ private:
     ofRectangle barRect;
     ofRectangle ptLangRect, enLangRect;
 
+#if defined TARGET_OF_IOS
     ofxImage imgAbout;
     ofxImage imgSplashScreen;
     ofxImage imgArrow;
     ofxImage imgArrowDown;
     ofxImage imgSwipeInfo;
+#else
+    ofImage imgAbout;
+    ofImage imgSplashScreen;
+    ofImage imgArrow;
+    ofImage imgArrowDown;
+    ofImage imgSwipeInfo;
+#endif
 
     int barY;
     int aboutY;
