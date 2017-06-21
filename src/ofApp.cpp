@@ -190,7 +190,7 @@ void ofApp::initImages() {
     if (ofApp::isPhone()) {
         imgAbout.load("images/about_phone.png");
     } else {
-    imgAbout.load("images/about.png");
+        imgAbout.load("images/about.png");
     }
     imgArrow.load("images/arrow_up.png");
     imgArrowDown.load("images/arrow_down.png");
