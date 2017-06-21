@@ -21,6 +21,7 @@
 
 #if defined TARGET_ANDROID
   #include "ofxAndroid.h"
+  #include "ofxAccelerometer.h"
 #endif
 
 // NOTE: need to forward declare Touch, because of Touch requiring ofApp and ofApp requiring Touch.
@@ -120,8 +121,9 @@ public:
 
     #if defined TARGET_OF_IOS
       void onSwipe(SwipeRecognitionArgs& args);
-      void shakeHandler();
     #endif
+
+    void shakeHandler();
 
     #if defined TARGET_SEMIBREVE
       void oscMultitouchHandler();
@@ -211,9 +213,11 @@ private:
 
     #if defined TARGET_OF_IOS
       SwipeRecognition swiper;
-      bool swiping;
-      int accelCount;
-    #endif
+  #endif
+   bool swiping;
+
+  int accelCount;
+  int lastTouchY; // NOTE: this is a hack since the oF API for Android doesn't provide (x,y) coordinates for the swipe
 
 };
 

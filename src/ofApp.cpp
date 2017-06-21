@@ -1,15 +1,15 @@
 #include "ofApp.h"
 
 // Statics initialization
-int ofApp::maxParticleY = 0;
-int ofApp::mouseId = 0;
+int ofApp::maxParticleY       = 0;
+int ofApp::mouseId            = 0;
 uint ofApp::inactivityCounter = 0;
-bool ofApp::multitouch = true;
-bool ofApp::inactive = false;
-uint ofApp::moduleActive = 0;
-uint ofApp::currentAlpha = DEFAULT_ALPHA;
+bool ofApp::multitouch        = true;
+bool ofApp::inactive          = false;
+uint ofApp::moduleActive      = 0;
+uint ofApp::currentAlpha      = DEFAULT_ALPHA;
+string ofApp::language        = "en";
 vector<Module*> ofApp::modules;
-string ofApp::language = "en";
 map<string,string> ofApp::translations;
 
 #if defined TARGET_SEMIBREVE
@@ -53,21 +53,22 @@ void ofApp::setup() {
 
     #if defined TARGET_OF_IOS
      if (ofApp::isTablet()) {
-        ofLogNotice() << "Running iPad version";
         ofSetOrientation(OF_ORIENTATION_90_LEFT);
-         swiper.setup();
-         ofAddListener(swiper.swipeRecognized, this, &ofApp::onSwipe);
-         swiping = false;
+        swiper.setup();
+        ofAddListener(swiper.swipeRecognized, this, &ofApp::onSwipe);
+        swiping = false;
     } else {
-        ofLogNotice() << "Running iPhone version";
         swiper.setup();
         ofAddListener(swiper.swipeRecognized, this, &ofApp::onSwipe);
         swiping = false;
     }
-    ofxAccelerometer.setup();
-    accelCount = 0;
-    crop = 0;
     #endif
+
+    if (isAndroid() || isIos()) {
+        ofxAccelerometer.setup();
+        accelCount = 0;
+        crop = 0;
+    }
 
     if (!ofApp::isIos()) {
         ofLogNotice() << "Registering for touch events if not ios";
@@ -234,15 +235,14 @@ void ofApp::appStateHandler() {
 }
 
 void ofApp::update() {
-    
+
     #if defined TARGET_SEMIBREVE
     inactivityHandler();
     oscMultitouchHandler();
     #endif
 
-    #if defined TARGET_OF_IOS
-    shakeHandler();
-    #endif
+    if (isIos() || isAndroid())
+        shakeHandler();
 
     appStateHandler();
 
@@ -323,7 +323,7 @@ void ofApp::setLanguageBBoxes() {
     // NOTE: extremely hacky solution but it works and gets the job done, so keep calm and don't worry
 
     int y;
-    
+
     if(ofApp::isPhone()) {
         y = ofGetHeight() * 0.078;
     } else if (ofApp::isTablet()) {
@@ -333,9 +333,9 @@ void ofApp::setLanguageBBoxes() {
     if (crop < y) {
 
         y -= crop;
-        
+
         float w, h, xPt, xEn;
-        
+
         if (ofApp::isPhone()) {
             w = 0.1;
             h = 0.05;
@@ -347,13 +347,13 @@ void ofApp::setLanguageBBoxes() {
             xPt = 0.03;
             xEn = 0.08;
         }
-        
+
         // Vars were just percentages, so update them to actual pixel sizes
         w = ofGetWidth() * w;
         h = ofGetHeight() * h;
         xPt = ofGetWidth() * xPt;
         xEn = ofGetWidth() * xEn;
-        
+
         ptLangRect.set(xPt, y, w, h);
         enLangRect.set(xEn, y, w, h);
 
@@ -796,6 +796,8 @@ void ofApp::updateNewModuleActive(int x) {
 
 void ofApp::touchDown(ofTouchEventArgs& touch) {
 
+    lastTouchY = touch.y;
+
     if (appState == APP) updateNewModuleActive(touch.x);
 
     resetInactivityTime();
@@ -920,7 +922,7 @@ void ofApp::touchUp(ofTouchEventArgs& touch) {
 
     #if defined TARGET_OF_IOS
     if (y > CONSOLE_HEIGHT*ofGetHeight() && y < ofApp::maxParticleY && !swiping) {
-        modules[getModuleIdx(x)]->addParticle(increment, x, y);
+        // modules[getModuleIdx(x)]->addParticle(increment, x, y);
         ofLogNotice() << "Particle added" ;
         swiping = false;
     }
@@ -1062,7 +1064,7 @@ void ofApp::deviceOrientationChanged(int newOrientation) {
 
 #if defined TARGET_OF_IOS
 void ofApp::onSwipe(SwipeRecognitionArgs& args) {
-    
+
     if (appState != APP) return;
 
     ofLogNotice() << "Detected swipe event";
@@ -1088,26 +1090,27 @@ void ofApp::onSwipe(SwipeRecognitionArgs& args) {
 #elif defined TARGET_ANDROID
 void ofApp::swipe(ofxAndroidSwipeDir swipeDir, int id){
     int dir;
-    if (swipeDir == OFX_ANDROID_SWIPE_UP) {
-        appState = ABOUT_ASCENDING;
-        ofLogNotice() << "Setting swiping true";
-    }
-    else if (swipeDir == OFX_ANDROID_SWIPE_LEFT) {
-        dir = 2;
-    }
-    else if (swipeDir == OFX_ANDROID_SWIPE_RIGHT) {
-        dir = 1;
-    }
+    if (lastTouchY > CONSOLE_HEIGHT * ofGetHeight()) {
+        if (swipeDir == OFX_ANDROID_SWIPE_UP) {
+            appState = ABOUT_ASCENDING;
+            ofLogNotice() << "Setting swiping true";
+        }
+        else if (swipeDir == OFX_ANDROID_SWIPE_LEFT) {
+            dir = 2;
+        }
+        else if (swipeDir == OFX_ANDROID_SWIPE_RIGHT) {
+            dir = 1;
+        }
 
-    if (dir == 1 || dir == 2) {
-        ofLogNotice() << "Prepare instrument change";
-        modules[0]->prepareInstrumentChange(dir);
+        if (dir == 1 || dir == 2) {
+            ofLogNotice() << "Prepare instrument change";
+            modules[0]->prepareInstrumentChange(dir);
+        }
     }
 }
 
 #endif
 
-#if defined TARGET_OF_IOS
 void ofApp::shakeHandler() {
 
     float offset = 1.7;
@@ -1126,7 +1129,6 @@ void ofApp::shakeHandler() {
     }
 
 }
-#endif
 
 bool ofApp::isOsx() {
   #if defined TARGET_OSX
@@ -1248,14 +1250,14 @@ string ofApp::getSystemLanguage() {
     string ret;
 
 #if defined TARGET_OF_IOS
- 
+
     // NOTE: Apparently one can mix Objective-C in C++ with no problem!
 
     NSString *lang = [[NSLocale preferredLanguages] objectAtIndex:0];
 
     // Convert NSString to C++ std::string
     ret = string([lang UTF8String]);
-    
+
     ofLogNotice() << "language in getSystemLanguage is " << ret;
 
     if (ret == "pt-PT" || ret == "pt-BR") ret = "pt";
@@ -1268,4 +1270,3 @@ string ofApp::getSystemLanguage() {
 
     return ret;
 }
-

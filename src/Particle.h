@@ -14,8 +14,6 @@ public:
 
     void draw();
     void drawCircle();
-    void gravity();
-    void loop();
     void update();
 
     #if defined TARGET_SEMIBREVE

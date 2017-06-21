@@ -129,17 +129,9 @@ void Module::update() {
         return;
 
     for (unsigned int i = 0; i < particles.size(); i++) {
-
         Particle* p = &particles[i];
-
-        if (isLooping())
-            p->loop();
-
-        if (isGravityOn())
-            p->gravity();
-
-        if (p->getHealth() <= 0)
-            particles.erase(particles.begin()+i);
+        p->update();
+        if (p->getHealth() <= 0) particles.erase(particles.begin()+i);
 
     }
 
@@ -189,6 +181,7 @@ void Module::drawParticles() {
 }
 
 void Module::playSound(int soundIndex, float vol) {
+
 
     if (!this->active) return;
     float soundPan;

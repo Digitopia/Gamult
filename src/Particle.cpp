@@ -11,46 +11,37 @@ Particle::Particle(Module* module, int index, float x, float y, int life) {
     this->velocity = 0;
 }
 
-void Particle::gravity() {
+void Particle::update() {
 
-    float gravity = module->getSpeed();
+    float speed = module->getSpeed();
 
-    if (center.y >= ofGetHeight()) {
-        center.y = ofGetHeight();
-        trigger(true, true);
-    }
-
-    else if (center.y <= CONSOLE_HEIGHT*ofGetHeight() + life) {
-        center.y = CONSOLE_HEIGHT*ofGetHeight() + life;
-    }
-
-    if (center.y >= ofGetHeight() || center.y <= CONSOLE_HEIGHT*ofGetHeight() + life) {
-        velocity = velocity * -0.95;
-        health--;
-    } else {
-        velocity += gravity;
-    }
+    bool topCollision    = false;
+    bool bottomCollision = false;
 
     center.y += velocity;
 
-}
-
-void Particle::loop() {
-
-    float loopCoef = module->getSpeed();
-
-    if (center.y >= ofGetHeight()) {
+    if (center.y + life >= ofGetHeight()) {
+        bottomCollision = true;
+        center.y = ofGetHeight() - life;
         trigger(true, true);
-        velocity *= -1;
-    } else if (center.y <= CONSOLE_HEIGHT*ofGetHeight() + life) {
-        center.y = CONSOLE_HEIGHT*ofGetHeight() + life;
-        velocity = 0;
-        velocity += loopCoef;
-    } else {
-        velocity += loopCoef;
     }
 
-    center.y += velocity;
+    else if (center.y - life <= CONSOLE_HEIGHT*ofGetHeight()) {
+        topCollision = true;
+        center.y = CONSOLE_HEIGHT*ofGetHeight() + life;
+    }
+
+    if (bottomCollision && module->isGravityOn()) health--;
+
+    // HACK: keep so that previous behaviour is kept, even though it doesn't make sense
+    if (topCollision && !module->isGravityOn()) velocity = 0;
+
+    if (bottomCollision || topCollision)
+        if (module->isGravityOn()) velocity *= -0.95;
+        else velocity *= -1;
+    else
+        velocity += speed;
+
 }
 
 void Particle::draw() {
