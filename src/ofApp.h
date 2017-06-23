@@ -7,11 +7,12 @@
 
 #define ofLogNotice() ofLogNotice() << ofGetTimestampString("[%H:%M:%S.%i] ")
 
+#include "ofxImage.h"
+
 #if defined TARGET_OF_IOS
     #include "ofxiOS.h"
     #include "ofxiOSExtras.h"
     #include "SwipeRecognition.h"
-    #include "ofxImage.h"
 #elif defined TARGET_SEMIBREVE
     #include "ofxOsc.h"
 #endif
