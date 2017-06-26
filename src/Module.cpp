@@ -21,6 +21,9 @@ Module::Module(int index, int x, int y, int width, int height, int maxPopulation
 
     this->mostRecent = false;
 
+    ofSoundPlayer s;
+    this->sounds.push_back(s);
+
 }
 
 void Module::setDimensions(int x, int y, int width, int height) {
@@ -52,64 +55,73 @@ void Module::touchDown(ofTouchEventArgs& event) {
 
 }
 
-void Module::prepareInstrumentChange(int direction) {
+void Module::changeInstrument(int direction) {
 
-    if (ofApp::isPhone()) {
-        ofLogNotice() << "Direction received: " << direction;
-        if (direction == 1) {
-            if (iSoundPaths <= 0) iSoundPaths = 4;
-            changeInstrument(--iSoundPaths);
-        }
+    if (!ofApp::isPhone()) return;
 
-        else if (direction == 2) {
-            if (iSoundPaths >= 3) iSoundPaths = -1;
-            changeInstrument(++iSoundPaths);
-        }
+    ofLogNotice() << "Direction received: " << direction;
+    if (direction == 1) {
+        iSoundPaths = iSoundPaths <= 0 ? 4 : iSoundPaths;
+        --iSoundPaths;
     }
+    else if (direction == 2) {
+        iSoundPaths = iSoundPaths >= 3 ? -1 : iSoundPaths;
+        ++iSoundPaths;
+    }
+
+    soundPaths = ofApp::getSoundPaths(iSoundPaths);
+    numberOfInstruments = soundPaths.size();
+
+    // NOTE: this is the hack, make it different for Android for now
+    if (!ofApp::isAndroid()) {
+        unloadSounds();
+        loadSounds();
+    }
+
+    // Update module background color too
+    backgroundColor = 255 - (30 * iSoundPaths);
 
 }
 
 void Module::loadSounds() {
 
+    ofLogNotice() << "Loading sounds for module " << this->index;
+
     vector <string> paths = soundPaths;
 
-#ifndef TARGET_OF_IOS
+    #if defined TARGET_ANDROID
+    for (uint i = 0; i < 3; i++) {
+        paths = ofApp::getSoundPaths(i);
+        for (uint p = 0; p < paths.size(); p++) {
+            ofSoundPlayer s;
+            s.load(paths[p], false);
+            s.setMultiPlay(true);
+            ofApp::sounds.push_back(s);
+        }
+    }
 
-    for (unsigned int i = 0; i < paths.size(); i++) {
-        ofSoundPlayer s;
-        //s.setMultiPlay(true);
-        sounds.push_back(s);
-        sounds[i].setMultiPlay(true);
-        sounds[i].load(paths[i], false);
-    }
-#else
-    for (unsigned int i = 0; i < paths.size(); i++) {
-        sounds.load(paths[i]);
-    }
-#endif
+    // #elif defined TARGET_OF_IOS
+    // for (uint i = 0; i < paths.size(); i++) {
+    //     sounds.load(paths[i]);
+    // }
+    #endif
+
 }
 
 void Module::unloadSounds() {
+    #if !defined TARGET_ANDROID
 
-#ifndef TARGET_OF_IOS
-    for (unsigned int i = 0; i < sounds.size(); i++) {
+    // #if !defined TARGET_OF_IOS && !defined TARGET_ANDROID
+    for (uint = 0; i < sounds.size(); i++) {
         sounds[i].stop();
         ofLogNotice() << "Stopping sound " << i;
         sounds[i].unload();
         ofLogNotice() << "Unloading sound " << i;
         sounds.clear();
     }
-#endif
+    // #endif
 
-}
-
-void Module::changeInstrument(int iSoundPaths) {
-    soundPaths = ofApp::getSoundPaths(iSoundPaths);
-    unloadSounds();
-    loadSounds();
-    numberOfInstruments = ofApp::getSoundPaths(iSoundPaths).size();
-    ofLogNotice() << "Changing instrument";
-    backgroundColor = 255 - (30 * iSoundPaths);
+    #endif
 }
 
 void Module::addParticle(uint life, uint x, uint y) {
@@ -128,7 +140,7 @@ void Module::update() {
     if (isFreezed())
         return;
 
-    for (unsigned int i = 0; i < particles.size(); i++) {
+    for (uint i = 0; i < particles.size(); i++) {
         Particle* p = &particles[i];
         p->update();
         if (p->getHealth() <= 0) particles.erase(particles.begin()+i);
@@ -167,7 +179,7 @@ void Module::drawGrid() {
 	ofSetColor(GRID_COLOR);
     int gridNumberElements  = getNumberOfInstrumentNotes();
 	int gridCellSize = round(float(width) / gridNumberElements);
-	for (int i = 1; i < gridNumberElements; i++) {
+	for (uint i = 1; i < gridNumberElements; i++) {
 		int gridCellX = x0 + (i)*gridCellSize + 2;
     	ofDrawLine(gridCellX, height, gridCellX, consoleHeight); // top to bottom grids
 	}
@@ -175,13 +187,12 @@ void Module::drawGrid() {
 
 void Module::drawParticles() {
     if (!active) return;
-    for (unsigned int i = 0; i < particles.size(); i++) {
+    for (uint i = 0; i < particles.size(); i++) {
         particles[i].draw();
     }
 }
 
 void Module::playSound(int soundIndex, float vol) {
-
 
     if (!this->active) return;
     float soundPan;
@@ -193,13 +204,24 @@ void Module::playSound(int soundIndex, float vol) {
     }
     ofLogNotice() << "soundPan is " << soundPan;
 
-#if !defined TARGET_OF_IOS
-    sounds[soundIndex].setMultiPlay(true);
-    sounds[soundIndex].setPan(soundPan);
-    sounds[soundIndex].setVolume(vol);
-    sounds[soundIndex].play();
-#else
-    sounds.play(soundPaths[soundIndex], vol, soundPan);
-    ofLogNotice() << "soundPath is " << soundPaths[soundIndex];
-#endif
+    #if !defined TARGET_OF_IOS
+    uint idx = ofApp::getBaseModuleOffsetSound(iSoundPaths) + soundIndex;
+    ofLogNotice() << "!!!!!!!!!!!!!!!!! idx is " << idx;
+
+    try {
+        if (ofApp::sounds[idx].isLoaded()) {
+            // ofApp::sounds[idx].setPan(soundPan);
+            // ofApp::sounds[idx].setVolume(vol);
+            // ofApp::sounds[idx].play();
+            ofLogNotice() << "playing sound!";
+        }
+        else
+            ofLogNotice() << "sound isn't loaded yet so skipping...";
+    }
+    catch (...) {
+        ofLogNotice() << "failed and trying to replay";
+        // ofApp::sounds[idx].play();
+    }
+
+    #endif
 }

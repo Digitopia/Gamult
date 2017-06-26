@@ -5,7 +5,7 @@
 #include "ModuleConsole.h"
 #include "Particle.h"
 
-#ifdef TARGET_OF_IOS
+#if defined TARGET_OF_IOS
 #include "Wrapper.h"
 #endif
 
@@ -31,8 +31,7 @@ public:
     void drawChangeInstrumentButtons();
 
     void playSound(int index, float vol);
-    void prepareInstrumentChange(int direction);
-	  void changeInstrument(int index);
+    void changeInstrument(int direction);
     void setDimensions(int x, int y, int width, int height);
     void updateParticlesOnOrientationChange();
 
@@ -82,15 +81,15 @@ private:
     uint width;
     uint height;
     uint consoleHeight;
-	  uint maxPopulation;
+    uint maxPopulation;
     uint numberOfInstruments;
-	  ModuleConsole* console;
-	  vector<Particle> particles;
+    ModuleConsole* console;
+    vector<Particle> particles;
 
-    #if !defined TARGET_OF_IOS
-    vector<ofSoundPlayer> sounds;
-    #else
+    #if defined TARGET_OF_IOS
     Wrapper sounds;
+    #else
+    vector<ofSoundPlayer> sounds; // NOTE: Leave it here, just so that it compiles...
     #endif
 
     bool active;     // is it being drawn and updated

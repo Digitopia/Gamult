@@ -16,14 +16,14 @@ Button::Button(Module* module, buttonType type, string title) {
 }
 
 void Button::setDimensions(int x, int y, int size) {
-    
+
     this->x = x;
     this->y = y;
     this->rect = ofRectangle(x, y, size, size);
-    
+
     this->font.load(UI_FONT_FACE, ofApp::getFontSize(), true);
-    
-#ifdef TARGET_OF_IOS
+
+#if defined TARGET_OF_IOS
     int offset = size*.6;
 #else
     int offset = 0;
@@ -37,7 +37,7 @@ void Button::setDimensions(int x, int y, int size) {
         titleX = x + size * 1.25;
         titleY = y + size - 8;
     }
-    
+
     // TODO: this is most probably unnecessarily overly complicated
     else if (this->type == BUTTON_REMOVE || this->type == BUTTON_CLEAR) {
         int lowerPartHeight = (1-CONSOLE_SECTION_HEIGHT) * CONSOLE_HEIGHT * ofGetHeight();
@@ -87,19 +87,19 @@ void Button::draw() {
 
     ofSetColor(UI_COLOR);
     ofSetLineWidth(BUTTON_WIDTH);
-    
+
     if (type == BUTTON_REMOVE || type == BUTTON_CLEAR) {
         ofSetHexColor(BUTTON_REMOVE_COLOR);
     }
 
     if (state) ofFill();
     else ofNoFill();
-    
+
     ofDrawRectangle(rect);
-    
+
     ofSetColor(UI_COLOR);
     font.drawString(title, titleX, titleY);
 
     ofPopStyle();
-    
+
 }

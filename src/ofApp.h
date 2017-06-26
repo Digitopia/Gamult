@@ -13,6 +13,7 @@
     #include "ofxiOS.h"
     #include "ofxiOSExtras.h"
     #include "SwipeRecognition.h"
+    #include "Wrapper.h"
 #elif defined TARGET_SEMIBREVE
     #include "ofxOsc.h"
 #endif
@@ -64,9 +65,9 @@ enum inactivityStateEnum {
 #if defined TARGET_ANDROID
 class ofApp : public ofxAndroidApp {
 #elif defined TARGET_OF_IOS
-    class ofApp : public ofxiOSApp {
+class ofApp : public ofxiOSApp {
 #else
-    class ofApp : public ofBaseApp {
+class ofApp : public ofBaseApp {
 #endif
 
 public:
@@ -121,18 +122,18 @@ public:
     static string getSystemLanguage();
 
     #if defined TARGET_OF_IOS
-      void onSwipe(SwipeRecognitionArgs& args);
+    void onSwipe(SwipeRecognitionArgs& args);
     #endif
 
     void shakeHandler();
 
     #if defined TARGET_SEMIBREVE
-      void oscMultitouchHandler();
-      static ofxOscSender oscSender;
-      static ofxOscReceiver oscReceiver;
+    void oscMultitouchHandler();
+    static ofxOscSender oscSender;
+    static ofxOscReceiver oscReceiver;
     #endif
 
-    #ifdef TARGET_ANDROID
+    #if defined TARGET_ANDROID
 	    void pause(){}
 	    void stop(){}
 	    void resume(){}
@@ -152,7 +153,7 @@ public:
 
     static vector<string> getSoundPaths(unsigned int index);
 
-    static unsigned int moduleActive;
+    static unsigned int moduleActive; // NOTE: when in tablets, this indicates which is the active module when in portrait
 
     static int maxParticleY; // TODO does this really needs to be static and here?
 
@@ -166,6 +167,8 @@ public:
     static bool isTabletInPortrait();
     static bool isTabletInLandscape();
 
+    static size_t getBaseModuleOffsetSound(uint imodule);
+
     static int mouseId;
 
     static bool inactive;
@@ -176,6 +179,10 @@ public:
     static map<string,string> translations;
 
     static vector<Module*> modules;
+
+    #if !defined TARGET_OF_IOS
+    static vector<ofSoundPlayer> sounds;
+    #endif
 
 private:
 
@@ -206,27 +213,20 @@ private:
     int arrowDownY;
     int arrowDownYBase;
     int arrowDownDir;
-
-    ofTrueTypeFont swipeFont;
-
     int splashAlpha;
-
     int crop;
-
     int pY; //for toucMoved() to scroll aboutImage on iPhone;
-
+    uint inactivityThreshold;
+    uint inactivityThresholdWithinParticles;
     bool showSwipeInfo;
-
-    unsigned int inactivityThreshold;
-    unsigned int inactivityThresholdWithinParticles;
+    ofTrueTypeFont swipeFont;
+    int accelCount;
+    int lastTouchY; // NOTE: this is a hack since the oF API for Android doesn't provide (x,y) coordinates for the swipe
+    bool swiping;
 
     #if defined TARGET_OF_IOS
-      SwipeRecognition swiper;
-  #endif
-   bool swiping;
-
-  int accelCount;
-  int lastTouchY; // NOTE: this is a hack since the oF API for Android doesn't provide (x,y) coordinates for the swipe
+    SwipeRecognition swiper;
+    #endif
 
 };
 

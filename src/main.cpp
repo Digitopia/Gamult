@@ -19,7 +19,7 @@ int main() {
 }
 
 
-#ifdef TARGET_ANDROID
+#if defined TARGET_ANDROID
 #include <jni.h>
 
 extern "C"{

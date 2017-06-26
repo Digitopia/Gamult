@@ -10,6 +10,7 @@ uint ofApp::moduleActive      = 0;
 uint ofApp::currentAlpha      = DEFAULT_ALPHA;
 string ofApp::language        = "en";
 vector<Module*> ofApp::modules;
+vector<ofSoundPlayer> ofApp::sounds;
 map<string,string> ofApp::translations;
 
 #if defined TARGET_SEMIBREVE
@@ -21,7 +22,7 @@ typedef map<int,Touch>::iterator touchesIterator;
 
 void ofApp::setup() {
 
-    ofSetLogLevel(OF_LOG_NOTICE);
+    // ofSetLogLevel(OF_LOG_NOTICE);
 
     ofLogNotice() << "setup()";
 
@@ -86,7 +87,6 @@ void ofApp::setup() {
     initTranslations();
     initModules();
     setupModules();
-    loadModuleSounds();
 
     initImages();
 
@@ -138,7 +138,6 @@ void ofApp::initTranslations() {
 void ofApp::initModules() {
 
     ofLogNotice() << "initModules() start";
-
     uint nModules = isPhone() ? 1 : 4;
     ofLogNotice() << "Allocating " << nModules << " modules";
     modules.reserve(nModules);
@@ -174,14 +173,12 @@ void ofApp::setupModules() {
     int barRectHeight = barRectLength/4;
     barRect.set(ofGetWidth()/2 - barRectLength/2, ofGetHeight() - barRectHeight, barRectLength, barRectHeight);
 
-    ofLogNotice() << "setupModules() end";
-}
-
-void ofApp::loadModuleSounds() {
-
-    for (unsigned int i = 0; i < modules.size(); i++) {
+    for (uint i = 0; i < modules.size(); i++) {
         modules[i]->loadSounds();
     }
+
+    ofLogNotice() << "setupModules() end";
+
 }
 
 void ofApp::initImages() {
@@ -594,51 +591,6 @@ vector<string> ofApp::getSoundPaths(unsigned int index) {
 
     vector<string> ret;
 
-    if (!isIos()) {
-
-      // bonangs
-      if (index == 0) {
-          ret.push_back("sounds/BBPL1.wav");
-          ret.push_back("sounds/BBPL2.wav");
-          ret.push_back("sounds/BBPL3.wav");
-      }
-
-      // genders
-      else if (index == 1) {
-          ret.push_back("sounds/GBPL1.wav");
-          ret.push_back("sounds/GBPL2.wav");
-          ret.push_back("sounds/GBPL3.wav");
-          ret.push_back("sounds/GBPL5.wav");
-          ret.push_back("sounds/GBPL2.wav");
-          ret.push_back("sounds/GBPL3.wav");
-      }
-
-      // gongs
-      else if (index == 2) {
-          ret.push_back("sounds/GKPL1f.wav");
-          ret.push_back("sounds/GKPL2f.wav");
-          ret.push_back("sounds/GKPL3f.wav");
-          ret.push_back("sounds/GKPL5f.wav");
-          ret.push_back("sounds/GKPL1f.wav");
-          ret.push_back("sounds/GKPL2f.wav");
-          ret.push_back("sounds/GKPL3f.wav");
-      }
-
-      // sarons
-      else if (index == 3) {
-          ret.push_back("sounds/SBPL1.wav");
-          ret.push_back("sounds/SBPL2.wav");
-          ret.push_back("sounds/SBPL3.wav");
-          ret.push_back("sounds/SBPL4.wav");
-          ret.push_back("sounds/SBPL3.wav");
-          ret.push_back("sounds/SBPL4.wav");
-          ret.push_back("sounds/SBPL4.wav");
-      }
-    }
-
-    else {
-
-
       // bonangs
       if (index == 0) {
           ret.push_back("sounds/01_Kenong/A_KSL2.wav");
@@ -648,12 +600,12 @@ vector<string> ofApp::getSoundPaths(unsigned int index) {
 
       // genders
       else if (index == 1) {
-          ret.push_back("sounds/02_Gender/A_01_GBSL1.wav");
-          ret.push_back("sounds/02_Gender/A_02_GBSL2.wav");
-          ret.push_back("sounds/02_Gender/A_03_GBSL3.wav");
-          ret.push_back("sounds/02_Gender/A_04_GBSL5.wav");
-          ret.push_back("sounds/02_Gender/A_05_GBSL6.wav");
-          ret.push_back("sounds/02_Gender/A_06_GBSL1h.wav");
+          ret.push_back("sounds/02_Gender/_A_01_GBSL1.wav");
+          ret.push_back("sounds/02_Gender/_A_02_GBSL2.wav");
+          ret.push_back("sounds/02_Gender/_A_03_GBSL3.wav");
+          ret.push_back("sounds/02_Gender/_A_04_GBSL5.wav");
+          ret.push_back("sounds/02_Gender/_A_05_GBSL6.wav");
+          ret.push_back("sounds/02_Gender/_A_06_GBSL1h.wav");
       }
 
       // gongs
@@ -669,18 +621,31 @@ vector<string> ofApp::getSoundPaths(unsigned int index) {
 
       // sarons
       else if (index == 3) {
-          ret.push_back("sounds/04_Saron/A_01_SBSL6l.wav");
-          ret.push_back("sounds/04_Saron/A_02_SBSL1.wav");
-          ret.push_back("sounds/04_Saron/A_03_SBSL2.wav");
-          ret.push_back("sounds/04_Saron/A_04_SBSL3.wav");
-          ret.push_back("sounds/04_Saron/A_05_SBSL5.wav");
-          ret.push_back("sounds/04_Saron/A_06_SBSL6.wav");
-          ret.push_back("sounds/04_Saron/A_07_SBSL1h.wav");
+        //   ret.push_back("sounds/04_Saron/A_01_SBSL6l.ogg");
+        //   ret.push_back("sounds/04_Saron/A_02_SBSL1.ogg");
+        //   ret.push_back("sounds/04_Saron/A_03_SBSL2.ogg");
+        //   ret.push_back("sounds/04_Saron/A_04_SBSL3.ogg");
+        //   ret.push_back("sounds/04_Saron/A_05_SBSL5.ogg");
+        //   ret.push_back("sounds/04_Saron/A_06_SBSL6.ogg");
+        //   ret.push_back("sounds/04_Saron/A_07_SBSL1h.ogg");
+        ret.push_back("sounds/01_Kenong/A_KSL2.wav");
+        ret.push_back("sounds/01_Kenong/A_KSL3.wav");
+        ret.push_back("sounds/01_Kenong/A_KSL5.wav");
+        ret.push_back("sounds/01_Kenong/A_KSL2.wav");
+        ret.push_back("sounds/01_Kenong/A_KSL3.wav");
+        ret.push_back("sounds/01_Kenong/A_KSL5.wav");
+        ret.push_back("sounds/01_Kenong/A_KSL2.wav");
       }
-    }
 
+      return ret;
+
+}
+
+// NOTE: terrible hack: get the base offset in the linear vector of sounds for a specific module
+size_t ofApp::getBaseModuleOffsetSound(uint imodule) {
+    size_t ret = 0;
+    for (size_t i = 0; i < imodule; i++) ret += getSoundPaths(i).size();
     return ret;
-
 }
 
 #if defined TARGET_SEMIBREVE
@@ -1078,7 +1043,7 @@ void ofApp::onSwipe(SwipeRecognitionArgs& args) {
             ofLogNotice() << "Setting swiping true";
         }
         else {
-            modules[0]->prepareInstrumentChange(direction);
+            modules[0]->changeInstrument(direction);
             swiping = true;
             ofLogNotice() << "Prepare instrument change";
         }
@@ -1103,8 +1068,7 @@ void ofApp::swipe(ofxAndroidSwipeDir swipeDir, int id){
         }
 
         if (dir == 1 || dir == 2) {
-            ofLogNotice() << "Prepare instrument change";
-            modules[0]->prepareInstrumentChange(dir);
+            modules[0]->changeInstrument(dir);
         }
     }
 }
