@@ -64,12 +64,14 @@ void ofApp::setup() {
     }
     #endif
 
+#ifndef TARGET_OSX
     if (isAndroid() || isIos()) {
         ofxAccelerometer.setup();
         accelCount = 0;
         crop = 0;
     }
-
+#endif
+    
     if (!ofApp::isIos()) {
         ofLogNotice() << "Registering for touch events if not ios";
         ofRegisterTouchEvents(this);
