@@ -924,7 +924,7 @@ void ofApp::touchUp(ofTouchEventArgs& touch) {
 
     #if defined TARGET_OF_IOS
     if (y > CONSOLE_HEIGHT*ofGetHeight() && y < ofApp::maxParticleY && !swiping) {
-        // modules[getModuleIdx(x)]->addParticle(increment, x, y);
+        modules[getModuleIdx(x)]->addParticle(increment, x, y);
         ofLogNotice() << "Particle added" ;
         swiping = false;
     }
