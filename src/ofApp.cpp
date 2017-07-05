@@ -600,12 +600,12 @@ vector<string> ofApp::getSoundPaths(unsigned int index) {
 
       // genders
       else if (index == 1) {
-          ret.push_back("sounds/02_Gender/_A_01_GBSL1.wav");
-          ret.push_back("sounds/02_Gender/_A_02_GBSL2.wav");
-          ret.push_back("sounds/02_Gender/_A_03_GBSL3.wav");
-          ret.push_back("sounds/02_Gender/_A_04_GBSL5.wav");
-          ret.push_back("sounds/02_Gender/_A_05_GBSL6.wav");
-          ret.push_back("sounds/02_Gender/_A_06_GBSL1h.wav");
+          ret.push_back("sounds/02_Gender/A_01_GBSL1.wav");
+          ret.push_back("sounds/02_Gender/A_02_GBSL2.wav");
+          ret.push_back("sounds/02_Gender/A_03_GBSL3.wav");
+          ret.push_back("sounds/02_Gender/A_04_GBSL5.wav");
+          ret.push_back("sounds/02_Gender/A_05_GBSL6.wav");
+          ret.push_back("sounds/02_Gender/A_06_GBSL1h.wav");
       }
 
       // gongs
@@ -818,7 +818,7 @@ void ofApp::touchDown(ofTouchEventArgs& touch) {
 
     }
 
-    #if defined TARGET_OF_IOS
+    #if defined TARGET_OF_IOS || defined TARGET_ANDROID
     swiping = false;
     #endif
 
@@ -892,9 +892,10 @@ void ofApp::touchUp(ofTouchEventArgs& touch) {
         swiping = false;
     }
     #else
-    if (y > CONSOLE_HEIGHT*ofGetHeight() && y < ofApp::maxParticleY) {
+    if (y > CONSOLE_HEIGHT*ofGetHeight() && y < ofApp::maxParticleY && !swiping) {
         modules[getModuleIdx(x)]->addParticle(increment, x, y);
         ofLogNotice() << "Particle added" ;
+        swiping = false;
     }
     #endif
 
@@ -1062,9 +1063,11 @@ void ofApp::swipe(ofxAndroidSwipeDir swipeDir, int id){
         }
         else if (swipeDir == OFX_ANDROID_SWIPE_LEFT) {
             dir = 2;
+            swiping = true;
         }
         else if (swipeDir == OFX_ANDROID_SWIPE_RIGHT) {
             dir = 1;
+            swiping = true;
         }
 
         if (dir == 1 || dir == 2) {

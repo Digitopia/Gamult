@@ -60,7 +60,8 @@ void Module::changeInstrument(int direction) {
     if (!ofApp::isPhone()) return;
 
     ofLogNotice() << "Direction received: " << direction;
-    if (direction == 1) {
+    if (direction == 1)
+    {
         iSoundPaths = iSoundPaths <= 0 ? 4 : iSoundPaths;
         --iSoundPaths;
     }
@@ -69,14 +70,14 @@ void Module::changeInstrument(int direction) {
         ++iSoundPaths;
     }
 
-    soundPaths = ofApp::getSoundPaths(iSoundPaths);
-    numberOfInstruments = soundPaths.size();
+    // soundPaths = ofApp::getSoundPaths(iSoundPaths);
+    // numberOfInstruments = soundPaths.size();
 
     // NOTE: this is the hack, make it different for Android for now
-    if (!ofApp::isAndroid()) {
-        unloadSounds();
-        loadSounds();
-    }
+    // if (!ofApp::isAndroid()) {
+    //     unloadSounds();
+    //     loadSounds();
+    // }
 
     // Update module background color too
     backgroundColor = 255 - (30 * iSoundPaths);
@@ -210,9 +211,9 @@ void Module::playSound(int soundIndex, float vol) {
 
     try {
         if (ofApp::sounds[idx].isLoaded()) {
-            // ofApp::sounds[idx].setPan(soundPan);
-            // ofApp::sounds[idx].setVolume(vol);
-            // ofApp::sounds[idx].play();
+            ofApp::sounds[idx].setPan(soundPan);
+            ofApp::sounds[idx].setVolume(vol);
+            ofApp::sounds[idx].play();
             ofLogNotice() << "playing sound!";
         }
         else
