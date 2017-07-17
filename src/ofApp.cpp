@@ -103,10 +103,7 @@ void ofApp::setup() {
     showSwipeInfo = true;
     ofApp::maxParticleY = round(ofGetHeight() * (1-LIMIT_PARTICLE));
 
-    uint swipeFontSize;
-    if (isTablet()) swipeFontSize = 26;
-    else swipeFontSize = 20;
-    swipeFont.load(UI_FONT_FACE, swipeFontSize);
+    swipeFont.load(UI_FONT_FACE, ofApp::getFontSize() * 0.8);
 
 }
 
@@ -200,6 +197,9 @@ void ofApp::initImages() {
     // TODO: try to avoid resize as slows downs starting of app
     // NOTE: 3080/1080 is the original image ratio
     if (ofApp::isPhone()) imgAbout.resize(ofGetWidth(), (int)((float)ofGetWidth()*3080/1080));
+
+    imgArrowDown.resize(ofGetWidth() * 0.20, ofGetWidth() * 0.20);
+    imgSwipeInfo.resize(ofGetWidth() * 0.20, ofGetWidth() * 0.20);
 
     ofLogNotice() << "initImages() end";
 
@@ -355,9 +355,11 @@ void ofApp::setLanguageBBoxes() {
         enLangRect.set(xEn, y, w, h);
 
         // NOTE: uncomment for debug
-        // ofNoFill();
-        // ofDrawRectangle(ptLangRect);
-        // ofDrawRectangle(enLangRect);
+        ofPushStyle();
+        ofNoFill();
+        ofDrawRectangle(ptLangRect);
+        ofDrawRectangle(enLangRect);
+        ofPopStyle();
 
     }
     else {
@@ -422,7 +424,7 @@ void ofApp::draw() {
         if (isTablet()) ofSetColor(47); // NOTE: previous white font color wasn't readable on iPad;
         else ofSetHexColor(CONSOLE_COLOR);
 
-        int swipeSize = 150;
+        int swipeSize = ofGetWidth() * 0.20;
         int padding = 80;
 
         imgSwipeInfo.draw(ofGetWidth()/2-swipeSize/2, ofGetHeight()/2, swipeSize, swipeSize);
@@ -784,8 +786,14 @@ void ofApp::touchDown(ofTouchEventArgs& touch) {
             appState = ABOUT_DESCENDING;
         }
 
-        if (ptLangRect.inside(x,y)) changeLanguage("pt");
-        else if (enLangRect.inside(x,y)) changeLanguage("en");
+        if (ptLangRect.inside(x,y)) {
+            ofLogNotice() << "clicked PT language";
+            changeLanguage("pt");
+        }
+        else if (enLangRect.inside(x,y)) {
+            ofLogNotice() << "clicked EN language";
+            changeLanguage("en");
+        }
 
         return;
     }
@@ -1188,28 +1196,50 @@ bool ofApp::isTabletInLandscape() {
 }
 
 int ofApp::getFontSize() {
+
+    uint ret;
+
     uint width = ofGetWidth();
-    if (ofApp::isPhone()) {
-        if      (width <= 640)  return 24; // iPhone 5, 5s and SE
-        else if (width <= 750)  return 28; // iPhone 6, 6s and 7
-        else if (width <= 1242) return 34; // iPhone 6+, 6s+ and 7+
-        else return 38;
+
+    if (ofApp::isAndroid()) {
+        ret = (width*24)/640;
     }
-    else {
-        if (isTabletInPortrait()) {
-            ofLogNotice() << "getFontSize in portrait mode!";
-            if      (width <= 1024) return 14; // iPad 2
-            else if (width <= 1536) return 24; // iPad Mini and iPad Air
-            else return 26;
+
+    else if (ofApp::isIos()) {
+
+        if (ofApp::isPhone()) {
+            if      (width <= 640)  ret = 24; // iPhone 5, 5s and SE
+            else if (width <= 750)  ret = 28; // iPhone 6, 6s and 7
+            else if (width <= 1242) ret = 34; // iPhone 6+, 6s+ and 7+
+            else ret = 38;
         }
+
         else {
-            ofLogNotice() << "getFontSize in landscape mode!";
-            uint offset = 2;
-            if      (width <= 1024) return 14-offset;   // iPad 2
-            else if (width <= 1536) return 24-offset*2; // iPad Mini and iPad Air
-            else return 26-offset*2;
+
+            if (isTabletInPortrait()) {
+                ofLogNotice() << "getFontSize in portrait mode!";
+                if      (width <= 1024) ret = 14; // iPad 2
+                else if (width <= 1536) ret = 24; // iPad Mini and iPad Air
+                else ret = 26;
+            }
+
+            else {
+                ofLogNotice() << "getFontSize in landscape mode!";
+                uint offset = 2;
+                if      (width <= 1024) ret = 14-offset;   // iPad 2
+                else if (width <= 1536) ret = 24-offset*2; // iPad Mini and iPad Air
+                else ret = 26-offset*2;
+            }
         }
     }
+
+    else {
+        ret = (width*24)/640;
+    }
+
+    ofLogNotice() << "Going to use font size " << ret;
+
+    return ret;
 }
 
 string ofApp::getSystemLanguage() {
