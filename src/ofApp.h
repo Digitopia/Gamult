@@ -124,7 +124,9 @@ public:
       void onSwipe(SwipeRecognitionArgs& args);
     #endif
 
+#ifndef TARGET_OSX
     void shakeHandler();
+#endif
 
     #if defined TARGET_SEMIBREVE
       void oscMultitouchHandler();

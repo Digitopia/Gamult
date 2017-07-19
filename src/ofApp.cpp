@@ -243,8 +243,10 @@ void ofApp::update() {
     oscMultitouchHandler();
     #endif
 
+    #ifndef TARGET_OSX
     if (isIos() || isAndroid())
         shakeHandler();
+    #endif
 
     appStateHandler();
 
@@ -1113,6 +1115,7 @@ void ofApp::swipe(ofxAndroidSwipeDir swipeDir, int id){
 
 #endif
 
+#ifndef TARGET_OSX
 void ofApp::shakeHandler() {
 
     float offset = 1.7;
@@ -1131,6 +1134,7 @@ void ofApp::shakeHandler() {
     }
 
 }
+#endif
 
 bool ofApp::isOsx() {
   #if defined TARGET_OSX
