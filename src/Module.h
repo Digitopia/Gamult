@@ -18,6 +18,8 @@ public:
     Module(int index, int x, int y, int width, int height, int maxPopulation, vector<string> soundPaths);
 
     void loadSounds();
+    void loadSoundsAux(int n);
+    void loadSoundsAux(vector<string> paths);
     void unloadSounds();
     void update();
     void addParticle(uint life, uint x, uint y);

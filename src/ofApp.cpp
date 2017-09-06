@@ -355,11 +355,11 @@ void ofApp::setLanguageBBoxes() {
         enLangRect.set(xEn, y, w, h);
 
         // NOTE: uncomment for debug
-        ofPushStyle();
-        ofNoFill();
-        ofDrawRectangle(ptLangRect);
-        ofDrawRectangle(enLangRect);
-        ofPopStyle();
+        // ofPushStyle();
+        // ofNoFill();
+        // ofDrawRectangle(ptLangRect);
+        // ofDrawRectangle(enLangRect);
+        // ofPopStyle();
 
     }
     else {
@@ -786,14 +786,8 @@ void ofApp::touchDown(ofTouchEventArgs& touch) {
             appState = ABOUT_DESCENDING;
         }
 
-        if (ptLangRect.inside(x,y)) {
-            ofLogNotice() << "clicked PT language";
-            changeLanguage("pt");
-        }
-        else if (enLangRect.inside(x,y)) {
-            ofLogNotice() << "clicked EN language";
-            changeLanguage("en");
-        }
+        if (ptLangRect.inside(x,y)) changeLanguage("pt");
+        else if (enLangRect.inside(x,y)) changeLanguage("en");
 
         return;
     }
@@ -1005,7 +999,7 @@ void ofApp::deviceOrientationChanged(int newOrientation) {
     }
 
     // upside down is no good for anything
-    if (isPhone() && newOrientation == OF_ORIENTATION_180)
+    if (isTablet() && newOrientation == OF_ORIENTATION_180)
         ofSetOrientation(OF_ORIENTATION_DEFAULT);
     else {
         ofLogNotice() << "Changing orientation change";
@@ -1062,7 +1056,8 @@ void ofApp::onSwipe(SwipeRecognitionArgs& args) {
 
 }
 #elif defined TARGET_ANDROID
-void ofApp::swipe(ofxAndroidSwipeDir swipeDir, int id){
+void ofApp::swipe(ofxAndroidSwipeDir swipeDir, int id) {
+    if (appState != APP) return;
     int dir;
     if (lastTouchY > CONSOLE_HEIGHT * ofGetHeight()) {
         if (swipeDir == OFX_ANDROID_SWIPE_UP) {
@@ -1150,21 +1145,23 @@ bool ofApp::isPhone() {
 
 bool ofApp::isTablet() {
   #if defined TARGET_OF_IOS
-    if (ofxiOSGetDeviceType() == OFXIOS_DEVICE_IPAD) return true;
-    return false;
+    return ofxiOSGetDeviceType() == OFXIOS_DEVICE_IPAD;
   #else
-    return false;
+    return ofGetWidth() >= 1800;
   #endif
 }
 
 bool ofApp::isTabletInPortrait() {
 
+    if (!isTablet()) return false;
+
   // check iPad in portrait
   #if defined TARGET_OF_IOS
-    if (ofxiOSGetDeviceType() == OFXIOS_DEVICE_IPAD) {
-        if (ofGetOrientation() == OF_ORIENTATION_DEFAULT || ofGetOrientation() == OF_ORIENTATION_180) {
-            return true;
-        }
+    if (isIos()) {
+        return ofGetOrientation() == OF_ORIENTATION_DEFAULT || ofGetOrientation() == OF_ORIENTATION_180;
+    }
+    else if (isAndroid()) {
+        return ofGetOrientation() == OF_ORIENTATION_DEFAULT || ofGetOrientation() == OF_ORIENTATION_180;
     }
   #endif
 

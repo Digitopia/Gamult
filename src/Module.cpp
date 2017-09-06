@@ -91,23 +91,33 @@ void Module::loadSounds() {
     vector <string> paths = soundPaths;
 
     #if defined TARGET_ANDROID
-    for (uint i = 0; i < 3; i++) {
-        paths = ofApp::getSoundPaths(i);
-        for (uint p = 0; p < paths.size(); p++) {
-            ofSoundPlayer s;
-            s.load(paths[p], false);
-            s.setMultiPlay(true);
-            ofApp::sounds.push_back(s);
-        }
-    }
+    if (ofApp::isPhone()) this->loadSoundsAux(4); // NOTE: As for now, 4 is always fixed
+    else this->loadSoundsAux(this->soundPaths);
 
-    // #elif defined TARGET_OF_IOS
-    // for (uint i = 0; i < paths.size(); i++) {
-    //     sounds.load(paths[i]);
-    // }
+    #elif defined TARGET_OF_IOS
+    for (uint i = 0; i < paths.size(); i++) {
+        sounds.load(paths[i]);
+    }
     #endif
 
 }
+
+void Module::loadSoundsAux(int n) {
+    for (uint i = 0; i < n; i++) {
+        vector<string> paths = ofApp::getSoundPaths(i);
+        this->loadSoundsAux(paths);
+    }
+}
+
+void Module::loadSoundsAux(vector<string> paths) {
+    for (uint p = 0; p < paths.size(); p++) {
+        ofSoundPlayer s;
+        s.load(paths[p], false);
+        s.setMultiPlay(true);
+        ofApp::sounds.push_back(s);
+    }
+}
+
 
 void Module::unloadSounds() {
     #if !defined TARGET_ANDROID
