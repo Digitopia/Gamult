@@ -88,6 +88,11 @@ public:
     void touchCancelled(ofTouchEventArgs& touch) {}
 
     void deviceOrientationChanged(int newOrientation);
+    void windowResized(int w, int h) {
+        if (w < h) deviceOrientationChanged(OF_ORIENTATION_DEFAULT);
+        else deviceOrientationChanged(OF_ORIENTATION_90_LEFT);
+        // for (unsigned int i = 0; i < modules.size(); i++) modules[i]->deactivate();
+    }
 
     void keyPressed(int key);
 
@@ -97,6 +102,7 @@ public:
     void drawLines();
     void drawLine(uint nth);
     void setupModules();
+    void setupModules(int newOrientation);
     void loadModuleSounds();
 
     void appStateHandler();
@@ -151,7 +157,7 @@ public:
 	    void swipe(ofxAndroidSwipeDir swipeDir, int id);
 	  #endif
 
-    static vector<string> getSoundPaths(unsigned int index);
+    static vector<string> getSoundPaths(uint index);
 
     static unsigned int moduleActive; // NOTE: when in tablets, this indicates which is the active module when in portrait
 
@@ -164,6 +170,8 @@ public:
     static bool isAndroid();
     static bool isPhone();
     static bool isTablet();
+    static bool isInPortrait();
+    static bool isInLandscape();
     static bool isTabletInPortrait();
     static bool isTabletInLandscape();
 
@@ -177,6 +185,14 @@ public:
     static unsigned int currentAlpha;
     static string language;
     static map<string,string> translations;
+
+    // NOTE: orientation in Android works very weirdly...
+    // First, deviceOrientationChanged callback is not called...
+    // The callback called is the windowResized()..., which we then force to call deviceOrientationChanged
+    // Also, ofGetOrientation() doesn't work in Android, so we need to keep a androidOrientation variable
+    // in order to keep track of it.. This is terribly hacky, but there's not really much other way rather
+    // altering OF framework.. No time for that now...
+    static int androidOrientation;
 
     static vector<Module*> modules;
 

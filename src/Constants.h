@@ -7,7 +7,7 @@
     #define TOUCH_MIN 10
     #define BUTTON_SIZE .20
     #define FADER_SIZE .19
-    #define PARTICLES_PER_MODULE 20
+    #define PARTICLES_PER_MODULE 7
 
  #elif defined TARGET_SEMIBREVE
     #define NMODULES 4

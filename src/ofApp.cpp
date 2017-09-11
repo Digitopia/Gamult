@@ -9,6 +9,7 @@ bool ofApp::inactive          = false;
 uint ofApp::moduleActive      = 0;
 uint ofApp::currentAlpha      = DEFAULT_ALPHA;
 string ofApp::language        = "en";
+int ofApp::androidOrientation = 1;
 vector<Module*> ofApp::modules;
 vector<ofSoundPlayer> ofApp::sounds;
 map<string,string> ofApp::translations;
@@ -22,7 +23,7 @@ typedef map<int,Touch>::iterator touchesIterator;
 
 void ofApp::setup() {
 
-    // ofSetLogLevel(OF_LOG_NOTICE);
+    ofSetLogLevel(OF_LOG_VERBOSE);
 
     ofLogNotice() << "setup()";
 
@@ -152,14 +153,20 @@ void ofApp::initModules() {
 }
 
 void ofApp::setupModules() {
+    setupModules(ofGetOrientation());
+}
+
+void ofApp::setupModules(int newOrientation) {
 
     ofLogNotice() << "setupModules() start";
 
-    if (isTabletInPortrait()) {
+    if (isTablet() && (newOrientation == OF_ORIENTATION_DEFAULT || newOrientation == OF_ORIENTATION_180)) {
         modules[moduleActive]->setDimensions(0, 0, ofGetWidth(), ofGetHeight());
     }
     else {
-        for (unsigned int i = 0; i < modules.size(); i++) {
+        ofLogNotice() << " here !!!";
+        for (uint i = 0; i < modules.size(); i++) {
+            ofLogNotice() << "Altering module " << i;
             int width = ofGetWidth()/modules.size();
             modules[i]->setDimensions(i*width, 0, width, ofGetHeight());
         }
@@ -175,6 +182,8 @@ void ofApp::setupModules() {
     }
 
     ofLogNotice() << "setupModules() end";
+
+    drawModules();
 
 }
 
@@ -468,7 +477,7 @@ void ofApp::draw() {
             aboutY = 0;
             appState = ABOUT;
         } else {
-            aboutY -= 15;
+            aboutY -= 25;
         }
         if (currentAlpha < 255) currentAlpha += 3;
         ofPushStyle();
@@ -589,57 +598,53 @@ void ofApp::drawArrow(bool up) {
 #endif
 }
 
-vector<string> ofApp::getSoundPaths(unsigned int index) {
+vector<string> ofApp::getSoundPaths(uint index) {
 
     vector<string> ret;
 
-      // bonangs
-      if (index == 0) {
-          ret.push_back("sounds/01_Kenong/A_KSL2.wav");
-          ret.push_back("sounds/01_Kenong/A_KSL3.wav");
-          ret.push_back("sounds/01_Kenong/A_KSL5.wav");
-      }
+    switch (index) {
 
-      // genders
-      else if (index == 1) {
-          ret.push_back("sounds/02_Gender/A_01_GBSL1.wav");
-          ret.push_back("sounds/02_Gender/A_02_GBSL2.wav");
-          ret.push_back("sounds/02_Gender/A_03_GBSL3.wav");
-          ret.push_back("sounds/02_Gender/A_04_GBSL5.wav");
-          ret.push_back("sounds/02_Gender/A_05_GBSL6.wav");
-          ret.push_back("sounds/02_Gender/A_06_GBSL1h.wav");
-      }
+        case 0:
+            ret.push_back("sounds/01_Kenong/A_KSL2.wav");
+            ret.push_back("sounds/01_Kenong/A_KSL3.wav");
+            ret.push_back("sounds/01_Kenong/A_KSL5.wav");
+            break;
 
-      // gongs
-      else if (index == 2) {
-          ret.push_back("sounds/03_Bonang/A_01_BBSL1.wav");
-          ret.push_back("sounds/03_Bonang/A_02_BBSL2.wav");
-          ret.push_back("sounds/03_Bonang/A_03_BBSL3.wav");
-          ret.push_back("sounds/03_Bonang/A_04_BBSL5.wav");
-          ret.push_back("sounds/03_Bonang/A_05_BBSL6.wav");
-          ret.push_back("sounds/03_Bonang/A_06_BBSL1h.wav");
-          ret.push_back("sounds/03_Bonang/A_07_BBSL2h.wav");
-      }
+        case 1:
+            ret.push_back("sounds/02_Gender/A_01_GBSL1.wav");
+            ret.push_back("sounds/02_Gender/A_02_GBSL2.wav");
+            ret.push_back("sounds/02_Gender/A_03_GBSL3.wav");
+            ret.push_back("sounds/02_Gender/A_04_GBSL5.wav");
+            ret.push_back("sounds/02_Gender/A_05_GBSL6.wav");
+            ret.push_back("sounds/02_Gender/A_06_GBSL1h.wav");
+            break;
 
-      // sarons
-      else if (index == 3) {
-        //   ret.push_back("sounds/04_Saron/A_01_SBSL6l.ogg");
-        //   ret.push_back("sounds/04_Saron/A_02_SBSL1.ogg");
-        //   ret.push_back("sounds/04_Saron/A_03_SBSL2.ogg");
-        //   ret.push_back("sounds/04_Saron/A_04_SBSL3.ogg");
-        //   ret.push_back("sounds/04_Saron/A_05_SBSL5.ogg");
-        //   ret.push_back("sounds/04_Saron/A_06_SBSL6.ogg");
-        //   ret.push_back("sounds/04_Saron/A_07_SBSL1h.ogg");
-        ret.push_back("sounds/01_Kenong/A_KSL2.wav");
-        ret.push_back("sounds/01_Kenong/A_KSL3.wav");
-        ret.push_back("sounds/01_Kenong/A_KSL5.wav");
-        ret.push_back("sounds/01_Kenong/A_KSL2.wav");
-        ret.push_back("sounds/01_Kenong/A_KSL3.wav");
-        ret.push_back("sounds/01_Kenong/A_KSL5.wav");
-        ret.push_back("sounds/01_Kenong/A_KSL2.wav");
-      }
+        case 2:
+            ret.push_back("sounds/03_Bonang/A_01_BBSL1.wav");
+            ret.push_back("sounds/03_Bonang/A_02_BBSL2.wav");
+            ret.push_back("sounds/03_Bonang/A_03_BBSL3.wav");
+            ret.push_back("sounds/03_Bonang/A_04_BBSL5.wav");
+            ret.push_back("sounds/03_Bonang/A_05_BBSL6.wav");
+            ret.push_back("sounds/03_Bonang/A_06_BBSL1h.wav");
+            ret.push_back("sounds/03_Bonang/A_07_BBSL2h.wav");
+            break;
 
-      return ret;
+        case 3:
+            ret.push_back("sounds/04_Saron/A_01_SBSL6l.ogg");
+            ret.push_back("sounds/04_Saron/A_02_SBSL1.ogg");
+            ret.push_back("sounds/04_Saron/A_03_SBSL2.ogg");
+            ret.push_back("sounds/04_Saron/A_04_SBSL3.ogg");
+            ret.push_back("sounds/04_Saron/A_05_SBSL5.ogg");
+            ret.push_back("sounds/04_Saron/A_06_SBSL6.ogg");
+            ret.push_back("sounds/04_Saron/A_07_SBSL1h.ogg");
+            break;
+
+        default:
+            break;
+
+    }
+
+    return ret;
 
 }
 
@@ -981,53 +986,40 @@ bool ofApp::hasParticles() {
 void ofApp::deviceOrientationChanged(int newOrientation) {
 
     ofLogNotice() << "Detected orientation change " << newOrientation;
+    ofLogNotice() << "Current orientation is " << ofGetOrientation();
 
-    if (isPhone()) {
-      ofLogNotice() << "Ignoring orientation change since it's a phone";
-      return;
-    }
+    if (isPhone()) return;
 
-    if (newOrientation == OF_ORIENTATION_UNKNOWN) {
-        return;
-    }
+    if (isTablet() && appState == APP) {
 
-    if (isTablet() && appState != APP) {
+        // it transitioning to portrait, deactivate all modules, except the one with which last interacted
         if (newOrientation == OF_ORIENTATION_DEFAULT || newOrientation == OF_ORIENTATION_180) {
-            ofLogNotice() << "!!!Ignoring orientation change in tablet in app ";
-            return;
+            for (uint i = 0; i < modules.size(); i++) {
+                if (i == moduleActive)  modules[i]->activate();
+                else modules[i]->deactivate();
+            }
         }
+        // it transitioning to landscape, activate back all modules
+        else {
+            for (uint i = 0; i < modules.size(); i++) modules[i]->activate();
+        }
+
+
     }
+
+    setupModules(newOrientation);
+
+    // NOTE: in android ofGetOrientation() doesn't get update, so force it
+    androidOrientation = newOrientation;
 
     // upside down is no good for anything
-    if (isTablet() && newOrientation == OF_ORIENTATION_180)
-        ofSetOrientation(OF_ORIENTATION_DEFAULT);
-    else {
-        ofLogNotice() << "Changing orientation change";
-        ofSetOrientation(ofOrientation(newOrientation));
-    }
+    // if (isTablet() && newOrientation == OF_ORIENTATION_180)
+    //     ofSetOrientation(OF_ORIENTATION_DEFAULT);
+    // else {
+    //     ofLogNotice() << "Changing orientation change";
+    //     ofSetOrientation(ofOrientation(newOrientation));
+    // }
 
-    // it transitioning to landscape, activate back all modules
-    if (newOrientation == OF_ORIENTATION_90_LEFT || newOrientation == OF_ORIENTATION_90_RIGHT) {
-        //imgAbout.rotate90(3);
-        for (unsigned int i = 0; i < modules.size(); i++) modules[i]->activate();
-    }
-    // it transitioning to portrait, deactivate all modules, except the one with which last interacted
-    else {
-        //imgAbout.rotate90(1);
-        for (unsigned int i = 0; i < modules.size(); i++) {
-            if (i == moduleActive) {
-
-                ofLogNotice() << "Activating module " << i;
-                modules[i]->activate();
-            }
-            else {
-                ofLogNotice() << "Deactivating module " << i;
-                modules[i]->deactivate();
-            }
-        }
-    }
-
-    setupModules();
 }
 
 #if defined TARGET_OF_IOS
@@ -1137,7 +1129,8 @@ bool ofApp::isPhone() {
     if (ofxiOSGetDeviceType() == OFXIOS_DEVICE_IPHONE) return true;
     else return false;
   #elif defined TARGET_ANDROID
-    return true;
+    return true; // NOTE: this is for testing
+    // return ofGetWidth() >= 1800;
   #else
     return false;
   #endif
@@ -1147,50 +1140,22 @@ bool ofApp::isTablet() {
   #if defined TARGET_OF_IOS
     return ofxiOSGetDeviceType() == OFXIOS_DEVICE_IPAD;
   #else
-    return ofGetWidth() >= 1800;
+    return !isPhone();
   #endif
 }
 
-bool ofApp::isTabletInPortrait() {
-
-    if (!isTablet()) return false;
-
-  // check iPad in portrait
-  #if defined TARGET_OF_IOS
-    if (isIos()) {
-        return ofGetOrientation() == OF_ORIENTATION_DEFAULT || ofGetOrientation() == OF_ORIENTATION_180;
-    }
-    else if (isAndroid()) {
-        return ofGetOrientation() == OF_ORIENTATION_DEFAULT || ofGetOrientation() == OF_ORIENTATION_180;
-    }
-  #endif
-
-  // check Android in portrait
-  // TODO
-
-  // Otherwise, is false
-  return false;
-
+bool ofApp::isInPortrait() {
+    int orientation = isAndroid() ? androidOrientation : ofGetOrientation();
+    return orientation == OF_ORIENTATION_DEFAULT || orientation == OF_ORIENTATION_180;
 }
 
-bool ofApp::isTabletInLandscape() {
-
-  // iPad in portrait
-  #if defined TARGET_OF_IOS
-  if (ofxiOSGetDeviceType() == OFXIOS_DEVICE_IPAD) {
-      if (ofGetOrientation() == OF_ORIENTATION_90_LEFT || ofGetOrientation() == OF_ORIENTATION_90_RIGHT) {
-          return true;
-      }
-  }
-  #endif
-
-  // Android in portrait
-  // TODO: check for android tablet in portrait too
-
-  // Otherwise, is false
-  return false;
-
+bool ofApp::isInLandscape() {
+    int orientation = isAndroid() ? androidOrientation : ofGetOrientation();
+    return orientation == OF_ORIENTATION_90_LEFT || orientation == OF_ORIENTATION_90_RIGHT;
 }
+
+bool ofApp::isTabletInPortrait() { return isTablet() && isInPortrait(); }
+bool ofApp::isTabletInLandscape() { return isTablet() && isInLandscape(); }
 
 int ofApp::getFontSize() {
 
@@ -1198,11 +1163,7 @@ int ofApp::getFontSize() {
 
     uint width = ofGetWidth();
 
-    if (ofApp::isAndroid()) {
-        ret = (width*24)/640;
-    }
-
-    else if (ofApp::isIos()) {
+    if (isIos() || isAndroid()) {
 
         if (ofApp::isPhone()) {
             if      (width <= 640)  ret = 24; // iPhone 5, 5s and SE

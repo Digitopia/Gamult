@@ -24,6 +24,7 @@ Module::Module(int index, int x, int y, int width, int height, int maxPopulation
     ofSoundPlayer s;
     this->sounds.push_back(s);
 
+    this->backgroundColor = 255 - (30 * this->index);
 }
 
 void Module::setDimensions(int x, int y, int width, int height) {
@@ -47,8 +48,6 @@ void Module::setDimensions(int x, int y, int width, int height) {
     this->x1 = x + width;
     this->consoleHeight = CONSOLE_HEIGHT*height;
 
-    this->backgroundColor = 255 - (30 * ofApp::getModuleIdx(x0));
-
 }
 
 void Module::touchDown(ofTouchEventArgs& event) {
@@ -60,18 +59,11 @@ void Module::changeInstrument(int direction) {
     if (!ofApp::isPhone()) return;
 
     ofLogNotice() << "Direction received: " << direction;
-    if (direction == 1)
-    {
-        iSoundPaths = iSoundPaths <= 0 ? 4 : iSoundPaths;
-        --iSoundPaths;
-    }
-    else if (direction == 2) {
-        iSoundPaths = iSoundPaths >= 3 ? -1 : iSoundPaths;
-        ++iSoundPaths;
-    }
 
-    // soundPaths = ofApp::getSoundPaths(iSoundPaths);
-    // numberOfInstruments = soundPaths.size();
+    if (direction == 1) iSoundPaths = iSoundPaths <= 0 ? 3 : --iSoundPaths;
+    else if (direction == 2) iSoundPaths = iSoundPaths >= 3 ? 0 : ++iSoundPaths;
+
+    this->numberOfInstruments = ofApp::getSoundPaths(iSoundPaths).size();
 
     // NOTE: this is the hack, make it different for Android for now
     // if (!ofApp::isAndroid()) {
@@ -177,7 +169,6 @@ void Module::drawBackground() {
 
 void Module::drawBorders() {
     ofPushStyle();
-
     if (this->mostRecent) ofSetLineWidth(CONSOLE_BORDER_WIDTH_MOST_RECENT);
     else ofSetLineWidth(CONSOLE_BORDER_WIDTH);
     ofSetHexColor(CONSOLE_BORDER_COLOR);
@@ -214,6 +205,7 @@ void Module::playSound(int soundIndex, float vol) {
         soundPan = ((50.0f*(float)index/((float)NMODULES)-1) + ((float)soundIndex/(float)numberOfInstruments)*((50.0f)/(float)NMODULES))-25.0f;
     }
     ofLogNotice() << "soundPan is " << soundPan;
+    ofLogNotice() << "orientation " << ofGetOrientation();
 
     #if !defined TARGET_OF_IOS
     uint idx = ofApp::getBaseModuleOffsetSound(iSoundPaths) + soundIndex;
