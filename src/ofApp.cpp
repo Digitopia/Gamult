@@ -89,7 +89,7 @@ void ofApp::setup() {
     initModules();
     setupModules();
 
-    initImages();
+    initImages(true);
 
     appState = ABOUT;
 
@@ -187,28 +187,27 @@ void ofApp::setupModules(int newOrientation) {
 
 }
 
-void ofApp::initImages() {
+void ofApp::initImages(bool first) {
 
     ofLogNotice() << "initImages() start";
-    if (ofApp::isPhone()) {
-        imgAbout.load("images/about_phone.png");
-    } else {
-        imgAbout.load("images/about.png");
-    }
-    imgArrow.load("images/arrow_up.png");
-    imgArrowDown.load("images/arrow_down.png");
+
+    if (isPhone()) imgAbout.load("images/about_phone.png");
+    else imgAbout.load("images/about.png");
 
     if (isPhone()) imgSwipeInfo.load("images/swipe_info.png");
-    else {
-        imgSwipeInfo.load("images/touch_info.png");
+    else imgSwipeInfo.load("images/touch_info.png");
+
+    // NOTE: some loads (and resizes are only needed on first load, and not when changing language)
+    if (first) {
+        imgArrowDown.load("images/arrow_down.png");
+        imgArrowDown.resize(ofGetWidth() * 0.20, ofGetWidth() * 0.20);
+        imgSwipeInfo.resize(ofGetWidth() * 0.20, ofGetWidth() * 0.20);
+        imgArrow.load("images/arrow_up.png");
     }
 
     // TODO: try to avoid resize as slows downs starting of app
     // NOTE: 3080/1080 is the original image ratio
-    if (ofApp::isPhone()) imgAbout.resize(ofGetWidth(), (int)((float)ofGetWidth()*3080/1080));
-
-    imgArrowDown.resize(ofGetWidth() * 0.20, ofGetWidth() * 0.20);
-    imgSwipeInfo.resize(ofGetWidth() * 0.20, ofGetWidth() * 0.20);
+    if (ofApp::isPhone() && first) imgAbout.resize(ofGetWidth(), (int)((float)ofGetWidth()*3080/1080));
 
     ofLogNotice() << "initImages() end";
 
@@ -364,11 +363,11 @@ void ofApp::setLanguageBBoxes() {
         enLangRect.set(xEn, y, w, h);
 
         // NOTE: uncomment for debug
-        // ofPushStyle();
-        // ofNoFill();
-        // ofDrawRectangle(ptLangRect);
-        // ofDrawRectangle(enLangRect);
-        // ofPopStyle();
+        ofPushStyle();
+        ofNoFill();
+        ofDrawRectangle(ptLangRect);
+        ofDrawRectangle(enLangRect);
+        ofPopStyle();
 
     }
     else {
@@ -836,7 +835,7 @@ void ofApp::changeLanguage(string language) {
     if (language == ofApp::language) return;
     ofApp::language = language;
     initTranslations();
-    initImages();
+    initImages(false);
     setupModules();
 }
 
@@ -990,6 +989,10 @@ void ofApp::deviceOrientationChanged(int newOrientation) {
 
     if (isPhone()) return;
 
+    if (isTablet() && appState != APP) {
+        if (newOrientation == OF_ORIENTATION_90_LEFT || newOrientation == OF_ORIENTATION_90_RIGHT) return;
+    }
+
     if (isTablet() && appState == APP) {
 
         // it transitioning to portrait, deactivate all modules, except the one with which last interacted
@@ -1054,6 +1057,7 @@ void ofApp::swipe(ofxAndroidSwipeDir swipeDir, int id) {
     if (lastTouchY > CONSOLE_HEIGHT * ofGetHeight()) {
         if (swipeDir == OFX_ANDROID_SWIPE_UP) {
             appState = ABOUT_ASCENDING;
+            swiping = true;
             ofLogNotice() << "Setting swiping true";
         }
         else if (swipeDir == OFX_ANDROID_SWIPE_LEFT) {
@@ -1129,7 +1133,7 @@ bool ofApp::isPhone() {
     if (ofxiOSGetDeviceType() == OFXIOS_DEVICE_IPHONE) return true;
     else return false;
   #elif defined TARGET_ANDROID
-    return true; // NOTE: this is for testing
+    return false; // NOTE: this is for testing
     // return ofGetWidth() >= 1800;
   #else
     return false;

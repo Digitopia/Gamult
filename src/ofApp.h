@@ -121,8 +121,8 @@ public:
     void updateNewModuleActive(int x);
 
     void initTranslations();
-    void initModules();
-    void initImages();
+    void initModules();    
+    void initImages(bool first);
 
     static int getFontSize();
     static string getSystemLanguage();
@@ -210,7 +210,7 @@ private:
     ofRectangle barRect;
     ofRectangle ptLangRect, enLangRect;
 
-#if defined TARGET_OF_IOS
+#if defined TARGET_OF_IOS || defined TARGET_ANDROID
     ofxImage imgAbout;
     ofxImage imgSplashScreen;
     ofxImage imgArrow;
