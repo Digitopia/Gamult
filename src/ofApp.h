@@ -76,6 +76,8 @@ public:
     void update();
     void draw();
 
+    void setupForApp();
+
     void mouseMoved(ofMouseEventArgs& mouse);
     void mouseDragged(ofMouseEventArgs& mouse);
     void mousePressed(ofMouseEventArgs& mouse);
@@ -89,9 +91,13 @@ public:
 
     void deviceOrientationChanged(int newOrientation);
     void windowResized(int w, int h) {
-        if (w < h) deviceOrientationChanged(OF_ORIENTATION_DEFAULT);
-        else deviceOrientationChanged(OF_ORIENTATION_90_LEFT);
-        // for (unsigned int i = 0; i < modules.size(); i++) modules[i]->deactivate();
+        if (w < h) {
+            deviceOrientationChanged(OF_ORIENTATION_DEFAULT);
+            androidOrientation = OF_ORIENTATION_DEFAULT;
+        } else {
+            deviceOrientationChanged(OF_ORIENTATION_90_LEFT);
+            androidOrientation = OF_ORIENTATION_90_LEFT;
+        }
     }
 
     void keyPressed(int key);
@@ -121,7 +127,8 @@ public:
     void updateNewModuleActive(int x);
 
     void initTranslations();
-    void initModules();    
+    void initModules();
+    void initSplashScreen();
     void initImages(bool first);
 
     static int getFontSize();
@@ -180,6 +187,8 @@ public:
     static int mouseId;
 
     static bool inactive;
+    static bool drawedSplashScreen;
+    static bool runSetupAlready;
     static bool multitouch;
     static unsigned int inactivityCounter;
     static unsigned int currentAlpha;
@@ -216,6 +225,7 @@ private:
     ofxImage imgArrow;
     ofxImage imgArrowDown;
     ofxImage imgSwipeInfo;
+
 #else
     ofImage imgAbout;
     ofImage imgSplashScreen;

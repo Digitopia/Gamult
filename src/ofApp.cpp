@@ -1,15 +1,18 @@
 #include "ofApp.h"
 
 // Statics initialization
-int ofApp::maxParticleY       = 0;
-int ofApp::mouseId            = 0;
+
+int ofApp::maxParticleY = 0;
+int ofApp::mouseId = 0;
 uint ofApp::inactivityCounter = 0;
-bool ofApp::multitouch        = true;
-bool ofApp::inactive          = false;
-uint ofApp::moduleActive      = 0;
-uint ofApp::currentAlpha      = DEFAULT_ALPHA;
-string ofApp::language        = "en";
+bool ofApp::multitouch = true;
+bool ofApp::inactive = false;
+bool ofApp::runSetupAlready = false;
+bool ofApp::drawedSplashScreen = false;
+uint ofApp::moduleActive = 0;
+uint ofApp::currentAlpha = DEFAULT_ALPHA;
 int ofApp::androidOrientation = 1;
+string ofApp::language = "en";
 vector<Module*> ofApp::modules;
 vector<ofSoundPlayer> ofApp::sounds;
 map<string,string> ofApp::translations;
@@ -23,32 +26,30 @@ typedef map<int,Touch>::iterator touchesIterator;
 
 void ofApp::setup() {
 
-    ofSetLogLevel(OF_LOG_VERBOSE);
+    initSplashScreen();
 
-    ofLogNotice() << "setup()";
+}
 
-    if (ofApp::isSemibreve()) ofLogNotice() << "Going to run Semibreve version";
+void ofApp::setupForApp() {
 
-    if (ofApp::isOsx())     ofLogNotice() << "OSX detected";
-    if (ofApp::isIos())     ofLogNotice() << "iOS detected";
-    if (ofApp::isAndroid()) ofLogNotice() << "Android detected";
+    ofSetLogLevel(OF_LOG_NOTICE);
 
-    if (ofApp::isPhone())   ofLogNotice() << "Phone detected";
-    if (ofApp::isTablet())  ofLogNotice() << "Tablet detected";
+    ofLogNotice() << "setupForApp()";
 
-    // if (ofApp::isIphone())  ofLogNotice() << "iPhone detected";
-    // if (ofApp::isIpad())    ofLogNotice() << "iPad detected";
+    if (ofApp::isOsx())     ofLogNotice() << "Plataform: OSX";
+    if (ofApp::isIos())     ofLogNotice() << "Plataform: iOS";
+    if (ofApp::isAndroid()) ofLogNotice() << "Plataform: Android";
 
-    // if (ofApp::isAndroidPhone())   ofLogNotice() << "Android phone detected";
-    // if (ofApp::isAndroidTablet())  ofLogNotice() << "Android tablet detected";
+    if (ofApp::isPhone())   ofLogNotice() << "Device: Phone";
+    if (ofApp::isTablet())  ofLogNotice() << "Device: Tablet";
+    if (!ofApp::isPhone() && !isTablet()) ofLogNotice() << "Device: Computer";
 
     #if defined TARGET_OSX
-    ofLogNotice() << "Running OSX version";
     ofSetDataPathRoot("../Resources/data/");
     #endif
 
     #if defined TARGET_SEMIBREVE
-    ofLogNotice() << "Running SEMIBREVE version";
+    ofLogNotice() << "Running **SEMIBREVE** version";
     oscReceiver.setup(RECEIVE_PORT);
     oscSender.setup(HOST, SEND_PORT);
     #endif
@@ -66,6 +67,11 @@ void ofApp::setup() {
     }
     #endif
 
+    if (isAndroid() && isTablet()) {
+        // ofSetOrientation(ofOrientation(OF_ORIENTATION_90_LEFT));
+        // windowResized(20, 10);
+    }
+
     if (isAndroid() || isIos()) {
         ofxAccelerometer.setup();
         accelCount = 0;
@@ -78,20 +84,21 @@ void ofApp::setup() {
     }
 
     ofSetFrameRate(FRAME_RATE);
-    ofSetCircleResolution(CIRCLE_RESOLUTION);
+    ofSetCircleResolution(20);
 
     if (multitouch) ofHideCursor();
 
     ofApp::language = ofApp::getSystemLanguage();
-    ofLogNotice() << "Language is " << ofApp::language;
+    ofLogNotice() << "Language: " << ofApp::language;
 
     initTranslations();
     initModules();
     setupModules();
+    setupModules();
 
     initImages(true);
 
-    appState = ABOUT;
+    // appState = ABOUT;
 
     inactivityState = ACTIVE;
 
@@ -105,6 +112,20 @@ void ofApp::setup() {
     ofApp::maxParticleY = round(ofGetHeight() * (1-LIMIT_PARTICLE));
 
     swipeFont.load(UI_FONT_FACE, ofApp::getFontSize() * 0.8);
+
+    // ofAddListener(ofEvents().windowResized, this, &ofApp::windowResized);
+
+    runSetupAlready = true;
+
+}
+
+void ofApp::initSplashScreen() {
+
+    if (isAndroid()) {
+        appState = SPLASH_SCREEN;
+        string splashScreenUrl = isPhone() ? "images/logo_portrait.png" : "images/logo_landscape.png";
+        imgSplashScreen.load(splashScreenUrl);
+    }
 
 }
 
@@ -128,7 +149,9 @@ void ofApp::initTranslations() {
     en["FADER_SPEED_TEXT"]    = "Speed";
     en["SWIPE_INFO_TOP_LINE"] = "Click and hold to create particles";
     en["SWIPE_INFO_BOTTOM_LINE_PHONE"]  = "Swipe left and right to change instrument";
-    en["SWIPE_INFO_BOTTOM_LINE_TABLET"] = "Rotate device to control one instrument at a time";
+
+    if (isIos()) en["SWIPE_INFO_BOTTOM_LINE_TABLET"] = "Rotate device to control one instrument at a time";
+    else en["SWIPE_INFO_BOTTOM_LINE_TABLET"] = "Swipe up at any time for the more detailed info";
 
     ofApp::translations = ofApp::language == "pt" ? pt : en;
 }
@@ -161,7 +184,8 @@ void ofApp::setupModules(int newOrientation) {
     ofLogNotice() << "setupModules() start";
 
     if (isTablet() && (newOrientation == OF_ORIENTATION_DEFAULT || newOrientation == OF_ORIENTATION_180)) {
-        modules[moduleActive]->setDimensions(0, 0, ofGetWidth(), ofGetHeight());
+        ofLogNotice() << "Setting dimensions for module " << moduleActive << " width " << ofGetWidth() << " height " << ofGetHeight();
+        modules[moduleActive]->setDimensions(-1, 0, ofGetWidth(), ofGetHeight());
     }
     else {
         ofLogNotice() << " here !!!";
@@ -200,14 +224,17 @@ void ofApp::initImages(bool first) {
     // NOTE: some loads (and resizes are only needed on first load, and not when changing language)
     if (first) {
         imgArrowDown.load("images/arrow_down.png");
-        imgArrowDown.resize(ofGetWidth() * 0.20, ofGetWidth() * 0.20);
-        imgSwipeInfo.resize(ofGetWidth() * 0.20, ofGetWidth() * 0.20);
+        float imgArrowDownScaleFactor = isInPortrait() ? 0.2 : 0.1;
+        imgArrowDown.resize(ofGetWidth() * imgArrowDownScaleFactor, ofGetWidth() * imgArrowDownScaleFactor);
+        imgSwipeInfo.resize(ofGetWidth() * imgArrowDownScaleFactor, ofGetWidth() * imgArrowDownScaleFactor);
         imgArrow.load("images/arrow_up.png");
     }
 
     // TODO: try to avoid resize as slows downs starting of app
     // NOTE: 3080/1080 is the original image ratio
     if (ofApp::isPhone() && first) imgAbout.resize(ofGetWidth(), (int)((float)ofGetWidth()*3080/1080));
+
+    if (ofApp::isAndroid())
 
     ofLogNotice() << "initImages() end";
 
@@ -258,13 +285,18 @@ void ofApp::update() {
     for (unsigned int i = 0; i < modules.size(); i++) {
         modules[i]->update();
     }
+
+    if (drawedSplashScreen && !runSetupAlready) {
+        setupForApp();
+        windowResized(ofGetWidth(), ofGetHeight());
+    }
 }
 
 void ofApp::inactivityHandler() {
 
     ofLogNotice() << "inactivityState: " << inactivityState;
 
-    // inactivity timer update
+    // inactivity timer updatesposp
     if (inactivityState == ACTIVE || inactivityState == PRE_INACTIVE) {
         inactivityCounter += ofGetLastFrameTime() * 1000;
     }
@@ -363,11 +395,11 @@ void ofApp::setLanguageBBoxes() {
         enLangRect.set(xEn, y, w, h);
 
         // NOTE: uncomment for debug
-        ofPushStyle();
-        ofNoFill();
-        ofDrawRectangle(ptLangRect);
-        ofDrawRectangle(enLangRect);
-        ofPopStyle();
+        // ofPushStyle();
+        // ofNoFill();
+        // ofDrawRectangle(ptLangRect);
+        // ofDrawRectangle(enLangRect);
+        // ofPopStyle();
 
     }
     else {
@@ -386,7 +418,8 @@ void ofApp::draw() {
 
     if (appState == SPLASH_SCREEN) {
         imgSplashScreen.draw(0, 0, ofGetWidth(), ofGetHeight());
-        if (ofGetElapsedTimeMillis() > 1500) appState = SPLASH_FADE;
+        if (ofGetElapsedTimeMillis() > 2000) appState = SPLASH_FADE;
+        drawedSplashScreen = true;
         return;
     }
 
@@ -432,8 +465,9 @@ void ofApp::draw() {
         if (isTablet()) ofSetColor(47); // NOTE: previous white font color wasn't readable on iPad;
         else ofSetHexColor(CONSOLE_COLOR);
 
-        int swipeSize = ofGetWidth() * 0.20;
-        int padding = 80;
+        float swipeSizeFactor = isInPortrait() ? 0.2 : 0.1;
+        int swipeSize = ofGetWidth() * swipeSizeFactor;
+        int padding = (ofGetWidth()*80)/1080;
 
         imgSwipeInfo.draw(ofGetWidth()/2-swipeSize/2, ofGetHeight()/2, swipeSize, swipeSize);
 
@@ -767,16 +801,16 @@ void ofApp::updateNewModuleActive(int x) {
 
 void ofApp::touchDown(ofTouchEventArgs& touch) {
 
+    // ofSetOrientation(OF_ORIENTATION_DEFAULT);
+
     lastTouchY = touch.y;
 
     if (appState == APP) updateNewModuleActive(touch.x);
 
     resetInactivityTime();
 
-    if (appState == SPLASH_SCREEN || appState == SPLASH_FADE) {
-        appState = ABOUT;
-        return;
-    }
+    if (appState == SPLASH_SCREEN) { appState = SPLASH_FADE; return; }
+    if (appState == SPLASH_FADE)   { appState = ABOUT; return; }
 
     int x = touch.x;
     int y = touch.y;
@@ -813,13 +847,12 @@ void ofApp::touchDown(ofTouchEventArgs& touch) {
 
     if (appState == APP || appState == BAR) {
 
-        // NOTE: dismiss swipe info after first touch
-        if (showSwipeInfo) showSwipeInfo = false;
-
         // ofLogNotice() << "down (" << id << ", " << x << ", " << y << ")" ;
 
         if (y > CONSOLE_HEIGHT*ofGetHeight() && (appState != BAR || y < aboutY) && modules[getModuleIdx(x)]->isNotFull()) {
             touches.insert(pair<int,Touch> (id, Touch(x, y)));
+            // NOTE: dismiss swipe info, only if inside module area (not including console)
+            if (showSwipeInfo) showSwipeInfo = false;
         }
 
     }
@@ -990,7 +1023,10 @@ void ofApp::deviceOrientationChanged(int newOrientation) {
     if (isPhone()) return;
 
     if (isTablet() && appState != APP) {
-        if (newOrientation == OF_ORIENTATION_90_LEFT || newOrientation == OF_ORIENTATION_90_RIGHT) return;
+        if (newOrientation == OF_ORIENTATION_DEFAULT || newOrientation == OF_ORIENTATION_180) {
+            ofLogNotice() << "!!!Ignoring orientation change in tablet in app ";
+            return;
+        }
     }
 
     if (isTablet() && appState == APP) {
@@ -1133,8 +1169,8 @@ bool ofApp::isPhone() {
     if (ofxiOSGetDeviceType() == OFXIOS_DEVICE_IPHONE) return true;
     else return false;
   #elif defined TARGET_ANDROID
-    return false; // NOTE: this is for testing
-    // return ofGetWidth() >= 1800;
+    // return true; // NOTE: this is for testing
+    return ofGetWidth() <= 1000;
   #else
     return false;
   #endif
@@ -1170,7 +1206,8 @@ int ofApp::getFontSize() {
     if (isIos() || isAndroid()) {
 
         if (ofApp::isPhone()) {
-            if      (width <= 640)  ret = 24; // iPhone 5, 5s and SE
+            if (width <= 500) ret = width*24/640;
+            else if (width <= 640)  ret = 24; // iPhone 5, 5s and SE
             else if (width <= 750)  ret = 28; // iPhone 6, 6s and 7
             else if (width <= 1242) ret = 34; // iPhone 6+, 6s+ and 7+
             else ret = 38;
@@ -1178,11 +1215,17 @@ int ofApp::getFontSize() {
 
         else {
 
-            if (isTabletInPortrait()) {
+            if (isIos() && isTabletInPortrait()) {
                 ofLogNotice() << "getFontSize in portrait mode!";
                 if      (width <= 1024) ret = 14; // iPad 2
                 else if (width <= 1536) ret = 24; // iPad Mini and iPad Air
                 else ret = 26;
+            }
+
+            else if (isAndroid() && isTabletInPortrait()) {
+                if      (width <= 1024) ret = 14; // iPad 2
+                else if (width <= 1536) ret = 36; // iPad Mini and iPad Air
+                else ret = 28;
             }
 
             else {

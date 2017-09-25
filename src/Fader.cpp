@@ -14,7 +14,7 @@ Fader::Fader(string title) {
 }
 
 void Fader::setDimensions(int x0, int y, int size, bool first) {
-    
+
     this->font.load(UI_FONT_FACE, ofApp::getFontSize()-2, true); // NOTE: -2 is a hack so that pt text fits in
 
     float oldValue;
@@ -33,13 +33,20 @@ void Fader::setDimensions(int x0, int y, int size, bool first) {
     // line with the Freeze buton, that is, at 0.6 of module width
 
     if (ofApp::isTabletInPortrait() || ofApp::isPhone()) {
-        this->x0 = x0 + 0.20 * (ofGetWidth()) + size;
-        this->range = 0.6*(ofGetWidth()) - size;
+        ofLogNotice() << "FIRST BLOCK!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
+        this->x0 = x0 + 0.20 * ofGetWidth() + size;
+        this->range = 0.5 * ofGetWidth();
     }
     else {
+        ofLogNotice() << "SECOND BLOCK!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
         this->x0 = x0 + 0.20 * (ofGetWidth()/NMODULES) + size;
-        this->range = 0.6*(ofGetWidth()/NMODULES)-size;
+        this->range = 0.5*(ofGetWidth()/NMODULES)-size;
     }
+
+    ofLogNotice() << "this->range is " << this->range;
+    ofLogNotice() << "this->range is " << this->range;
+    ofLogNotice() << "this->range is " << this->range;
+
 
     rect.setY(this->y - this->size/2);
     rect.setSize(this->size, this->size);
@@ -86,12 +93,16 @@ float Fader::getValue() {
 
 void Fader::draw() {
 
+    ofLogNotice() << "isTabletInPortrait() " << ofApp::isTabletInPortrait();
+
     ofSetColor(UI_COLOR);
 
     // draw the line in which the fader moves
+    // this->range = 0.6*(ofGetWidth())-size;
     ofDrawLine(x0, y, x0+range, y);
+    // ofLogNotice() << "range in draw is " << range;
 
-    int middleX = x0+range/2;
+    int middleX = x0+range/2 - size/2;
     ofDrawLine(middleX, y-size/3, middleX, y+size/3);
 
     // draw the fader

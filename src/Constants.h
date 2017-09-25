@@ -5,7 +5,7 @@
     #define UI_FONT_SIZE 12
     #define TOUCH_MAX 40
     #define TOUCH_MIN 10
-    #define BUTTON_SIZE .20
+    #define BUTTON_SIZE .21
     #define FADER_SIZE .19
     #define PARTICLES_PER_MODULE 7
 
@@ -67,7 +67,7 @@
 #define PARTICLE_OFFSET 1.05
 
 // console
-#define CONSOLE_HEIGHT 0.18
+#define CONSOLE_HEIGHT 0.20
 #define CONSOLE_SECTION_HEIGHT 0.75 // this is, in practice, the height at which the remove and clear buttons start
 #define CONSOLE_COLOR 0xA1DEDF
 #define CONSOLE_BORDER_WIDTH 1
