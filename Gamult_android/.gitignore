@@ -1,4 +1,6 @@
 
+*.apk
+
 gen/
 obj/
 libs/

@@ -1170,7 +1170,7 @@ bool ofApp::isPhone() {
     else return false;
   #elif defined TARGET_ANDROID
     // return true; // NOTE: this is for testing
-    return ofGetWidth() <= 1000;
+    return min(ofGetWidth(), ofGetHeight()) <= 1100;
   #else
     return false;
   #endif
