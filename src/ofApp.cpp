@@ -54,6 +54,7 @@ void ofApp::setupForApp() {
     oscSender.setup(HOST, SEND_PORT);
     #endif
 
+
     #if defined TARGET_OF_IOS
      if (ofApp::isTablet()) {
         ofSetOrientation(OF_ORIENTATION_90_LEFT);
@@ -1169,8 +1170,8 @@ bool ofApp::isPhone() {
     if (ofxiOSGetDeviceType() == OFXIOS_DEVICE_IPHONE) return true;
     else return false;
   #elif defined TARGET_ANDROID
-    // return true; // NOTE: this is for testing
-    return min(ofGetWidth(), ofGetHeight()) <= 1100;
+    return false; // NOTE: this is for testing
+    // return min(ofGetWidth(), ofGetHeight()) <= 1100;
   #else
     return false;
   #endif

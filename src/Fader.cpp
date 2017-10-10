@@ -102,8 +102,8 @@ void Fader::draw() {
     ofDrawLine(x0, y, x0+range, y);
     // ofLogNotice() << "range in draw is " << range;
 
-    int middleX = x0+range/2 - size/2;
-    ofDrawLine(middleX, y-size/3, middleX, y+size/3);
+    int middleX = x0+range/2;
+    ofDrawLine(middleX, y-size/2, middleX, y+size/2);
 
     // draw the fader
     ofDrawRectangle(rect);
