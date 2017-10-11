@@ -54,6 +54,7 @@ void ofApp::setupForApp() {
     oscSender.setup(HOST, SEND_PORT);
     #endif
 
+
     #if defined TARGET_OF_IOS
      if (ofApp::isTablet()) {
         ofSetOrientation(OF_ORIENTATION_90_LEFT);
@@ -225,6 +226,18 @@ void ofApp::initImages(bool first) {
     if (first) {
         imgArrowDown.load("images/arrow_down.png");
         float imgArrowDownScaleFactor = isInPortrait() ? 0.2 : 0.1;
+        ofLogNotice() << "<<<<<<<<<<<<<<<<< imgArrowDownScaleFactor " << imgArrowDownScaleFactor;
+        ofLogNotice() << "<<<<<<<<<<<<<<<<< imgArrowDownScaleFactor " << imgArrowDownScaleFactor;
+        ofLogNotice() << "<<<<<<<<<<<<<<<<< imgArrowDownScaleFactor " << imgArrowDownScaleFactor;
+        ofLogNotice() << "<<<<<<<<<<<<<<<<< imgArrowDownScaleFactor " << imgArrowDownScaleFactor;
+        ofLogNotice() << "<<<<<<<<<<<<<<<<< imgArrowDownScaleFactor " << imgArrowDownScaleFactor;
+        ofLogNotice() << "<<<<<<<<<<<<<<<<< imgArrowDownScaleFactor " << imgArrowDownScaleFactor;
+        ofLogNotice() << "<<<<<<<<<<<<<<<<< imgArrowDownScaleFactor " << imgArrowDownScaleFactor;
+        ofLogNotice() << "<<<<<<<<<<<<<<<<< imgArrowDownScaleFactor " << imgArrowDownScaleFactor;
+        ofLogNotice() << "<<<<<<<<<<<<<<<<< imgArrowDownScaleFactor " << imgArrowDownScaleFactor;
+        ofLogNotice() << "<<<<<<<<<<<<<<<<< imgArrowDownScaleFactor " << imgArrowDownScaleFactor;
+        ofLogNotice() << "<<<<<<<<<<<<<<<<< imgArrowDownScaleFactor " << imgArrowDownScaleFactor;
+        ofLogNotice() << "<<<<<<<<<<<<<<<<< imgArrowDownScaleFactor " << imgArrowDownScaleFactor;
         imgArrowDown.resize(ofGetWidth() * imgArrowDownScaleFactor, ofGetWidth() * imgArrowDownScaleFactor);
         imgSwipeInfo.resize(ofGetWidth() * imgArrowDownScaleFactor, ofGetWidth() * imgArrowDownScaleFactor);
         imgArrow.load("images/arrow_up.png");
@@ -1169,8 +1182,9 @@ bool ofApp::isPhone() {
     if (ofxiOSGetDeviceType() == OFXIOS_DEVICE_IPHONE) return true;
     else return false;
   #elif defined TARGET_ANDROID
-    // return true; // NOTE: this is for testing
-    return min(ofGetWidth(), ofGetHeight()) <= 1100;
+    return false; // NOTE: this is for testing
+    //return true;
+    // return min(ofGetWidth(), ofGetHeight()) <= 1100;
   #else
     return false;
   #endif
@@ -1185,6 +1199,7 @@ bool ofApp::isTablet() {
 }
 
 bool ofApp::isInPortrait() {
+    if (isAndroid() && isTablet()) return false;
     int orientation = isAndroid() ? androidOrientation : ofGetOrientation();
     return orientation == OF_ORIENTATION_DEFAULT || orientation == OF_ORIENTATION_180;
 }
@@ -1206,6 +1221,7 @@ int ofApp::getFontSize() {
     if (isIos() || isAndroid()) {
 
         if (ofApp::isPhone()) {
+            ofLogNotice() << " I am phone !!!!!!!";
             if (width <= 500) ret = width*24/640;
             else if (width <= 640)  ret = 24; // iPhone 5, 5s and SE
             else if (width <= 750)  ret = 28; // iPhone 6, 6s and 7
@@ -1222,7 +1238,8 @@ int ofApp::getFontSize() {
                 else ret = 26;
             }
 
-            else if (isAndroid() && isTabletInPortrait()) {
+            else if (isAndroid() && isTablet()) {
+                ofLogNotice() << " I am tablet !!!!!!!!!!!!";
                 if      (width <= 1024) ret = 14; // iPad 2
                 else if (width <= 1536) ret = 36; // iPad Mini and iPad Air
                 else ret = 28;

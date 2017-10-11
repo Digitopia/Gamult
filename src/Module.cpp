@@ -169,8 +169,9 @@ void Module::drawBackground() {
 
 void Module::drawBorders() {
     ofPushStyle();
-    if (this->mostRecent) ofSetLineWidth(CONSOLE_BORDER_WIDTH_MOST_RECENT);
-    else ofSetLineWidth(CONSOLE_BORDER_WIDTH);
+    // if (this->mostRecent) ofSetLineWidth(CONSOLE_BORDER_WIDTH_MOST_RECENT);
+    // else ofSetLineWidth(CONSOLE_BORDER_WIDTH);
+    ofSetLineWidth(CONSOLE_BORDER_WIDTH);
     ofSetHexColor(CONSOLE_BORDER_COLOR);
     ofNoFill();
     ofDrawRectangle(x0, y, width, height);

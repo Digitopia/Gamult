@@ -6,7 +6,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import 	android.content.pm.ActivityInfo;
+
 import cc.openframeworks.OFAndroid;
 
 
@@ -15,9 +15,9 @@ public class OFActivity extends cc.openframeworks.OFActivity{
 	@Override
     public void onCreate(Bundle savedInstanceState)
     {
-        if(getResources().getBoolean(R.bool.portrait_only)){
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        }
+//        if(getResources().getBoolean(R.bool.portrait_only)){
+//            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+//        }
 
         /*Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
