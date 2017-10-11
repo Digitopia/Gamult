@@ -226,6 +226,7 @@ void ofApp::initImages(bool first) {
     if (first) {
         imgArrowDown.load("images/arrow_down.png");
         float imgArrowDownScaleFactor = isInPortrait() ? 0.2 : 0.1;
+        ofLogNotice() << "<<<<<<<<<<<<<<<<< imgArrowDownScaleFactor " << imgArrowDownScaleFactor;
         imgArrowDown.resize(ofGetWidth() * imgArrowDownScaleFactor, ofGetWidth() * imgArrowDownScaleFactor);
         imgSwipeInfo.resize(ofGetWidth() * imgArrowDownScaleFactor, ofGetWidth() * imgArrowDownScaleFactor);
         imgArrow.load("images/arrow_up.png");
@@ -1171,6 +1172,7 @@ bool ofApp::isPhone() {
     else return false;
   #elif defined TARGET_ANDROID
     return false; // NOTE: this is for testing
+    //return true;
     // return min(ofGetWidth(), ofGetHeight()) <= 1100;
   #else
     return false;
