@@ -1182,8 +1182,7 @@ bool ofApp::isPhone() {
     if (ofxiOSGetDeviceType() == OFXIOS_DEVICE_IPHONE) return true;
     else return false;
   #elif defined TARGET_ANDROID
-    return false; // NOTE: this is for testing
-    //return true;
+    return !MULTI_VERSION_FLAG;
     // return min(ofGetWidth(), ofGetHeight()) <= 1100;
   #else
     return false;

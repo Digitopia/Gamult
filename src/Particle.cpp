@@ -34,7 +34,7 @@ void Particle::update() {
     if (bottomCollision && module->isGravityOn()) health--;
 
     // HACK: keep so that previous behaviour is kept, even though it doesn't make sense
-    if (topCollision && !module->isGravityOn()) velocity = 0;
+    if (topCollision && !module->isGravityOn()) velocity = -0.1;
 
     if (bottomCollision || topCollision)
         if (module->isGravityOn()) velocity *= -0.95;

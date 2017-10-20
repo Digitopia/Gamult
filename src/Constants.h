@@ -1,5 +1,8 @@
 // #define TARGET_SEMIBREVE
 
+// NOTE: this determines if android compiled version is multi or "single" (standard with just one module)
+#define MULTI_VERSION_FLAG true
+
 #if defined TARGET_OF_IOS || defined TARGET_ANDROID
     #define NMODULES 4
     #define UI_FONT_SIZE 12
